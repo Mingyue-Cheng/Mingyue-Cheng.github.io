@@ -147,11 +147,10 @@
 </div>
 
 
-<div class="container">
+<!-- <div class="container">
   <h3 id="news">Latest News</h3>
   <hr style="border:0; background-color:black; height:1px;" size="0">
   <ul style="font-size: 13.0pt">
-
 
 
   <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Shuo Yu</strong> and <strong>Jiahao Wang</strong> on their paper being accepted to <strong>CIKM 2025</strong>!</li>
@@ -186,6 +185,97 @@
 
   </ul>
 </div>
+ -->
+
+
+<style>
+  .news-container {
+    font-size: 13pt;
+  }
+
+  .toggle-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 12pt;
+    margin-top: 8px;
+    display: block;
+    text-align: center;
+    padding: 4px 0;
+    transition: color 0.2s;
+  }
+
+  .toggle-button:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  #moreNews li {
+    margin-top: 6px;
+  }
+</style>
+
+<div class="container">
+  <h3 id="news">Latest News</h3>
+  <hr style="border:0; background-color:black; height:1px;" size="0">
+
+  <ul class="news-container" id="newsList">
+    <!-- 默认显示的新闻 -->
+
+  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Shuo Yu</strong> and <strong>Jiahao Wang</strong> on their paper being accepted to <strong>CIKM 2025</strong>!</li>
+  
+  <li><strong>[Jul. 2025]</strong> 🎉 Congratulations to <strong>Mingfan Pan</strong> and <strong>Yue Chen</strong> for their paper acceptance at <strong>RecSys 2025</strong>! </li>
+
+  <li>
+  <strong>[Jun. 2025]</strong> 📊 We released <strong>ChemTable</strong>, a large-scale dataset and benchmark for evaluating MLLMs on real-world chemical tables — one of the most structured and information-dense formats in scientific literature. 
+  <a href="https://github.com/lqzxt/ChemTable" target="_blank">[GitHub]</a>
+  <a href="https://arxiv.org/abs/2506.11375" target="_blank">[arXiv]</a>
+  </li>
+
+  <li><strong>[Jun. 2025]</strong> 🚀 We released <strong>Time-R1</strong>, the first time series reasoning model with reinforcement fine-tuning, now available on <a href="https://huggingface.co/ustc-zyt/Time-R1" target="_blank">Hugging Face</a> and <a href="https://github.com/lqzxt/Time-R1" target="_blank">GitHub</a>.</li>
+  
+  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Jie Ouyang</strong> and <strong>Junhao Yu</strong> on their paper being accepted to <strong>ACL 2025</strong>!</li>
+
+    <!-- 折叠内容 -->
+    <div id="moreNews" style="display: none;">
+  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Daoyu Wang</strong> and <strong>Zirui Liu</strong> on their paper being accepted to <strong>ICML 2025</strong>!</li>  
+
+  <li><strong>[Apr. 2025]</strong> 🎉 Congratulations to <strong>Jintao Zhang</strong>, <strong>Yitong Zhou</strong>, and <strong>Hao Zhang</strong> for having their paper accepted by <strong>IJCAI 2025</strong>!</li>
+
+  <li><strong>[Apr. 2025]</strong> 📄 We have recently preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174430535.53879341" target="_blank" rel="noopener">TechRxiv</a>.</li>
+
+  <li><strong>[Apr. 2025]</strong> 📄 Our new survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> has just been released on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174352282.22844759" target="_blank" rel="noopener">TechRxiv</a>.</li>
+
+  <li><strong>[Mar. 2025]</strong> 🚀 Our <strong>Agent R1</strong> project has been officially released on <a href="https://github.com/0russwest0/Agent-R1" target="_blank">GitHub</a>.</li>
+  
+  <li><strong>[Mar. 2025]</strong> 📄 Our survey <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong> has just been released on <a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">arXiv</a>.
+  </li>
+  
+  <li><strong>[Dec. 2024]</strong> 🏆 Congrats to our students on winning the <strong>Gold Award</strong> in the 2024 <strong>Ascend AI Innovation Competition</strong> finals!</li>
+
+    </div>
+  </ul>
+
+  <!-- 优雅按钮 -->
+  <button class="toggle-button" onclick="toggleMoreNews()" id="toggleBtn">Show More ▼</button>
+</div>
+
+<script>
+  function toggleMoreNews() {
+    const moreNews = document.getElementById("moreNews");
+    const btn = document.getElementById("toggleBtn");
+    if (moreNews.style.display === "none") {
+      moreNews.style.display = "block";
+      btn.textContent = "Show Less ▲";
+    } else {
+      moreNews.style.display = "none";
+      btn.textContent = "Show More ▼";
+    }
+  }
+</script>
+
+
 
 
 <div class="container">

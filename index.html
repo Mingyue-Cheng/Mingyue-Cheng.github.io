@@ -683,7 +683,7 @@
 </div>
 
 
-<div class="container">
+<!-- <div class="container">
   <h3 id="opensource">Open Source Projects</h3>
   <hr style="border:0; background-color:black; height:1px;" size="0">
   <ul style="font-size: 13.0pt">
@@ -707,7 +707,43 @@
 
 
   </ul>
+</div> -->
+
+<div class="container">
+  <h3 id="opensource">Open Source Projects</h3>
+  <hr style="border:0; background-color:black; height:1px;" size="0">
+  <ul style="font-size: 13.0pt">
+
+    <li>
+      <strong>Science-Star</strong> — An open-source framework for building, extending, and experimenting with 
+      <strong>scientific AI agents</strong>.  
+      It provides a ReAct-based engine, tool orchestration, memory & reflection, 
+      HLE dataset integration, and powerful visualization, enabling rapid development of 
+      scientific agents from concept to deployment.  
+      [
+      <a href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">
+        <strong>GitHub</strong>
+      </a>
+      ⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">loading...</span>
+      ]
+    </li>
+
+    <li>
+      <strong>Agent-R1</strong> — A <strong>large-model agent training framework</strong> designed to enable 
+      efficient alignment and reasoning capabilities for LLM-based agents.  
+      It supports reinforcement fine-tuning (e.g., GRPO), multi-tool orchestration, long-term memory, 
+      and reflective reasoning, accelerating the development of autonomous and context-aware agents.  
+      [
+      <a href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">
+        <strong>GitHub</strong>
+      </a>
+      ⭐ <span class="github-stars" data-repo="0russwest0/Agent-R1">loading...</span>
+      ]
+    </li>
+
+  </ul>
 </div>
+
 
 
 
@@ -863,6 +899,27 @@
   -->
   </ul>
 </div>
+
+
+<script>
+async function loadGitHubStars() {
+  const elements = document.querySelectorAll('.github-stars');
+
+  for (const el of elements) {
+    const repo = el.dataset.repo;
+    try {
+      const response = await fetch(`https://api.github.com/repos/${repo}`);
+      const data = await response.json();
+      el.textContent = data.stargazers_count;
+    } catch (e) {
+      el.textContent = "N/A";
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadGitHubStars);
+</script>
+
 
 
 </body>

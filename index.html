@@ -1,1126 +1,1112 @@
 <!DOCTYPE html>
-<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mingyue Cheng's HomePage</title>
+  <title>Mingyue Cheng's Homepage</title>
   <meta name="google-site-verification" content="kyHylTDUEgzODHrPnUw-S_22ahgQoswvjR1ui-JvdNk" />
-  <link rel="stylesheet" href="./HomePage_files/bootstrap.min.css">
-  <link rel="stylesheet" href="./HomePage_files/bootstrap.css">
+  <meta name="description" content="Mingyue Cheng's academic homepage. Associate Researcher at USTC State Key Laboratory of Cognitive Intelligence. Research in Time Series Analysis, LLM Agents, and Table Mining.">
+  <meta name="keywords" content="Mingyue Cheng, Time Series, LLM Agent, Table Mining, USTC, Machine Learning, Deep Learning">
+  <meta name="author" content="Mingyue Cheng">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mingyue Cheng | USTC">
+  <meta property="og:description" content="Associate Researcher at USTC. Research in Time Series Analysis, LLM Agents, and Tabular Data Mining.">
+  <meta property="og:url" content="https://mingyue-cheng.github.io/">
+  <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mingyue Cheng | USTC">
+  <meta name="twitter:description" content="Associate Researcher at USTC. Research in Time Series Analysis, LLM Agents, and Tabular Data Mining.">
+  <meta name="twitter:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
   <style>
-    body {
-      padding-bottom: 3rem;
-    }
+/* ===== Variables ===== */
+:root {
+  --accent:      #003087;
+  --accent-dark: #00226b;
+  --accent-light:#e8edf7;
+  --text:        #1a1a1a;
+  --text-muted:  #666;
+  --border:      #e2e5ea;
+  --bg:          #fff;
+  --bg-alt:      #f6f7fb;
+  --radius:      5px;
+  --max-w:       1100px;
+  --font: system-ui, -apple-system, 'Segoe UI', Arial,
+          'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  text-align: justify;
+}
+
+/* ===== Container ===== */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ===== Sticky Nav ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 13px 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ===== Profile Hero ===== */
+.profile-section {
+  padding: 52px 0 46px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%);
+}
+.profile-wrap {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+}
+.profile-photo {
+  width: 175px;
+  height: 210px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0,48,135,0.08);
+  margin-top: 16px;
+}
+.profile-info { flex: 1; min-width: 0; }
+.profile-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.profile-name-cn {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.profile-title {
+  font-size: 15px;
+  color: var(--text);
+  margin: 8px 0 4px;
+  font-weight: 500;
+}
+.profile-affil {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.profile-affil a { color: var(--accent); text-decoration: none; }
+.profile-affil a:hover { text-decoration: underline; }
+.profile-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.badge {
+  display: inline-block;
+  padding: 4px 13px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  transition: all 0.2s;
+  background: #fff;
+}
+.badge:hover { background: var(--accent-light); border-color: var(--accent); }
+.profile-contact {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+.profile-contact a { color: var(--accent); text-decoration: none; }
+.profile-contact a:hover { text-decoration: underline; }
+
+/* ===== Generic Sections ===== */
+.section { padding: 40px 0 32px; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  margin-bottom: 22px;
+  letter-spacing: -0.01em;
+}
+.section p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.section p a { color: var(--accent); text-decoration: none; }
+.section p a:hover { text-decoration: underline; }
+.plain-list {
+  font-size: 14px;
+  line-height: 1.8;
+  padding-left: 20px;
+}
+.plain-list li { margin-bottom: 7px; }
+.plain-list li a { color: var(--accent); text-decoration: none; }
+.plain-list li a:hover { text-decoration: underline; }
+
+/* ===== Research Interests ===== */
+.research-list {
+  font-size: 14px;
+  line-height: 1.8;
+  padding-left: 20px;
+  margin-bottom: 14px;
+}
+.research-list li { margin-bottom: 9px; }
+.research-note {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  background: var(--bg-alt);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-top: 14px;
+}
+.research-note a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.research-note a:hover { text-decoration: underline; }
+
+/* ===== News ===== */
+.news-list {
+  font-size: 14px;
+  line-height: 1.8;
+  padding-left: 20px;
+  margin-bottom: 4px;
+}
+.news-list li { margin-bottom: 9px; }
+.news-list li a { color: var(--accent); text-decoration: none; }
+.news-list li a:hover { text-decoration: underline; }
+.news-list li.pinned { font-weight: 500; }
+.toggle-button {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 14px;
+  font-family: var(--font);
+  margin-top: 10px;
+  padding: 5px 18px;
+  transition: all 0.2s;
+  display: block;
+}
+.toggle-button:hover { background: var(--accent-light); border-color: var(--accent); }
+
+/* ===== Open Source Cards ===== */
+.os-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.os-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 18px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.os-logo {
+  width: 90px;
+  height: 90px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.os-body { flex: 1; min-width: 0; }
+.os-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 10px rgba(0,48,135,0.08);
+}
+.os-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.os-card-title a.os-github {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.os-card-title a.os-github:hover { border-bottom-color: var(--accent); }
+.os-stars {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.os-card-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+.os-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.os-card-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.os-card-footer a:hover { text-decoration: underline; }
+.os-year {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* ===== Publication Filters ===== */
+.pub-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.pub-filter-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-family: var(--font);
+  transition: all 0.2s;
+}
+.pub-filter-btn:hover, .pub-filter-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ===== Publications ===== */
+.pub-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.pub-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  margin-bottom: 0;
+}
+.pub-scholar-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  margin-top: 4px;
+}
+.pub-scholar-links a {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.pub-scholar-links a:hover { background: var(--accent-light); border-color: var(--accent); }
+.pub-note {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+.pub-year-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 26px 0 10px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  line-height: 1.3;
+}
+.pub-list {
+  font-size: 15px;
+  line-height: 1.75;
+  padding-left: 22px;
+}
+.pub-list li { margin-bottom: 10px; color: var(--text); }
+.pub-list a { color: var(--accent); text-decoration: none; }
+.pub-list a:hover { text-decoration: underline; }
+.pub-list font[color="red"] { color: #b91c1c !important; font-weight: 700; font-style: normal; }
+.pub-list em { color: var(--text-muted); font-style: italic; }
+.pub-list .sktime-note { color: var(--text-muted); }
+
+/* ===== AI Systems ===== */
+.sys-list {
+  font-size: 14px;
+  line-height: 1.8;
+  padding-left: 20px;
+}
+.sys-list li { margin-bottom: 8px; }
+.sys-list a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.sys-list a:hover { text-decoration: underline; }
+
+/* ===== Experience / Education / Honors ===== */
+.timeline-list {
+  font-size: 14px;
+  line-height: 1.8;
+  padding-left: 20px;
+}
+.timeline-list li { margin-bottom: 7px; }
+.timeline-list a { color: var(--accent); text-decoration: none; }
+.timeline-list a:hover { text-decoration: underline; }
+
+/* ===== Services ===== */
+.services-group { margin-bottom: 18px; }
+.services-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.services-list {
+  font-size: 13.5px;
+  line-height: 1.8;
+  padding-left: 20px;
+}
+.services-list li { margin-bottom: 4px; }
+.services-list a { color: var(--accent); text-decoration: none; }
+.services-list a:hover { text-decoration: underline; }
+
+/* ===== Footer ===== */
+.site-footer {
+  margin-top: 48px;
+  padding: 32px 0 48px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 680px) {
+  .profile-wrap { flex-direction: column; }
+  .profile-photo { width: 120px; height: 145px; }
+  .os-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 14px; }
+  .profile-name { font-size: 22px; }
+}
+@media (max-width: 480px) {
+  .nav-links { display: none; }
+}
+
+/* ===== Back to Top Button ===== */
+#back-to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #003087;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background-color 0.2s ease;
+  z-index: 999;
+}
+#back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#back-to-top:hover {
+  background-color: #00226b;
+}
   </style>
 </head>
-<body data-gr-c-s-loaded="true">
-<nav class="navbar navbar-inverse" role="navigation">
+<body>
 
+<!-- ===== Navigation ===== -->
+<header class="site-header">
   <div class="container">
-    <div class="row"></div>
-    <div class="col-md-8">
-      <div class="navbar-collapse collapse ">
-        <ul class="nav navbar-nav" style="clear: both">
-          <li class="active"><a class="navitme" href="https://mingyue-cheng.github.io/#home">Home</a> </li>
-          <li><a class="navitme" href="https://mingyue-cheng.github.io/#biography">Biography</a> </li>
-          <li><a class="navitme" href="https://mingyue-cheng.github.io/#education">Education</a> </li>
-          <li><a class="navitme" href="https://mingyue-cheng.github.io/#experience">Experience</a> </li>
-          <li><a class="navitme" href="https://mingyue-cheng.github.io/#publications">Publications</a> </li>
-          <li><a class="navitme" href="https://mingyue-cheng.github.io/#system">System</a> </li>
-          <li><a class="navitme" href="https://mingyue-cheng.github.io/#honors">Honors</a> </li>
-        </ul>
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Mingyue Cheng</a>
+      <nav class="nav-links">
+        <a href="#biography">Biography</a>
+        <a href="#news">News</a>
+        <a href="#opensource">Open Source</a>
+        <a href="#selected-publications">Publications</a>
+        <a href="#experience">Experience</a>
+        <a href="#honors">Honors</a>
+        <a href="#services">Services</a>
+        <a href="#grants">Grants</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Profile ===== -->
+<div id="home" class="profile-section">
+  <div class="container">
+    <div class="profile-wrap">
+      <img class="profile-photo" src="./HomePage_files/Mycheng-6.png" alt="Mingyue Cheng">
+      <div class="profile-info">
+        <div class="profile-name">
+          Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span>
+        </div>
+        <div class="profile-title">Ph.D &nbsp;·&nbsp; Associate Researcher</div>
+        <div class="profile-affil">
+          <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener">State Key Laboratory of Cognitive Intelligence</a><br>
+          <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener">School of Computer Science and Technology</a>,&nbsp;
+          <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener">University of Science and Technology of China</a>
+        </div>
+        <div class="profile-badges">
+          <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl" target="_blank" rel="noopener" class="badge">Google Scholar</a>
+          <a href="https://dblp.org/pid/240/6202.html" target="_blank" rel="noopener" class="badge">DBLP</a>
+          <a href="https://ustcagi.github.io/" target="_blank" rel="noopener" class="badge">USTC-AGI Group</a>
+        </div>
+        <div class="profile-contact">
+          <strong>Email:</strong> <a href="mailto:mycheng@ustc.edu.cn">mycheng@ustc.edu.cn</a><br>
+          <strong>Address:</strong> B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031
+        </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- ===== Biography ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="biography" class="section-heading">Biography</h2>
+    <p>
+      I am an Associate Researcher at <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener"><strong>the School of Computer Science and Technology</strong></a>, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>USTC</strong></a>. I am also affiliated with the <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at the side of USTC, working under the leadership of <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener"><strong>Prof. Enhong Chen</strong></a> and <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>.
+    </p>
+  </div>
+</div>
+
+
+<!-- ===== Research Interests ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="Research" class="section-heading">Research Interests</h2>
+    <p>
+      My research focuses on <u>structured data analysis</u> and <u>LLM-based reasoning &amp; agents</u>, with applications in <u>AI for Science</u> and <u>Recommender Systems</u>.
+    </p>
+    <ul class="research-list">
+      <li><strong>Structured Data Mining:</strong> Building foundation models and agentic frameworks for <u>time series</u>, <u>spatio-temporal</u>, and <u>tabular data</u> — covering forecasting, classification, anomaly detection, and universal data representation.</li>
+      <li><strong>LLM-based Reasoning and Agent:</strong> Advancing LLM capabilities via <u>reinforcement learning</u> and <u>training-free methods</u>, toward autonomous agents with long-chain reasoning, memory, tool use, and multi-agent collaboration.</li>
+      <li><strong>AI for Science:</strong> Leveraging structured data mining and <u>LLM agents</u> for scientific discovery — including scientific table/time-series understanding, literature reasoning, and automated report generation.</li>
+      <li><strong>Recommender Systems:</strong> Context-aware personalized recommendation via <u>sequential modeling</u>, <u>one-class collaborative filtering</u>, and LLM-driven reasoning for dynamic user preference understanding.</li>
+    </ul>
+    <div class="research-note">
+      欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI</a> 研究组。也欢迎体验我们精心打造的
+      <a href="https://writelearn.bdaa.pro" target="_blank" rel="noopener">科言智能助写平台</a> 提升写作效率与技能。
     </div>
-    
-</nav>
-
-<div id="home" class="container">
-  <div class="row">
-    
-    <div class="col-md-1 col-md-1">
-      <!-- <div class="col-md-1 col-md-offset-1"> -->
-      <img id="photo" class="img-rounded" style="margin-top:25px;margin-right:80px;" src="./HomePage_files/Mycheng-6.png" width="190px">
-    </div>
-
-    <div class="col-md-8 col-md-offset-1">
-    <h2>Mingyue Cheng&nbsp;(程明月) &nbsp;
-    <br>
-    <br>
-
-    <p style="font-size: 15.0pt">Ph.D, Associate Researcher</p>
-    <p style="font-size: 12.0pt"> 
-    <a href="https://dm.ustc.edu.cn/" target="_blank" rel="noopener">State Key Laboratory of Cognitive Intelligence</a>
-    <br>
-    <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener">School of Computer Science and Technology, </a><a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener">University of Science and Technology of China</a>
-    <!-- <br>    -->
-    <br>
-
-    <br>
-
-  <strong>Paper Profiles:</strong> 
-  View on <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl" target="_blank" rel="noopener">Google Scholar</a> and 
-  <a href="https://dblp.org/pid/240/6202.html" target="_blank" rel="noopener">DBLP</a>.
-    <br>
+  </div>
+</div>
 
 
-    <br>
-    <strong>Research Group: </strong><a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Research Group</a>
+<!-- ===== Latest News ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="news" class="section-heading">Latest News</h2>
 
-    <br>
-      </p>
-      <p style="font-size: 10.5pt">
-        <strong>Email:</strong>
-          <a href="mailto:mycheng@ustc.edu.cn">mycheng@ustc.edu.cn&nbsp;&nbsp;</a>
-          <br><strong>Add:</strong> B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031
-      </p>
+    <ul class="news-list" id="newsList">
+<!--       <li class="news pinned">
+        <strong>[Aug. 2025] 📌Pinned</strong> 🚀
+        We released <strong>Science-Star（科星）</strong>, an open-source framework for building, extending, and experimenting with scientific AI agents.
+        <a href="https://paperarena-ai.github.io/" target="_blank">GitHub</a>
+      </li>
+      <li class="news pinned">
+        <strong>[Mar. 2025] 📌Pinned</strong> 🚀
+        We released <strong>Agent-R1</strong>: Training Powerful LLM Agents with End-to-End Reinforcement Learning.
+        <a href="https://github.com/0russwest0/Agent-R1" target="_blank">GitHub</a>
+      </li>
+      <li class="news pinned">
+        <strong>[Jan. 2026] 📌Pinned</strong> 🚀
+        We officially release <strong>Mind2Report</strong>, a <strong>DeepResearch agent</strong> for automated multi-step literature analysis, reasoning, and report generation!
+        <a href="https://github.com/Melmaphother/Mind2Report" target="_blank">GitHub</a>
+      </li> -->
+
+
+      <li><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>TabClaw</strong>, an <a href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic table reasoning</strong>, designed to enable <strong>LLM agents</strong> to understand, analyze, and interact with <strong>large-scale tabular data</strong> through structured reasoning and tool-augmented workflows.</li>
+
+      <li><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>Claw-R1</strong>, an <a href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic reinforcement learning</strong>, extending RL training environments for <strong>reasoning and tool-using LLM agents</strong>.</li>
+
+
+      <li><strong>[Feb. 2026]</strong> 🎉 We released a <strong>Position Paper</strong> on <a href="https://arxiv.org/abs/2602.01776" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"Beyond Model-Centric Prediction — Agentic Time Series Forecasting"</strong>.</li>
+      <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Li Li</strong> on her paper being accepted to <strong>DASFAA 2026</strong>!</li>
+      <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Qingyang Mao</strong> and <strong>Zirui Liu</strong> on their paper being accepted to <strong>ICLR 2026</strong>!</li>
+      <li><strong>[Jan. 2026]</strong> 🎉 I will serve as a <strong>Senior Program Committee (SPC)</strong> member for <strong>IJCAI2026</strong>.</li>
+      <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Huajian Zhang</strong>, <strong>Shuo Yu</strong>, <strong>Qingchuan Li</strong> and <strong>Zhiding Liu</strong> on their paper being accepted to <strong>WWW 2026</strong>!</li>
+      <li><strong>[Dec. 2025]</strong> 🎉 I will serve as a <strong>AE</strong> for <strong>IEEE SMC2026</strong>.</li>
+      <li><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> on her paper being accepted to <strong>ACM TIST</strong>!</li>
+      <li><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Qingchuan Li</strong> and <strong>Yupeng Li</strong> on their paper being accepted to <strong>AAAI 2026</strong>!</li>
+      <li><strong>[Oct. 2025]</strong> 🎉 Congratulations to <strong>Chuang Jiang</strong>, <strong>Jiahao Wang</strong>, and collaborators on their paper being accepted to <strong>ACM WSDM2026</strong>!</li>
+      <li><strong>[Sep. 2025]</strong> 🎉 Congratulations to <strong>Zhiding Liu</strong> on his paper being accepted to <strong>NeurIPS 2025</strong>!</li>
+      <li><strong>[Aug. 2025]</strong> 🎉 Congratulations to <strong>Shuo Yu</strong> and <strong>Jiahao Wang</strong> on their paper being accepted to <strong>CIKM 2025</strong>!</li>
+    </ul>
+
+    <ul id="moreNews" class="news-list" style="display:none;">
+      <li><strong>[Jul. 2025]</strong> 🎉 Congratulations to <strong>Mingfan Pan</strong> and <strong>Yue Chen</strong> for their paper acceptance at <strong>RecSys 2025</strong>!</li>
+      <li><strong>[Jun. 2025]</strong> 📊 We released <strong>ChemTable</strong>, a large-scale dataset and benchmark for evaluating MLLMs on real-world chemical tables. <a href="https://github.com/lqzxt/ChemTable" target="_blank">[GitHub]</a> <a href="https://arxiv.org/abs/2506.11375" target="_blank">[arXiv]</a></li>
+      <li><strong>[Jun. 2025]</strong> 🚀 We released <strong>Time-R1</strong>, the first time series reasoning model with reinforcement fine-tuning, now available on <a href="https://huggingface.co/ustc-zyt/Time-R1" target="_blank">Hugging Face</a> and <a href="https://github.com/lqzxt/Time-R1" target="_blank">GitHub</a>.</li>
+      <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Jie Ouyang</strong> and <strong>Junhao Yu</strong> on their paper being accepted to <strong>ACL 2025</strong>!</li>
+      <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Daoyu Wang</strong> and <strong>Zirui Liu</strong> on their paper being accepted to <strong>ICML 2025</strong>!</li>
+      <li><strong>[Apr. 2025]</strong> 🎉 Congratulations to <strong>Jintao Zhang</strong>, <strong>Yitong Zhou</strong>, and <strong>Hao Zhang</strong> for having their paper accepted by <strong>IJCAI 2025</strong>!</li>
+      <li><strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong> on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174430535.53879341" target="_blank" rel="noopener">TechRxiv</a>.</li>
+      <li><strong>[Apr. 2025]</strong> 📄 Our survey <strong>A Survey on Table Mining with Large Language Models</strong> released on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174352282.22844759" target="_blank" rel="noopener">TechRxiv</a>.</li>
+      <li><strong>[Mar. 2025]</strong> 🚀 Our <strong>Agent R1</strong> project officially released on <a href="https://github.com/0russwest0/Agent-R1" target="_blank">GitHub</a>.</li>
+      <li><strong>[Mar. 2025]</strong> 📄 Our survey <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong> released on <a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">arXiv</a>.</li>
+      <li><strong>[Dec. 2024]</strong> 🏆 Congrats to our students on winning the <strong>Gold Award</strong> in the 2024 <strong>Ascend AI Innovation Competition</strong> finals!</li>
+    </ul>
+
+    <button class="toggle-button" onclick="toggleMoreNews()" id="toggleBtn">Show More ▼</button>
+  </div>
+</div>
+
+
+<!-- ===== Open Source Projects ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="opensource" class="section-heading">Open Source Projects</h2>
+    <div class="os-grid">
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/tabclaw.png" alt="TabClaw Logo">
+        <div class="os-body">
+          <div class="os-card-title">TabClaw <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span></div>
+          <div class="os-card-desc">TabClaw is an agentic table reasoning framework that empowers LLMs to understand, analyze, and interact with complex tabular data through structured reasoning, tool use, and multi-step decision workflows.</div>
+        </div>
+      </div>
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/claw-r1.jpeg" alt="Claw-R1 Logo">
+        <div class="os-body">
+          <div class="os-card-title">Claw-R1 <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span></div>
+          <div class="os-card-desc">An agentic reinforcement learning framework extending RL training environments for reasoning and tool-using LLM agents.</div>
+        </div>
+      </div>
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/mind2report.png" alt="Mind2Report Logo">
+        <div class="os-body">
+          <div class="os-card-title">Mind2Report <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Mind2Report">…</span></span></div>
+          <div class="os-card-desc">A cognitive deep research agent for synthesizing expert-level commercial and strategic reports from massive web sources with citation-grounded outputs.</div>
+        </div>
+      </div>
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/science-star.png" alt="Science-Star Logo">
+        <div class="os-body">
+          <div class="os-card-title">Science-Star <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">…</span></span></div>
+          <div class="os-card-desc">An open-source framework for building scientific AI agents — ReAct engine, tool orchestration, memory &amp; reflection, HLE dataset integration.</div>
+        </div>
+      </div>
+
+
+       <div class="os-card">
+        <img class="os-logo" src="./files/assets/agent-r1.png" alt="Agent-R1 Logo">
+        <div class="os-body">
+          <div class="os-card-title">Agent-R1 <span class="os-year">2025</span> <a class="os-github" href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="0russwest0/Agent-R1">…</span></span></div>
+          <div class="os-card-desc">A large-model agent training framework supporting reinforcement fine-tuning (GRPO), multi-tool orchestration, long-term memory, and reflective reasoning.</div>
+        </div>
+      </div>
+
+
+
 
     </div>
   </div>
-  <hr>
 </div>
 
 
-
-<div class="container">
-  <h3 id="biography">Biography</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <p style="font-size: 13.0pt">
-    I am an Associate Researcher at <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener"><strong>the School of Computer Science and Technology</strong></a>, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>USTC</strong></a>. I am also affiliated with the <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at the side of USTC, working under the leadership of <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener"><strong>Prof. Enhong Chen</strong></a> and <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu </strong></a>.
-  </p>
-</div>
-
-<div class="container">
-  <h3 id="Research">Research Interests</h3>
-  <hr style="border:0; background-color:black; height:1px;" size=0>
-  <p style="font-size: 13.0pt">
-
-
-
-    <!-- My research focuses on <u>time series and tabular data mining</u> and <u>large language model (LLM) reasoning and agents</u>, with the main goal of building <u>context-aware intelligent decision-making systems</u> to support <u>AI for Science</u> and <u>Recommender Systems</u>. -->
-
-    My research focuses on <u>structured data analysis (e.g., time series, spatio-temporal, and tabular data)</u> and <u>large language model (LLM)-based reasoning and agent</u>, with an emphasis on <u>context-aware forecasting</u>, particularly in <u>AI for Science</u> and <u>Recommender Systems</u>.
-
-
-    <br>
-    <ul style="font-size: 13.0pt"> 
-<!--     <li>
-      <strong>Time Series Analysis and Applications of Biomedical Big Data Mining:</strong> Specializing in building time series and sequence modeling algorithms from <u>low-level preprocessing and data representation to foundational modeling and the development of trustworthy machine learning algorithms tailored for multivariate time series</u>. Particularly, I am interested in exploring leveraging time series anlaysis technique for Biomedical Big Data Mining.
-    </li> 
-    
-    <li>
-      <strong>Large Language Models (LLMs) and Applications of AI4Science:</u></strong> Deeply committed to advancing the field of LLMs, with a particular focus on <u>retrieval-augmented generation (RAG)</u>, LLM-driven agent techniques. Particularly, I am intersted in exploring llm-based scientific Literature mining and domain reasoning task.
-    </li>  -->
-<!--     <li> <strong>Time Series Analysis:</strong> Focus on developing time series and sequence modeling algorithms, covering <u>preprocessing, data representation, foundational modeling, and reliable methods for multivariate time series</u>. Interested in applying these techniques to biomedical big data mining. 
-    </li> 
-
-    <li> <strong>Large Language Models (LLMs):</strong> Focus on advancing LLM research, particularly in <u>retrieval-augmented generation (RAG)</u> and <u>LLM-based Agents</u>. Interested in leveraging LLMs for AI4Science, mainly including scientific literature mining and domain-specific reasoning (E.g., Medical QA). 
-    </li>
-    
-    <li>
-      <strong>Recommender Systems:</strong> Specializing in <u>user behavior modeling</u>, including sequential and session-based recommendation, one-class learning with implicit feedback, automated machine learning techniques (e.g., NAS) for RecSys, and transfer learning in recommendation. 
-    </li>  -->
-
-
-    <!-- <li><strong>Time Series Analysis:</strong> Focus on developing time series and sequence modeling algorithms, including <u>time series forecasting, classification, foundation models, and data-centric and trustworthy AI methods</u>. We are particularly interested in applying these techniques to biomedical big data.</li> -->
-
-<!--     <li><strong>Time Series Analysis:</strong> Focus on developing fundamental modeling theories and methods for time series data, including <u>forecasting, classification, and multimodal time series reasoning</u>, as well as advancing <u>time series foundation models</u>. We are particularly interested in integrating these techniques into <u>decision-making processes</u> and exploring their potential for <u>collaborative, context-aware decision support</u> in biomedical and other real-world applications.</li> 
-
-    <li><strong>Tabular Data Mining:</strong> Focus on developing methods for table recognition, semantic understanding, and reasoning, including <u>structure parsing, content interpretation, and multi-hop reasoning</u>. We are particularly interested in applying these techniques to scientific literature tables to facilitate knowledge discovery in chemistry and biomedical domains.</li> -->
-
-
-    <!-- <li><strong>Recommender Systems:</strong> Focus on <u>user behavior modeling</u>, including <u>sequential recommendation</u>, <u>one-class learning with implicit feedback</u>, and <u>automated recommendation strategies</u>. In addition, we are increasingly interested in <u>retrieval-augmented generation</u> for personalized recommendation and content synthesis.</li> -->
-
-
-    <li><strong>Structured Data Mining:</strong> We develop core methods for <u>time series</u>, <u>spatial-temporal data</u>, and <u>tabular data</u>, focusing on <u>forecasting</u>, <u>classification</u>, <u>anomaly detection</u>. Our interests include <u>time series representation</u>, <u>contextual reasoning</u>, <u>agentic forecasting</u>, and the development of <u>foundation models</u> for universal structured data representation.</li>
-
-
-    <li><strong>LLM-based Reasoning and Agent:</strong> We aim to enhance <u>LLM</u> via <u>training-free contextual learning</u> and <u>reinforcement learning</u>, focusing on <u>long CoT reasoning</u>, <u>planning</u>, <u>long-context memory</u>, <u>tool use</u>, <u>self-reflection</u>, and <u>multi-agent collaboration</u>. Our objective is to build agents that can perceive, reason, and act autonomously in complex environments.</li>
-
-
-    <li><strong>AI for Science:</strong> We focus on data mining and LLM for scientific discovery, with two main directions: (1) understanding <u>structured scientific data</u> (e.g., time series and tabular data), and building <u>scientific LLM agents</u> that support paper search, multimodal understanding, scientific reasoning, and scientific discovery.
-
-    <li><strong>Recommender Systems:</strong> Advance personalized recommendation through <u>sequential and spatio-temporal modeling</u> and <u>one-class collaborative filtering</u>. We aim to investigate leverage <u>LLM reasoner</u> and <u>LLM agent</u> to enable <u>context-aware recommendation</u>.</li> 
-
-
-    </ul>
-
-    <br>
-    <p style="font-size: 13.0pt">
-    欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室<a href="https://ustcagi.github.io/"><strong>USTC-AGI</strong></a>研究组。也欢迎体验我们精心打造的<a href="https://writelearn.bdaa.pro"><strong>科言智能助写平台</strong></a>提升写作效率与技能。
-   </p>
-  </p>
-
-</div>
-
-
-<!-- <div class="container">
-  <h3 id="news">Latest News</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-
-
-  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Shuo Yu</strong> and <strong>Jiahao Wang</strong> on their paper being accepted to <strong>CIKM 2025</strong>!</li>
-  
-  <li><strong>[Jul. 2025]</strong> 🎉 Congratulations to <strong>Mingfan Pan</strong> and <strong>Yue Chen</strong> for their paper acceptance at <strong>RecSys 2025</strong>! </li>
-
-  <li>
-  <strong>[Jun. 2025]</strong> 📊 We released <strong>ChemTable</strong>, a large-scale dataset and benchmark for evaluating MLLMs on real-world chemical tables — one of the most structured and information-dense formats in scientific literature. 
-  <a href="https://github.com/lqzxt/ChemTable" target="_blank">[GitHub]</a>
-  <a href="https://arxiv.org/abs/2506.11375" target="_blank">[arXiv]</a>
-  </li>
-
-  <li><strong>[Jun. 2025]</strong> 🚀 We released <strong>Time-R1</strong>, the first time series reasoning model with reinforcement fine-tuning, now available on <a href="https://huggingface.co/ustc-zyt/Time-R1" target="_blank">Hugging Face</a> and <a href="https://github.com/lqzxt/Time-R1" target="_blank">GitHub</a>.</li>
-  
-  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Jie Ouyang</strong> and <strong>Junhao Yu</strong> on their paper being accepted to <strong>ACL 2025</strong>!</li>
-
-  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Daoyu Wang</strong> and <strong>Zirui Liu</strong> on their paper being accepted to <strong>ICML 2025</strong>!</li>  
-
-  <li><strong>[Apr. 2025]</strong> 🎉 Congratulations to <strong>Jintao Zhang</strong>, <strong>Yitong Zhou</strong>, and <strong>Hao Zhang</strong> for having their paper accepted by <strong>IJCAI 2025</strong>!</li>
-
-  <li><strong>[Apr. 2025]</strong> 📄 We have recently preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174430535.53879341" target="_blank" rel="noopener">TechRxiv</a>.</li>
-
-  <li><strong>[Apr. 2025]</strong> 📄 Our new survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> has just been released on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174352282.22844759" target="_blank" rel="noopener">TechRxiv</a>.</li>
-
-  <li><strong>[Mar. 2025]</strong> 🚀 Our <strong>Agent R1</strong> project has been officially released on <a href="https://github.com/0russwest0/Agent-R1" target="_blank">GitHub</a>.</li>
-  
-  <li><strong>[Mar. 2025]</strong> 📄 Our survey <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong> has just been released on <a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">arXiv</a>.
-  </li>
-  
-  <li><strong>[Dec. 2024]</strong> 🏆 Congrats to our students on winning the <strong>Gold Award</strong> in the 2024 <strong>Ascend AI Innovation Competition</strong> finals!</li>
-
-
-  </ul>
-</div>
- -->
-
-
-<style>
-  .news-container {
-    font-size: 13pt;
-  }
-
-  .toggle-button {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 12pt;
-    margin-top: 8px;
-    display: block;
-    text-align: center;
-    padding: 4px 0;
-    transition: color 0.2s;
-  }
-
-  .toggle-button:hover {
-    color: #0056b3;
-    text-decoration: underline;
-  }
-
-  #moreNews li {
-    margin-top: 6px;
-  }
-</style>
-
-<div class="container">
-  <h3 id="news">Latest News</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-
-  <ul class="news-container" id="newsList">
-    <!-- 默认显示的新闻 -->
-
-<!--   <li><strong>[Aug. 2025] 📌Pinned </strong> 🚀 We released <strong>Science-Star（科星）</strong>, an open-source framework for building, extending, and experimenting with scientific AI agents. <a href="https://paperarena-ai.github.io/" target="_blank">GitHub</a> 
-
-  <li><strong>[Mar. 2025] 📌Pinned </strong> 🚀 We released <strong>Agent-R1</strong>: Training Powerful LLM Agents with End-to-End Reinforcement Learning. <a href="https://github.com/0russwest0/Agent-R1" target="_blank">GitHub</a></li>
-
-  <li><strong>[Jan. 2026] 📌Pinned </strong> 🚀 We officially release <strong>Mind2Report</strong>, a <strong>DeepResearch agent</strong> for automated multi-step literature analysis, reasoning, and report generation!  <a href="https://github.com/Melmaphother/Mind2Report" target="_blank">GitHub</a></li>
- -->
-
-   <li class="news pinned">
-    <strong>[Aug. 2025] 📌Pinned </strong> 🚀
-    We released <strong>Science-Star（科星）</strong>, an open-source framework for building, extending, and experimenting with scientific AI agents.
-    <a href="https://paperarena-ai.github.io/" target="_blank">GitHub</a>
-  </li>
-
-  <li class="news pinned">
-    <strong>[Mar. 2025] 📌Pinned </strong> 🚀
-    We released <strong>Agent-R1</strong>: Training Powerful LLM Agents with End-to-End Reinforcement Learning.
-    <a href="https://github.com/0russwest0/Agent-R1" target="_blank">GitHub</a>
-  </li>
-
-  <li class="news pinned">
-    <strong>[Jan. 2026] 📌Pinned </strong> 🚀
-    We officially release <strong>Mind2Report</strong>, a <strong>DeepResearch agent</strong> for automated multi-step literature analysis, reasoning, and report generation!
-    <a href="https://github.com/Melmaphother/Mind2Report" target="_blank">GitHub</a>
-  </li>
-  
-  <li><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>Claw-R1</strong>, an 
-  <a href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for 
-  <strong>agentic reinforcement learning</strong>, extending RL training environments for 
-  <strong>reasoning and tool-using LLM agents</strong> (e.g., OpenClaw-style environments).</li>
-
-
-  <li><strong>[Feb. 2026]</strong> 🎉 We released a <strong>Position Paper</strong> on 
-  <a href="https://arxiv.org/abs/2602.01776" target="_blank" rel="noopener"><strong>arXiv</strong></a>: 
-  <strong>“Beyond Model-Centric Prediction — Agentic Time Series Forecasting”</strong>.</li>
-
-
-  <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Li Li</strong> on her paper being accepted to <strong>DASFAA 2026</strong>!</li>
-
-  <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Qingyang Mao</strong> and <strong>Zirui Liu</strong> on their paper being accepted to <strong>ICLR 2026</strong>!</li>
-
-  <li><strong>[Jan. 2026]</strong> 🎉 I will serve as a <strong>Senior Program Committee (SPC)</strong> member for <strong>IJCAI2026</strong>.</li>
-
-  <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Huajian Zhang</strong>, <strong>Shuo Yu</strong>, <strong>Qingchuan Li</strong> and <strong>Zhiding Liu</strong> on their paper being accepted to <strong>WWW 2026</strong>!</li>
-
-
-  <li><strong>[Dec. 2025]</strong> 🎉 I will serve as a <strong>AE</strong> for <strong>IEEE SMC2026</strong>.</li>
-
-  <li><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> on her paper being accepted to <strong>ACM TIST</strong>!
-
-
-  <li><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Qingchuan Li</strong> and <strong>Yupeng Li</strong> on their paper being accepted to <strong>AAAI 2026</strong>!
-  
-  <li><strong>[Oct. 2025]</strong> 🎉 Congratulations to <strong>Chuang Jiang</strong>, <strong>Jiahao Wang</strong>, and collaborators on their paper being accepted to <strong>ACM WSDM2026</strong>!</li>
-
-  <li><strong>[Sep. 2025]</strong> 🎉 Congratulations to <strong>Zhiding Liu</strong> on his paper being accepted to <strong>NeurIPS 2025</strong>!</li>
-
-  <li><strong>[Aug. 2025]</strong> 🎉 Congratulations to <strong>Shuo Yu</strong> and <strong>Jiahao Wang</strong> on their paper being accepted to <strong>CIKM 2025</strong>!</li>
-
-  </ul>
-
-  <!-- 折叠内容 -->
-  <ul id="moreNews" class="news-container" style="display: none;">
-
-   <li><strong>[Jul. 2025]</strong> 🎉 Congratulations to <strong>Mingfan Pan</strong> and <strong>Yue Chen</strong> for their paper acceptance at <strong>RecSys 2025</strong>! </li>
-
-  <li>
-  <strong>[Jun. 2025]</strong> 📊 We released <strong>ChemTable</strong>, a large-scale dataset and benchmark for evaluating MLLMs on real-world chemical tables — one of the most structured and information-dense formats in scientific literature.
-  <a href="https://github.com/lqzxt/ChemTable" target="_blank">[GitHub]</a>
-  <a href="https://arxiv.org/abs/2506.11375" target="_blank">[arXiv]</a>
-  </li>
-
-  <li><strong>[Jun. 2025]</strong> 🚀 We released <strong>Time-R1</strong>, the first time series reasoning model with reinforcement fine-tuning, now available on <a href="https://huggingface.co/ustc-zyt/Time-R1" target="_blank">Hugging Face</a> and <a href="https://github.com/lqzxt/Time-R1" target="_blank">GitHub</a>.</li>
-
-  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Jie Ouyang</strong> and <strong>Junhao Yu</strong> on their paper being accepted to <strong>ACL 2025</strong>!</li>
-
-  <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Daoyu Wang</strong> and <strong>Zirui Liu</strong> on their paper being accepted to <strong>ICML 2025</strong>!</li>
-
-  <li><strong>[Apr. 2025]</strong> 🎉 Congratulations to <strong>Jintao Zhang</strong>, <strong>Yitong Zhou</strong>, and <strong>Hao Zhang</strong> for having their paper accepted by <strong>IJCAI 2025</strong>!</li>
-
-  <li><strong>[Apr. 2025]</strong> 📄 We have recently preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174430535.53879341" target="_blank" rel="noopener">TechRxiv</a>.</li>
-
-  <li><strong>[Apr. 2025]</strong> 📄 Our new survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> has just been released on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174352282.22844759" target="_blank" rel="noopener">TechRxiv</a>.</li>
-
-  <li><strong>[Mar. 2025]</strong> 🚀 Our <strong>Agent R1</strong> project has been officially released on <a href="https://github.com/0russwest0/Agent-R1" target="_blank">GitHub</a>.</li>
-
-  <li><strong>[Mar. 2025]</strong> 📄 Our survey <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong> has just been released on <a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">arXiv</a>.</li>
-
-  <li><strong>[Dec. 2024]</strong> 🏆 Congrats to our students on winning the <strong>Gold Award</strong> in the 2024 <strong>Ascend AI Innovation Competition</strong> finals!</li>
-
-  </ul>
-
-  <!-- 优雅按钮 -->
-  <button class="toggle-button" onclick="toggleMoreNews()" id="toggleBtn">Show More ▼</button>
-</div>
-
-<script>
-  function toggleMoreNews() {
-    const moreNews = document.getElementById("moreNews");
-    const btn = document.getElementById("toggleBtn");
-    if (moreNews.style.display === "none") {
-      moreNews.style.display = "block";
-      btn.textContent = "Show Less ▲";
-    } else {
-      moreNews.style.display = "none";
-      btn.textContent = "Show More ▼";
-    }
-  }
-</script>
-
-
-
-<div class="container">
-  <h3 id="opensource">Open Source Projects</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-
-
-    <li>
-      <strong>Agent-R1</strong> — A <strong>large-model agent training framework</strong> designed to enable 
-      efficient alignment and reasoning capabilities for LLM-based agents.  
-      It supports reinforcement fine-tuning (e.g., GRPO), multi-tool orchestration, long-term memory, 
-      and reflective reasoning, accelerating the development of autonomous and context-aware agents.  
-      [
-      <a href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">
-        <strong>GitHub</strong>
-      </a>
-      ⭐ <span class="github-stars" data-repo="0russwest0/Agent-R1">loading...</span>
-      ]
-    </li>
-
-    <li>
-      <strong>Science-Star</strong> — An open-source framework for building, extending, and experimenting with 
-      <strong>scientific AI agents</strong>.  
-      It provides a ReAct-based engine, tool orchestration, memory & reflection, 
-      HLE dataset integration, and powerful visualization, enabling rapid development of 
-      scientific agents from concept to deployment.  
-      [
-      <a href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">
-        <strong>GitHub</strong>
-      </a>
-      ⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">loading...</span>
-      ]
-    </li>
-
-    <li>
-    <strong>Mind2Report</strong> — A <strong>cognitive deep research agent</strong> for synthesizing 
-  expert-level commercial and strategic reports from massive and noisy web sources.  
-  It emulates human analyst workflows with intent-aware planning, memory-augmented search, and reflective iterative synthesis to generate long-form, citation-grounded, and decision-ready reports with strong quality, reliability, and coverage for high-stakes business analysis.
-
-  [
-      <a href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">
-        <strong>GitHub</strong>
-      </a>
-      ⭐ <span class="github-stars" data-repo="Melmaphother/Mind2Report">loading...</span>
-  ]
-
-    </li>
-
-  </ul>
-</div>
-
-
-
-
-<div class="container">
-
-<!--   <h3 id="selected publications">Selected Publications 
-    <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl=zh-CN" target="_blank" rel="noopener"><small>(Mingyue Cheng's Google Scholar)</small></a>  
-    
-    <a href="https://ustcagi-table-mining.github.io/" target="_blank" rel="noopener"> <small>(Time Series Analysis)</small></a>
-    <a href="https://ustcagi-table-mining.github.io/" target="_blank" rel="noopener"> <small>(Tabular Data Mining)</small></a>
-    <a href="https://ustc-rag-x.github.io/" target="_blank" rel="noopener"> <small>(LLM Reasoning and Agent)</small></a>
-
-  </h3>
-  <p>(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
-  <hr style="border:0; background-color:black; height:1px;" size="0"> -->
-
-
-  <!-- <ol style="font-size: 12.0pt">   -->
-
-
-      <style>
-      .pub-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px 20px;          /* 上下 14px，左右 20px 间距 */
-        margin: 6px 0 10px 0;
-      }
-
-      .pub-links a {
-        font-size: 14px;
-        color: #555;
-        text-decoration: none;
-        padding: 2px 4px;        /* 让链接更稳重 */
-      }
-
-      .pub-links a:hover {
-        color: #000;
-        text-decoration: underline;
-      }
-      </style>
-
-
-<!--     <div id="selected-publications-container">
-
-      <h3 id="selected publications">Selected Publications</h3>
-
-      <div class="pub-links">
-        <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl=zh-CN" target="_blank">Google Scholar</a>
-        <a href="https://ustc-rag-x.github.io/" target="_blank">LLM Reasoning and Agent</a> 
-        <a href="https://ustcagi-table-mining.github.io/" target="_blank">Time Series Analysis</a>
-        <a href="https://ustcagi-table-mining.github.io/" target="_blank">Tabular Data Mining</a>
-        <a href="https://ustc-rag-x.github.io/" target="_blank">AI for Scientific Literature Mining</a>
-      </div>
-
-
-      <p>(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
-      <hr style="border:0; background-color:black; height:1px;" size="0">
-    </div> -->
+<!-- ===== Selected Publications ===== -->
+<div class="section">
+  <div class="container">
 
     <div id="selected-publications-container">
+      <h2 id="selected-publications" class="section-heading">Selected Publications</h2>
+      <p class="pub-note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
+      <div class="pub-filters">
+        <button class="pub-filter-btn active" data-filter="all">All</button>
+        <button class="pub-filter-btn" data-filter="timeseries">Time Series</button>
+        <button class="pub-filter-btn" data-filter="table">Table</button>
+        <button class="pub-filter-btn" data-filter="llm">LLM</button>
+        <button class="pub-filter-btn" data-filter="agent">Agent</button>
+        <button class="pub-filter-btn" data-filter="recsys">RecSys</button>
+        <button class="pub-filter-btn" data-filter="ai4science">AI4Science</button>
+      </div>
+    </div>
 
-  <h3 id="selected-publications" style="color:#1f3a5f; font-weight:600;">
-    Selected Publications
-  </h3>
+    <h3 class="pub-year-heading">📘 Preprint and Under Review</h3>
+    <ol class="pub-list">
+      <li data-tags="agent llm"><strong>Mingyue Cheng</strong>, Jie Ouyang, Shuo Yu, Ruiran Yan, Yucong Luo, Zirui Liu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Agent-R1: Training Powerful LLM Agents with End-to-End Reinforcement Learning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="agent llm ai4science"><strong>Mingyue Cheng</strong>, Daoyu Wang, Qi Liu, Shuo Yu, Xiaoyu Tao, Yuqian Wang, Chengzhong Chu, Yu Duan, Mingkang Long, Enhong Chen, <strong>Mind2Report: A Cognitive Deep Research Agent for Expert-Level Commercial Report Synthesis</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2601.04879" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Huajian Zhang, Qi Liu, Enhong Chen, <strong>InstructTime++: Time Series Classification with Multimodal Language Modeling via Implicit Feature Enhancement</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2601.14968" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries agent">Xiaohan Zhang, Tian Gao, <strong>Mingyue Cheng*</strong>, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, <strong>AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries agent llm">Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen, <strong>Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries agent">Xiaoyu Tao, <strong>Mingyue Cheng*</strong>, Ze Guo, Shuo Yu, Yaguo Liu, Qi Liu, Shijin Wang, <strong>MemCast: Memory-Driven Time Series Forecasting with Experience-Conditioned Reasoning</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries llm">Xiaoyu Tao, Shilong Zhang, <strong>Mingyue Cheng*</strong>, Daoyu Wang, Tingyue Pan, Bokai Pan, Changqing Zhang, Shijin Wang, <strong>From Values to Tokens: An LLM-Driven Framework for Context-aware Time Series Forecasting via Symbolic Discretization</strong>. (Preprint) [<a href="https://github.com/Xiaoyu-Tao/TokenCast" target="_blank" rel="noopener">Code</a>]</li>
+    </ol>
 
-  <div class="pub-links" style="margin-top:6px;">
-    <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl=zh-CN"
-       target="_blank"
-       style="color:#1f5fbf; font-weight:500; margin-right:14px;">
-      Google Scholar
-    </a>
+    <h3 class="pub-year-heading">📘 Released Benchmark and Survey</h3>
+    <ol class="pub-list">
+      <li data-tags="timeseries agent"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu, Ze Guo, Enhong Chen, <strong>Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/abs/2602.01776" target="_blank" rel="noopener">arXiv</a>] [<a href="https://arxiv.org/pdf/2602.01776.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Zhiding Liu, Xiaoyu Tao, Qi Liu*, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen, <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm"><strong>Mingyue Cheng</strong>, Qingyang Mao, Qi Liu*, Yitong Zhou, Yupeng Li, Jiahao Wang, Jiaying Lin, Jiawei Cao, Enhong Chen, <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/252177/preprint_pdf/3d9c9b7d57481675d0d6e486c8bb7985.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-LLM-Table-Mining" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm"><strong>Mingyue Cheng</strong>, Yucong Luo, Jie Ouyang, Qi Liu*, et al., <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Retrieval-Augmented-Generation" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="agent llm ai4science">Daoyu Wang, <strong>Mingyue Cheng*</strong>, Shuo Yu, Zirui Liu, Ze Guo, Qi Liu, <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm ai4science">Yitong Zhou, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Yucong Luo, Qi Liu, et al., <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Code</a>]</li>
+    </ol>
 
-    <a href="https://ustcagi-rag.github.io/"
-       target="_blank"
-       style="color:#1f5fbf; font-weight:500; margin-right:14px;">
-      LLM Reasoning and Agent
-    </a> 
+    <h3 class="pub-year-heading">🐎 Year of the Fire Horse (Bing Wu Year, 2026)</h3>
+    <ol class="pub-list">
+      <li data-tags="table llm">Huajian Zhang, <strong>Mingyue Cheng*</strong>, Yucong Luo, Xiaoyu Tao, <strong>STaR: Towards Cognitive Table Reasoning via Slow-Thinking Large Language Models</strong>. (ACM WWW2026) [<a href="https://arxiv.org/pdf/2511.11233" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zhjai/STaR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm agent recsys">Zhiding Liu, Ben Chen, <strong>Mingyue Cheng*</strong>, Enhong Chen, Li Li, Chenyi Lei, Wenwu Ou, Han Li and Kun Gai, <strong>Towards Context-aware Reasoning-enhanced Generative Searching in E-commerce</strong>. (ACM WWW2026) [<a href="https://arxiv.org/abs/2510.16925" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm agent recsys">Shuo Yu, <strong>Mingyue Cheng*</strong>, Daoyu Wang, Qi Liu, Zirui Liu, Ze Guo, Xiaoyu Tao, <strong>MemWeaver: A Hierarchical Memory from Textual Interactive Behaviors for Personalized Generation</strong>. (ACM WWW2026) [<a href="https://arxiv.org/abs/2510.07713" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Qingchuan Li, Jiatong Li, Zirui Liu, <strong>Mingyue Cheng</strong>, Yitong Zhou, Yuting Zeng, Qi Liu and Tongxuan Liu, <strong>Are LLMs Stable Formal Logic Translators in Logical Reasoning Across Linguistically Diversified Texts?</strong> (ACM WWW2026)</li>
+      <li data-tags="recsys">Li Li, <strong>Mingyue Cheng*</strong>, Yuyang Ye, Zhiding Liu, Enhong Chen, <strong>Preference Trajectory Modeling via Flow Matching for Sequential Recommendation</strong>. (DASFAA2026)</li>
+      <li data-tags="llm">Zirui Liu, Xianquan Wang, Yan Zhuang, Jiatong Li, Qi Liu, Shuanghong Shen, <strong>Mingyue Cheng</strong>, Shijin Wang, <strong>Fewer Battles, More Gain: An Information-Efficient Framework for Arena-based LLM Evaluation</strong>. (ICLR2026) [<a href="#" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Qingyang Mao, Qi Cai, Yehao Li, Yingwei Pan, <strong>Mingyue Cheng</strong>, Ting Yao, Qi Liu, Tao Mei, <strong>Visual Autoregressive Modeling for Instruction-Guided Image Editing</strong>. (ICLR2026)</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Jiahao Wang, Daoyu Wang, Xiaoyu Tao, Qi Liu*, Enhong Chen, <strong>Can Slow-Thinking LLMs Reason Over Time? Empirical Studies in Time Series Forecasting</strong>, <em>ACM WSDM2026</em>: 99–110, Feb 2026. [<a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Zhiding Liu, Qi Liu*, Hao Zhang, Rujiao Zhang and Enhong Chen, <strong>TimeMAE: Self-Supervised Representations of Time Series with Decoupled Masked Autoencoders</strong>, <em>ACM WSDM2026</em>: 498–508, Feb 2026. [<a href="https://arxiv.org/pdf/2303.00320" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TimeMAE" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table agent">Chuang Jiang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Qingyang Mao, Jie Ouyang and Qi Liu, <strong>TableMind: An Autonomous Programmatic Agent for Tool-Augmented Table Reasoning</strong>, <em>ACM WSDM2026</em>: 260–270, Feb 2026. [<a href="https://arxiv.org/pdf/2509.06278" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lennendd/TableMind-Repo" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm">Qingchuan Li, <strong>Mingyue Cheng*</strong>, Zirui Liu, Daoyu Wang, Yuting Zeng, Tongxuan Liu, <strong>From Hypothesis to Premises: LLM-based Backward Logical Reasoning with Selective Symbolic Translation</strong>. (AAAI2026)</li>
+      <li data-tags="recsys">Yupeng Li, <strong>Mingyue Cheng*</strong>, Yucong Luo, Yitong Zhou, Qingyang Mao, Shijin Wang, <strong>BLADE: A Behavior-Level Data Augmentation Framework with Dual Fusion Modeling for Multi-Behavior Sequential Recommendation</strong>. (AAAI2026)</li>
+      <li data-tags="llm recsys">Xian Guo, Ben Chen, Siyuan Wang, YingYang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Yuqing Ding, Han Li, <strong>OneSug: The Unified End-to-End Generative Framework for E-commerce Query Suggestion</strong>. (AAAI2026)</li>
+    </ol>
 
-    <a href="https://ustcagi-ts.github.io/"
-       target="_blank"
-       style="color:#1f5fbf; font-weight:500; margin-right:14px;">
-      Time Series Analysis
-    </a>
+    <h3 class="pub-year-heading">🐍 Year of the Wood Snake (Yi Si Year, 2025)</h3>
+    <ol class="pub-list">
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Jiqian Yang, Tingyue Pan, Qi Liu*, Zhi Li, <strong>ConvTimeNet: A Deep Hierarchical Fully Convolutional Model for Multivariate Time Series Analysis</strong>, <em>ACM WWW2025</em>, Sydney, 2025. [<a href="https://arxiv.org/pdf/2403.01493" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/ConvTimeNet" target="_blank" rel="noopener">Code</a>] <span class="sktime-note">— Included in <a href="https://www.sktime.net/en/stable/" target="_blank" rel="noopener"><em>sktime</em></a></span></li>
+      <li data-tags="timeseries llm">Xiaoyu Tao, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Yucong Luo, Qi Liu, Enhong Chen, <strong>Hierarchical Multimodal LLMs with Semantic Space Alignment for Enhanced Time Series Classification</strong>. (<em>ACM TIST</em>) [<a href="https://arxiv.org/pdf/2410.18686" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/HiTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Yiheng Chen, Qi Liu*, Zhiding Liu, Yucong Luo, Enhong Chen, <strong>InstrucTime: Advancing Time Series Classification with Multimodal Language Modeling</strong>, <em>ACM WSDM2025</em> (<font color="red"><b>Best of WSDM</b></font>): 792–800, Hannover, 2025. [<a href="https://dl.acm.org/doi/abs/10.1145/3701551.3703499" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>] [<a href="./files/posters/instructtime-poster.pdf" target="_blank" rel="noopener">Poster</a>]</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu*, Hao Zhang, Yiheng Chen, Defu Lian, <strong>Cross-Domain Pre-training with Language Models for Transferable Time Series Representations</strong>, <em>ACM WSDM2025</em>: 175–183, Hannover, 2025. [<a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">Code</a>] [<a href="./files/posters/crosstimenet-poster.pdf" target="_blank" rel="noopener">Poster</a>]</li>
+      <li data-tags="timeseries">Daoyu Wang, <strong>Mingyue Cheng*</strong>, Zhiding Liu, Qi Liu, <strong>TimeDART: A Diffusion Autoregressive Transformer for Self-supervised Time Series Representation</strong>, <em>ICML 2025</em>, Vancouver, PMLR 267, 2025. [<a href="https://arxiv.org/html/2410.05711v1" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm ai4science">Jie Ouyang, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Ruiran Yan, Yucong Luo, Jiaying Lin, Qi Liu, <strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG</strong>, <em>ACL 2025</em>: 6036–6063, Vienna, 2025. [<a href="https://aclanthology.org/2025.acl-long.301.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Jintao Zhang, Zhiding Liu, Chunli Liu*, <strong>A Hybrid Multi-Factor Framework for Dynamic Intraoperative Hypotension Prediction</strong>, <em>IJCAI 2025</em>: 4923–4931, Montreal, 2025. [<a href="https://www.arxiv.org/pdf/2409.11064" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries">Jintao Zhang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Zhiding Liu, Daoyu Wang, <strong>Conditional Denoising Meets Polynomial Modeling: A Flexible Decoupled Framework for Time Series Forecasting</strong>, <em>IJCAI 2025</em>: 6993–7001, Montreal, 2025. [<a href="https://arxiv.org/pdf/2410.13253" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zjt-gpu/FDF" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm">Yitong Zhou, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Feiyang Xu, Xin Li, <strong>Enhancing Table Recognition with Vision LLMs: A Benchmark and Neighbor-Guided Toolchain Reasoner</strong>, <em>IJCAI 2025</em>: 2503–2511, Montreal, 2025. [<a href="https://arxiv.org/abs/2412.20662" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/NGTR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Hao Zhang, <strong>Mingyue Cheng*</strong>, Qi Liu, Zhiding Liu, Linbo Zhu, Yu Su, <strong>Towards Automatic Sampling of User Behaviors for Sequential Recommender Systems</strong>, <em>IJCAI 2025</em>: 3624–3632, Montreal, 2025. [<a href="https://arxiv.org/abs/2311.00388" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zh-ustc/AutoSAM" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm timeseries">Jiahao Wang, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Qi Liu, Feiyang Xu, Xin Li, Enhong Chen, <strong>TableTime: Reformulating Time Series Classification as Zero-Shot Table Understanding via LLMs</strong>, <em>ACM CIKM 2025</em>. [<a href="https://arxiv.org/pdf/2411.15737" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TableTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm">Shuo Yu, <strong>Mingyue Cheng*</strong>, Jiqian Yang, Jie Ouyang, et al., <strong>Multi-Source Knowledge Pruning for Retrieval-Augmented Generation: A Benchmark and Empirical Study</strong>, <em>ACM CIKM 2025</em>.</li>
+      <li data-tags="timeseries">Zhiding Liu, <strong>Mingyue Cheng</strong>, Guanhao Zhao, Jiqian Yang, Qi Liu, Enhong Chen, <strong>Improving Time Series Forecasting via Instance-aware Post-hoc Revision</strong>. (<em>NeurIPS2025</em>) [<a href="https://arxiv.org/pdf/2505.23583" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Huijie Liu, Shulan Ruan, Qi Liu, <strong>Mingyue Cheng</strong>, Zhenya Huang, Yu Liu, Enhong Chen, You He, <strong>Global Structure-aware and Feature-augmented Graph Neural Network for Heterophilic Graphs</strong>, <em>ACM TOIS</em>. [<a href="https://dl.acm.org/doi/pdf/10.1145/3775057" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="agent llm">Junhao Yu, Yan Zhuang, Yuxuan Sun, Weibo Gao, Qi Liu, <strong>Mingyue Cheng</strong>, Zhenya Huang, Enhong Chen, <strong>TestAgent: An Adaptive and Intelligent Expert for Human Assessment</strong>. (<em>ACL2025</em>) [<a href="https://arxiv.org/pdf/2503.04800" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Zirui Liu, Jiatong Li, Yan Zhuang, Qi Liu, Shuanghong Shen, Jie Ouyang, <strong>Mingyue Cheng</strong>, Shijin Wang, <strong>am-ELO: A Stable Framework for Arena-based LLM Evaluation</strong>, <em>ICML 2025</em>, PMLR 267, 2025. [<a href="https://arxiv.org/pdf/2505.03475" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="recsys">Mingfan Pan, Qingyang Mao, Xu An, Jianhui Ma, Gang Zhou, <strong>Mingyue Cheng</strong>, Enhong Chen, <strong>Tag-augmented Dual-target Cross-domain Recommendation</strong>, <em>RecSys 2025</em>, Prague, 2025.</li>
+      <li data-tags="llm recsys">Yue Chen, Susen Yang, Tong Zhang, Chao Wang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Han Li, <strong>Lasso: Large Language Model-based User Simulator for Cross-Domain Recommendation</strong>, <em>RecSys 2025</em>, Prague, 2025.</li>
+    </ol>
 
-    <a href="https://ustcagi-table-mining.github.io/"
-       target="_blank"
-       style="color:#1f5fbf; font-weight:500; margin-right:14px;">
-      Tabular Data Mining
-    </a>
+    <h3 class="pub-year-heading">🐉 Year of the Wood Dragon (Jia Chen Year, 2024)</h3>
+    <ol class="pub-list">
+      <li data-tags="llm agent ai4science">Jie Ouyang, Yucong Luo, <strong>Mingyue Cheng*</strong>, Shuo Yu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Revisiting the Solution of Meta KDD Cup 2024: CRAG</strong>. (KDD Cup Workshop, <font color="red"><b>2nd Place in Task 2 &amp; Task 3</b></font>) [<a href="./files/posters/KDD-slide-v4.pdf" target="_blank" rel="noopener">Slides</a>] [<a href="./files/posters/crag_kddcup.pdf" target="_blank" rel="noopener">Poster</a>]</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Qi Liu*, Wenyu Zhang, Zhiding Liu, Hongke Zhao, Enhong Chen, <strong>A General Tail Item Representation Enhancement Framework for Sequential Recommender Systems</strong>, <em>Frontier of Computer Science</em> (<strong>FCS</strong>), 2024, 18(6): 1–12. [<a href="./files/papers/tailrec-fcs2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TailRec" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Rujiao Zhang, Hao Zhang, Yucong Luo, Zhiding Liu, <strong>Mingyue Cheng</strong>, Qi Liu, Enhong Chen*, <strong>Learning the Dynamics in Sequential Recommendation by Exploiting Real-time Information</strong>, <em>ACM CIKM2024</em>: 4288–4292, Oct 2024. [<a href="https://dl.acm.org/doi/pdf/10.1145/3627673.3679955" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="recsys">Jie Wang, Fajie Yuan, <strong>Mingyue Cheng</strong>, et al., <strong>TransRec: Learning Transferable Recommendation from Mixture-of-Modality Feedback</strong>, <em>APWeb-WAIM2024</em>: 193–208, Aug 2024. [<a href="https://arxiv.org/pdf/2206.06190.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries">Zhiding Liu, Jiqian Yang, <strong>Mingyue Cheng*</strong>, Yucong Luo, Zhi Li, <strong>Generative Pretrained Hierarchical Transformer for Time Series Forecasting</strong>, <em>ACM SIGKDD2024</em>: 2003–2013, Barcelona, 2024. [<a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm recsys">Yucong Luo, <strong>Mingyue Cheng</strong>, Hao Zhang, Junyu Lu, Enhong Chen*, <strong>Unlocking the Potential of Large Language Models for Explainable Recommendations</strong>. (DASFAA2024) [<a href="https://arxiv.org/pdf/2312.15661" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/GodFire66666/LLM_rec_explanation" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys llm">Junzhe Jiang, Shang Qu, <strong>Mingyue Cheng*</strong>, Qi Liu, et al., <strong>Reformulating Sequential Recommendation: Learning Dynamic User Interest with Content-enriched Language Modeling</strong>. (DASFAA2024) [<a href="https://arxiv.org/pdf/2309.10435" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Gnimixy/lancer" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Hao Zhang, Qi Liu*, Fajie Yuan, Zhi Li, Zhenya Huang, Enhong Chen, Longfei Li, Jun Zhou, <strong>Empowering Sequential Recommender Systems from Mixture of Collaborative Signals and Semantic Relatedness</strong>. (DASFAA2024) [<a href="https://arxiv.org/pdf/2403.07623" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TSSR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Hao Zhang, <strong>Mingyue Cheng*</strong>, Qi Liu, Yucong Luo, Rui Li, Enhong Chen, <strong>Learning Recommender Systems with Soft Target: A Decoupled Perspective</strong>. (DASFAA2024) [<a href="https://arxiv.org/pdf/2410.06536" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zh-ustc/desorec/" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm"><strong>Mingyue Cheng</strong>, Hao Zhang, Jiqian Yang, Qi Liu*, Li Li, Xin Huang, Liwei Song, Zhi Li, Zhenya Huang, Enhong Chen, <strong>Towards Personalized Evaluation of Large Language Models with An Anonymous Crowd-Sourcing Platform</strong>. (WWW2024)</li>
+      <li data-tags="recsys">Junchen Fu, Fajie Yuan, Yu Song, Zheng Yuan, <strong>Mingyue Cheng</strong>, et al., <strong>Exploring Adapter-based Transfer Learning for Recommender Systems</strong>, <em>ACM WSDM'2024</em>: 208–217, Mar 2024. [<a href="https://arxiv.org/pdf/2305.15036" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/westlake-repl/Adapter4Rec/" target="_blank" rel="noopener">Code</a>]</li>
+    </ol>
 
-    <a href="https://ustc-rag-x.github.io/"
-       target="_blank"
-       style="color:#1f5fbf; font-weight:500;">
-      AI for Scientific Literature Mining
-    </a>
+    <h3 class="pub-year-heading">📘 2023 and Before</h3>
+    <ol class="pub-list">
+      <li data-tags="timeseries">Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Zhenya Huang, Qi Liu, Yanhu Xie, Enhong Chen, <strong>Adaptive Normalization for Non-stationary Time Series Forecasting: A Temporal Slice Perspective</strong>, <em>NeurIPS'2023</em>: 36, New Orleans, 2023. [<a href="./files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/icantnamemyself/SAN" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">耿杰, 刘春丽*, 魏雪梅, <strong>程明月</strong>, 袁昆, 李洋, 刘业政, <strong>基于用户重购行为的产品推荐方法</strong>, <em>计算机研究与发展</em> 2023, 60(8): 1795–1807.</li>
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Qi Liu*, Zhiding Liu, Zhi Li, Yucong Luo, Enhong Chen, <strong>FormerTime: Hierarchical Multi-scale Representation for Multivariate Time Series Classification</strong>, <em>ACM WWW'2023</em>: 1437–1445, Austin, 2023. [<a href="./files/papers/formertime-www2023.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/FormerTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries">Wenqiang He, <strong>Mingyue Cheng</strong>, Qi Liu*, Zhi Li, <strong>ShapeWordNet: An Interpretable Shapelet Neural Network for Physiological Signal Classification</strong>, <em>DASFAA'2023</em>: 353–369, Tianjin, 2023.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Zhiding Liu<sup>+</sup>, Qi Liu*, Shenyang Ge, Enhong Chen, <strong>Towards Automatic Designing of Deep Hybrid Network Architecture for Sequential Recommendation</strong>, <em>ACM WWW'2022</em>: 1923–1932. [<a href="https://github.com/Mingyue-Cheng/NASR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Qi Liu, Enhong Chen*, <strong>One Person, One Model — Learning Compound Router for Sequential Recommendation</strong>, <em>IEEE ICDM'2022</em>. [<a href="https://github.com/Mingyue-Cheng/CANet" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm">Junzhe Jiang, <strong>Mingyue Cheng</strong>, Qi Liu*, Zhi Li, Enhong Chen, <strong>Nested Named Entity Recognition from Medical Texts: A Multi-task Learning Approach</strong>, <em>CAAI CICAI'2022</em>: 248–259.</li>
+      <li data-tags="recsys">Runlong Yu, Qi Liu*, Yuyang Ye, <strong>Mingyue Cheng</strong>, Enhong Chen, Jianhui Ma, <strong>Collaborative List-and-Pairwise Filtering from Implicit Feedback</strong>, <em>IEEE TKDE'2022</em>: 34(6): 2667–2680.</li>
+      <li data-tags="llm">Kai Zhang, Qi Liu*, Zhenya Huang, <strong>Mingyue Cheng</strong>, Kun Zhang, Mengdi Zhang, Wei Wu, Enhong Chen, <strong>Graph Adaptive Semantic Transfer for Cross-domain Sentiment Classification</strong>, <em>ACM SIGIR'2022</em>: 1566–1576.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Fajie Yuan<sup>+</sup>, Qi Liu*, Xin Xin, Enhong Chen, <strong>Learning Transferrable User Representations with Sequential Behaviors via Contrastive Pre-training</strong>, <em>IEEE ICDM'2021</em>: 51–60.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Fajie Yuan<sup>+</sup>, Qi Liu*, Shenyang Ge, Zhi Li, Runlong Yu, Defu Lian, Senchao Yuan, Enhong Chen, <strong>Learning Recommender Systems with Implicit Feedback via Soft Target Enhancement</strong>, <em>ACM SIGIR'2021</em>: 575–584.</li>
+      <li data-tags="llm">Linan Yue, Qi Liu*, Han Wu, Kai Zhang, Yanqing An, <strong>Mingyue Cheng</strong>, Biao Yin, Dayong Wu, <strong>NeurJudge: A Circumstance-aware Neural Framework for Legal Judgment Prediction</strong>, <em>ACM SIGIR'2021</em>: 973–982.</li>
+      <li data-tags="llm">Yanqing An, Qi Liu*, Han Wu, Kai Zhang, Linan Yue, <strong>Mingyue Cheng</strong>, Hongke Zhao, Senchao Yuan, Enhong Chen, <strong>LawyerPAN: A Proficiency Assessment Network for Trial Lawyers</strong>, <em>ACM SIGKDD'2021</em>: 5–13.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Runlong Yu, Qi Liu*, Hongke Zhao, Hefu Zhang, Enhong Chen, <strong>Alpha-Beta Sampling for Pairwise Ranking in One-Class Collaborative Filtering</strong>, <em>IEEE ICDM'2019</em>: 1000–1005.</li>
+      <li data-tags="recsys"><strong>程明月</strong>, 刘淇*, 李徵, 于润龙, 高维博, 陈恩红, <strong>多重对级贝叶斯个性化排序算法</strong>. (<em>南京信息工程大学学报自然科学版</em>, 2019(03): 302–308)</li>
+    </ol>
 
-    
   </div>
-
-  <p style="margin-top:6px; color:#555;">
-    (* Corresponding Author, <sup>+</sup> Equal Contribution)
-  </p>
-
-  <hr style="border:0; background-color:#000; height:1px;">
 </div>
 
 
-    
-
-  <h4>📘 Preprint and Under Review</h4>
-
-  <ol style="font-size: 12pt">
-
-
-    <li>
-       <strong>Mingyue Cheng</strong>, Jie Ouyang, Shuo Yu, Ruiran Yan, Yucong Luo, Zirui Liu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Agent-R1: Training Powerful LLM Agents with End-to-End Reinforcement Learning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">Code</a>]
-    </li> 
-   
-    <li>
-      <strong>Mingyue Cheng</strong>, Daoyu Wang, Qi Liu, Shuo Yu, Xiaoyu Tao, Yuqian Wang, Chengzhong Chu, Yu Duan, Mingkang Long, Enhong Chen, <strong>Mind2Report: A Cognitive Deep Research Agent for Expert-Level Commercial Report Synthesis</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2601.04879" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">Code</a>] 
-    </li> 
-
-
-
-    <li>
-      <strong>Mingyue Cheng</strong>, Xiaoyu Tao, Huajian Zhang, Qi Liu, Enhong Chen, <strong>InstructTime++: Time Series Classification with Multimodal Language Modeling via Implicit Feature Enhancement</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2601.14968" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>]
-    </li> 
- 
-
-  <li>
-      Xiaohan Zhang, Tian Gao, <strong>Mingyue Cheng*</strong>, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, <strong>AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-    <li>
-      Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen, <strong>Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-    <li>
-    Xiaoyu Tao, <strong>Mingyue Cheng*</strong>, Ze Guo, Shuo Yu, Yaguo Liu, Qi Liu, Shijin Wang,
-    <strong>MemCast: Memory-Driven Time Series Forecasting with Experience-Conditioned Reasoning</strong>. (Preprint)
-    [<a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">PDF</a>]
-    </li> 
-
-    <li>  
-      Xiaoyu Tao, Shilong Zhang, <strong>Mingyue Cheng*</strong>, Daoyu Wang, Tingyue Pan, Bokai Pan, Changqing Zhang, Shijin Wang, <strong>From Values to Tokens: An LLM-Driven Framework for Context-aware Time Series Forecasting via Symbolic Discretization</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/TokenCast" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-
-    
-
-  </ol>  
-
-
-
-  <h4>📘 Relased Benchmark and Survey</h4>
-
-  <ol style="font-size: 12pt">
-
-
-      <li>
-        <strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu, Ze Guo, Enhong Chen,
-        <strong>Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting</strong>.
-        (Preprint) [<a href="https://arxiv.org/abs/2602.01776" target="_blank" rel="noopener">arXiv</a>] [<a href="https://arxiv.org/pdf/2602.01776.pdf" target="_blank" rel="noopener">PDF</a>]
-      </li>
-
-
-     <li>
-      <strong>Mingyue Cheng</strong>, Zhiding Liu, Xiaoyu Tao, Qi Liu*, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen, <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-    <li>
-      <strong>Mingyue Cheng</strong>, Qingyang Mao, Qi Liu*, Yitong Zhou, Yupeng Li, Jiahao Wang, Jiaying Lin, Jiawei Cao, Enhong Chen, <strong> A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/252177/preprint_pdf/3d9c9b7d57481675d0d6e486c8bb7985.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-LLM-Table-Mining" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-    <li>
-      <strong>Mingyue Cheng</strong>, Yucong Luo, Jie Ouyang, Qi Liu*, Huijie Liu, Li Li, Shuo Yu, Bohou Zhang, Jiawei Cao, Jie Ma, Daoyu Wang, Enhong Chen, <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Retrieval-Augmented-Generation" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-
-    <li>
-       Daoyu Wang, <strong>Mingyue Cheng*</strong>, Shuo Yu, Zirui Liu, Ze Guo, Qi Liu, <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-
-    <li>
-       Yitong Zhou, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Yucong Luo, Qi Liu, Yupeng Li, Xiaohan Zhang, Deguang Liu, Xin Li, Enhong Chen, <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-
-
-
-
-
-  </ol>     
-
-
-
-<h4>♞ Year of the Fire Horse (Bing Wu Year, 2026)</h4>
-
-<ol style="font-size: 12pt">
-
-    <li>
-      Huajian Zhang, <strong>Mingyue Cheng*</strong>, Yucong Luo, Xiaoyu Tao, <strong>STaR: Towards Cognitive Table Reasoning via Slow-Thinking Large Language Models</strong>. (ACM WWW2026, Accepted) [<a href="https://arxiv.org/pdf/2511.11233" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zhjai/STaR" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-
-    <li>
-      Zhiding Liu, Ben Chen, <strong>Mingyue Cheng*</strong>, Enhong Chen, Li Li, Chenyi Lei, Wenwu Ou, Han Li and Kun Gai, <strong>Towards Context-aware Reasoning-enhanced Generative Searching in E-commerce</strong>. (ACM WWW2026, Accepted) [<a href="https://arxiv.org/abs/2510.16925" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-     <li>
-       Shuo Yu, <strong>Mingyue Cheng*</strong>, Daoyu Wang, Qi Liu, Zirui Liu, Ze Guo, Xiaoyu Tao,
-      <strong>MemWeaver: A Hierarchical Memory from Textual Interactive Behaviors for Personalized Generation</strong>. (ACM WWW2026, Accepted)
-      [<a href="https://arxiv.org/abs/2510.07713" target="_blank" rel="noopener">PDF</a>]
-      [<a href="#" rel="noopener">Code</a>]
-    </li>
-
-     <li>
-       Qingchuan Li, Jiatong Li, Zirui Liu, <strong>Mingyue Cheng</strong>, Yitong Zhou, Yuting Zeng, Qi Liu and Tongxuan Liu, <strong>Are LLMs Stable Formal Logic Translators in Logical Reasoning Across Linguistically Diversified Texts?</strong>. (ACM WWW2026, Accepted)
-      [<a href="#" rel="noopener">PDF</a>]
-      [<a href="#" rel="noopener">Code</a>]
-    </li>
-
-
-     <li>
-       Li Li, <strong>Mingyue Cheng*</strong>, Yuyang Ye, Zhiding Liu, Enhong Chen, <strong>Preference Trajectory Modeling via Flow Matching for Sequential Recommendation</strong>. (DASFAA2026, Accepted)
-      [<a href="#" rel="noopener">PDF</a>]
-      [<a href="#" rel="noopener">Code</a>]
-    </li>
-
-
-     <li>
-       Zirui Liu, Xianquan Wang, Yan Zhuang, Jiatong Li, Qi Liu, Shuanghong Shen, <strong>Mingyue Cheng</strong>, Shijin Wang, <strong>Fewer Battles, More Gain: An Information-Efficient Framework for Arena-based LLM Evaluation</strong>. (ICLR2026, Accepted)
-      [<a href="#" rel="noopener">PDF</a>]
-      [<a href="#" rel="noopener">Code</a>]
-    </li>
-
-
-     <li>
-       Qingyang Mao, Qi Cai, Yehao Li, Yingwei Pan, <strong>Mingyue Cheng</strong>, Ting Yao, Qi Liu, Tao Mei, <strong>Visual Autoregressive Modeling for Instruction-Guided Image Editing</strong>. (ICLR2026, Accepted)
-      [<a href="#" rel="noopener">PDF</a>]
-      [<a href="#" rel="noopener">Code</a>]
-    </li>
-
-
-
-
-     <li>
-      <strong>Mingyue Cheng</strong>, Jiahao Wang, Daoyu Wang, Xiaoyu Tao, Qi Liu*, Enhong Chen, <strong>Can Slow-Thinking LLMs Reason Over Time? Empirical Studies in Time Series Forecasting</strong>, <em>Proceedings of the Nineteenth ACM International Conference on Web Search and Data Mining (ACM WSDM2026)</em>: 99-110, Boise, ID, USA, February 22-26, 2026. [<a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-      <strong>Mingyue Cheng</strong>, Xiaoyu Tao, Zhiding Liu, Qi Liu*, Hao Zhang, Rujiao Zhang and Enhong Chen, <strong>TimeMAE: Self-Supervised Representations of Time Series with Decoupled Masked Autoencoders</strong>, <em>Proceedings of the Nineteenth ACM International Conference on Web Search and Data Mining (ACM WSDM2026)</em>: 498-508, Boise, Idaho, USA, February 23-27, 2026. [<a href="https://arxiv.org/pdf/2303.00320" target="_blank" rel="noopener">PDF</a>] [<a href="https://dl.acm.org/doi/10.1145/3773966.3778007" target="_blank" rel="noopener">DOI</a>] [<a href="https://github.com/Mingyue-Cheng/TimeMAE" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-    <li>
-      Chuang Jiang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Qingyang Mao, Jie Ouyang and Qi Liu, <strong>TableMind: An Autonomous Programmatic Agent for Tool-Augmented Table Reasoning</strong>, <em>Proceedings of the Nineteenth ACM International Conference on Web Search and Data Mining (ACM WSDM2026)</em>: 260-270, Boise, ID, USA, February 22-26, 2026. [<a href="https://arxiv.org/pdf/2509.06278" target="_blank" rel="noopener">PDF</a>] [<a href="https://dl.acm.org/doi/10.1145/3773966.3777932" target="_blank" rel="noopener">DOI</a>] [<a href="https://github.com/lennendd/TableMind-Repo" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-    <li>
-      Qingchuan Li, <strong>Mingyue Cheng*</strong>, Zirui Liu, Daoyu Wang, Yuting Zeng, Tongxuan Liu, <strong>From Hypothesis to Premises: LLM-based Backward Logical Reasoning with Selective Symbolic Translation</strong>. (AAAI2026, Accepted) [<a href="#" rel="noopener">PDF</a>] [<a href="https://github.com/lennendd/TableMind-Repo" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-    <li>
-      Yupeng Li, <strong>Mingyue Cheng*</strong>, Yucong Luo, Yitong Zhou, Qingyang Mao, Shijin Wang, <strong>BLADE: A Behavior-Level Data Augmentation Framework with Dual Fusion Modeling for Multi-Behavior Sequential Recommendation</strong>. (AAAI2026, Accepted) [<a href="#" rel="noopener">PDF</a>] [<a href="https://github.com/lennendd/TableMind" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-    <li>
-      Xian Guo, Ben Chen, Siyuan Wang, YingYang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Yuqing Ding, Han Li, <strong> OneSug: The Unified End-to-End Generative Framework for E-commerce Query Suggestion</strong>. (AAAI2026, Accepted) [<a href="#" rel="noopener">PDF</a>] [<a href="https://github.com/lennendd/TableMind" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-</ol>     
-
-
-    <h4>🐍 Year of the Wood Snake (Yi Si Year, 2025)</h4>
-
-    <ol style="font-size: 12pt">
-
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Jiqian Yang, Tingyue Pan, Qi Liu*, Zhi Li, 
-    <strong>ConvTimeNet: A Deep Hierarchical Fully Convolutional Model for Multivariate Time Series Analysis</strong>,  the ACM on Web Conference 2025 (ACM WWW2025), Sydney, NSW, Australia, 28 April 2025 - 2 May 2025. [<a href="https://arxiv.org/pdf/2403.01493" target="_blank" rel="noopener">PDF</a>] 
-    [<a href="https://github.com/Mingyue-Cheng/ConvTimeNet" target="_blank" rel="noopener">Code</a>] 
-    <span style="color: gray;">— Included in <a href="https://www.sktime.net/en/stable/" target="_blank" rel="noopener"><em>sktime</em></a> library</span>
-    </li> 
-
-
-    <li>
-      Xiaoyu Tao, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Yucong Luo, Qi Liu, Enhong Chen, <strong>Hierarchical multimodal llms with semantic space alignment for enhanced time series classification</strong>. (ACM Transactions on Intelligent Systems and Technology) [<a href="https://arxiv.org/pdf/2410.18686" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/HiTime" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-    <li>
-      <strong>Mingyue Cheng</strong>, Yiheng Chen, Qi Liu*, Zhiding Liu, Yucong Luo, Enhong Chen, <strong>InstrucTime: Advancing Time Series Classification with Multimodal Language Modeling</strong>, <em>the Eighteenth ACM International Conference on Web Search and Data Mining (ACM WSDM2025, <font color="red"><b>Best of WSDM</b></font>)</em>: 792-800, Hannover, Germany, March 10-14, 2025.  [<a href="https://dl.acm.org/doi/abs/10.1145/3701551.3703499" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>] [<a href="./files/posters/instructtime-poster.pdf" target="_blank" rel="noopener">Poster</a>]
-    </li>
-    
-    <li>
-    <strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu*, Hao Zhang, Yiheng Chen, Defu Lian, <strong>Cross-Domain Pre-training with Language Models for Transferable Time Series Representations</strong>, <em>the Eighteenth ACM International Conference on Web Search and Data Mining (ACM WSDM2025)</em>: 175-183, Hannover, Germany, March 10-14, 2025.[<a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">Code</a>][<a href="./files/posters/crosstimenet-poster.pdf" target="_blank" rel="noopener">Poster</a>]
-    </li>
-
-    <li>
-      Daoyu Wang, <strong>Mingyue Cheng*</strong>, Zhiding Liu, Qi Liu, <strong>TimeDART: A Diffusion Autoregressive Transformer for Self-supervised Time Series Representation</strong>, <em>Proceedings of the Forty-second International Conference on Machine Learning (ICML 2025) </em>, Vancouver, Canada, July 13-19, PMLR 267, 2025. [<a href="https://arxiv.org/html/2410.05711v1" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-
-    <li>
-      Jie Ouyang, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Ruiran Yan, Yucong Luo, Jiaying Lin, Qi Liu, <strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation</strong>, <em>Procedings of the 63rd Annual Meeting of the Association for Computational Linguistics </em> (Volume 1: Long Papers), ACL 2025: 6036-6063, Vienna, Austria, July 27 - August 1, 2025.  [<a href="https://aclanthology.org/2025.acl-long.301.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Jintao Zhang, Zhiding Liu, Chunli Liu*, <strong> A Hybrid Multi-Factor Framework for Dynamic Intraoperative Hypotension Prediction</strong>, the Thirty-Fourth International Joint Conference on Artificial Intelligence, IJCAI 2025: 4923-4931, Montreal, Canada, August 16-22, 2025.[<a href="https://www.arxiv.org/pdf/2409.11064" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-      Jintao Zhang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Zhiding Liu, Daoyu Wang, <strong>Conditional Denoising Meets Polynomial Modeling: A Flexible Decoupled Framework for Time Series Forecasting</strong>, the Thirty-Fourth International Joint Conference on Artificial Intelligence, IJCAI 2025: 6993-7001, Montreal, Canada, August 16-22, 2025. [<a href="https://arxiv.org/pdf/2410.13253" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zjt-gpu/FDF" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-      Yitong Zhou, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Feiyang Xu, Xin Li, <strong>Enhancing Table Recognition with Vision LLMs: A Benchmark and Neighbor-Guided Toolchain Reasoner</strong>, the Thirty-Fourth International Joint Conference on Artificial Intelligence, IJCAI 2025: 2503-2511, Montreal, Canada, August 16-22, 2025. [<a href="https://arxiv.org/abs/2412.20662" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/NGTR" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-
-    <li>
-      Hao Zhang, <strong>Mingyue Cheng*</strong>, Qi Liu, Zhiding Liu, Linbo Zhu, Yu Su, <strong>Towards Automatic Sampling of User Behaviors for Sequential Recommender Systems</strong>, the Thirty-Fourth International Joint Conference on Artificial Intelligence, IJCAI 2025: 3624-3632, Montreal, Canada, August 16-22, 2025. [<a href="https://arxiv.org/abs/2311.00388" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zh-ustc/AutoSAM" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-
-    <li>
-      Jiahao Wang, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Qi Liu, Feiyang Xu, Xin Li, Enhong Chen, <strong>TableTime: Reformulating Time Series Classification as Zero-Shot Table Understanding via Large Language Models</strong>, the 34rd ACM International Conference on Information and Knowledge Management (ACM CIKM 2025).  [<a href="https://arxiv.org/pdf/2411.15737" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TableTime" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-
-
-    <li>
-      Shuo Yu, <strong>Mingyue Cheng*</strong>, Jiqian Yang, Jie Ouyang, Yucong Luo, Chenyi Lei, Qi Liu, Enhong Chen, <strong>Multi-Source Knowledge Pruning for Retrieval-Augmented Generation: A Benchmark and Empirical Study</strong>, the 34rd ACM International Conference on Information and Knowledge Management (ACM CIKM 2025).[<a href="https://ustc-rag-x.github.io/" target="_blank" rel="noopener">PDF</a>] [<a href="https://ustc-rag-x.github.io/" target="_blank" rel="noopener">Code</a>] 
-    </li>
-
-
-
-    <li>
-      Zhiding Liu, <strong>Mingyue Cheng</strong>, Guanhao Zhao, Jiqian Yang, Qi Liu, Enhong Chen, <strong>Improving Time Series Forecasting via Instance-aware Post-hoc Revision</strong>. (NeurIPS2025, Accepted) [<a href="https://arxiv.org/pdf/2505.23583?" target="_blank" rel="noopener">PDF</a>] [<a href="https://arxiv.org/pdf/2505.23583?" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-
-    <li>
-    Huijie Liu, Shulan Ruan, Qi Liu, <strong>Mingyue Cheng</strong>, Zhenya Huang, Yu Liu, Enhong Chen, You He, <strong>Global Structure-aware and Feature-augmented Graph Neural Network for Heterophilic Graphs</strong>, ACM Transactions on Information Systems (<strong>TOIS</strong>). [<a href="https://dl.acm.org/doi/pdf/10.1145/3775057" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/huijieliu2023/GSF-GNN" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-
-    <li>
-      Junhao Yu, Yan Zhuang, Yuxuan Sun, Weibo Gao, Qi Liu, <strong>Mingyue Cheng</strong>, Zhenya Huang, Enhong Chen, <strong>TestAgent: An Adaptive and Intelligent Expert for Human Assessment</strong>. (ACL2025, Accepted) [<a href="https://arxiv.org/pdf/2503.04800" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/tinyy115/HiTime" target="_blank" rel="noopener">Code</a>]
-    </li> 
-
-    <li>
-      Zirui Liu, Jiatong Li, Yan Zhuang, Qi Liu, Shuanghong Shen, Jie Ouyang, <strong>Mingyue Cheng</strong>, Shijin Wang, <strong>am-ELO: A Stable Framework for Arena-based LLM Evaluation</strong>, <em>Proceedings of the Forty-second International Conference on Machine Learning (ICML 2025) </em>, Vancouver, Canada, July 13-19, PMLR 267, 2025. [<a href="https://arxiv.org/pdf/2505.03475" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-
-    <li> 
-      Mingfan Pan, Qingyang Mao, Xu An, Jianhui Ma, Gang Zhou, <strong>Mingyue Cheng</strong>, Enhong Chen, <strong>Tag-augmented Dual-target Cross-domain Recommendation</strong>, the Nineteenth ACM Conference on Recommender Systems, RecSys 2025, Prague, Czech Republic, September 22-26, 2025.
-    </li> 
-
-    <li> 
-      Yue Chen, Susen Yang, Tong Zhang, Chao Wang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Han Li, <strong>Lasso: Large Language Model-based User Simulator for Cross-Domain Recommendation</strong>, the Nineteenth ACM Conference on Recommender Systems, RecSys 2025, Prague, Czech Republic, September 22-26, 2025.
-    </li>
-
-
-      </ol>
-
-
-  
-    <h4>🐉 Year of the Wood Dragon (Jia Chen Year, 2024) </h4>
-
-
-    <ol style="font-size: 12pt">
-
-    <li>
-      Jie Ouyang, Yucong Luo, <strong>Mingyue Cheng*</strong>, Shuo Yu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Revisiting the Solution of Meta KDD Cup 2024: CRAG</strong>. (2024 KDD Cup Workshop for Retrieval Augmented Generation, <font color="red"><b>Second Place in Task 2 & Task 3 of KDD Cup 2024</b></font>)
-      [<a href="https://ustc-rag-x.github.io/" target="_blank" rel="noopener">Code</a>][<a href="./files/posters/KDD-slide-v4.pdf" target="_blank" rel="noopener">Slides</a>][<a href="./files/posters/crag_kddcup.pdf" target="_blank" rel="noopener">Poster</a>].
-    </li>
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Qi Liu*, Wenyu Zhang, Zhiding Liu, Hongke Zhao, Enhong Chen, <strong>A General Tail Item Representation Enhancement Framework for Sequential Recommender Systems</strong>,  <em> Frontier of Comupter Science </em> (<strong>FCS</strong>), 2024, 18(6): 1-12. [<a href="./files/papers/tailrec-fcs2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TailRec" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-      Rujiao Zhang, Hao Zhang, Yucong Luo, Zhiding Liu, <strong>Mingyue Cheng</strong>, Qi Liu, Enhong Chen*, <strong>Learning the Dynamics in Sequential Recommendation by Exploiting Real-time Information</strong>, <em>The 33rd ACM International Conference on Information and Knowledge Management</em> (ACM CIKM2024):4288 - 4292, October 21–25, 2024, Boise, ID, USA.  [<a href="https://dl.acm.org/doi/pdf/10.1145/3627673.3679955" target="_blank" rel="noopener">Code</a>][<a href="https://github.com/imsery/Dynamics/" target="_blank" rel="noopener">Slides</a>]
-    </li>
-
-    <li>
-      Jie Wang, Fajie Yuan, <strong>Mingyue Cheng</strong>, Joemon M. Jose, Chenyun Yu, Beibei Kong, Zhijin Wang, Bo Hu, Zang Li, <strong>TransRec: Learning Transferable Recommendation from Mixture-of-Modality Feedback</strong>, <em>The 8th APWeb-WAIM Joint International Conference on Web and Big Data</em>（<strong>APWeb-WAIM2024</strong>): 193-208, August 30 - September 1, Jinhua, China. [<a href="https://arxiv.org/pdf/2206.06190.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/icantnamemyself/GPHT" target="_blank" rel="noopener">Poster</a>]
-    </li>
-
-    <li>
-      Zhiding Liu, Jiqian Yang, <strong>Mingyue Cheng*</strong>, Yucong Luo, Zhi Li, <strong>Generative Pretrained Hierarchical Transformer for Time Series Forecasting</strong>(<strong>ACM SIGKDD2024</strong>):2003-2013, August 25-29, 2024, Barcelona Spain, 2024. [<a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="./files/posters/gpht_poster.pdf" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-      Yucong Luo, <strong>Mingyue Cheng</strong>, Hao Zhang, Junyu Lu, Enhong Chen*, <strong>Unlocking the Potential of Large Language Models for Explainable Recommendations</strong>. (DASFAA2024)[<a href="https://arxiv.org/pdf/2312.15661" target="_blank" rel="noopener">PDF</a>][<a href="https://github.com/GodFire66666/LLM_rec_explanation" target="_blank" rel="noopener">Code</a>]
-    </li>
-    
-    <li>
-    Junzhe Jiang, Shang Qu, <strong>Mingyue Cheng*</strong>, Qi Liu, Zhiding Liu, Hao Zhang, Rujiao Zhang, Kai Zhang, Rui Li, Jiatong Li, Min Gao, <strong>Reformulating Sequential Recommendation: Learning Dynamic User Interest with Content-enriched Language Modeling</strong>. (Accepted, DASFAA2024)[<a href="https://arxiv.org/pdf/2309.10435" target="_blank" rel="noopener">PDF</a>][<a href="https://github.com/Gnimixy/lancer" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Hao Zhang, Qi Liu*, Fajie Yuan, Zhi Li, Zhenya Huang, Enhong Chen, Longfei Li, Jun Zhou, <strong>Empowering Sequential Recommender Systems from Mixture of Collaborative Signals and Semantic Relatedness</strong>. (Accepted, DASFAA2024)[<a href="https://arxiv.org/pdf/2403.07623" target="_blank" rel="noopener">PDF</a>][<a href="https://github.com/Mingyue-Cheng/TSSR" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-    Hao Zhang, <strong>Mingyue Cheng*</strong>, Qi Liu, Yucong Luo, Rui Li, Enhong Chen, <strong>Learning Recommender Systems with Soft Target: A Decoupled Perspective</strong> (Accepted, DASFAA2024). [<a href="https://arxiv.org/pdf/2410.06536" target="_blank" rel="noopener">PDF</a>][<a href="https://github.com/zh-ustc/desorec/" target="_blank" rel="noopener">Code</a>][<a href="./files/posters/gpht_poster.pdf" target="_blank" rel="noopener">Poster</a>] 
-    </li>
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Hao Zhang, Jiqian Yang, Qi Liu*, Li Li, Xin Huang, Liwei Song, Zhi Li, Zhenya Huang, Enhong Chen, <strong>Towards Personalized Evaluation of Large Language Models with An Anonymous Crowd-Sourcing Platform</strong>. (WWW2024, Accepted)
-    </li>
-
-    <li>
-    Junchen Fu, Fajie Yuan, Yu Song, Zheng Yuan, <strong>Mingyue Cheng</strong>, Shenghui Cheng, Jiaqi Zhang, Jie Wang, Yunzhu Pan, <strong>Exploring Adapter-based Transfer Learning for Recommender Systems: Empirical Studies and Practical Insights</strong>, The 17th ACM International Conference on Web Search and Data Mining (<strong>WSDM'2024</strong>): 208-217, Mar 4-8, 2024, Mérida, México. [<a href="https://arxiv.org/pdf/2305.15036" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/westlake-repl/Adapter4Rec/" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-
-      </ol>
-
-
-  
-    <h4>📘 2023 and Before</h4>
-
-
-    <ol style="font-size: 12pt">
-
-
-    <li>
-    Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Zhenya Huang, Qi Liu, Yanhu Xie, Enhong Chen, <strong>Adaptive Normalization for Non-stationary Time Series Forecasting: A Temporal Slice Perspective</strong>, The 37th Advances in Neural Information Processing Systems (<strong>NeurIPS'2023</strong>):36, Dec 9-15, 2023, New Orleans, Louisiana, USA. [<a href="./files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/icantnamemyself/SAN" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-     耿杰, 刘春丽*, 魏雪梅, <strong>程明月</strong>, 袁昆, 李洋, 刘业政, <strong>基于用户重购行为的产品推荐方法</strong>,  <em> 计算机研究与发展 </em> 2023, 60(8): 1795-1807
-    </li>
-
-
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Qi Liu*, Zhiding Liu, Zhi Li, Yucong Luo, Enhong Chen, <strong>FormerTime: Hierarchical Multi-scale Representation for Multivariate Time Series Classification</strong>, <em> The 32nd International World Wide Web Conference</em> (<strong>ACM WWW'2023</strong>): 1437–1445, Austin, TX, USA. [<a href="./files/papers/formertime-www2023.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/FormerTime" target="_blank" rel="noopener">Code</a>]
-    </li>
-    
-    <li>
-    Wenqiang He, <strong>Mingyue Cheng</strong>, Qi Liu*, Zhi Li, <strong>ShapeWordNet: An Interpretable Shapelet Neural Network for Physiological Signal Classification</strong>, <em>  The 28th International Conference on Database Systems for Advanced Applications</em> (<strong>DASFAA'2023</strong>): 353–369, Tianjin, China.
-    </li>
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Zhiding Liu<sup>+</sup>, Qi Liu*, Shenyang Ge, Enhong Chen, <strong>Towards Automatic Designing of Deep Hybrid Network Architecture for Sequential Recommendation</strong>, <em> The 31st International World Wide Web Conference</em> (<strong>ACM WWW'2022</strong>):1923-1932, Virtual Conference. [<a href="https://github.com/Mingyue-Cheng/NASR" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-    Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Qi Liu, Enhong Chen*, <strong>One Person, One Model—Learning Compound Router for Sequential Recommendation</strong>, <em>The 22nd IEEE International Conference on Data Mining</em> (<strong>IEEE ICDM'2022</strong>).[<a href="https://github.com/Mingyue-Cheng/CANet" target="_blank" rel="noopener">Code</a>]
-    </li>
-
-    <li>
-    Junzhe Jiang, <strong>Mingyue Cheng</strong>, Qi Liu*, Zhi Li, Enhong Chen, <strong>Nested Named Entity Recognition from Medical Texts: A Multi-task Learning Approach</strong>, <em>The Second CAAI International Conference on Artificial Intelligence </em> (<strong>CAAI CICAI'2022</strong>):248-259, Bejing, China.
-    </li>
-
-    <li>
-    Runlong Yu, Qi Liu*, Yuyang Ye, <strong>Mingyue Cheng</strong>, Enhong Chen, Jianhui Ma, <strong>Collaborative List-and-Pairwise Filtering from Implicit Feedback</strong>, <em> IEEE Transactions on Knowledge and Data Engineering (<strong>IEEE TKDE'2022</strong>)</em> : 34(6): 2667-2680, June 2022.
-    </li>
-
-    <li>
-    Kai Zhang, Qi Liu*, Zhenya Huang, <strong>Mingyue Cheng</strong>, Kun Zhang, Mengdi Zhang, Wei Wu, Enhong Chen, <strong>Graph Adaptive Semantic Transfer for Cross-domain Sentiment Classification</strong>, <em> The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval (<strong>ACM SIGIR'2022</strong>)</em> : 1566-1576, Virtual Conference. 
-    </li>
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Fajie Yuan<sup>+</sup>, Qi Liu*, Xin Xin, Enhong Chen, <strong>Learning Transferrable User Representations with Sequential Behaviors via Contrastive Pre-training</strong>, <em> The 21st IEEE International Conference on Data Mining (<strong>IEEE ICDM'2021</strong>)</em> :51-60, Auckland, New Zealand, December 7-10, 2021. 
-    </li>
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Fajie Yuan<sup>+</sup>, Qi Liu*, Shenyang Ge, Zhi Li, Runlong Yu, Defu Lian, Senchao Yuan, Enhong Chen, <strong>Learning Recommender Systems with Implicit Feedback via Soft Target Enhancement</strong>, <em> The 44th International ACM SIGIR Conference on Research and Development in Information Retrieval (<strong>ACM SIGIR'2021</strong>)</em> : 575-584, July 11–15, 2021, Virtual Event, Canada. 
-    </li>
-
-    <li>
-    Linan Yue, Qi Liu*, Han Wu, Kai Zhang, Yanqing An, <strong>Mingyue Cheng</strong>, Biao Yin, Dayong Wu, <strong>NeurJudge: A Circumstance-aware Neural Framework for Legal Judgment Prediction</strong>, <em> The 44th International ACM SIGIR Conference on Research and Development in Information Retrieval  ( <strong>ACM SIGIR'2021</strong>)</em>:973–982, July 11–15, 2021, Virtual Event, Canada. 
-    </li>
-
-    <li>
-    Yanqing An, Qi Liu*, Han Wu, Kai Zhang, Linan Yue, <strong>Mingyue Cheng</strong>, Hongke Zhao, Senchao Yuan, Enhong Chen, <strong>LawyerPAN: A Proficiency Assessment Network for Trial Lawyers</strong>, <em> The 27th International ACM SIGKDD Conference on Knowledge Discovery and Data Mining (<strong>ACM SIGKDD'2021</strong>)</em>:5-13, August 14–18, 2021, Virtual Event, Singapore.
-    </li>
-
-    <li>
-    <strong>Mingyue Cheng</strong>, Runlong Yu, Qi Liu*, Hongke Zhao, Hefu Zhang, Enhong Chen, <strong>Alpha-Beta Sampling for Pairwise Ranking in One-Class Collaborative Filtering</strong>, <em> The 19th IEEE International Conference on Data Mining (<strong>IEEE ICDM'2019</strong>)</em>: 1000-1005, Beijing, China. 
-    </li>
-
-    <li>
-    <strong>程明月</strong>, 刘淇*, 李徵, 于润龙, 高维博, 陈恩红, <strong>多重对级贝叶斯个性化排序算法</strong>. (<em>南京信息工程大学学报自然科学版</em>: 2019年03期302-308)
-    </li>
-
-  </ol>
-</div>
-
-
-<!-- <div class="container">
-  <h3 id="opensource">Open Source Projects</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-
-    <li>
-      <strong>Science-Star</strong> — An open-source framework for building, extending, and experimenting with 
-      <strong>scientific AI agents</strong>.  
-      It provides a ReAct-based engine, tool orchestration, memory & reflection, 
-      HLE dataset integration, and powerful visualization, enabling rapid development of 
-      scientific agents from concept to deployment.  
-      [<a href="https://paperarena-ai.github.io/" target="_blank" rel="noopener"><strong>GitHub</strong></a>]
-    </li>
-
-    <li>
-      <strong>Agent-R1</strong> — A <strong>large-model agent training framework</strong> designed to enable 
-      efficient alignment and reasoning capabilities for LLM-based agents.  
-      It supports reinforcement fine-tuning (e.g., GRPO), multi-tool orchestration, long-term memory, 
-      and reflective reasoning, accelerating the development of autonomous and context-aware agents.  
-      [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener"><strong>GitHub</strong></a>]
-    </li>
-
-
-  </ul>
-</div> -->
-
-
-
-
-
-<div class="container">
-  <h3 id="system">AI System Development</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <p style="font-size: 13.0pt">
-    我们团队致力于研发高效且实用的AI系统，以下为一些我们团队研发的部分系统成果：
-    <br>
-    <ul style="font-size: 13.0pt">
-      
-      <li>
-        <strong>冰鉴·大模型评测平台：</strong>
-        <a href="https://bjllm.com/home" target="_blank" rel="noopener">冰鉴大模型评测平台</a>，大模型认知能力评测工具。
-      </li>
-
-      <li>
-        <strong>科言·智能助写平台：</strong>
-        <a href="https://writelearn.bdaa.pro" target="_blank" rel="noopener">科言智能助写平台</a>，提升写作效率与技能。
-      </li>
-
-      <li>
-        <strong>科小研·学位论文辅助审查：</strong>
-        <a href="https://tas.zhongkediman.com/" target="_blank" rel="noopener">文阅学位论文辅助审查</a>，研究生学位论文辅助审阅。
-      </li>
-
-  <!--     <li>
-        <strong>传道英文作业智能批阅：</strong>
-        <a href="http://transdle.bdaa.pro/" target="_blank" rel="noopener">传道学位论文辅助审查</a>，大学英语学生作业辅助批改。
-      </li>
- -->
+<!-- ===== AI System Development ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="system" class="section-heading">AI System Development</h2>
+    <p>我们团队致力于研发高效且实用的AI系统，以下为一些我们团队研发的部分系统成果：</p>
+    <ul class="sys-list">
+      <li><strong>冰鉴·大模型评测平台：</strong><a href="https://bjllm.com/home" target="_blank" rel="noopener">冰鉴大模型评测平台</a>，大模型认知能力评测工具。</li>
+      <li><strong>科言·智能助写平台：</strong><a href="https://writelearn.bdaa.pro" target="_blank" rel="noopener">科言智能助写平台</a>，提升写作效率与技能。</li>
+      <li><strong>科小研·学位论文辅助审查：</strong><a href="https://tas.zhongkediman.com/" target="_blank" rel="noopener">文阅学位论文辅助审查</a>，研究生学位论文辅助审阅。</li>
     </ul>
-  </p>
-</div>
-
-<div class="container">
-  <h3 id="experience">Working Experiences</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-  <li>Jun. 2023 ~ Present, Associate Researcher, School of Computer Science and Technology, USTC, 
-      Hefei, China</li> 
-  <li>Jan. 2021 ~ Jun. 2023, Research Assistant, Research Center for Big Data in Intelligent Healthcare, USTC, 
-  Hefei, China</li> 
-  <li>Jun. 2019 ~ Oct. 2019, Research Intern, Data Service Center (DSC), Platform and Conetnt Group (PCG), Tencent, Shenzhen, China</li> 
-  <li>Jul.&nbsp; 2018 ~ Sep. 2018, Engineer Intern, Lab of Big Data, Core Technology R&amp;D Platform, iFLYTEK, Hefei, China</li>
-  </ul>
-</div>
-
-<div class="container">
-  <h3 id="education">Education</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-    <li>Sep. 2017 ~ Jun. 2023, Major: Data Science (Computer Science and Technology), Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
-    <li>Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
-  </ul>
-</div>
-
-<div class="container">
-  <h3 id="honors">Honors and Awards</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-  <li>Aug. 2025, 中国科学技术大学红专青年人才</li>
-  <li>Mar. 2025, Best of WSDM2025（优秀论文奖） </li>
-  <li>Dec. 2024, 昇腾人工智能创新大赛全国总决赛金奖 (指导教师)</li>
-  <li>Aug. 2024, Second Place of Task2&Task3 in KDD Cup'2024</li>
-  <li>Jan. 2024, 中国科学技术大学雄鹰创新创业基金 (指导教师)</li>
-  <li>Dec. 2023, 2023年中国国际大学生创新大赛国家级银奖（教育部）</li>
-  <li>Jul. 2023, 全国“互联网+”大学生创新创业大赛安徽省金奖（安徽省教育厅）</li>
-  <li>Mar. 2023, 中国科学技术大学优秀毕业生</li>
-  <li>May. 2022, 2022年中国科学技术大学“创新创业”基金 (中国科学技术大学)</li>
-  <li>Jan. 2022, 中国科学技术大学2022年“优秀博士生出国留学支持计划”（中国科大研究生院）</li>
-  <li>Dec. 2021, “创青春”中国青年创新创业项目支持—大学生创业“金种子”计划（团中央）</li>
-  <li>Sep. 2021, 博士研究生国家奖学金 (教育部)</li>
-  <li>Sep. 2021, 全国“互联网+”大学生创新创业大赛安徽省金奖（安徽省教育厅）</li>
-  <li>Jul. 2021, 中国科学技术大学“庆峰杯”创新创业大赛二等奖(中国科学技术大学)</li>
-  <li>Sep. 2019, 腾讯科技平台与事业群实习生Mini项目卓越奖</li>
-  <li>Jul. 2018, 全国大学生“创青春”创新创业大赛安徽省金奖（安徽省教育厅）</li>
-  </ul>
+  </div>
 </div>
 
 
-<div class="container">
-  <h3 id="teaching">Teaching</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-  <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring Semester, 2024.</li>
-  <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring Semester, 2025.</li>
-  <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring Semester, 2026.</li>
-  <li>Introduction to Systems Programming（系统程序设计基础）, Undergraduate Course, Spring Semester, 2026.</li>
-  </ul>
+<!-- ===== Working Experience ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="experience" class="section-heading">Working Experiences</h2>
+    <ul class="timeline-list">
+      <li>Jun. 2023 ~ Present, Associate Researcher, School of Computer Science and Technology, USTC, Hefei, China</li>
+      <li>Jan. 2021 ~ Jun. 2023, Research Assistant, Research Center for Big Data in Intelligent Healthcare, USTC, Hefei, China</li>
+      <li>Jun. 2019 ~ Oct. 2019, Research Intern, Data Service Center (DSC), Platform and Content Group (PCG), Tencent, Shenzhen, China</li>
+      <li>Jul. 2018 ~ Sep. 2018, Engineer Intern, Lab of Big Data, Core Technology R&amp;D Platform, iFLYTEK, Hefei, China</li>
+    </ul>
+  </div>
 </div>
 
 
-
-
-<div class="container">
-  <h3 id="services">Professional Activities</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-  <li><strong>Program Committee Member:</strong></li>
-  
-  <ul style="font-size: 12.0pt">
-    <li>ACM International World Wide Web Conference (TheWebConf): 2024, 2025</li>
-    <li>ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD): 2023, 2024, 2025</li>
-    <li>International Conference on Learning Representations (ICLR): 2025</li>
-     <li>International Conference on Machine Learning (ICML): 2025</li>
-    <li>Conference on Neural Information Processing Systems (NeurIPS): 2024, 2025</li>
-    <li>Annual Meeting of the Association for Computational Linguistics (ACL): 2025</li>
-    <li>International Joint Conference on Artificial Intelligence (IJCAI): 2024, 2025, 2026 (SPC)</li>
-    <li>International Conference on Web Search and Data Mining: 2025</li>
-    <li>SIAM International Conference on Data Mining (SDM): 2024</li>
-    <li>ACM International Conference on Information and Knowledge Management: 2024, 2025</li>
-    <li>Database Systems for Advanced Applications (DASFAA): 2024, 2025</li>
-    <li><a href="https://cis.taskforce.ieee.org/ai4tst/" target="_blank">Task Force on AI for Time Series and Spatio-Temporal Data</a></li>
-
-  </ul>
-
-  <li><strong>Journal Reviewer:</strong></li>
-  <ul style="font-size: 12.0pt">
-    <li>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</li>
-    <li>IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</li>
-    <li>IEEE Transactions on Neural Network and Learning Systems (IEEE TNNLS)  </li>
-    <li>IEEE Transactions on Audio, Speech and Language Processing (IEEE T-ASL)</li>
-    <li>ACM Transactions on Knowledge Discovery from Data (TKDD)</li>
-    <li>ACM Transactions on Intelligent Systems and Technology (TIST)</li>
-   <li>Transactions on Machine Learning Research (TMLR)</li>
-    <li>Neurocomputing</li>
-    <li>Frontiers of Computer Science (FCS)</li>
-    <li>软件学报</li>
-    <li>计算机学报</li>
-  </ul>
-  </ul>
-</div>
-
-<div class="container">
-  <h3 id="grants">Research Grants</h3>
-  <hr style="border:0; background-color:black; height:1px;" size="0">
-  <ul style="font-size: 13.0pt">
-    <li>2026.01-2028.12, the Natural Science Foundation of China</li>
-    <li>2025.01-2027.12, USTC New Medicine Joint Fund Cultivation Project (Double First-Class Initiative Special Project)</li>
-    <li>2024.09-2026.08, Anhui Provincial Natural Science Foundation</li>
-    <li>In addition, my research has been partially supported by industrial grants from leading companies such as, iFlyTek, Huawei and Kuaishou.</li>
-  </ul>
+<!-- ===== Education ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="education" class="section-heading">Education</h2>
+    <ul class="timeline-list">
+      <li>Sep. 2017 ~ Jun. 2023, Major: Data Science (Computer Science and Technology), Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
+      <li>Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
+    </ul>
+  </div>
 </div>
 
 
-<div class="container">
-  <h3>Related Links</h3>
-  <hr style="border:0; background-color:black; height:1px;" size=0>
-  <ul style="font-size: 13.0pt">
-    <li>Prof. <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener">Qi Liu</a> (USTC)</li>
-    <li>Prof. <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener">Enhong Chen</a> (USTC)</li>
-    <li>Prof. <a href="https://fajieyuan.github.io/" target="_blank" rel="noopener">Fajie Yuan</a> (WU)</li>
-    <li>Prof. <a href="http://come.tju.edu.cn/info/1526/5697.htm" target="_blank" rel="noopener">Hongke Zhao</a> (TJU)</li>
-
-  <!--
-    <li>USTC <a href="http://base.ustc.edu.cn" target="_blank" rel="noopener">BASE Group</a>, <a href="http://bigdata.ustc.edu.cn" target="_blank" rel="noopener">BDAA Lab.</a></li>
-  -->
-
-  </ul>
+<!-- ===== Honors ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="honors" class="section-heading">Honors and Awards</h2>
+    <ul class="timeline-list">
+      <li>Aug. 2025, 中国科学技术大学红专青年人才</li>
+      <li>Mar. 2025, Best of WSDM2025（优秀论文奖）</li>
+      <li>Dec. 2024, 昇腾人工智能创新大赛全国总决赛金奖（指导教师）</li>
+      <li>Aug. 2024, Second Place of Task2 &amp; Task3 in KDD Cup'2024</li>
+      <li>Jan. 2024, 中国科学技术大学雄鹰创新创业基金（指导教师）</li>
+      <li>Dec. 2023, 2023年中国国际大学生创新大赛国家级银奖（教育部）</li>
+      <li>Jul. 2023, 全国"互联网+"大学生创新创业大赛安徽省金奖（安徽省教育厅）</li>
+      <li>Mar. 2023, 中国科学技术大学优秀毕业生</li>
+      <li>May. 2022, 2022年中国科学技术大学"创新创业"基金</li>
+      <li>Jan. 2022, 中国科学技术大学2022年"优秀博士生出国留学支持计划"</li>
+      <li>Dec. 2021, "创青春"中国青年创新创业项目支持——大学生创业"金种子"计划（团中央）</li>
+      <li>Sep. 2021, 博士研究生国家奖学金（教育部）</li>
+      <li>Sep. 2021, 全国"互联网+"大学生创新创业大赛安徽省金奖（安徽省教育厅）</li>
+      <li>Jul. 2021, 中国科学技术大学"庆峰杯"创新创业大赛二等奖</li>
+      <li>Sep. 2019, 腾讯科技平台与事业群实习生Mini项目卓越奖</li>
+      <li>Jul. 2018, 全国大学生"创青春"创新创业大赛安徽省金奖（安徽省教育厅）</li>
+    </ul>
+  </div>
 </div>
 
 
+<!-- ===== Teaching ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="teaching" class="section-heading">Teaching</h2>
+    <ul class="timeline-list">
+      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2024.</li>
+      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2025.</li>
+      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2026.</li>
+      <li>Introduction to Systems Programming（系统程序设计基础）, Undergraduate Course, Spring 2026.</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ===== Professional Activities ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="services" class="section-heading">Professional Activities</h2>
+
+    <div class="services-group">
+      <div class="services-label">Program Committee Member</div>
+      <ul class="services-list">
+        <li>ACM International World Wide Web Conference (TheWebConf): 2024, 2025</li>
+        <li>ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD): 2023, 2024, 2025</li>
+        <li>International Conference on Learning Representations (ICLR): 2025</li>
+        <li>International Conference on Machine Learning (ICML): 2025</li>
+        <li>Conference on Neural Information Processing Systems (NeurIPS): 2024, 2025</li>
+        <li>Annual Meeting of the Association for Computational Linguistics (ACL): 2025</li>
+        <li>International Joint Conference on Artificial Intelligence (IJCAI): 2024, 2025, 2026 (SPC)</li>
+        <li>International Conference on Web Search and Data Mining (WSDM): 2025</li>
+        <li>SIAM International Conference on Data Mining (SDM): 2024</li>
+        <li>ACM International Conference on Information and Knowledge Management (CIKM): 2024, 2025</li>
+        <li>Database Systems for Advanced Applications (DASFAA): 2024, 2025</li>
+        <li><a href="https://cis.taskforce.ieee.org/ai4tst/" target="_blank">IEEE Task Force on AI for Time Series and Spatio-Temporal Data</a></li>
+      </ul>
+    </div>
+
+    <div class="services-group">
+      <div class="services-label">Journal Reviewer</div>
+      <ul class="services-list">
+        <li>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</li>
+        <li>IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</li>
+        <li>IEEE Transactions on Neural Network and Learning Systems (IEEE TNNLS)</li>
+        <li>IEEE Transactions on Audio, Speech and Language Processing (IEEE T-ASL)</li>
+        <li>ACM Transactions on Knowledge Discovery from Data (TKDD)</li>
+        <li>ACM Transactions on Intelligent Systems and Technology (TIST)</li>
+        <li>Transactions on Machine Learning Research (TMLR)</li>
+        <li>Neurocomputing</li>
+        <li>Frontiers of Computer Science (FCS)</li>
+        <li>软件学报</li>
+        <li>计算机学报</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== Research Grants ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="grants" class="section-heading">Research Grants</h2>
+    <ul class="timeline-list">
+      <li>2026.01–2028.12, the Natural Science Foundation of China</li>
+      <li>2025.01–2027.12, USTC New Medicine Joint Fund Cultivation Project (Double First-Class Initiative Special Project)</li>
+      <li>2024.09–2026.08, Anhui Provincial Natural Science Foundation</li>
+      <li>In addition, my research has been partially supported by industrial grants from leading companies such as iFlyTek, Huawei and Kuaishou.</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ===== Related Links ===== -->
+<div class="section">
+  <div class="container">
+    <h2 class="section-heading">Related Links</h2>
+    <ul class="plain-list">
+      <li>Prof. <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener">Qi Liu</a> (USTC)</li>
+      <li>Prof. <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener">Enhong Chen</a> (USTC)</li>
+      <li>Prof. <a href="https://fajieyuan.github.io/" target="_blank" rel="noopener">Fajie Yuan</a> (WU)</li>
+      <li>Prof. <a href="http://come.tju.edu.cn/info/1526/5697.htm" target="_blank" rel="noopener">Hongke Zhao</a> (TJU)</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ===== Back to Top Button ===== -->
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div style="height:12rem;width:21rem;margin:0 auto;">
+    <script type='text/javascript' id='clustrmaps'
+      src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=n&d=yzpRvK6tscYP95eJAtp2KO6oJy1DQIIoLhPD5S-3EG8&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353'>
+    </script>
+  </div>
+</footer>
+
+
+<!-- ===== Scripts ===== -->
 <script>
-async function loadGitHubStars() {
-  const elements = document.querySelectorAll('.github-stars');
-
-  for (const el of elements) {
-    const repo = el.dataset.repo;
-    try {
-      const response = await fetch(`https://api.github.com/repos/${repo}`);
-      const data = await response.json();
-      el.textContent = data.stargazers_count;
-    } catch (e) {
-      el.textContent = "N/A";
-    }
+function toggleMoreNews() {
+  const moreNews = document.getElementById("moreNews");
+  const btn = document.getElementById("toggleBtn");
+  if (moreNews.style.display === "none") {
+    moreNews.style.display = "block";
+    btn.textContent = "Show Less ▲";
+  } else {
+    moreNews.style.display = "none";
+    btn.textContent = "Show More ▼";
   }
 }
 
+// ===== Publication Filter =====
+(function() {
+  const filterBtns = document.querySelectorAll('.pub-filter-btn');
+  const pubItems = document.querySelectorAll('.pub-list li[data-tags]');
+  const yearHeadings = document.querySelectorAll('.pub-year-heading');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+
+      pubItems.forEach(item => {
+        if (filter === 'all') {
+          item.style.display = '';
+        } else {
+          const tags = item.getAttribute('data-tags') || '';
+          item.style.display = tags.split(' ').includes(filter) ? '' : 'none';
+        }
+      });
+
+      // Hide year headings whose following ol has no visible items
+      yearHeadings.forEach(heading => {
+        const ol = heading.nextElementSibling;
+        if (!ol) return;
+        const hasVisible = Array.from(ol.querySelectorAll('li')).some(li => li.style.display !== 'none');
+        heading.style.display = hasVisible ? '' : 'none';
+        ol.style.display = hasVisible ? '' : 'none';
+      });
+    });
+  });
+})();
+
+async function loadGitHubStars() {
+  const CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
+  const elements = document.querySelectorAll('.github-stars');
+  for (const el of elements) {
+    const repo = el.dataset.repo;
+    const cacheKey = `gh_stars_${repo}`;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      const { stars, ts } = JSON.parse(cached);
+      if (Date.now() - ts < CACHE_TTL) {
+        el.textContent = stars;
+        continue;
+      }
+    }
+    try {
+      const response = await fetch(`https://api.github.com/repos/${repo}`);
+      const data = await response.json();
+      const stars = data.stargazers_count;
+      el.textContent = stars;
+      localStorage.setItem(cacheKey, JSON.stringify({ stars, ts: Date.now() }));
+    } catch (e) {
+      el.textContent = cached ? JSON.parse(cached).stars : 'N/A';
+    }
+  }
+}
 document.addEventListener("DOMContentLoaded", loadGitHubStars);
+
+// Scroll highlight for nav links
+(function () {
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = Array.from(document.querySelectorAll('section[id], div[id], header[id]'))
+    .filter(el => {
+      const id = el.id;
+      return Array.from(navLinks).some(a => a.getAttribute('href') === '#' + id);
+    });
+
+  function setActive(id) {
+    navLinks.forEach(a => {
+      if (a.getAttribute('href') === '#' + id) {
+        a.style.color = 'var(--accent, #003087)';
+      } else {
+        a.style.color = '';
+      }
+    });
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActive(entry.target.id);
+      }
+    });
+  }, {
+    rootMargin: '-30% 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(sec => observer.observe(sec));
+})();
+
+// ===== Back to Top Button =====
+(function () {
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 400) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
 </script>
 
-
-
 </body>
-
-
-<!-- 页脚地图 -->
-<footer style="margin-top: 3rem; padding-bottom: 3rem;">
-    <div class="container" style="height: 12rem; width: 21rem;">
-        <div>
-            <script type='text/javascript' id='clustrmaps'
-                src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=n&d=yzpRvK6tscYP95eJAtp2KO6oJy1DQIIoLhPD5S-3EG8&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353'>
-            </script>
-        </div>
-    </div>
-</footer>
-  
-
-
-
 </html>

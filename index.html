@@ -355,6 +355,19 @@ body {
   line-height: 1.65;
   margin-bottom: 8px;
 }
+.os-card-desc strong { color: var(--accent); }
+.os-inline-highlight {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid #c9d8f5;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  vertical-align: baseline;
+}
 .os-card-footer {
   display: flex;
   align-items: center;
@@ -383,12 +396,12 @@ body {
 /* ===== Dataset Cards ===== */
 .dataset-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 14px;
 }
 .dataset-card {
   position: relative;
-  padding: 18px 18px 16px;
+  padding: 16px 18px 14px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
@@ -409,7 +422,7 @@ body {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .dataset-card-title {
   display: flex;
@@ -419,7 +432,19 @@ body {
   font-size: 18px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+}
+.dataset-topic {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: var(--accent);
+  border: 1px solid #c9d8f5;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 .dataset-inline-link {
   font-size: 13px;
@@ -435,8 +460,8 @@ body {
 .dataset-card-desc {
   font-size: 14px;
   color: var(--text-muted);
-  line-height: 1.75;
-  margin-bottom: 12px;
+  line-height: 1.65;
+  margin-bottom: 0;
 }
 .dataset-card-desc strong {
   color: var(--text);
@@ -540,6 +565,19 @@ body {
 .pub-list font[color="red"] { color: #b91c1c !important; font-weight: 700; font-style: normal; }
 .pub-list em { color: var(--text-muted); font-style: italic; }
 .pub-list .sktime-note { color: var(--text-muted); }
+.paper-highlight {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #fff1eb;
+  color: #c2410c;
+  border: 1px solid #fdba74;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  vertical-align: middle;
+}
 
 /* ===== AI Systems ===== */
 .sys-list {
@@ -854,9 +892,9 @@ body {
       <nav class="nav-links">
         <a href="#biography">Biography</a>
         <a href="#news">News</a>
-        <a href="#opensource">Open Source</a>
-        <a href="#datasets">Datasets</a>
         <a href="#selected-publications">Publications</a>
+        <a href="#opensource">Open Source</a>
+        <a href="#datasets">Benchmarks &amp; Datasets</a>
         <a href="#experience">Experience</a>
       </nav>
     </div>
@@ -986,93 +1024,6 @@ body {
   </div>
 </div>
 
-
-<!-- ===== Open Source Projects ===== -->
-<div class="section">
-  <div class="container">
-    <h2 id="opensource" class="section-heading">Open Source Projects</h2>
-    <div class="os-grid">
-
-
-      <div class="os-card">
-        <img class="os-logo" src="./files/assets/tabclaw.png" alt="TabClaw Logo">
-        <div class="os-body">
-          <div class="os-card-title">TabClaw <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span></div>
-          <div class="os-card-desc">TabClaw is an agentic table reasoning framework that empowers LLMs to understand, analyze, and interact with complex tabular data through structured reasoning, tool use, and multi-step decision workflows.</div>
-        </div>
-      </div>
-
-
-      <div class="os-card">
-        <img class="os-logo" src="./files/assets/claw-r1.jpeg" alt="Claw-R1 Logo">
-        <div class="os-body">
-          <div class="os-card-title">Claw-R1 <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span></div>
-          <div class="os-card-desc">An agentic reinforcement learning framework extending RL training environments for reasoning and tool-using LLM agents.</div>
-        </div>
-      </div>
-
-
-      <div class="os-card">
-        <img class="os-logo" src="./files/assets/mind2report.png" alt="Mind2Report Logo">
-        <div class="os-body">
-          <div class="os-card-title">Mind2Report <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Mind2Report">…</span></span></div>
-          <div class="os-card-desc">A cognitive deep research agent for synthesizing expert-level commercial and strategic reports from massive web sources with citation-grounded outputs.</div>
-        </div>
-      </div>
-
-
-      <div class="os-card">
-        <img class="os-logo" src="./files/assets/science-star.png" alt="Science-Star Logo">
-        <div class="os-body">
-          <div class="os-card-title">Science-Star <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">…</span></span></div>
-          <div class="os-card-desc">An open-source framework for building scientific AI agents — ReAct engine, tool orchestration, memory &amp; reflection, HLE dataset integration.</div>
-        </div>
-      </div>
-
-
-       <div class="os-card">
-        <img class="os-logo" src="./files/assets/agent-r1.png" alt="Agent-R1 Logo">
-        <div class="os-body">
-          <div class="os-card-title">Agent-R1 <span class="os-year">2025</span> <a class="os-github" href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="0russwest0/Agent-R1">…</span></span></div>
-          <div class="os-card-desc">A large-model agent training framework supporting reinforcement fine-tuning (GRPO), multi-tool orchestration, long-term memory, and reflective reasoning.</div>
-        </div>
-      </div>
-
-
-
-
-    </div>
-  </div>
-</div>
-
-
-<!-- ===== Datasets ===== -->
-<div class="section">
-  <div class="container">
-    <h2 id="datasets" class="section-heading">Datasets</h2>
-    <div class="dataset-grid">
-      <article class="dataset-card">
-        <div class="dataset-kicker">AI for Science · Chemical Tables</div>
-        <div class="dataset-card-title">ChemTable <a class="dataset-inline-link" href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2025.06</span></div>
-        <div class="dataset-card-desc">
-          <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong> introduces <strong>ChemTable</strong>, a real-world benchmark curated from chemical literature. It supports two core tasks:
-          <strong>table recognition</strong> and <strong>table understanding</strong>, with expert annotations over cell polygons, logical layouts, and chemistry-specific semantic labels such as reagents, catalysts, yields, and graphical components.
-        </div>
-      </article>
-
-      <article class="dataset-card">
-        <div class="dataset-kicker">E-Commerce Search · Recall to Relevance</div>
-        <div class="dataset-card-title">KuaiSearch <a class="dataset-inline-link" href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2026.02</span></div>
-        <div class="dataset-card-desc">
-          <strong>KuaiSearch: A Large-Scale E-Commerce Search Dataset for Recall, Ranking, and Relevance</strong> is built from real user search interactions on Kuaishou. It preserves authentic user queries and natural-language product texts, covers
-          <strong>cold-start users</strong> and <strong>long-tail products</strong>, and spans the three key stages of modern search systems: <strong>recall</strong>, <strong>ranking</strong>, and <strong>relevance judgment</strong>.
-        </div>
-      </article>
-    </div>
-  </div>
-</div>
-
-
 <!-- ===== Selected Publications ===== -->
 <div class="section">
   <div class="container">
@@ -1102,13 +1053,13 @@ body {
 
       <!-- <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Huajian Zhang, Qi Liu, Enhong Chen, <strong>InstructTime++: Time Series Classification with Multimodal Language Modeling via Implicit Feature Enhancement</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2601.14968" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>]</li> -->
 
-      <li data-tags="timeseries agent"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu, Ze Guo, Enhong Chen, <strong>Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.01776.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries agent"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu, Ze Guo, Enhong Chen, <strong>Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting</strong>. <span class="paper-highlight">Highlight: 率先探索 Agentic Time Series Forecasting 范式的立场 paper。</span> (Preprint) [<a href="https://arxiv.org/pdf/2602.01776.pdf" target="_blank" rel="noopener">PDF</a>]</li>
 
-     <li data-tags="timeseries agent">Xiaohan Zhang, Tian Gao, <strong>Mingyue Cheng*</strong>, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, <strong>AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">Code</a>]</li>
+     <li data-tags="timeseries agent">Xiaohan Zhang, Tian Gao, <strong>Mingyue Cheng*</strong>, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, <strong>AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting</strong>. <span class="paper-highlight">Highlight: 率先探索人机协同交互式时间序列预测范式。</span> (Preprint) [<a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">Code</a>]</li>
 
-      <li data-tags="timeseries agent">Xiaoyu Tao, <strong>Mingyue Cheng</strong>, Chuang Jiang, Tian Gao, Huanjian Zhang, Yaguo Liu, <strong>Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries agent">Xiaoyu Tao, <strong>Mingyue Cheng</strong>, Chuang Jiang, Tian Gao, Huanjian Zhang, Yaguo Liu, <strong>Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting</strong>. <span class="paper-highlight">Highlight: 首个基于多轮强化学习训练的时间序列预测智能体。</span> (Preprint) [<a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener">Code</a>]</li>
 
-      <li data-tags="timeseries llm">Xiaoyu Tao, <strong>Mingyue Cheng*</strong>, Ze Guo, Shuo Yu, Yaguo Liu, Qi Liu, Shijin Wang, <strong>MemCast: Memory-Driven Time Series Forecasting with Experience-Conditioned Reasoning</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries llm">Xiaoyu Tao, <strong>Mingyue Cheng*</strong>, Ze Guo, Shuo Yu, Yaguo Liu, Qi Liu, Shijin Wang, <strong>MemCast: Memory-Driven Time Series Forecasting with Experience-Conditioned Reasoning</strong>. <span class="paper-highlight">Highlight: 率先探索基于经验积累与持续进化的时间序列预测范式。</span> (Preprint) [<a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">PDF</a>]</li>
 
       <li data-tags="timeseries agent llm">Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen, <strong>Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Code</a>]</li>
 
@@ -1142,9 +1093,9 @@ body {
       <li data-tags="recsys">Li Li, <strong>Mingyue Cheng*</strong>, Yuyang Ye, Zhiding Liu, Enhong Chen, <strong>Preference Trajectory Modeling via Flow Matching for Sequential Recommendation</strong>. (DASFAA2026)</li>
       <li data-tags="llm">Zirui Liu, Xianquan Wang, Yan Zhuang, Jiatong Li, Qi Liu, Shuanghong Shen, <strong>Mingyue Cheng</strong>, Shijin Wang, <strong>Fewer Battles, More Gain: An Information-Efficient Framework for Arena-based LLM Evaluation</strong>. (ICLR2026) [<a href="#" rel="noopener">PDF</a>]</li>
       <li data-tags="llm">Qingyang Mao, Qi Cai, Yehao Li, Yingwei Pan, <strong>Mingyue Cheng</strong>, Ting Yao, Qi Liu, Tao Mei, <strong>Visual Autoregressive Modeling for Instruction-Guided Image Editing</strong>. (ICLR2026)</li>
-      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Jiahao Wang, Daoyu Wang, Xiaoyu Tao, Qi Liu*, Enhong Chen, <strong>Can Slow-Thinking LLMs Reason Over Time? Empirical Studies in Time Series Forecasting</strong>, <em>ACM WSDM2026</em>: 99–110, Feb 2026. [<a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Jiahao Wang, Daoyu Wang, Xiaoyu Tao, Qi Liu*, Enhong Chen, <strong>Can Slow-Thinking LLMs Reason Over Time? Empirical Studies in Time Series Forecasting</strong>. <span class="paper-highlight">Highlight: 首次提出基于慢思考思维链推理的时序预测范式。</span> <em>ACM WSDM2026</em>: 99–110, Feb 2026. [<a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Zhiding Liu, Qi Liu*, Hao Zhang, Rujiao Zhang and Enhong Chen, <strong>TimeMAE: Self-Supervised Representations of Time Series with Decoupled Masked Autoencoders</strong>, <em>ACM WSDM2026</em>: 498–508, Feb 2026. [<a href="https://arxiv.org/pdf/2303.00320" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TimeMAE" target="_blank" rel="noopener">Code</a>]</li>
-      <li data-tags="table agent">Chuang Jiang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Qingyang Mao, Jie Ouyang and Qi Liu, <strong>TableMind: An Autonomous Programmatic Agent for Tool-Augmented Table Reasoning</strong>, <em>ACM WSDM2026</em>: 260–270, Feb 2026. [<a href="https://arxiv.org/pdf/2509.06278" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lennendd/TableMind-Repo" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table agent">Chuang Jiang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Qingyang Mao, Jie Ouyang and Qi Liu, <strong>TableMind: An Autonomous Programmatic Agent for Tool-Augmented Table Reasoning</strong>. <span class="paper-highlight">Highlight: 率先探索基于多轮强化学习的智能体式表格推理范式。</span> <em>ACM WSDM2026</em>: 260–270, Feb 2026. [<a href="https://arxiv.org/pdf/2509.06278" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lennendd/TableMind-Repo" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="llm">Qingchuan Li, <strong>Mingyue Cheng*</strong>, Zirui Liu, Daoyu Wang, Yuting Zeng, Tongxuan Liu, <strong>From Hypothesis to Premises: LLM-based Backward Logical Reasoning with Selective Symbolic Translation</strong>. (AAAI2026)</li>
       <li data-tags="recsys">Yupeng Li, <strong>Mingyue Cheng*</strong>, Yucong Luo, Yitong Zhou, Qingyang Mao, Shijin Wang, <strong>BLADE: A Behavior-Level Data Augmentation Framework with Dual Fusion Modeling for Multi-Behavior Sequential Recommendation</strong>. (AAAI2026)</li>
       <li data-tags="llm recsys">Xian Guo, Ben Chen, Siyuan Wang, YingYang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Yuqing Ding, Han Li, <strong>OneSug: The Unified End-to-End Generative Framework for E-commerce Query Suggestion</strong>. (AAAI2026)</li>
@@ -1209,6 +1160,125 @@ body {
   </div>
 </div>
 
+
+<!-- ===== Open Source Projects ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="opensource" class="section-heading">Open Source Projects</h2>
+    <div class="os-grid">
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/tabclaw.png" alt="TabClaw Logo">
+        <div class="os-body">
+          <div class="os-card-title">TabClaw <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span></div>
+          <div class="os-card-desc">An open-source framework for <span class="os-inline-highlight">agentic table reasoning</span> that enables LLM agents to work over <strong>complex tabular data</strong> through <strong>structured reasoning</strong>, <strong>tool use</strong>, and <strong>multi-step decision workflows</strong>.</div>
+        </div>
+      </div>
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/claw-r1.jpeg" alt="Claw-R1 Logo">
+        <div class="os-body">
+          <div class="os-card-title">Claw-R1 <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span></div>
+          <div class="os-card-desc">An open-source framework for <span class="os-inline-highlight">agentic reinforcement learning</span> that extends RL training environments to support <strong>reasoning-intensive</strong> and <strong>tool-using LLM agents</strong>.</div>
+        </div>
+      </div>
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/mind2report.png" alt="Mind2Report Logo">
+        <div class="os-body">
+          <div class="os-card-title">Mind2Report <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Mind2Report">…</span></span></div>
+          <div class="os-card-desc">A <span class="os-inline-highlight">deep research agent</span> for synthesizing <strong>expert-level commercial and strategic reports</strong> from massive web sources with <strong>citation-grounded outputs</strong>.</div>
+        </div>
+      </div>
+
+
+      <div class="os-card">
+        <img class="os-logo" src="./files/assets/science-star.png" alt="Science-Star Logo">
+        <div class="os-body">
+          <div class="os-card-title">Science-Star <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">…</span></span></div>
+          <div class="os-card-desc">An open-source framework for <span class="os-inline-highlight">scientific AI agents</span>, integrating <strong>ReAct-style planning</strong>, <strong>tool orchestration</strong>, <strong>memory and reflection</strong>, and <strong>HLE benchmark support</strong>.</div>
+        </div>
+      </div>
+
+
+       <div class="os-card">
+        <img class="os-logo" src="./files/assets/agent-r1.png" alt="Agent-R1 Logo">
+        <div class="os-body">
+          <div class="os-card-title">Agent-R1 <span class="os-year">2025</span> <a class="os-github" href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="0russwest0/Agent-R1">…</span></span></div>
+          <div class="os-card-desc">A large-model agent training framework for <span class="os-inline-highlight">end-to-end RL fine-tuning</span>, supporting <strong>GRPO</strong>, <strong>multi-tool orchestration</strong>, <strong>long-term memory</strong>, and <strong>reflective reasoning</strong>.</div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== Datasets ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="datasets" class="section-heading">Benchmarks &amp; Datasets</h2>
+    <div class="dataset-grid">
+
+
+      <article class="dataset-card">
+        <div class="dataset-kicker">E-Commerce Search · Recall to Relevance</div>
+        <div class="dataset-card-title">KuaiSearch <span class="dataset-topic">Search-based Recommendation</span> <a class="dataset-inline-link" href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2026.02</span></div>
+        <div class="dataset-card-desc">
+          <strong>KuaiSearch: A Large-Scale E-Commerce Search Dataset for Recall, Ranking, and Relevance</strong> is built from real user search interactions on Kuaishou. It preserves authentic user queries and natural-language product texts, covers
+          <strong>cold-start users</strong> and <strong>long-tail products</strong>, and spans the three key stages of modern search systems: <strong>recall</strong>, <strong>ranking</strong>, and <strong>relevance judgment</strong>.
+        </div>
+      </article>
+      
+      <article class="dataset-card">
+        <div class="dataset-kicker">Scientific Literature · Agentic Evaluation</div>
+        <div class="dataset-card-title">PaperArena <span class="dataset-topic">Scientific Literature Mining</span> <a class="dataset-inline-link" href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">Code</a> <span class="os-year">2025.10</span></div>
+        <div class="dataset-card-desc">
+          <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong> benchmarks agentic systems on scientific reading and reasoning with tool use. It targets
+          <strong>literature understanding</strong>, <strong>tool-augmented reasoning</strong>, and <strong>evidence-grounded evaluation</strong> over scientific papers and related scholarly workflows.
+        </div>
+      </article>
+
+
+        <article class="dataset-card">
+        <div class="dataset-kicker">AI for Science · Chemical Tables</div>
+        <div class="dataset-card-title">ChemTable <span class="dataset-topic">Scientific Literature Mining</span> <a class="dataset-inline-link" href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2025.06</span></div>
+        <div class="dataset-card-desc">
+          <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong> introduces <strong>ChemTable</strong>, a real-world benchmark curated from chemical literature. It supports two core tasks:
+          <strong>table recognition</strong> and <strong>table understanding</strong>, with expert annotations over cell polygons, logical layouts, and chemistry-specific semantic labels such as reagents, catalysts, yields, and graphical components.
+        </div>
+      </article>
+
+      <article class="dataset-card">
+        <div class="dataset-kicker">RAG Evaluation · Dynamic Benchmark</div>
+        <div class="dataset-card-title">HoH <span class="dataset-topic">RAG</span> <a class="dataset-inline-link" href="https://aclanthology.org/2025.acl-long.301.pdf" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">Code</a> <span class="os-year">2025.05</span></div>
+        <div class="dataset-card-desc">
+          <strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG</strong> studies how retrieval-augmented generation systems fail when knowledge becomes stale. It provides a dynamic evaluation setting for measuring
+          <strong>temporal robustness</strong>, <strong>outdated-information sensitivity</strong>, and the impact of knowledge freshness in modern <strong>RAG</strong> pipelines.
+        </div>
+      </article>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== Education ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="education" class="section-heading">Education</h2>
+    <ul class="timeline-list">
+      <li>Sep. 2017 ~ Jun. 2023, Major: Data Science (Computer Science and Technology), Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
+      <li>Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
+    </ul>
+  </div>
+</div>
+
 <!-- ===== Working Experience ===== -->
 <div class="section">
   <div class="container">
@@ -1223,17 +1293,18 @@ body {
 </div>
 
 
-<!-- ===== Education ===== -->
+<!-- ===== Teaching ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="education" class="section-heading">Education</h2>
+    <h2 id="teaching" class="section-heading">Teaching</h2>
     <ul class="timeline-list">
-      <li>Sep. 2017 ~ Jun. 2023, Major: Data Science (Computer Science and Technology), Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
-      <li>Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
+      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2024.</li>
+      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2025.</li>
+      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2026.</li>
+      <li>Introduction to Systems Programming（系统程序设计基础）, Undergraduate Course, Spring 2026.</li>
     </ul>
   </div>
 </div>
-
 
 <!-- ===== Honors ===== -->
 <div class="section">
@@ -1261,24 +1332,10 @@ body {
 </div>
 
 
-<!-- ===== Teaching ===== -->
-<div class="section">
-  <div class="container">
-    <h2 id="teaching" class="section-heading">Teaching</h2>
-    <ul class="timeline-list">
-      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2024.</li>
-      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2025.</li>
-      <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2026.</li>
-      <li>Introduction to Systems Programming（系统程序设计基础）, Undergraduate Course, Spring 2026.</li>
-    </ul>
-  </div>
-</div>
-
-
 <!-- ===== Professional Activities ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="services" class="section-heading">Professional Activities</h2>
+    <h2 id="services" class="section-heading">Service</h2>
 
     <div class="services-group">
       <div class="services-label">Program Committee Member</div>

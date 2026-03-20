@@ -1447,29 +1447,21 @@ function toggleMoreNews() {
 })();
 
 async function loadGitHubStars() {
-  const CACHE_TTL = 60 * 60 * 1000; // 1 hour in ms
   const elements = document.querySelectorAll('.github-stars');
-  for (const el of elements) {
+  await Promise.all(Array.from(elements).map(async el => {
     const repo = el.dataset.repo;
-    const cacheKey = `gh_stars_${repo}`;
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      const { stars, ts } = JSON.parse(cached);
-      if (Date.now() - ts < CACHE_TTL) {
-        el.textContent = stars;
-        continue;
-      }
-    }
     try {
-      const response = await fetch(`https://api.github.com/repos/${repo}`);
+      const response = await fetch(`https://api.github.com/repos/${repo}`, {
+        cache: 'no-store',
+        headers: { 'Accept': 'application/vnd.github+json' }
+      });
+      if (!response.ok) throw new Error(`GitHub API ${response.status}`);
       const data = await response.json();
-      const stars = data.stargazers_count;
-      el.textContent = stars;
-      localStorage.setItem(cacheKey, JSON.stringify({ stars, ts: Date.now() }));
+      el.textContent = data.stargazers_count ?? 'N/A';
     } catch (e) {
-      el.textContent = cached ? JSON.parse(cached).stars : 'N/A';
+      el.textContent = 'N/A';
     }
-  }
+  }));
 }
 document.addEventListener("DOMContentLoaded", loadGitHubStars);
 

@@ -197,6 +197,59 @@ body {
 .plain-list li a { color: var(--accent); text-decoration: none; }
 .plain-list li a:hover { text-decoration: underline; }
 
+/* ===== Related Links ===== */
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.related-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.related-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px rgba(0, 48, 135, 0.08);
+  transform: translateY(-1px);
+}
+.related-card-main {
+  min-width: 0;
+}
+.related-card-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+}
+.related-card-role {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.related-card-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 48, 135, 0.1);
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
 /* ===== Research Interests ===== */
 .research-list {
   font-size: 14px;
@@ -368,6 +421,17 @@ body {
   color: var(--text);
   margin-bottom: 8px;
 }
+.dataset-inline-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.dataset-inline-link:hover {
+  border-bottom-color: var(--accent);
+}
 .dataset-card-desc {
   font-size: 14px;
   color: var(--text-muted);
@@ -376,23 +440,6 @@ body {
 }
 .dataset-card-desc strong {
   color: var(--text);
-}
-.dataset-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.dataset-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: var(--accent-light);
-  border: 1px solid rgba(0, 48, 135, 0.08);
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 600;
 }
 .dataset-links {
   display: flex;
@@ -547,17 +594,21 @@ body {
 }
 .footer-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
-  gap: 22px;
-  align-items: stretch;
-  padding: 20px;
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 500px);
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--border);
   border-radius: 18px;
   box-shadow: 0 14px 40px rgba(0, 48, 135, 0.08);
 }
 .footer-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: left;
+  min-height: 100%;
 }
 .footer-kicker {
   display: inline-flex;
@@ -637,8 +688,8 @@ body {
 }
 .footer-map-panel {
   position: relative;
-  min-height: 300px;
-  padding: 14px;
+  min-height: 238px;
+  padding: 12px;
   border-radius: 16px;
   border: 1px solid rgba(0, 48, 135, 0.12);
   background:
@@ -658,7 +709,7 @@ body {
 .footer-map-note {
   position: relative;
   z-index: 1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   text-align: left;
 }
 .footer-map-label {
@@ -669,218 +720,55 @@ body {
   text-transform: uppercase;
 }
 .footer-map-subtitle {
-  margin-top: 4px;
-  font-size: 13px;
+  margin-top: 2px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 .footer-map {
   position: relative;
   z-index: 1;
-  min-height: 230px;
+  min-height: 170px;
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.88);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
 }
-.world-map {
-  display: block;
-  width: 100%;
-  height: auto;
+.clustrmaps-shell {
+  min-height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
 }
-.world-map-bg {
-  opacity: 0.96;
+.clustrmaps-widget {
+  width: min(100%, 380px);
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.world-grid line {
-  stroke: rgba(107, 137, 191, 0.18);
-  stroke-width: 1;
+.clustrmaps-widget > div,
+.clustrmaps-widget > iframe,
+.clustrmaps-widget > img,
+.clustrmaps-widget > a {
+  max-width: 100%;
 }
-.world-grid path {
-  stroke: rgba(107, 137, 191, 0.22);
-  stroke-width: 1;
-  fill: none;
-}
-.continent {
-  fill: rgba(214, 226, 246, 0.95);
-  stroke: rgba(84, 121, 179, 0.55);
-  stroke-width: 1.4;
-}
-.continent-shadow {
-  fill: rgba(170, 191, 225, 0.22);
-}
-.route {
-  fill: none;
-  stroke: url(#routeGradient);
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  opacity: 0.85;
-  stroke-dasharray: 8 8;
-  animation: routeFlow 18s linear infinite;
-}
-.route-secondary {
-  stroke: rgba(58, 204, 58, 0.55);
-  stroke-width: 1.6;
-  opacity: 0.55;
-}
-.node-dot {
-  fill: #ffffff;
-  stroke: var(--accent);
-  stroke-width: 2;
-}
-.node-core {
-  fill: var(--accent);
-}
-.node-pulse {
-  fill: rgba(0, 48, 135, 0.18);
-  animation: mapPulse 3.2s ease-out infinite;
-  transform-origin: center;
-  transform-box: fill-box;
-}
-.node-accent .node-core {
-  fill: #3acc3a;
-}
-.node-accent .node-dot {
-  stroke: #3acc3a;
-}
-.map-label {
-  font-size: 12px;
-  font-weight: 600;
-  fill: #33527d;
-}
-.map-label-home {
-  fill: var(--accent);
-}
-.map-live-points {
-  pointer-events: none;
-}
-.live-point {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.live-point .spark-dot {
-  fill: rgba(0, 48, 135, 0.78);
-  opacity: 0.75;
-  animation: sparkBlink 3.2s ease-in-out infinite;
-}
-.live-point .spark-core {
-  fill: #ffffff;
-  opacity: 0.95;
-}
-.live-point .spark-ring {
-  fill: rgba(58, 204, 58, 0.12);
-  stroke: rgba(58, 204, 58, 0.32);
-  stroke-width: 1.1;
-  animation: sparkExpand 3.2s ease-out infinite;
-}
-.live-point.is-accent .spark-dot {
-  fill: rgba(58, 204, 58, 0.82);
-}
-.live-point.is-soft .spark-dot {
-  fill: rgba(122, 178, 255, 0.8);
-}
-.scan-line {
-  opacity: 0.45;
-  animation: worldScan 9s ease-in-out infinite;
-}
-.scan-line rect {
-  fill: url(#scanGlow);
-}
-.map-legend {
+.footer-map-hint {
   position: relative;
   z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 8px;
-}
-.legend-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(0, 48, 135, 0.1);
+  margin-top: 6px;
   font-size: 12px;
   color: var(--text-muted);
+  line-height: 1.45;
 }
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(0, 48, 135, 0.12);
+.footer-map-hint a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
 }
-.legend-dot-alt {
-  background: #3acc3a;
-  box-shadow: 0 0 0 4px rgba(58, 204, 58, 0.12);
-}
-@keyframes mapPulse {
-  0% {
-    transform: scale(0.6);
-    opacity: 0.8;
-  }
-  70% {
-    transform: scale(1.55);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1.55);
-    opacity: 0;
-  }
-}
-@keyframes routeFlow {
-  to {
-    stroke-dashoffset: -160;
-  }
-}
-@keyframes sparkBlink {
-  0%, 100% {
-    opacity: 0.22;
-    transform: scale(0.72);
-  }
-  45% {
-    opacity: 0.95;
-    transform: scale(1);
-  }
-  70% {
-    opacity: 0.5;
-    transform: scale(0.9);
-  }
-}
-@keyframes sparkExpand {
-  0% {
-    opacity: 0.7;
-    transform: scale(0.45);
-  }
-  70% {
-    opacity: 0;
-    transform: scale(1.7);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.7);
-  }
-}
-@keyframes worldScan {
-  0%, 100% {
-    transform: translateX(-130px);
-    opacity: 0;
-  }
-  18% {
-    opacity: 0.18;
-  }
-  50% {
-    transform: translateX(280px);
-    opacity: 0.42;
-  }
-  82% {
-    opacity: 0.18;
-  }
-  100% {
-    transform: translateX(620px);
-    opacity: 0;
-  }
+.footer-map-hint a:hover {
+  text-decoration: underline;
 }
 .footer-bottom {
   margin-top: 10px;
@@ -895,6 +783,7 @@ body {
   .profile-photo { width: 120px; height: 145px; }
   .os-grid { grid-template-columns: 1fr; }
   .dataset-grid { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 14px; }
   .profile-name { font-size: 22px; }
   .footer-card {
@@ -902,7 +791,7 @@ body {
     padding: 18px;
   }
   .footer-map-panel {
-    min-height: 240px;
+    min-height: 228px;
   }
   .footer-title {
     font-size: 21px;
@@ -921,11 +810,8 @@ body {
     padding: 10px;
   }
   .footer-map {
-    min-height: 190px;
+    min-height: 176px;
     padding: 8px;
-  }
-  .map-label {
-    font-size: 10px;
   }
 }
 
@@ -1166,45 +1052,22 @@ body {
 <div class="section">
   <div class="container">
     <h2 id="datasets" class="section-heading">Datasets</h2>
-    <p>
-      Released benchmarks and datasets for <strong>AI for Science</strong> and <strong>real-world e-commerce search</strong>, with a focus on structured understanding, retrieval, ranking, and relevance.
-    </p>
     <div class="dataset-grid">
       <article class="dataset-card">
         <div class="dataset-kicker">AI for Science · Chemical Tables</div>
-        <div class="dataset-card-title">ChemTable <span class="os-year">2025.06</span></div>
+        <div class="dataset-card-title">ChemTable <a class="dataset-inline-link" href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2025.06</span></div>
         <div class="dataset-card-desc">
           <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong> introduces <strong>ChemTable</strong>, a real-world benchmark curated from chemical literature. It supports two core tasks:
           <strong>table recognition</strong> and <strong>table understanding</strong>, with expert annotations over cell polygons, logical layouts, and chemistry-specific semantic labels such as reagents, catalysts, yields, and graphical components.
-        </div>
-        <div class="dataset-tags">
-          <span class="dataset-tag">Table Recognition</span>
-          <span class="dataset-tag">Table Understanding</span>
-          <span class="dataset-tag">Chemical Tables</span>
-          <span class="dataset-tag">Multimodal Benchmark</span>
-        </div>
-        <div class="dataset-links">
-          <a href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a>
-          <a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Dataset</a>
         </div>
       </article>
 
       <article class="dataset-card">
         <div class="dataset-kicker">E-Commerce Search · Recall to Relevance</div>
-        <div class="dataset-card-title">KuaiSearch <span class="os-year">2026.02</span></div>
+        <div class="dataset-card-title">KuaiSearch <a class="dataset-inline-link" href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2026.02</span></div>
         <div class="dataset-card-desc">
           <strong>KuaiSearch: A Large-Scale E-Commerce Search Dataset for Recall, Ranking, and Relevance</strong> is built from real user search interactions on Kuaishou. It preserves authentic user queries and natural-language product texts, covers
           <strong>cold-start users</strong> and <strong>long-tail products</strong>, and spans the three key stages of modern search systems: <strong>recall</strong>, <strong>ranking</strong>, and <strong>relevance judgment</strong>.
-        </div>
-        <div class="dataset-tags">
-          <span class="dataset-tag">Recall</span>
-          <span class="dataset-tag">Ranking</span>
-          <span class="dataset-tag">Relevance</span>
-          <span class="dataset-tag">Real-World Search</span>
-        </div>
-        <div class="dataset-links">
-          <a href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a>
-          <a href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">Dataset</a>
         </div>
       </article>
     </div>
@@ -1469,12 +1332,36 @@ body {
 <div class="section">
   <div class="container">
     <h2 class="section-heading">Related Links</h2>
-    <ul class="plain-list">
-      <li>Prof. <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener">Qi Liu</a> (USTC)</li>
-      <li>Prof. <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener">Enhong Chen</a> (USTC)</li>
-      <li>Prof. <a href="https://fajieyuan.github.io/" target="_blank" rel="noopener">Fajie Yuan</a> (WU)</li>
-      <li>Prof. <a href="http://come.tju.edu.cn/info/1526/5697.htm" target="_blank" rel="noopener">Hongke Zhao</a> (TJU)</li>
-    </ul>
+    <div class="related-grid">
+      <a class="related-card" href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Qi Liu</div>
+          <div class="related-card-role">University of Science and Technology of China</div>
+        </div>
+        <span class="related-card-badge">USTC</span>
+      </a>
+      <a class="related-card" href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Enhong Chen</div>
+          <div class="related-card-role">University of Science and Technology of China</div>
+        </div>
+        <span class="related-card-badge">USTC</span>
+      </a>
+      <a class="related-card" href="https://fajieyuan.github.io/" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Fajie Yuan</div>
+          <div class="related-card-role">Westlake University</div>
+        </div>
+        <span class="related-card-badge">WU</span>
+      </a>
+      <a class="related-card" href="http://come.tju.edu.cn/info/1526/5697.htm" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Hongke Zhao</div>
+          <div class="related-card-role">Tianjin University</div>
+        </div>
+        <span class="related-card-badge">TJU</span>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -1491,16 +1378,16 @@ body {
   <div class="footer-shell">
     <div class="footer-card">
       <div class="footer-copy">
-        <div class="footer-kicker">Global Academic Reach</div>
-        <h2 class="footer-title">A cleaner world map for research visibility, collaborators, and readers</h2>
+        <div class="footer-kicker">Live Visitor Map</div>
+        <h2 class="footer-title">A real world map of readers, collaborators, and visitors</h2>
         <p class="footer-desc">
-          Instead of embedding a generic widget, this footer now closes the homepage with a custom global footprint view.
-          The visualization is designed to reflect international research presence across major academic and open-source communities.
+          The footer now keeps a real visitor map widget based on ClustrMaps.
+          It gives a more natural snapshot of global access while staying compact inside the existing homepage layout.
         </p>
         <div class="footer-highlights">
-          <span class="footer-highlight">Time Series</span>
-          <span class="footer-highlight">LLM Agents</span>
-          <span class="footer-highlight">Table Mining</span>
+          <span class="footer-highlight">Live Tracking</span>
+          <span class="footer-highlight">World Map</span>
+          <span class="footer-highlight">Global Reach</span>
         </div>
         <div class="footer-links">
           <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl" target="_blank" rel="noopener">Google Scholar</a>
@@ -1508,119 +1395,20 @@ body {
           <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
         </div>
       </div>
-      <div class="footer-map-panel" aria-label="Illustrated global research footprint map">
+      <div class="footer-map-panel" aria-label="Live visitor world map">
         <div class="footer-map-note">
-          <div class="footer-map-label">Worldwide Footprint</div>
-          <div class="footer-map-subtitle">Illustrated academic reach across research, readership, and open-source communities</div>
+          <div class="footer-map-label">Visitor Distribution</div>
+          <div class="footer-map-subtitle">Live world map for this homepage.</div>
         </div>
         <div class="footer-map">
-          <svg class="world-map" viewBox="0 0 760 420" role="img" aria-label="Stylized world map with global research nodes">
-            <defs>
-              <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#3acc3a" stop-opacity="0.15"></stop>
-                <stop offset="55%" stop-color="#003087" stop-opacity="0.9"></stop>
-                <stop offset="100%" stop-color="#7ab2ff" stop-opacity="0.3"></stop>
-              </linearGradient>
-              <linearGradient id="scanGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#ffffff" stop-opacity="0"></stop>
-                <stop offset="35%" stop-color="#ffffff" stop-opacity="0"></stop>
-                <stop offset="50%" stop-color="#7ab2ff" stop-opacity="0.55"></stop>
-                <stop offset="65%" stop-color="#ffffff" stop-opacity="0"></stop>
-                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"></stop>
-              </linearGradient>
-            </defs>
-
-            <g class="world-map-bg">
-            <g class="world-grid" aria-hidden="true">
-              <line x1="35" y1="90" x2="725" y2="90"></line>
-              <line x1="35" y1="160" x2="725" y2="160"></line>
-              <line x1="35" y1="230" x2="725" y2="230"></line>
-              <line x1="35" y1="300" x2="725" y2="300"></line>
-              <path d="M100 40 Q120 100 100 180 T100 380"></path>
-              <path d="M220 40 Q240 100 220 180 T220 380"></path>
-              <path d="M340 40 Q360 100 340 180 T340 380"></path>
-              <path d="M460 40 Q480 100 460 180 T460 380"></path>
-              <path d="M580 40 Q600 100 580 180 T580 380"></path>
-              <path d="M700 40 Q720 100 700 180 T700 380"></path>
-            </g>
-
-            <g aria-hidden="true">
-              <path class="continent-shadow" d="M80 104 C125 66 189 72 222 104 C246 126 263 151 247 176 C232 199 205 201 181 193 C164 207 145 212 131 202 C122 189 113 182 100 176 C76 165 54 141 61 123 C66 112 72 108 80 104 Z"></path>
-              <path class="continent-shadow" d="M186 224 C208 210 239 216 251 235 C258 248 254 261 246 270 C242 279 243 292 235 307 C225 328 211 349 194 365 C181 357 180 338 175 322 C168 302 159 278 163 259 C167 243 174 232 186 224 Z"></path>
-              <path class="continent-shadow" d="M338 100 C367 82 410 79 438 93 C453 81 479 80 503 93 C533 92 583 104 611 116 C647 132 691 148 689 177 C683 190 670 190 654 188 C633 188 614 191 596 201 C587 213 572 218 552 216 C529 217 510 224 491 234 C469 245 449 237 430 224 C408 216 387 203 371 185 C353 173 342 161 336 145 C332 130 331 112 338 100 Z"></path>
-              <path class="continent-shadow" d="M407 218 C427 207 454 214 466 233 C476 252 476 281 468 303 C454 322 441 344 423 353 C409 346 404 329 399 314 C391 296 378 276 380 255 C384 239 391 227 407 218 Z"></path>
-              <path class="continent-shadow" d="M604 292 C621 279 647 280 670 287 C690 296 704 311 697 326 C687 338 666 344 648 346 C626 349 605 345 592 334 C586 319 590 302 604 292 Z"></path>
-              <path class="continent-shadow" d="M302 70 C317 58 340 58 351 72 C343 82 329 89 312 87 C301 83 296 78 302 70 Z"></path>
-            </g>
-
-            <g>
-              <path class="continent" d="M86 98 C132 60 196 68 228 102 C252 124 269 149 252 173 C238 194 212 197 188 189 C172 202 153 207 139 198 C130 186 121 178 108 173 C84 163 62 140 68 120 C73 107 79 101 86 98 Z"></path>
-              <path class="continent" d="M191 218 C214 204 244 211 255 230 C262 242 259 255 250 265 C247 275 248 289 240 303 C230 323 217 344 199 360 C186 352 186 332 180 317 C173 298 164 274 168 255 C172 238 179 226 191 218 Z"></path>
-              <path class="continent" d="M344 95 C374 77 415 75 442 89 C458 77 483 77 506 89 C537 88 586 100 616 113 C652 129 696 144 695 172 C690 184 676 185 659 183 C638 183 620 186 602 196 C593 208 579 213 559 211 C535 212 517 220 498 229 C477 240 457 232 438 220 C416 211 393 198 376 180 C359 169 348 156 342 141 C338 125 337 107 344 95 Z"></path>
-              <path class="continent" d="M412 212 C432 202 459 208 472 228 C481 246 481 276 473 298 C460 317 446 339 429 348 C414 341 409 323 404 308 C397 291 383 270 386 250 C389 234 397 221 412 212 Z"></path>
-              <path class="continent" d="M609 286 C626 273 652 274 675 282 C695 291 708 306 702 321 C691 333 671 338 653 341 C631 343 610 339 597 328 C591 314 595 297 609 286 Z"></path>
-              <path class="continent" d="M306 66 C321 54 344 54 355 68 C347 78 333 85 316 83 C305 79 300 74 306 66 Z"></path>
-            </g>
-            </g>
-
-            <g aria-hidden="true">
-              <path class="route" d="M548 162 Q474 104 392 116"></path>
-              <path class="route" d="M548 162 Q400 108 198 146"></path>
-              <path class="route" d="M548 162 Q594 150 606 152"></path>
-              <path class="route" d="M548 162 Q572 206 568 228"></path>
-              <path class="route" d="M548 162 Q628 228 648 308"></path>
-              <path class="route route-secondary" d="M392 116 Q480 128 606 152"></path>
-            </g>
-
-            <g class="node node-home">
-              <circle class="node-pulse" cx="548" cy="162" r="10"></circle>
-              <circle class="node-dot" cx="548" cy="162" r="8"></circle>
-              <circle class="node-core" cx="548" cy="162" r="4"></circle>
-              <text class="map-label map-label-home" x="560" y="154">Hefei</text>
-              <text class="map-label map-label-home" x="560" y="170">USTC</text>
-            </g>
-            <g class="node node-accent">
-              <circle class="node-pulse" cx="392" cy="116" r="8"></circle>
-              <circle class="node-dot" cx="392" cy="116" r="6"></circle>
-              <circle class="node-core" cx="392" cy="116" r="3"></circle>
-              <text class="map-label" x="402" y="110">Europe</text>
-            </g>
-            <g class="node">
-              <circle class="node-pulse" cx="198" cy="146" r="8"></circle>
-              <circle class="node-dot" cx="198" cy="146" r="6"></circle>
-              <circle class="node-core" cx="198" cy="146" r="3"></circle>
-              <text class="map-label" x="110" y="138">North America</text>
-            </g>
-            <g class="node">
-              <circle class="node-pulse" cx="606" cy="152" r="8"></circle>
-              <circle class="node-dot" cx="606" cy="152" r="6"></circle>
-              <circle class="node-core" cx="606" cy="152" r="3"></circle>
-              <text class="map-label" x="617" y="146">East Asia</text>
-            </g>
-            <g class="node node-accent">
-              <circle class="node-pulse" cx="568" cy="228" r="8"></circle>
-              <circle class="node-dot" cx="568" cy="228" r="6"></circle>
-              <circle class="node-core" cx="568" cy="228" r="3"></circle>
-              <text class="map-label" x="579" y="223">Southeast Asia</text>
-            </g>
-            <g class="node">
-              <circle class="node-pulse" cx="648" cy="308" r="8"></circle>
-              <circle class="node-dot" cx="648" cy="308" r="6"></circle>
-              <circle class="node-core" cx="648" cy="308" r="3"></circle>
-              <text class="map-label" x="613" y="329">Oceania</text>
-            </g>
-
-            <g class="scan-line" aria-hidden="true">
-              <rect x="0" y="42" width="120" height="330" rx="60"></rect>
-            </g>
-
-            <g id="map-live-points" class="map-live-points" aria-hidden="true"></g>
-          </svg>
+          <div class="clustrmaps-shell">
+            <div id="clustrmaps-widget" class="clustrmaps-widget" aria-label="ClustrMaps visitor map"></div>
+            <noscript>
+              <a href="https://clustrmaps.com/site/1c6vu" target="_blank" rel="noopener">View visitor map</a>
+            </noscript>
+          </div>
         </div>
-        <div class="map-legend" aria-hidden="true">
-          <span class="legend-item"><span class="legend-dot"></span>Primary research base</span>
-          <span class="legend-item"><span class="legend-dot legend-dot-alt"></span>International visibility</span>
-        </div>
+        <div class="footer-map-hint">Powered by <a href="https://clustrmaps.com/" target="_blank" rel="noopener">ClustrMaps</a>. Click the map for details.</div>
       </div>
     </div>
     <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in March 2026.</div>
@@ -1702,72 +1490,18 @@ async function loadGitHubStars() {
 }
 document.addEventListener("DOMContentLoaded", loadGitHubStars);
 
-function initLiveWorldMap() {
-  const layer = document.getElementById('map-live-points');
-  if (!layer) return;
+function initClustrMaps() {
+  const container = document.getElementById('clustrmaps-widget');
+  if (!container || container.querySelector('#clustrmaps')) return;
 
-  const NS = 'http://www.w3.org/2000/svg';
-  const clusters = [
-    { cx: 170, cy: 136, count: 16, spreadX: 56, spreadY: 24, accent: false },
-    { cx: 210, cy: 238, count: 10, spreadX: 34, spreadY: 50, accent: false },
-    { cx: 380, cy: 115, count: 18, spreadX: 54, spreadY: 26, accent: true },
-    { cx: 470, cy: 150, count: 16, spreadX: 68, spreadY: 26, accent: false },
-    { cx: 550, cy: 162, count: 24, spreadX: 78, spreadY: 34, accent: true },
-    { cx: 565, cy: 232, count: 12, spreadX: 52, spreadY: 30, accent: true },
-    { cx: 645, cy: 302, count: 8, spreadX: 36, spreadY: 20, accent: false }
-  ];
-
-  const existing = layer.querySelectorAll('.live-point').length;
-  if (existing > 0) return;
-
-  let index = 0;
-
-  function randomBetween(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  clusters.forEach(cluster => {
-    for (let i = 0; i < cluster.count; i += 1) {
-      const x = cluster.cx + randomBetween(-cluster.spreadX, cluster.spreadX);
-      const y = cluster.cy + randomBetween(-cluster.spreadY, cluster.spreadY);
-      const dotRadius = randomBetween(1.4, 2.8);
-      const coreRadius = Math.max(0.8, dotRadius * 0.42);
-      const ringRadius = dotRadius * randomBetween(1.8, 2.6);
-      const group = document.createElementNS(NS, 'g');
-      const colorClass = cluster.accent && i % 3 === 0 ? ' is-accent' : (i % 5 === 0 ? ' is-soft' : '');
-      group.setAttribute('class', `live-point${colorClass}`);
-      group.style.animationDelay = `${(index * 0.17).toFixed(2)}s`;
-
-      const ring = document.createElementNS(NS, 'circle');
-      ring.setAttribute('class', 'spark-ring');
-      ring.setAttribute('cx', x.toFixed(1));
-      ring.setAttribute('cy', y.toFixed(1));
-      ring.setAttribute('r', ringRadius.toFixed(2));
-      ring.style.animationDelay = `${(index * 0.19).toFixed(2)}s`;
-
-      const dot = document.createElementNS(NS, 'circle');
-      dot.setAttribute('class', 'spark-dot');
-      dot.setAttribute('cx', x.toFixed(1));
-      dot.setAttribute('cy', y.toFixed(1));
-      dot.setAttribute('r', dotRadius.toFixed(2));
-      dot.style.animationDelay = `${(index * 0.13).toFixed(2)}s`;
-
-      const core = document.createElementNS(NS, 'circle');
-      core.setAttribute('class', 'spark-core');
-      core.setAttribute('cx', x.toFixed(1));
-      core.setAttribute('cy', y.toFixed(1));
-      core.setAttribute('r', coreRadius.toFixed(2));
-
-      group.appendChild(ring);
-      group.appendChild(dot);
-      group.appendChild(core);
-      layer.appendChild(group);
-      index += 1;
-    }
-  });
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.id = 'clustrmaps';
+  script.async = true;
+  script.src = 'https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=360&t=n&d=yzpRvK6tscYP95eJAtp2KO6oJy1DQIIoLhPD5S-3EG8&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353';
+  container.appendChild(script);
 }
-
-document.addEventListener('DOMContentLoaded', initLiveWorldMap);
+document.addEventListener("DOMContentLoaded", initClustrMaps);
 
 // Scroll highlight for nav links
 (function () {

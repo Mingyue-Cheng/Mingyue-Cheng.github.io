@@ -327,6 +327,88 @@ body {
   vertical-align: middle;
 }
 
+/* ===== Dataset Cards ===== */
+.dataset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.dataset-card {
+  position: relative;
+  padding: 18px 18px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 8px 28px rgba(0, 48, 135, 0.05);
+  overflow: hidden;
+}
+.dataset-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, #3acc3a 100%);
+}
+.dataset-kicker {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.dataset-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.dataset-card-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+.dataset-card-desc strong {
+  color: var(--text);
+}
+.dataset-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.dataset-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--accent-light);
+  border: 1px solid rgba(0, 48, 135, 0.08);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+}
+.dataset-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+}
+.dataset-links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.dataset-links a:hover {
+  text-decoration: underline;
+}
+
 /* ===== Publication Filters ===== */
 .pub-filters {
   display: flex;
@@ -812,6 +894,7 @@ body {
   .profile-wrap { flex-direction: column; }
   .profile-photo { width: 120px; height: 145px; }
   .os-grid { grid-template-columns: 1fr; }
+  .dataset-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 14px; }
   .profile-name { font-size: 22px; }
   .footer-card {
@@ -886,6 +969,7 @@ body {
         <a href="#biography">Biography</a>
         <a href="#news">News</a>
         <a href="#opensource">Open Source</a>
+        <a href="#datasets">Datasets</a>
         <a href="#selected-publications">Publications</a>
         <a href="#experience">Experience</a>
         <a href="#honors">Honors</a>
@@ -1078,6 +1162,56 @@ body {
 </div>
 
 
+<!-- ===== Datasets ===== -->
+<div class="section">
+  <div class="container">
+    <h2 id="datasets" class="section-heading">Datasets</h2>
+    <p>
+      Released benchmarks and datasets for <strong>AI for Science</strong> and <strong>real-world e-commerce search</strong>, with a focus on structured understanding, retrieval, ranking, and relevance.
+    </p>
+    <div class="dataset-grid">
+      <article class="dataset-card">
+        <div class="dataset-kicker">AI for Science · Chemical Tables</div>
+        <div class="dataset-card-title">ChemTable <span class="os-year">2025.06</span></div>
+        <div class="dataset-card-desc">
+          <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong> introduces <strong>ChemTable</strong>, a real-world benchmark curated from chemical literature. It supports two core tasks:
+          <strong>table recognition</strong> and <strong>table understanding</strong>, with expert annotations over cell polygons, logical layouts, and chemistry-specific semantic labels such as reagents, catalysts, yields, and graphical components.
+        </div>
+        <div class="dataset-tags">
+          <span class="dataset-tag">Table Recognition</span>
+          <span class="dataset-tag">Table Understanding</span>
+          <span class="dataset-tag">Chemical Tables</span>
+          <span class="dataset-tag">Multimodal Benchmark</span>
+        </div>
+        <div class="dataset-links">
+          <a href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a>
+          <a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Dataset</a>
+        </div>
+      </article>
+
+      <article class="dataset-card">
+        <div class="dataset-kicker">E-Commerce Search · Recall to Relevance</div>
+        <div class="dataset-card-title">KuaiSearch <span class="os-year">2026.02</span></div>
+        <div class="dataset-card-desc">
+          <strong>KuaiSearch: A Large-Scale E-Commerce Search Dataset for Recall, Ranking, and Relevance</strong> is built from real user search interactions on Kuaishou. It preserves authentic user queries and natural-language product texts, covers
+          <strong>cold-start users</strong> and <strong>long-tail products</strong>, and spans the three key stages of modern search systems: <strong>recall</strong>, <strong>ranking</strong>, and <strong>relevance judgment</strong>.
+        </div>
+        <div class="dataset-tags">
+          <span class="dataset-tag">Recall</span>
+          <span class="dataset-tag">Ranking</span>
+          <span class="dataset-tag">Relevance</span>
+          <span class="dataset-tag">Real-World Search</span>
+        </div>
+        <div class="dataset-links">
+          <a href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a>
+          <a href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">Dataset</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+
 <!-- ===== Selected Publications ===== -->
 <div class="section">
   <div class="container">
@@ -1114,7 +1248,7 @@ body {
       <li data-tags="table llm"><strong>Mingyue Cheng</strong>, Qingyang Mao, Qi Liu*, Yitong Zhou, Yupeng Li, Jiahao Wang, Jiaying Lin, Jiawei Cao, Enhong Chen, <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/252177/preprint_pdf/3d9c9b7d57481675d0d6e486c8bb7985.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-LLM-Table-Mining" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="llm"><strong>Mingyue Cheng</strong>, Yucong Luo, Jie Ouyang, Qi Liu*, et al., <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Retrieval-Augmented-Generation" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="agent llm ai4science">Daoyu Wang, <strong>Mingyue Cheng*</strong>, Shuo Yu, Zirui Liu, Ze Guo, Qi Liu, <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">Code</a>]</li>
-      <li data-tags="table llm ai4science">Yitong Zhou, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Yucong Luo, Qi Liu, et al., <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm ai4science">Yitong Zhou, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Yucong Luo, Qi Liu, et al., <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2506.11375" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Code</a>]</li>
     </ol>
 
     <h3 class="pub-year-heading">🐎 Year of the Fire Horse (Bing Wu Year, 2026)</h3>

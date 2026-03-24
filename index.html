@@ -301,49 +301,110 @@ body {
 .os-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 14px;
 }
 .os-card {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 18px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 14px 10px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 8px 24px rgba(0,48,135,0.05);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.os-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, #3acc3a 100%);
+}
+.os-logo-shell {
+  width: 102px;
+  min-height: 102px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.85);
+  flex-shrink: 0;
 }
 .os-logo {
-  width: 90px;
-  height: 90px;
-  border-radius: var(--radius);
+  width: 88px;
+  height: 88px;
+  border-radius: 10px;
   object-fit: cover;
-  flex-shrink: 0;
-  border: 1px solid var(--border);
+  display: block;
+  border: 1px solid #edf1f7;
 }
-.os-body { flex: 1; min-width: 0; }
+.os-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .os-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 2px 10px rgba(0,48,135,0.08);
+  box-shadow: 0 12px 30px rgba(0,48,135,0.1);
+  transform: translateY(-1px);
 }
-.os-card-title {
+.os-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.os-card-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.os-card-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.os-card-meta {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 6px;
+}
+.os-card-title {
+  margin-bottom: 0;
+}
+.os-card-title .os-year {
+  margin-left: 0;
+}
+.os-card-title .os-github,
+.os-card-title .os-stars {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
 }
 .os-card-title a.os-github {
   font-size: 13px;
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.15s;
+  transition: all 0.15s;
 }
-.os-card-title a.os-github:hover { border-bottom-color: var(--accent); }
+.os-card-title a.os-github:hover {
+  background: var(--accent-light);
+  border-color: #c9d8f5;
+}
 .os-stars {
   font-size: 13px;
   color: var(--text-muted);
@@ -360,7 +421,7 @@ body {
   font-size: 14px;
   color: var(--text-muted);
   line-height: 1.65;
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 .os-card-desc strong { color: var(--accent); }
 .os-inline-highlight {
@@ -414,6 +475,7 @@ body {
   background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
   box-shadow: 0 8px 28px rgba(0, 48, 135, 0.05);
   overflow: hidden;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
 }
 .dataset-card::before {
   content: "";
@@ -421,6 +483,33 @@ body {
   inset: 0 0 auto 0;
   height: 3px;
   background: linear-gradient(90deg, var(--accent) 0%, #3acc3a 100%);
+  transition: height 0.22s ease, opacity 0.22s ease;
+}
+.dataset-card::after {
+  content: "";
+  position: absolute;
+  inset: -32% auto auto -12%;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(0, 76, 204, 0.12) 0%, rgba(0, 76, 204, 0) 72%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  transform: translate3d(-10px, -10px, 0);
+}
+.dataset-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 14px 34px rgba(0, 48, 135, 0.11);
+  transform: translateY(-3px);
+}
+.dataset-card:hover::before {
+  height: 4px;
+  opacity: 1;
+}
+.dataset-card:hover::after {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 .dataset-kicker {
   display: inline-block;
@@ -430,15 +519,82 @@ body {
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 8px;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
-.dataset-card-title {
+.dataset-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dataset-card-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dataset-title-main {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+.dataset-card-title {
+  margin-bottom: 0;
+}
+.dataset-name {
   font-size: 18px;
   font-weight: 700;
   color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+.dataset-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+.dataset-card-title .os-year,
+.dataset-repo-link,
+.dataset-stars {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.dataset-card-title .os-year {
+  margin-left: 0;
+}
+.dataset-repo-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.dataset-repo-link:hover {
+  background: var(--accent-light);
+  border-color: #c9d8f5;
+}
+.dataset-stars {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.dataset-card-title a.dataset-inline-link {
+  border-bottom: 1px solid transparent;
+}
+.dataset-card-title a.dataset-inline-link:hover {
+  border-bottom-color: var(--accent);
+}
+.dataset-card-title {
   margin-bottom: 6px;
 }
 .dataset-topic {
@@ -452,26 +608,46 @@ body {
   font-size: 12px;
   font-weight: 600;
   line-height: 1.4;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 .dataset-inline-link {
   font-size: 13px;
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.15s;
-}
-.dataset-inline-link:hover {
-  border-bottom-color: var(--accent);
+  transition: border-color 0.15s, color 0.15s ease;
 }
 .dataset-card-desc {
   font-size: 14px;
   color: var(--text-muted);
   line-height: 1.65;
   margin-bottom: 0;
+  transition: color 0.2s ease;
 }
 .dataset-card-desc strong {
   color: var(--text);
+  transition: color 0.2s ease;
+}
+.dataset-card:hover .dataset-kicker {
+  color: #0a57d6;
+  transform: translateX(2px);
+}
+.dataset-card:hover .dataset-name,
+.dataset-card:hover .dataset-card-desc,
+.dataset-card:hover .dataset-card-desc strong {
+  color: #0d2348;
+}
+.dataset-card:hover .dataset-topic,
+.dataset-card:hover .dataset-card-title .os-year,
+.dataset-card:hover .dataset-repo-link,
+.dataset-card:hover .dataset-stars {
+  border-color: #c9d8f5;
+  background: #f5f9ff;
+  box-shadow: 0 6px 18px rgba(0, 48, 135, 0.08);
+  transform: translateY(-1px);
+}
+.dataset-card:hover .dataset-inline-link {
+  color: #0a57d6;
 }
 .dataset-links {
   display: flex;
@@ -827,7 +1003,26 @@ body {
   .profile-wrap { flex-direction: column; }
   .profile-photo { width: 120px; height: 145px; }
   .os-grid { grid-template-columns: 1fr; }
+  .os-card {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .os-logo-shell {
+    width: 96px;
+    min-height: 96px;
+  }
+  .os-card-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .dataset-grid { grid-template-columns: 1fr; }
+  .dataset-card-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dataset-card-meta {
+    margin-left: 0;
+  }
   .related-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 14px; }
   .profile-name { font-size: 22px; }
@@ -1175,45 +1370,100 @@ body {
 
 
       <div class="os-card">
-        <img class="os-logo" src="./files/assets/tabclaw.png" alt="TabClaw Logo">
+        <div class="os-logo-shell">
+          <img class="os-logo" src="./files/assets/tabclaw.png" alt="TabClaw Logo">
+        </div>
         <div class="os-body">
-          <div class="os-card-title">TabClaw <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span></div>
+          <div class="os-card-header">
+            <div class="os-card-title os-card-title-row">
+              <div class="os-card-name">TabClaw</div>
+              <div class="os-card-meta">
+                <span class="os-year">2026.03</span>
+                <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span>
+              </div>
+            </div>
+          </div>
           <div class="os-card-desc">An open-source framework for <span class="os-inline-highlight">agentic table reasoning</span> that enables LLM agents to work over <strong>complex tabular data</strong> through <strong>structured reasoning</strong>, <strong>tool use</strong>, and <strong>multi-step decision workflows</strong>.</div>
         </div>
       </div>
 
 
       <div class="os-card">
-        <img class="os-logo" src="./files/assets/claw-r1.jpeg" alt="Claw-R1 Logo">
+        <div class="os-logo-shell">
+          <img class="os-logo" src="./files/assets/claw-r1.jpeg" alt="Claw-R1 Logo">
+        </div>
         <div class="os-body">
-          <div class="os-card-title">Claw-R1 <span class="os-year">2026.03</span> <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span></div>
+          <div class="os-card-header">
+            <div class="os-card-title os-card-title-row">
+              <div class="os-card-name">Claw-R1</div>
+              <div class="os-card-meta">
+                <span class="os-year">2026.03</span>
+                <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span>
+              </div>
+            </div>
+          </div>
           <div class="os-card-desc">An open-source framework for <span class="os-inline-highlight">agentic reinforcement learning</span> that extends RL training environments to support <strong>reasoning-intensive</strong> and <strong>tool-using LLM agents</strong>.</div>
         </div>
       </div>
 
 
       <div class="os-card">
-        <img class="os-logo" src="./files/assets/mind2report.png" alt="Mind2Report Logo">
+        <div class="os-logo-shell">
+          <img class="os-logo" src="./files/assets/mind2report.png" alt="Mind2Report Logo">
+        </div>
         <div class="os-body">
-          <div class="os-card-title">Mind2Report <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Mind2Report">…</span></span></div>
+          <div class="os-card-header">
+            <div class="os-card-title os-card-title-row">
+              <div class="os-card-name">Mind2Report</div>
+              <div class="os-card-meta">
+                <span class="os-year">2025</span>
+                <a class="os-github" href="https://github.com/Melmaphother/Mind2Report" target="_blank" rel="noopener">GitHub</a>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Mind2Report">…</span></span>
+              </div>
+            </div>
+          </div>
           <div class="os-card-desc">A <span class="os-inline-highlight">deep research agent</span> for synthesizing <strong>expert-level commercial and strategic reports</strong> from massive web sources with <strong>citation-grounded outputs</strong>.</div>
         </div>
       </div>
 
 
       <div class="os-card">
-        <img class="os-logo" src="./files/assets/science-star.png" alt="Science-Star Logo">
+        <div class="os-logo-shell">
+          <img class="os-logo" src="./files/assets/science-star.png" alt="Science-Star Logo">
+        </div>
         <div class="os-body">
-          <div class="os-card-title">Science-Star <span class="os-year">2025</span> <a class="os-github" href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">…</span></span></div>
+          <div class="os-card-header">
+            <div class="os-card-title os-card-title-row">
+              <div class="os-card-name">Science-Star</div>
+              <div class="os-card-meta">
+                <span class="os-year">2025</span>
+                <a class="os-github" href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">GitHub</a>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">…</span></span>
+              </div>
+            </div>
+          </div>
           <div class="os-card-desc">An open-source framework for <span class="os-inline-highlight">scientific AI agents</span>, integrating <strong>ReAct-style planning</strong>, <strong>tool orchestration</strong>, <strong>memory and reflection</strong>, and <strong>HLE benchmark support</strong>.</div>
         </div>
       </div>
 
 
        <div class="os-card">
-        <img class="os-logo" src="./files/assets/agent-r1.png" alt="Agent-R1 Logo">
+        <div class="os-logo-shell">
+          <img class="os-logo" src="./files/assets/agent-r1.png" alt="Agent-R1 Logo">
+        </div>
         <div class="os-body">
-          <div class="os-card-title">Agent-R1 <span class="os-year">2025</span> <a class="os-github" href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">GitHub</a> <span class="os-stars">⭐ <span class="github-stars" data-repo="0russwest0/Agent-R1">…</span></span></div>
+          <div class="os-card-header">
+            <div class="os-card-title os-card-title-row">
+              <div class="os-card-name">Agent-R1</div>
+              <div class="os-card-meta">
+                <span class="os-year">2025</span>
+                <a class="os-github" href="https://github.com/0russwest0/Agent-R1" target="_blank" rel="noopener">GitHub</a>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="0russwest0/Agent-R1">…</span></span>
+              </div>
+            </div>
+          </div>
           <div class="os-card-desc">A large-model agent training framework for <span class="os-inline-highlight">end-to-end RL fine-tuning</span>, supporting <strong>GRPO</strong>, <strong>multi-tool orchestration</strong>, <strong>long-term memory</strong>, and <strong>reflective reasoning</strong>.</div>
         </div>
       </div>
@@ -1235,7 +1485,20 @@ body {
 
       <article class="dataset-card">
         <div class="dataset-kicker">E-Commerce Search · Recall to Relevance</div>
-        <div class="dataset-card-title">KuaiSearch <span class="dataset-topic">Search-based Recommendation</span> <a class="dataset-inline-link" href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2026.02</span></div>
+        <div class="dataset-card-header">
+          <div class="dataset-card-title dataset-card-title-row">
+            <div class="dataset-title-main">
+              <span class="dataset-name">KuaiSearch</span>
+              <span class="dataset-topic">Search-based Recommendation</span>
+              <a class="dataset-inline-link" href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a>
+            </div>
+            <div class="dataset-card-meta">
+              <a class="dataset-repo-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">GitHub</a>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="benchen4395/KuaiSearch">…</span></span>
+              <span class="os-year">2026.02</span>
+            </div>
+          </div>
+        </div>
         <div class="dataset-card-desc">
           <strong>KuaiSearch: A Large-Scale E-Commerce Search Dataset for Recall, Ranking, and Relevance</strong> is built from real user search interactions on Kuaishou. It preserves authentic user queries and natural-language product texts, covers
           <strong>cold-start users</strong> and <strong>long-tail products</strong>, and spans the three key stages of modern search systems: <strong>recall</strong>, <strong>ranking</strong>, and <strong>relevance judgment</strong>.
@@ -1244,7 +1507,20 @@ body {
       
       <article class="dataset-card">
         <div class="dataset-kicker">Scientific Literature · Agentic Evaluation</div>
-        <div class="dataset-card-title">PaperArena <span class="dataset-topic">Scientific Literature Mining</span> <a class="dataset-inline-link" href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">Code</a> <span class="os-year">2025.10</span></div>
+        <div class="dataset-card-header">
+          <div class="dataset-card-title dataset-card-title-row">
+            <div class="dataset-title-main">
+              <span class="dataset-name">PaperArena</span>
+              <span class="dataset-topic">Scientific Literature Mining</span>
+              <a class="dataset-inline-link" href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">Paper</a>
+            </div>
+            <div class="dataset-card-meta">
+              <a class="dataset-repo-link" href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">GitHub</a>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="Melmaphother/PaperArena">…</span></span>
+              <span class="os-year">2025.10</span>
+            </div>
+          </div>
+        </div>
         <div class="dataset-card-desc">
           <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong> benchmarks agentic systems on scientific reading and reasoning with tool use. It targets
           <strong>literature understanding</strong>, <strong>tool-augmented reasoning</strong>, and <strong>evidence-grounded evaluation</strong> over scientific papers and related scholarly workflows.
@@ -1254,7 +1530,20 @@ body {
 
         <article class="dataset-card">
         <div class="dataset-kicker">AI for Science · Chemical Tables</div>
-        <div class="dataset-card-title">ChemTable <span class="dataset-topic">Scientific Literature Mining</span> <a class="dataset-inline-link" href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">Dataset</a> <span class="os-year">2025.06</span></div>
+        <div class="dataset-card-header">
+          <div class="dataset-card-title dataset-card-title-row">
+            <div class="dataset-title-main">
+              <span class="dataset-name">ChemTable</span>
+              <span class="dataset-topic">Scientific Literature Mining</span>
+              <a class="dataset-inline-link" href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a>
+            </div>
+            <div class="dataset-card-meta">
+              <a class="dataset-repo-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">GitHub</a>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="lqzxt/ChemTable">…</span></span>
+              <span class="os-year">2025.06</span>
+            </div>
+          </div>
+        </div>
         <div class="dataset-card-desc">
           <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong> introduces <strong>ChemTable</strong>, a real-world benchmark curated from chemical literature. It supports two core tasks:
           <strong>table recognition</strong> and <strong>table understanding</strong>, with expert annotations over cell polygons, logical layouts, and chemistry-specific semantic labels such as reagents, catalysts, yields, and graphical components.
@@ -1263,7 +1552,20 @@ body {
 
       <article class="dataset-card">
         <div class="dataset-kicker">RAG Evaluation · Dynamic Benchmark</div>
-        <div class="dataset-card-title">HoH <span class="dataset-topic">RAG</span> <a class="dataset-inline-link" href="https://aclanthology.org/2025.acl-long.301.pdf" target="_blank" rel="noopener">Paper</a> <a class="dataset-inline-link" href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">Code</a> <span class="os-year">2025.05</span></div>
+        <div class="dataset-card-header">
+          <div class="dataset-card-title dataset-card-title-row">
+            <div class="dataset-title-main">
+              <span class="dataset-name">HoH</span>
+              <span class="dataset-topic">RAG</span>
+              <a class="dataset-inline-link" href="https://aclanthology.org/2025.acl-long.301.pdf" target="_blank" rel="noopener">Paper</a>
+            </div>
+            <div class="dataset-card-meta">
+              <a class="dataset-repo-link" href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">GitHub</a>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="0russwest0/HoH">…</span></span>
+              <span class="os-year">2025.06</span>
+            </div>
+          </div>
+        </div>
         <div class="dataset-card-desc">
           <strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG</strong> studies how retrieval-augmented generation systems fail when knowledge becomes stale. It provides a dynamic evaluation setting for measuring
           <strong>temporal robustness</strong>, <strong>outdated-information sensitivity</strong>, and the impact of knowledge freshness in modern <strong>RAG</strong> pipelines.
@@ -1279,7 +1581,7 @@ body {
   <div class="container">
     <h2 id="education" class="section-heading">Education</h2>
     <ul class="timeline-list">
-      <li>Sep. 2017 ~ Jun. 2023, Major: Data Science (Computer Science and Technology), Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
+      <li>Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology（Data Science）, Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
       <li>Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
     </ul>
   </div>
@@ -1341,7 +1643,7 @@ body {
 <!-- ===== Professional Activities ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="services" class="section-heading">Service</h2>
+    <h2 id="services" class="section-heading">Professional Service</h2>
 
     <div class="services-group">
       <div class="services-label">Program Committee Member</div>

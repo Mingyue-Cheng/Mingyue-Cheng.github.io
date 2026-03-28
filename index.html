@@ -251,13 +251,38 @@ body {
 }
 
 /* ===== Research Interests ===== */
+.research-section p,
+.research-section li,
+.research-section .research-note {
+  text-align: left;
+}
 .research-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
   font-size: 14px;
   line-height: 1.8;
-  padding-left: 20px;
-  margin-bottom: 8px;
+  padding-left: 0;
+  margin: 14px 0 8px;
 }
-.research-list li { margin-bottom: 5px; }
+.research-list li {
+  margin-bottom: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 6px 18px rgba(0,48,135,0.04);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.research-list li:hover {
+  border-color: rgba(0, 48, 135, 0.2);
+  box-shadow: 0 10px 24px rgba(0,48,135,0.07);
+  transform: translateY(-1px);
+}
+.research-list strong {
+  color: var(--accent);
+}
 .research-note {
   font-size: 14px;
   color: var(--text);
@@ -1002,6 +1027,7 @@ body {
 @media (max-width: 680px) {
   .profile-wrap { flex-direction: column; }
   .profile-photo { width: 120px; height: 145px; }
+  .research-list { grid-template-columns: 1fr; }
   .os-grid { grid-template-columns: 1fr; }
   .os-card {
     flex-direction: column;
@@ -1146,7 +1172,7 @@ body {
 
 
 <!-- ===== Research Interests ===== -->
-<div class="section">
+<div class="section research-section">
   <div class="container">
     <h2 id="Research" class="section-heading">Research Interests</h2>
     <p>

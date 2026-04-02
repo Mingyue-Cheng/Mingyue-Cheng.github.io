@@ -259,8 +259,8 @@ body {
 .research-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 14px;
   font-size: 14px;
   line-height: 1.8;
   padding-left: 0;
@@ -1027,7 +1027,6 @@ body {
 @media (max-width: 680px) {
   .profile-wrap { flex-direction: column; }
   .profile-photo { width: 120px; height: 145px; }
-  .research-list { grid-template-columns: 1fr; }
   .os-grid { grid-template-columns: 1fr; }
   .os-card {
     flex-direction: column;

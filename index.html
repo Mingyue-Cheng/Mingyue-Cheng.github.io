@@ -813,13 +813,16 @@ body {
   font-size: 15px;
   line-height: 1.75;
   padding-left: 22px;
-  text-align: left;
+  text-align: justify;
+  text-justify: inter-word;
 }
 .pub-list li {
   margin-bottom: 6px;
   color: var(--text);
-  text-align: left;
-  text-align-last: auto;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 .pub-list a { color: var(--accent); text-decoration: none; }
 .pub-list a:hover { text-decoration: underline; }

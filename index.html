@@ -1223,7 +1223,7 @@ body {
     </p>
     <ul class="research-list primary-directions">
       <li><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class="research-keyword">agent runtime construction</span>, <span class="research-keyword">agentic RL</span>, and <span class="research-keyword">agent action behavior analysis</span>, covering memory, context management, skill libraries, decision interpretability, and emergent tool-use patterns.</li>
-      <li><span class="research-label">📊 <strong>Time Series Analysis:</strong></span> Building foundation models and agentic frameworks for <span class="research-keyword">forecasting</span>, <span class="research-keyword">classification</span>, <span class="research-keyword">anomaly detection</span>, and universal time-series representation, with emphasis on <span class="research-keyword">LLM-based multimodal semantic understanding</span>, <span class="research-keyword">slow-thinking cognitive reasoning</span>, and <span class="research-keyword">autonomous agent interaction</span>.</li>
+      <li><span class="research-label">📊 <strong>Time Series Analysis:</strong></span> Focused on <span class="research-keyword">context-aware time series analysis</span> with <span class="research-keyword">LLM-driven multimodal semantic understanding</span>, <span class="research-keyword">slow-thinking cognitive reasoning</span>, and <span class="research-keyword">autonomous agent interaction</span>.</li>
     </ul>
     <div class="research-scenarios">
       <div class="research-scenarios-title">Broader Application and Evaluation Scenarios</div>
@@ -1316,10 +1316,9 @@ body {
       <p class="pub-note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
       <div class="pub-filters">
         <button class="pub-filter-btn active" data-filter="all">All</button>
+        <button class="pub-filter-btn" data-filter="llm-agent">LLMs and Agent</button>
         <button class="pub-filter-btn" data-filter="timeseries">Time Series</button>
-        <button class="pub-filter-btn" data-filter="table">Table</button>
-        <button class="pub-filter-btn" data-filter="llm">LLM</button>
-        <button class="pub-filter-btn" data-filter="agent">Agent</button>
+        <button class="pub-filter-btn" data-filter="table">Table Mining</button>
         <button class="pub-filter-btn" data-filter="recsys">RecSys</button>
         <button class="pub-filter-btn" data-filter="ai4science">AI4Science</button>
       </div>
@@ -1571,6 +1570,7 @@ body {
                 <span class="os-year">2025.04</span>
                 <a class="os-github" href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://agentr1.github.io/agent-r1/" target="_blank" rel="noopener">Website</a>
+                <a class="os-github" href="https://agentr1.github.io/agent-r1/docs/" target="_blank" rel="noopener">Docs</a>
                 <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Agent-R1">…</span></span>
               </div>
             </div>
@@ -1928,7 +1928,11 @@ function toggleMoreNews() {
           item.style.display = '';
         } else {
           const tags = item.getAttribute('data-tags') || '';
-          item.style.display = tags.split(' ').includes(filter) ? '' : 'none';
+          const tagList = tags.split(' ');
+          const isMatch = filter === 'llm-agent'
+            ? tagList.includes('llm') || tagList.includes('agent')
+            : tagList.includes(filter);
+          item.style.display = isMatch ? '' : 'none';
         }
       });
 

@@ -260,7 +260,7 @@ body {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 12px;
   font-size: 14px;
   line-height: 1.8;
   padding-left: 0;
@@ -268,9 +268,9 @@ body {
 }
 .research-list li {
   margin-bottom: 0;
-  padding: 14px 16px;
+  padding: 12px 15px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
   box-shadow: 0 6px 18px rgba(0,48,135,0.04);
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
@@ -286,6 +286,49 @@ body {
 }
 .research-list .research-label {
   white-space: nowrap;
+}
+.research-keyword {
+  color: var(--accent);
+  font-weight: 600;
+}
+.primary-directions li {
+  border-left: 3px solid var(--accent);
+}
+.research-scenarios {
+  margin: 12px 0 8px;
+  padding: 12px 15px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-alt);
+}
+.research-scenarios-title {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.scenario-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.scenario-list li {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+.scenario-label {
+  display: block;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 2px;
 }
 .research-note {
   font-size: 14px;
@@ -1046,6 +1089,7 @@ body {
     margin-left: 0;
   }
   .related-grid { grid-template-columns: 1fr; }
+  .scenario-list { grid-template-columns: 1fr; }
   .nav-links { gap: 14px; }
   .profile-name { font-size: 22px; }
   .footer-card {
@@ -1172,14 +1216,20 @@ body {
   <div class="container">
     <h2 id="Research" class="section-heading">Research Interests</h2>
     <p>
-      My research focuses on <u>LLMs and Agentic AI</u>, with applications in <u>Time Series and Tabular Data Mining</u>, <u>Recommender Systems</u>, and <u>AI for Science</u>.
+      My research focuses on <span class="research-keyword">LLMs and Agentic AI</span> for complex data mining, with a particular emphasis on <span class="research-keyword">Time Series Analysis</span>.
     </p>
-    <ul class="research-list">
-      <li><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <u>agent runtime construction</u> — including memory, context management, and skill libraries — <u>agentic RL</u> across algorithms, training frameworks, and system infrastructure, and <u>agent action behavior analysis</u> covering action mechanisms, decision interpretability, and emergent tool-use patterns.</li>
-      <li><span class="research-label">📊 <strong>Time Series and Tabular Data Mining:</strong></span> Building foundation models and agentic frameworks for <u>time series</u> and <u>tabular data</u> — covering forecasting, classification, anomaly detection, and universal data representation.</li>
-      <li><span class="research-label">🎯 <strong>Recommender Systems:</strong></span> Context-aware personalized recommendation via <u>sequential modeling</u>, <u>one-class collaborative filtering</u>, and LLM-driven reasoning for dynamic user preference understanding.</li>
-      <li><span class="research-label">🔬 <strong>Scientific Literature Mining:</strong></span> Focused on <u>scientific literature retrieval</u>, <u>multimodal scientific document parsing and understanding</u>, and <u>knowledge discovery in scientific literature</u> — spanning information extraction, cross-modal reasoning, and agent-driven literature analysis.</li>
+    <ul class="research-list primary-directions">
+      <li><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class="research-keyword">agent runtime construction</span>, <span class="research-keyword">agentic RL</span>, and <span class="research-keyword">agent action behavior analysis</span>, covering memory, context management, skill libraries, decision interpretability, and emergent tool-use patterns.</li>
+      <li><span class="research-label">📊 <strong>Time Series Analysis:</strong></span> Building foundation models and agentic frameworks for <span class="research-keyword">forecasting</span>, <span class="research-keyword">classification</span>, <span class="research-keyword">anomaly detection</span>, and universal time-series representation, with emphasis on <span class="research-keyword">LLM-based multimodal semantic understanding</span>, <span class="research-keyword">slow-thinking cognitive reasoning</span>, and <span class="research-keyword">autonomous agent interaction</span>.</li>
     </ul>
+    <div class="research-scenarios">
+      <div class="research-scenarios-title">Broader Application and Evaluation Scenarios</div>
+      <ul class="scenario-list">
+        <li><span class="scenario-label">▦ Table Mining</span> LLM-driven tabular data understanding, table reasoning, multi-table inference, and scientific table analysis.</li>
+        <li><span class="scenario-label">🎯 Recommender Systems</span> Sequential modeling, one-class collaborative filtering, and LLM-driven reasoning for dynamic user preference understanding.</li>
+        <li><span class="scenario-label">🔬 Scientific Literature Mining</span> Literature retrieval, multimodal scientific document understanding, knowledge discovery, and evidence-grounded reasoning.</li>
+      </ul>
+    </div>
     <div class="research-note">
       Research collections:
       🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> ·

@@ -324,6 +324,10 @@ body {
   border-radius: 8px;
   background: #fff;
 }
+.scenario-list li:nth-child(2),
+.scenario-list li:nth-child(3) {
+  margin-top: 12px;
+}
 .scenario-label {
   display: block;
   color: var(--accent);
@@ -1222,15 +1226,15 @@ body {
       My research focuses on <span class="research-keyword">LLMs and Agentic AI</span> for complex data mining, with a particular emphasis on <span class="research-keyword">Time Series Analysis</span>.
     </p>
     <ul class="research-list primary-directions">
-      <li><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class="research-keyword">agent runtime construction</span>, <span class="research-keyword">agentic RL</span>, and <span class="research-keyword">agent action behavior analysis</span>, covering memory, context management, skill libraries, decision interpretability, and emergent tool-use patterns.</li>
+      <li><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class="research-keyword">autonomous and continual learning</span> for large language models, <span class="research-keyword">slow-thinking reasoning</span> such as chain-of-thought, and <span class="research-keyword">LLM-driven agents</span>, including agentic RL and agent runtime mechanisms such as memory, skills, and autonomous evolution.</li>
       <li><span class="research-label">📊 <strong>Time Series Analysis:</strong></span> Focused on <span class="research-keyword">context-aware time series analysis</span> with <span class="research-keyword">LLM-driven multimodal semantic understanding</span>, <span class="research-keyword">slow-thinking cognitive reasoning</span>, and <span class="research-keyword">autonomous agent interaction</span>.</li>
     </ul>
     <div class="research-scenarios">
       <div class="research-scenarios-title">Broader Application and Evaluation Scenarios</div>
       <ul class="scenario-list">
         <li><span class="scenario-label">▦ Table Mining</span> LLM-driven tabular data understanding, table reasoning, multi-table inference, and scientific table analysis.</li>
-        <li><span class="scenario-label">🎯 Recommender Systems</span> Sequential modeling, one-class collaborative filtering, and LLM-driven reasoning for dynamic user preference understanding.</li>
         <li><span class="scenario-label">🔬 Scientific Literature Mining</span> Literature retrieval, multimodal scientific document understanding, knowledge discovery, and evidence-grounded reasoning.</li>
+        <li><span class="scenario-label">🎯 Recommender Systems</span> Sequential modeling, one-class collaborative filtering, and LLM-driven reasoning for dynamic user preference understanding.</li>
       </ul>
     </div>
     <div class="research-note">
@@ -1263,6 +1267,7 @@ body {
         <a href="https://github.com/AgentR1/Agent-R1" target="_blank">GitHub</a>
       </li> -->
       <li><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> on our paper <strong>InstructTime++</strong> being accepted to <strong>ACM TIST</strong>!</li>
+      <li><strong>[May. 2026]</strong> 🚀 We released <strong>CastFactory</strong>, a framework for <strong>LLM-driven time series forecasting model training</strong>. <a href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener"><strong>GitHub</strong></a></li>
       <li><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> and <strong>Bohou Zhang</strong> on our papers (<strong>TokenCast</strong> and <strong>ScholarSum</strong>) being accepted to <strong>IJCAI 2026</strong>!</li>
       <li><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> and <strong>Yaguo Liu</strong> on our papers (<strong>CoGenCast</strong> and <strong>MemCast</strong>) being accepted to <strong>ICML 2026</strong>!</li>
       <li><strong>[Apr. 2026]</strong> 📄 We released the preprint version of our survey on <strong>LLM-based agents</strong> from the <strong>contextual cognition perspective</strong> on <a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener"><strong>Preprints.org</strong></a>: <strong>"A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective"</strong>.</li>
@@ -1477,6 +1482,22 @@ body {
             </div>
           </div>
           <div class="os-card-desc"><span class="os-inline-highlight">CastClaw</span> is an open-source framework for <strong>agentic time series forecasting</strong>. It enables LLM agents to autonomously perform <strong>data analysis</strong>, <strong>model selection</strong>, <strong>feature engineering</strong>, and <strong>iterative forecasting refinement</strong> through structured tool-augmented workflows. CastClaw bridges classical time series methods with <strong>agentic reasoning</strong>, supporting diverse forecasting scenarios ranging from <strong>short-term point prediction</strong> to <strong>long-horizon multi-step forecasting</strong>, with built-in evaluation and interpretability mechanisms.</div>
+        </div>
+      </div>
+
+      <div class="os-card">
+        <div class="os-body">
+          <div class="os-card-header">
+            <div class="os-card-title os-card-title-row">
+              <div class="os-card-name">CastFactory</div>
+              <div class="os-card-meta">
+                <span class="os-year">2026.05</span>
+                <a class="os-github" href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener">GitHub</a>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastFactory">…</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="os-card-desc"><span class="os-inline-highlight">CastFactory</span> is an open-source framework for <strong>LLM-driven time series forecasting model training</strong>, designed to make it <strong>extremely easy</strong> for users to build and adapt TSF models with modern large-model pipelines. It provides a unified and practical workflow for <strong>continued pre-training (CPT)</strong>, <strong>supervised fine-tuning (SFT)</strong>, and <strong>reinforcement learning (RL)</strong>, helping researchers and practitioners develop, optimize, and evaluate LLM-based forecasting systems with much lower engineering overhead.</div>
         </div>
       </div>
 

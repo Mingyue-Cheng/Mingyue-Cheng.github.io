@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Source &amp; Benchmarks — Mingyue Cheng</title>
+  <meta name="description" content="Open source frameworks and benchmark datasets from Mingyue Cheng's research group at USTC.">
+  <meta name="author" content="Mingyue Cheng">
+  <style>
+:root {
+  --accent:      #003087;
+  --accent-dark: #00226b;
+  --accent-light:#e8edf7;
+  --text:        #1a1a1a;
+  --text-muted:  #666;
+  --border:      #e2e5ea;
+  --bg:          #fff;
+  --bg-alt:      #f6f7fb;
+  --radius:      5px;
+  --max-w:       1100px;
+  --font: system-ui, -apple-system, 'Segoe UI', Arial,
+          'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+
+/* ===== Nav ===== */
+.site-header {
+  position: sticky; top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100; padding: 13px 0;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-weight: 700; font-size: 16px; color: var(--accent); text-decoration: none; letter-spacing: 0.01em; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+
+/* ===== Hero ===== */
+.page-hero {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%);
+}
+.page-hero-title { font-size: 28px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; margin-bottom: 8px; }
+.page-hero-sub { font-size: 14px; color: var(--text-muted); line-height: 1.8; max-width: 76ch; }
+.page-hero-sub a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.page-hero-sub a:hover { text-decoration: underline; }
+
+/* Jump nav */
+.page-jump-nav {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
+}
+.page-jump-nav a {
+  display: inline-block; padding: 4px 13px; border-radius: 20px;
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  border: 1px solid var(--border); color: var(--text-muted); background: #fff;
+  transition: all 0.18s;
+}
+.page-jump-nav a:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+
+/* ===== Main ===== */
+.projects-main { padding: 32px 0 56px; }
+
+/* ===== Section heading ===== */
+.section-heading {
+  font-size: 20px; font-weight: 700; color: var(--text);
+  padding-bottom: 8px; border-bottom: 2px solid var(--accent);
+  display: inline-block; margin-bottom: 16px; letter-spacing: -0.01em;
+  scroll-margin-top: 80px;
+}
+.section-block { margin-bottom: 48px; }
+
+/* ===== Open Source Cards ===== */
+.os-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.os-card {
+  position: relative; display: flex; align-items: flex-start; gap: 18px;
+  border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 8px 24px rgba(0,48,135,0.05); overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.os-card::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, #3acc3a 100%);
+}
+.os-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px rgba(0,48,135,0.1);
+  transform: translateY(-1px);
+}
+.os-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.os-card-header { display: flex; flex-direction: column; gap: 8px; }
+.os-card-title { margin-bottom: 0; }
+.os-card-title-row {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+}
+.os-card-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; letter-spacing: -0.01em; }
+.os-card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.os-year {
+  font-size: 11px; font-weight: 500; color: var(--text-muted);
+  background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: 3px; padding: 1px 6px; margin-left: 0; vertical-align: middle;
+}
+a.os-github {
+  font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
+  transition: all 0.15s;
+}
+a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
+.os-stars {
+  font-size: 13px; color: var(--text-muted); font-weight: 400;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
+}
+.github-stars img { display: block; height: 15px; }
+.os-card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 0; }
+.os-card-desc strong { color: var(--accent); }
+.os-inline-highlight {
+  display: inline-block; padding: 1px 7px; border-radius: 999px;
+  background: var(--accent-light); color: var(--accent); border: 1px solid #c9d8f5;
+  font-size: 12px; font-weight: 600; line-height: 1.5; vertical-align: baseline;
+}
+
+/* ===== Dataset Cards ===== */
+.dataset-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.dataset-card {
+  position: relative; padding: 16px 18px 14px;
+  border: 1px solid var(--border); border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 8px 28px rgba(0,48,135,0.05); overflow: hidden;
+  transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
+}
+.dataset-card::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, #3acc3a 100%);
+}
+.dataset-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 14px 34px rgba(0,48,135,0.11);
+  transform: translateY(-3px);
+}
+.dataset-kicker {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 8px;
+}
+.dataset-card-header { display: flex; flex-direction: column; gap: 8px; }
+.dataset-card-title-row {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+}
+.dataset-title-main { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dataset-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; letter-spacing: -0.01em; }
+.dataset-topic {
+  display: inline-flex; align-items: center; padding: 2px 8px;
+  border-radius: 999px; background: #eef4ff; color: var(--accent);
+  border: 1px solid #c9d8f5; font-size: 12px; font-weight: 600; line-height: 1.4;
+}
+.dataset-inline-link {
+  font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
+  transition: color 0.15s;
+}
+.dataset-inline-link:hover { text-decoration: underline; }
+.dataset-card-meta {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: auto;
+}
+.dataset-repo-link {
+  font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
+  transition: all 0.15s;
+}
+.dataset-repo-link:hover { background: var(--accent-light); border-color: #c9d8f5; }
+.dataset-stars {
+  font-size: 13px; color: var(--text-muted); font-weight: 400;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
+}
+.dataset-card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 10px; }
+.dataset-card-desc strong { color: var(--text); }
+
+/* ===== Back to Top ===== */
+#back-to-top {
+  position: fixed; right: 28px; bottom: 32px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background-color: #003087; color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease, background-color 0.2s ease; z-index: 999;
+}
+#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top:hover { background-color: #00226b; }
+
+/* ===== Footer ===== */
+.site-footer {
+  margin-top: 0; padding: 18px 0 36px;
+  border-top: 1px solid var(--border);
+  background: radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%),
+              linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+.footer-shell { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 14px 0 0; }
+.footer-link {
+  display: inline-flex; align-items: center; padding: 7px 14px;
+  border-radius: 999px; border: 1px solid var(--border);
+  color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 600;
+  background: #fff; transition: all 0.2s ease;
+}
+.footer-link:hover { border-color: var(--accent); background: var(--accent-light); }
+.footer-bottom { margin-top: 10px; font-size: 12px; color: var(--text-muted); text-align: center; padding: 8px 0 0; }
+
+/* ===== Responsive ===== */
+@media (max-width: 680px) {
+  .nav-links { gap: 14px; }
+  .page-hero-title { font-size: 22px; }
+  .os-card-title-row { flex-direction: column; align-items: flex-start; }
+  .dataset-card-title-row { flex-direction: column; align-items: flex-start; }
+  .dataset-card-meta { margin-left: 0; }
+}
+@media (max-width: 760px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- ===== Nav ===== -->
+<header class="site-header">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html#home" class="nav-logo">Homepage</a>
+      <nav class="nav-links">
+        <a href="research.html">Research</a>
+        <a href="news.html">News</a>
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Open Source</a>
+        <a href="awards.html">Award</a>
+        <a href="service.html">Service</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-title">Open Source &amp; Benchmarks</div>
+    <p class="page-hero-sub">
+      Open-source frameworks, tools, and benchmark datasets released by
+      <a href="index.html">Mingyue Cheng</a>'s research group at USTC.
+      Covering agentic AI, time series analysis, table mining, and scientific literature mining.
+    </p>
+    <nav class="page-jump-nav" aria-label="Jump to section">
+      <a href="#opensource">Open Source Projects</a>
+      <a href="#datasets">Benchmarks &amp; Datasets</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ===== Main ===== -->
+<div class="projects-main">
+  <div class="container">
+
+    <!-- ===== Open Source ===== -->
+    <div class="section-block">
+      <h2 id="opensource" class="section-heading">Open Source Projects</h2>
+      <div class="os-grid">
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">CastClaw（观星阁）</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.04</span>
+                  <a class="os-github" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
+                  <a class="os-github" href="https://ustc-time-series.github.io/cast-claw/" target="_blank" rel="noopener">Website</a>
+                  <a class="os-github" href="https://ustc-time-series.github.io/cast-claw/docs/" target="_blank" rel="noopener">Docs</a>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastClaw">…</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">CastClaw（观星阁）</span> is an open-source framework for <strong>agentic time series forecasting</strong>. It enables LLM agents to autonomously perform <strong>data analysis</strong>, <strong>model selection</strong>, <strong>feature engineering</strong>, and <strong>iterative forecasting refinement</strong> through structured tool-augmented workflows. CastClaw（观星阁） bridges classical time series methods with <strong>agentic reasoning</strong>, supporting diverse forecasting scenarios ranging from <strong>short-term point prediction</strong> to <strong>long-horizon multi-step forecasting</strong>, with built-in evaluation and interpretability mechanisms.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">CastFactory（炼星坊）</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.05</span>
+                  <a class="os-github" href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener">GitHub</a>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastFactory">…</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">CastFactory（炼星坊）</span> is an open-source framework for <strong>LLM-driven time series forecasting model training</strong>, designed to make it <strong>extremely easy</strong> for users to build and adapt TSF models with modern large-model pipelines. It provides a unified and practical workflow for <strong>continued pre-training (CPT)</strong>, <strong>supervised fine-tuning (SFT)</strong>, and <strong>reinforcement learning (RL)</strong>, helping researchers and practitioners develop, optimize, and evaluate LLM-based forecasting systems with much lower engineering overhead.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">FutureCast（天星台）</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.05</span>
+                  <a class="os-github" href="https://ustc-time-series.github.io/future-cast/" target="_blank" rel="noopener">Website</a>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">FutureCast（天星台）</span> is a unified evaluation suite for <strong>time series models</strong> and <strong>agentic forecasting systems</strong>. It organizes benchmark management, metric computation, error attribution, and report generation into a consistent evaluation workflow, helping researchers compare model capabilities and system-level gains across datasets, scenarios, and task settings including forecasting, classification, and anomaly detection.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">NeoResearch（智多星）</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.05</span>
+                  <a class="os-github" href="https://ustc-time-series.github.io/star-cast/" target="_blank" rel="noopener">Website</a>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">NeoResearch（智多星）</span> is an autonomous research agent system for <strong>time series forecasting model development</strong>. It connects research hypothesis generation, candidate recipe search, controlled experiments, evaluation diagnosis, and research memory into a reproducible loop, supporting systematic iteration from problem definition to validated forecasting model candidates.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">Academic Search</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.04</span>
+                  <a class="os-github" href="https://github.com/ustc-ai4science/academic-search" target="_blank" rel="noopener">GitHub</a>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-ai4science/academic-search">…</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">Academic Search</span> is an open-source <strong>academic literature research skill</strong> for <strong>Claude Code</strong>. It unifies paper discovery across <strong>arXiv</strong>, <strong>Semantic Scholar</strong>, <strong>Google Scholar</strong>, <strong>CNKI</strong>, and other scholarly sources, while supporting <strong>query expansion</strong>, <strong>citation tracing</strong>, <strong>BibTeX export</strong>, <strong>PDF-first retrieval</strong>, and <strong>multi-source deduplication</strong>. With recency-aware ranking and browser-assisted fallback for hard-to-access platforms, it helps researchers surface recent, high-value papers and their code resources more efficiently.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">PaperScout</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.01</span>
+                  <a class="os-github" href="https://github.com/pty12345/PaperScout" target="_blank" rel="noopener">GitHub</a>
+                  <a class="os-github" href="https://agentr1.github.io/paperscout/" target="_blank" rel="noopener">Website</a>
+                  <a class="os-github" href="https://arxiv.org/abs/2601.10029" target="_blank" rel="noopener">Paper</a>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="pty12345/PaperScout">…</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">PaperScout</span> is an autonomous <strong>academic paper search agent</strong> trained with <strong>Process-Aware Sequence-Level Policy Optimization (PSPO)</strong>. It formulates literature search as a <strong>multi-turn sequential decision-making</strong> problem, allowing agents to dynamically decide when to <strong>Search</strong> for new directions and when to <strong>Expand</strong> along citation and related-paper paths. PaperScout turns scholarly retrieval into an agentic RL environment for learning efficient tool-use policies and producing stronger recall under realistic research queries.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">TabClaw</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.03</span>
+                  <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a>
+                  <a class="os-github" href="https://agentr1.github.io/tab-claw/" target="_blank" rel="noopener">Website</a>
+                  <a class="os-github" href="https://tabclaw.bdaa.pro/" target="_blank" rel="noopener">Platform</a>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">TabClaw</span> is an open-source agentic framework that empowers LLMs to reason over <strong>complex, real-world tabular data</strong>. It decomposes table-centric tasks into <strong>structured sub-goals</strong>, equips agents with <strong>code execution</strong>, <strong>schema-aware lookup</strong>, and <strong>formula tools</strong>, and coordinates them through <strong>multi-step decision workflows</strong>. TabClaw is designed to tackle challenges beyond flat QA — including <strong>multi-hop joins</strong>, <strong>conditional aggregation</strong>, and <strong>cross-table inference</strong> — making it suitable for enterprise data analysis and scientific table understanding.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">Claw-R1</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2026.03</span>
+                  <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a>
+                  <a class="os-github" href="https://agentr1.github.io/claw-r1/" target="_blank" rel="noopener">Website</a>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">Claw-R1</span> is an open-source framework for training <strong>reasoning-intensive, tool-using LLM agents</strong> via reinforcement learning. It extends standard RL environments with <strong>agentic action spaces</strong> — including tool invocation, multi-turn interaction, and environment feedback — and supports <strong>GRPO-based policy optimization</strong> with customizable reward signals. Designed for reproducibility and extensibility, Claw-R1 enables researchers to study how RL shapes <strong>emergent reasoning behaviors</strong>, <strong>tool-use strategies</strong>, and <strong>decision robustness</strong> in large language models.</div>
+          </div>
+        </div>
+
+        <div class="os-card">
+          <div class="os-body">
+            <div class="os-card-header">
+              <div class="os-card-title os-card-title-row">
+                <div class="os-card-name">Agent-R1</div>
+                <div class="os-card-meta">
+                  <span class="os-year">2025.04</span>
+                  <a class="os-github" href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">GitHub</a>
+                  <a class="os-github" href="https://agentr1.github.io/agent-r1/" target="_blank" rel="noopener">Website</a>
+                  <a class="os-github" href="https://agentr1.github.io/agent-r1/docs/" target="_blank" rel="noopener">Docs</a>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Agent-R1">…</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="os-card-desc"><span class="os-inline-highlight">Agent-R1</span> is a large-model agent training framework for <strong>end-to-end reinforcement learning fine-tuning</strong>. It supports <strong>GRPO-based policy optimization</strong> with reward signals derived from environment feedback, and equips agents with <strong>multi-tool orchestration</strong>, <strong>persistent long-term memory</strong>, and <strong>reflective self-correction</strong> across interaction turns. Grounded in the DeepSeek-R1 paradigm, Agent-R1 enables researchers to train LLM agents that not only reason under uncertainty but also <strong>learn to use tools strategically</strong> and <strong>recover from failures autonomously</strong>.</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /open source -->
+
+    <!-- ===== Benchmarks & Datasets ===== -->
+    <div class="section-block">
+      <h2 id="datasets" class="section-heading">Benchmarks &amp; Datasets</h2>
+      <div class="dataset-grid">
+
+        <article class="dataset-card">
+          <div class="dataset-kicker">E-Commerce Search · Recall to Relevance</div>
+          <div class="dataset-card-header">
+            <div class="dataset-card-title-row">
+              <div class="dataset-title-main">
+                <span class="dataset-name">KuaiSearch</span>
+                <span class="dataset-topic">Search-based Recommendation</span>
+                <a class="dataset-inline-link" href="https://arxiv.org/abs/2602.11518" target="_blank" rel="noopener">Paper</a>
+              </div>
+              <div class="dataset-card-meta">
+                <span class="os-year">2026.02</span>
+                <a class="dataset-repo-link" href="https://benchen4395.github.io/KuaiSearch/" target="_blank" rel="noopener">Website</a>
+                <a class="dataset-repo-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">GitHub</a>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="benchen4395/KuaiSearch">…</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="dataset-card-desc">
+            <strong>KuaiSearch: A Large-Scale E-Commerce Search Dataset for Recall, Ranking, and Relevance</strong> is built from real user search interactions on Kuaishou. It preserves authentic user queries and natural-language product texts, covers
+            <strong>cold-start users</strong> and <strong>long-tail products</strong>, and spans the three key stages of modern search systems: <strong>recall</strong>, <strong>ranking</strong>, and <strong>relevance judgment</strong>.
+          </div>
+        </article>
+
+        <article class="dataset-card">
+          <div class="dataset-kicker">Scientific Literature · Agentic Evaluation</div>
+          <div class="dataset-card-header">
+            <div class="dataset-card-title-row">
+              <div class="dataset-title-main">
+                <span class="dataset-name">PaperArena</span>
+                <span class="dataset-topic">Scientific Literature Mining</span>
+                <a class="dataset-inline-link" href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">Paper</a>
+              </div>
+              <div class="dataset-card-meta">
+                <span class="os-year">2025.10</span>
+                <a class="dataset-repo-link" href="https://paperarena-ai.github.io/" target="_blank" rel="noopener">Website</a>
+                <a class="dataset-repo-link" href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">GitHub</a>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="Melmaphother/PaperArena">…</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="dataset-card-desc">
+            <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong> benchmarks agentic systems on scientific reading and reasoning with tool use. It targets
+            <strong>literature understanding</strong>, <strong>tool-augmented reasoning</strong>, and <strong>evidence-grounded evaluation</strong> over scientific papers and related scholarly workflows.
+          </div>
+        </article>
+
+        <article class="dataset-card">
+          <div class="dataset-kicker">AI for Science · Chemical Tables</div>
+          <div class="dataset-card-header">
+            <div class="dataset-card-title-row">
+              <div class="dataset-title-main">
+                <span class="dataset-name">ChemTable</span>
+                <span class="dataset-topic">Scientific Literature Mining</span>
+                <a class="dataset-inline-link" href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">Paper</a>
+              </div>
+              <div class="dataset-card-meta">
+                <span class="os-year">2025.06</span>
+                <a class="dataset-repo-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">GitHub</a>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="lqzxt/ChemTable">…</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="dataset-card-desc">
+            <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong> introduces <strong>ChemTable</strong>, a real-world benchmark curated from chemical literature. It supports two core tasks:
+            <strong>table recognition</strong> and <strong>table understanding</strong>, with expert annotations over cell polygons, logical layouts, and chemistry-specific semantic labels such as reagents, catalysts, yields, and graphical components.
+          </div>
+        </article>
+
+        <article class="dataset-card">
+          <div class="dataset-kicker">RAG Evaluation · Dynamic Benchmark</div>
+          <div class="dataset-card-header">
+            <div class="dataset-card-title-row">
+              <div class="dataset-title-main">
+                <span class="dataset-name">HoH</span>
+                <span class="dataset-topic">RAG</span>
+                <a class="dataset-inline-link" href="https://aclanthology.org/2025.acl-long.301.pdf" target="_blank" rel="noopener">Paper</a>
+              </div>
+              <div class="dataset-card-meta">
+                <span class="os-year">2025.06</span>
+                <a class="dataset-repo-link" href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">GitHub</a>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="0russwest0/HoH">…</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="dataset-card-desc">
+            <strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG</strong> studies how retrieval-augmented generation systems fail when knowledge becomes stale. It provides a dynamic evaluation setting for measuring
+            <strong>temporal robustness</strong>, <strong>outdated-information sensitivity</strong>, and the impact of knowledge freshness in modern <strong>RAG</strong> pipelines.
+          </div>
+        </article>
+
+      </div>
+    </div><!-- /datasets -->
+
+  </div>
+</div>
+
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<footer class="site-footer">
+  <div class="footer-shell">
+    <div class="footer-links">
+      <a class="footer-link" href="index.html">← Back to Homepage</a>
+      <a class="footer-link" href="publications.html">Publications</a>
+      <a class="footer-link" href="research.html">Research</a>
+      <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
+    </div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+  </div>
+</footer>
+
+<script>
+// Back to top
+(function() {
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => { btn.classList.toggle('visible', window.scrollY > 300); });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+
+// GitHub Stars
+function readCachedStars(repo) {
+  try {
+    const raw = localStorage.getItem(`github-stars:${repo}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return Number.isFinite(parsed?.count) ? parsed.count : null;
+  } catch { return null; }
+}
+function writeCachedStars(repo, count) {
+  try { localStorage.setItem(`github-stars:${repo}`, JSON.stringify({ count, updatedAt: Date.now() })); } catch {}
+}
+function renderStarCount(el, count) { el.textContent = String(count); }
+function renderStarBadgeFallback(el, repo) {
+  el.innerHTML = `<img src="https://img.shields.io/github/stars/${repo}?style=flat&label=&color=003087" alt="GitHub stars" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+}
+async function fetchRepoStars(repo) {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 6000);
+  try {
+    const response = await fetch(`https://api.github.com/repos/${repo}`, {
+      signal: controller.signal,
+      headers: { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
+    });
+    if (!response.ok) throw new Error(`GitHub API ${response.status}`);
+    const data = await response.json();
+    const count = data?.stargazers_count;
+    if (!Number.isFinite(count)) throw new Error('Invalid count');
+    return count;
+  } finally { window.clearTimeout(timeoutId); }
+}
+async function loadGitHubStars() {
+  const elements = document.querySelectorAll('.github-stars');
+  await Promise.all(Array.from(elements).map(async el => {
+    const repo = el.dataset.repo;
+    const cachedCount = readCachedStars(repo);
+    if (cachedCount !== null) renderStarCount(el, cachedCount);
+    try {
+      const liveCount = await fetchRepoStars(repo);
+      renderStarCount(el, liveCount);
+      writeCachedStars(repo, liveCount);
+    } catch (e) {
+      if (cachedCount === null) renderStarBadgeFallback(el, repo);
+    }
+  }));
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadGitHubStars);
+} else {
+  loadGitHubStars();
+}
+</script>
+</body>
+</html>

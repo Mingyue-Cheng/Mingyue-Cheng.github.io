@@ -72,6 +72,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 .nav-logo {
   font-weight: 700;
@@ -91,6 +92,38 @@ body {
   transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--accent); }
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  cursor: pointer;
+}
+.nav-toggle-lines,
+.nav-toggle-lines::before,
+.nav-toggle-lines::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+.nav-toggle-lines {
+  position: relative;
+}
+.nav-toggle-lines::before,
+.nav-toggle-lines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.nav-toggle-lines::before { top: -6px; }
+.nav-toggle-lines::after { top: 6px; }
 
 /* ===== Profile Hero ===== */
 .profile-section {
@@ -812,6 +845,17 @@ body {
   padding-left: 10px;
   border-left: 3px solid var(--accent);
   line-height: 1.3;
+  cursor: pointer;
+  user-select: none;
+}
+.pub-year-heading::after {
+  content: ' ▲';
+  font-size: 11px;
+  opacity: 0.45;
+  margin-left: 5px;
+}
+.pub-year-heading.pub-year-collapsed::after {
+  content: ' ▼';
 }
 .pub-list {
   font-size: 15px;
@@ -1110,8 +1154,36 @@ body {
     font-size: 21px;
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 760px) {
   .nav-links { display: none; }
+}
+@media (max-width: 480px) {
+  .nav-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+  .nav-links {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+  .site-header.js-mobile-nav .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 6px;
+  }
+  .site-header.nav-open .nav-links {
+    display: flex;
+  }
+  .site-header.js-mobile-nav .nav-links a {
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+  }
   .footer-shell {
     padding: 0 18px;
   }
@@ -1163,14 +1235,14 @@ body {
 <header class="site-header">
   <div class="container">
     <div class="nav-inner">
-      <a href="#home" class="nav-logo">Mingyue Cheng</a>
+      <a href="index.html#home" class="nav-logo">Homepage</a>
       <nav class="nav-links">
-        <a href="#biography">Biography</a>
-        <a href="#news">News</a>
-        <a href="#selected-publications">Publications</a>
-        <a href="#opensource">Open Source</a>
-        <a href="#datasets">Benchmarks &amp; Datasets</a>
-        <a href="#experience">Experience</a>
+        <a href="research.html">Research</a>
+        <a href="news.html">News</a>
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Open Source</a>
+        <a href="awards.html">Award</a>
+        <a href="service.html">Service</a>
       </nav>
     </div>
   </div>
@@ -1182,9 +1254,9 @@ body {
     <div class="profile-wrap">
       <img class="profile-photo" src="./HomePage_files/Mycheng-6.png" alt="Mingyue Cheng">
       <div class="profile-info">
-        <div class="profile-name">
+        <h1 class="profile-name">
           Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span>
-        </div>
+        </h1>
         <div class="profile-title">Ph.D &nbsp;·&nbsp; Associate Researcher</div>
         <div class="profile-affil">
           <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener">State Key Laboratory of Cognitive Intelligence</a><br>
@@ -1256,16 +1328,6 @@ body {
     <h2 id="news" class="section-heading">Latest News</h2>
 
     <ul class="news-list" id="newsList">
-<!--       <li class="news pinned">
-        <strong>[Aug. 2025] 📌Pinned</strong> 🚀
-        We released <strong>Science-Star（科星）</strong>, an open-source framework for building, extending, and experimenting with scientific AI agents.
-        <a href="https://paperarena-ai.github.io/" target="_blank">GitHub</a>
-      </li>
-      <li class="news pinned">
-        <strong>[Mar. 2025] 📌Pinned</strong> 🚀
-        We released <strong>Agent-R1</strong>: Training Powerful LLM Agents with End-to-End Reinforcement Learning.
-        <a href="https://github.com/AgentR1/Agent-R1" target="_blank">GitHub</a>
-      </li> -->
       <li><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> on our paper <strong>InstructTime++</strong> being accepted to <strong>ACM TIST</strong>!</li>
       <li><strong>[May. 2026]</strong> 🚀 We released <strong>CastFactory（炼星坊）</strong>, a framework for <strong>LLM-driven time series forecasting model training</strong>. <a href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener"><strong>GitHub</strong></a></li>
       <li><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> and <strong>Bohou Zhang</strong> on our papers (<strong>TokenCast</strong> and <strong>ScholarSum</strong>) being accepted to <strong>IJCAI 2026</strong>!</li>
@@ -1273,28 +1335,22 @@ body {
       <li><strong>[Apr. 2026]</strong> 📄 We released the preprint version of our survey on <strong>LLM-based agents</strong> from the <strong>contextual cognition perspective</strong> on <a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener"><strong>Preprints.org</strong></a>: <strong>"A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective"</strong>.</li>
       <li><strong>[Apr. 2026]</strong> 📄 We released the preprint version of <strong>GeoMind</strong> on <a href="https://arxiv.org/abs/2604.21501" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"GeoMind: An Agentic Workflow for Lithology Classification with Reasoned Tool Invocation"</strong>.</li>
       <li class="pinned"><strong>[Apr. 2026]</strong> 📄 We released the preprint version of <strong>StepPO</strong>, our Agentic RL algorithm, on <a href="https://arxiv.org/abs/2604.18401" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning"</strong>.</li>
-      <li class="pinned"><strong>[Apr. 2026]</strong> 📘 We released the <strong>CastClaw（观星台）</strong> <a href="https://ustc-time-series.github.io/cast-claw/docs/" target="_blank" rel="noopener"><strong>user documentation</strong></a>, covering installation, configuration, and usage for <strong>agentic time series forecasting</strong>.</li>
+      <li class="pinned"><strong>[Apr. 2026]</strong> 📘 We released the <strong>CastClaw（观星阁）</strong> <a href="https://ustc-time-series.github.io/cast-claw/docs/" target="_blank" rel="noopener"><strong>user documentation</strong></a>, covering installation, configuration, and usage for <strong>agentic time series forecasting</strong>.</li>
       <li><strong>[Apr. 2026]</strong> 🎉 Congratulations to <strong>Jiawei Cao</strong> on his paper being accepted to <strong>ACL 2026 Main Conference</strong>!</li>
       <li><strong>[Apr. 2026]</strong> 🎉 Congratulations to <strong>Qingyang Mao</strong> on his paper being accepted to <strong>IEEE TKDE</strong>!</li>
-      <li><strong>[Apr. 2026]</strong> 🚀 We released <strong>CastClaw（观星台）</strong>, an open-source <a href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic time series forecasting</strong>. Check out the <a href="https://ustc-time-series.github.io/cast-claw/" target="_blank" rel="noopener"><strong>project page</strong></a>!</li>
+    </ul>
+
+    <ul id="moreNews" class="news-list" style="display:none;">
+      <li><strong>[Apr. 2026]</strong> 🚀 We released <strong>CastClaw（观星阁）</strong>, an open-source <a href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic time series forecasting</strong>. Check out the <a href="https://ustc-time-series.github.io/cast-claw/" target="_blank" rel="noopener"><strong>project page</strong></a>!</li>
       <li><strong>[Apr. 2026]</strong> 🚀 We released <strong>Academic Search</strong>, an open-source <a href="https://github.com/ustc-ai4science/academic-search" target="_blank" rel="noopener"><strong>GitHub</strong></a> skill for <strong>AI4Science literature search</strong>.</li>
-      <!-- Temporarily hidden: CrabShrimp news item.
-      <li><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>CrabShrimp</strong>, an <a href="https://github.com/Xiaoyu-Tao/CrabShrimp" target="_blank" rel="noopener"><strong>GitHub</strong></a> multi-agent runtime framework for <strong>collaborative decision-making and autonomous evolution</strong>, featuring Dragon-King orchestration, Coral-Meeting consensus, and Shell-Molting self-evolution.</li>
-      -->
-
       <li><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>TabClaw</strong>, an <a href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic table reasoning</strong>, designed to enable <strong>LLM agents</strong> to understand, analyze, and interact with <strong>large-scale tabular data</strong> through structured reasoning and tool-augmented workflows.</li>
-
       <li><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>Claw-R1</strong>, an <a href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic reinforcement learning</strong>, extending RL training environments for <strong>reasoning and tool-using LLM agents</strong>.</li>
-
       <li><strong>[Feb. 2026]</strong> 🎉 We released a <strong>Position Paper</strong> on <a href="https://arxiv.org/abs/2602.01776" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"Beyond Model-Centric Prediction — Agentic Time Series Forecasting"</strong>.</li>
       <li><strong>[Jan. 2026]</strong> 📄 We released <strong>PSPO</strong>, our Agentic RL algorithm, and validated it on the <strong>PaperScout</strong> paper search agent on <a href="https://arxiv.org/abs/2601.10029" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization"</strong>.</li>
       <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Li Li</strong> on her paper being accepted to <strong>DASFAA 2026</strong>!</li>
       <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Qingyang Mao</strong> and <strong>Zirui Liu</strong> on our paper being accepted to <strong>ICLR 2026</strong>!</li>
       <li><strong>[Jan. 2026]</strong> 🎉 I will serve as a <strong>Senior Program Committee (SPC)</strong> member for <strong>IJCAI2026</strong>.</li>
       <li><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Huajian Zhang</strong>, <strong>Shuo Yu</strong>, <strong>Qingchuan Li</strong> and <strong>Zhiding Liu</strong> on our paper being accepted to <strong>WWW 2026</strong>!</li>
-    </ul>
-
-    <ul id="moreNews" class="news-list" style="display:none;">
       <li><strong>[Dec. 2025]</strong> 🎉 I will serve as a <strong>AE</strong> for <strong>IEEE SMC2026</strong>.</li>
       <li><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> on her paper being accepted to <strong>ACM TIST</strong>!</li>
       <li><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Qingchuan Li</strong> and <strong>Yupeng Li</strong> on our paper being accepted to <strong>AAAI 2026</strong>!</li>
@@ -1302,19 +1358,22 @@ body {
       <li><strong>[Sep. 2025]</strong> 🎉 Congratulations to <strong>Zhiding Liu</strong> on his paper being accepted to <strong>NeurIPS 2025</strong>!</li>
       <li><strong>[Aug. 2025]</strong> 🎉 Congratulations to <strong>Shuo Yu</strong> and <strong>Jiahao Wang</strong> on our paper being accepted to <strong>CIKM 2025</strong>!</li>
       <li><strong>[Jul. 2025]</strong> 🎉 Congratulations to <strong>Mingfan Pan</strong> and <strong>Yue Chen</strong> for our paper acceptance at <strong>RecSys 2025</strong>!</li>
-      <li><strong>[Jun. 2025]</strong> 📊 We released <strong>ChemTable</strong>, a large-scale dataset and benchmark for evaluating MLLMs on real-world chemical tables. <a href="https://github.com/lqzxt/ChemTable" target="_blank">[GitHub]</a> <a href="https://arxiv.org/abs/2506.11375" target="_blank">[arXiv]</a></li>
-      <li><strong>[Jun. 2025]</strong> 🚀 We released <strong>Time-R1</strong>, the first time series reasoning model with reinforcement fine-tuning, now available on <a href="https://huggingface.co/ustc-zyt/Time-R1" target="_blank">Hugging Face</a> and <a href="https://github.com/lqzxt/Time-R1" target="_blank">GitHub</a>.</li>
+      <li><strong>[Jun. 2025]</strong> 📊 We released <strong>ChemTable</strong>, a large-scale dataset and benchmark for evaluating MLLMs on real-world chemical tables. <a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">[GitHub]</a> <a href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">[arXiv]</a></li>
+      <li><strong>[Jun. 2025]</strong> 🚀 We released <strong>Time-R1</strong>, the first time series reasoning model with reinforcement fine-tuning, now available on <a href="https://huggingface.co/ustc-zyt/Time-R1" target="_blank" rel="noopener">Hugging Face</a> and <a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">GitHub</a>.</li>
       <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Jie Ouyang</strong> and <strong>Junhao Yu</strong> on our paper being accepted to <strong>ACL 2025</strong>!</li>
       <li><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Daoyu Wang</strong> and <strong>Zirui Liu</strong> on our paper being accepted to <strong>ICML 2025</strong>!</li>
       <li><strong>[Apr. 2025]</strong> 🎉 Congratulations to <strong>Jintao Zhang</strong>, <strong>Yitong Zhou</strong>, and <strong>Hao Zhang</strong> for having our paper accepted by <strong>IJCAI 2025</strong>!</li>
       <li><strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong> on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174430535.53879341" target="_blank" rel="noopener">TechRxiv</a>.</li>
       <li><strong>[Apr. 2025]</strong> 📄 Our survey <strong>A Survey on Table Mining with Large Language Models</strong> released on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174352282.22844759" target="_blank" rel="noopener">TechRxiv</a>.</li>
-      <li><strong>[Mar. 2025]</strong> 🚀 Our <strong>Agent R1</strong> project officially released on <a href="https://github.com/AgentR1/Agent-R1" target="_blank">GitHub</a>.</li>
+      <li><strong>[Mar. 2025]</strong> 🚀 Our <strong>Agent R1</strong> project officially released on <a href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">GitHub</a>.</li>
       <li><strong>[Mar. 2025]</strong> 📄 Our survey <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong> released on <a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">arXiv</a>.</li>
       <li><strong>[Dec. 2024]</strong> 🏆 Congrats to our students on winning the <strong>Gold Award</strong> in the 2024 <strong>Ascend AI Innovation Competition</strong> finals!</li>
     </ul>
 
-    <button class="toggle-button" onclick="toggleMoreNews()" id="toggleBtn">Show More ▼</button>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:8px;flex-wrap:wrap;">
+      <button class="toggle-button" onclick="toggleMoreNews()" id="toggleBtn">Show More ▼</button>
+      <a href="news.html" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;">View All News →</a>
+    </div>
   </div>
 </div>
 
@@ -1337,7 +1396,7 @@ body {
 
     <h3 class="pub-year-heading">📘 Preprint</h3>
     <ol class="pub-list">
-      
+
       <!-- <li data-tags="agent llm"><strong>Mingyue Cheng</strong>, Jie Ouyang, Shuo Yu, Ruiran Yan, Yucong Luo, Zirui Liu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Agent-R1: Training Powerful LLM Agents with End-to-End Reinforcement Learning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">Code</a>]</li> -->
 
       <li data-tags="timeseries agent"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu, Ze Guo, Enhong Chen, <strong>Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.01776.pdf" target="_blank" rel="noopener">PDF</a>]</li>
@@ -1351,7 +1410,7 @@ body {
       <li data-tags="timeseries agent llm">Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen, <strong>Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Code</a>]</li>
 
 
-      <li data-tags="timeseries agent">Xiaoyu Tao, Yuchong Wu, <strong>Mingyue Cheng</strong>, Ze Guo, Tian Gao, <strong>AnomaMind: Agentic Time Series Anomaly Detection with Tool-Augmented Reasoning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.13807" target="_blank" rel="noopener">PDF</a>]</li>    
+      <li data-tags="timeseries agent">Xiaoyu Tao, Yuchong Wu, <strong>Mingyue Cheng</strong>, Ze Guo, Tian Gao, <strong>AnomaMind: Agentic Time Series Anomaly Detection with Tool-Augmented Reasoning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.13807" target="_blank" rel="noopener">PDF</a>]</li>
 
       <li data-tags="agent llm">Daoyu Wang, Qingchuan Li, <strong>Mingyue Cheng</strong>, Jie Ouyang, Shuo Yu, Qi Liu, Enhong Chen, <strong>StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2604.18401.pdf" target="_blank" rel="noopener">PDF</a>]</li>
 
@@ -1366,9 +1425,9 @@ body {
 
       <li data-tags="agent llm"><strong>Mingyue Cheng</strong>, Daoyu Wang, Shuo Yu, Qingchuan Li, Jie Ouyang, Yucong Luo, Yiju Zhang, Qi Liu*, Enhong Chen, <strong>A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective</strong>. (Preprint) [<a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener">Preprint</a>]</li>
 
-      
+
       <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Zhiding Liu, Xiaoyu Tao, Qi Liu*, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen, <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting" target="_blank" rel="noopener">Code</a>]</li>
-      
+
       <li data-tags="table llm"><strong>Mingyue Cheng</strong>, Qingyang Mao, Qi Liu*, Yitong Zhou, Yupeng Li, Jiahao Wang, Jiaying Lin, Jiawei Cao, Enhong Chen, <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/252177/preprint_pdf/3d9c9b7d57481675d0d6e486c8bb7985.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-LLM-Table-Mining" target="_blank" rel="noopener">Code</a>]</li>
 
       <li data-tags="llm"><strong>Mingyue Cheng</strong>, Yucong Luo, Jie Ouyang, Qi Liu*, Huijie Liu, Li Li, Shuo Yu, Bohou Zhang, Jiawei Cao, Jie Ma, Daoyu Wang, Enhong Chen, <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Retrieval-Augmented-Generation" target="_blank" rel="noopener">Code</a>]</li>
@@ -1473,7 +1532,7 @@ body {
         <div class="os-body">
           <div class="os-card-header">
             <div class="os-card-title os-card-title-row">
-              <div class="os-card-name">CastClaw（观星台）</div>
+              <div class="os-card-name">CastClaw（观星阁）</div>
               <div class="os-card-meta">
                 <span class="os-year">2026.04</span>
                 <a class="os-github" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
@@ -1483,7 +1542,7 @@ body {
               </div>
             </div>
           </div>
-          <div class="os-card-desc"><span class="os-inline-highlight">CastClaw（观星台）</span> is an open-source framework for <strong>agentic time series forecasting</strong>. It enables LLM agents to autonomously perform <strong>data analysis</strong>, <strong>model selection</strong>, <strong>feature engineering</strong>, and <strong>iterative forecasting refinement</strong> through structured tool-augmented workflows. CastClaw（观星台） bridges classical time series methods with <strong>agentic reasoning</strong>, supporting diverse forecasting scenarios ranging from <strong>short-term point prediction</strong> to <strong>long-horizon multi-step forecasting</strong>, with built-in evaluation and interpretability mechanisms.</div>
+          <div class="os-card-desc"><span class="os-inline-highlight">CastClaw（观星阁）</span> is an open-source framework for <strong>agentic time series forecasting</strong>. It enables LLM agents to autonomously perform <strong>data analysis</strong>, <strong>model selection</strong>, <strong>feature engineering</strong>, and <strong>iterative forecasting refinement</strong> through structured tool-augmented workflows. CastClaw（观星阁） bridges classical time series methods with <strong>agentic reasoning</strong>, supporting diverse forecasting scenarios ranging from <strong>short-term point prediction</strong> to <strong>long-horizon multi-step forecasting</strong>, with built-in evaluation and interpretability mechanisms.</div>
         </div>
       </div>
 
@@ -1698,7 +1757,7 @@ body {
           <strong>cold-start users</strong> and <strong>long-tail products</strong>, and spans the three key stages of modern search systems: <strong>recall</strong>, <strong>ranking</strong>, and <strong>relevance judgment</strong>.
         </div>
       </article>
-      
+
       <article class="dataset-card">
         <div class="dataset-kicker">Scientific Literature · Agentic Evaluation</div>
         <div class="dataset-card-header">
@@ -1993,12 +2052,45 @@ function toggleMoreNews() {
   }
 }
 
-// ===== Publication Filter =====
+// ===== Publication Year Collapse + Filter =====
 (function() {
   const filterBtns = document.querySelectorAll('.pub-filter-btn');
   const pubItems = document.querySelectorAll('.pub-list li[data-tags]');
   const yearHeadings = document.querySelectorAll('.pub-year-heading');
 
+  // collapsed state: all sections except 2026 start collapsed
+  const collapsedState = new Map();
+  yearHeadings.forEach(h => {
+    collapsedState.set(h, !h.textContent.includes('2026'));
+  });
+
+  function applyCollapseState() {
+    collapsedState.forEach((collapsed, h) => {
+      const ol = h.nextElementSibling;
+      if (!ol) return;
+      if (collapsed) {
+        h.classList.add('pub-year-collapsed');
+        ol.style.display = 'none';
+      } else {
+        h.classList.remove('pub-year-collapsed');
+        ol.style.display = '';
+      }
+    });
+  }
+
+  applyCollapseState();
+
+  // click heading to toggle (only in "all" filter mode)
+  yearHeadings.forEach(h => {
+    h.addEventListener('click', () => {
+      const activeBtn = document.querySelector('.pub-filter-btn.active');
+      if (activeBtn && activeBtn.getAttribute('data-filter') !== 'all') return;
+      collapsedState.set(h, !collapsedState.get(h));
+      applyCollapseState();
+    });
+  });
+
+  // filter buttons
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
@@ -2018,14 +2110,20 @@ function toggleMoreNews() {
         }
       });
 
-      // Hide year headings whose following ol has no visible items
-      yearHeadings.forEach(heading => {
-        const ol = heading.nextElementSibling;
-        if (!ol) return;
-        const hasVisible = Array.from(ol.querySelectorAll('li')).some(li => li.style.display !== 'none');
-        heading.style.display = hasVisible ? '' : 'none';
-        ol.style.display = hasVisible ? '' : 'none';
-      });
+      if (filter === 'all') {
+        yearHeadings.forEach(h => { h.style.display = ''; });
+        applyCollapseState();
+      } else {
+        // expand all sections with matching items; hide those without
+        yearHeadings.forEach(h => {
+          const ol = h.nextElementSibling;
+          if (!ol) return;
+          const hasVisible = Array.from(ol.querySelectorAll('li')).some(li => li.style.display !== 'none');
+          h.classList.remove('pub-year-collapsed');
+          h.style.display = hasVisible ? '' : 'none';
+          ol.style.display = hasVisible ? '' : 'none';
+        });
+      }
     });
   });
 })();
@@ -2123,6 +2221,34 @@ function initClustrMaps() {
   container.appendChild(script);
 }
 document.addEventListener("DOMContentLoaded", initClustrMaps);
+
+// Mobile navigation
+(function () {
+  const header = document.querySelector('.site-header');
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (!header || !toggle || !nav) return;
+
+  header.classList.add('js-mobile-nav');
+
+  function closeNav() {
+    header.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle.addEventListener('click', function () {
+    const isOpen = header.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  nav.addEventListener('click', function (event) {
+    if (event.target.closest('a')) closeNav();
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 480) closeNav();
+  }, { passive: true });
+})();
 
 // Scroll highlight for nav links
 (function () {

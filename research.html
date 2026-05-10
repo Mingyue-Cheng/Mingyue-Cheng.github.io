@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research — Mingyue Cheng</title>
+  <meta name="description" content="Research directions of Mingyue Cheng: LLMs and Agentic AI, Time Series Analysis, Table Mining, Scientific Literature Mining, and Recommender Systems.">
+  <meta name="author" content="Mingyue Cheng">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Research — Mingyue Cheng">
+  <meta property="og:description" content="Agentic intelligence for complex, structured, and temporal data, spanning LLM agents, time series analysis, table mining, scientific literature mining, and recommender systems.">
+  <meta property="og:url" content="https://mingyue-cheng.github.io/research.html">
+  <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
+  <meta name="twitter:card" content="summary">
+  <style>
+/* ===== Variables ===== */
+:root {
+  --accent:      #003087;
+  --accent-dark: #00226b;
+  --accent-light:#e8edf7;
+  --teal:        #087f8c;
+  --green:       #12805c;
+  --amber:       #a16207;
+  --purple:      #6d4aff;
+  --text:        #1a1a1a;
+  --text-muted:  #666;
+  --border:      #e2e5ea;
+  --bg:          #fff;
+  --bg-alt:      #f6f7fb;
+  --radius:      5px;
+  --max-w:       1100px;
+  --font: system-ui, -apple-system, 'Segoe UI', Arial,
+          'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ===== Nav ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 13px 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ===== Hero ===== */
+.page-hero {
+  padding: 42px 0 34px;
+  border-bottom: 1px solid var(--border);
+  background:
+    linear-gradient(150deg, #eef4fb 0%, #ffffff 58%, #f6faf8 100%);
+}
+.page-hero-content {
+  max-width: 76ch;
+}
+.research-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.page-hero-title {
+  font-size: 32px;
+  line-height: 1.16;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0;
+  max-width: 100%;
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+.page-hero-sub {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.8;
+  max-width: 100%;
+  text-align: justify;
+  text-align-last: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+.page-hero-sub a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.page-hero-sub a:hover { text-decoration: underline; }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.hero-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.hero-action.primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.hero-action:hover { background: var(--accent-light); }
+.hero-action.primary:hover { background: var(--accent-dark); }
+/* ===== Main ===== */
+.research-main {
+  padding: 36px 0 56px;
+}
+
+/* ===== Orientation ===== */
+.research-snapshot {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 34px;
+}
+.snapshot-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 14px 15px;
+}
+.snapshot-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.snapshot-value {
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.method-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 38px;
+}
+.method-item {
+  border-left: 3px solid var(--accent);
+  background: var(--bg-alt);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 15px;
+}
+.method-item.teal { border-left-color: var(--teal); }
+.method-item.green { border-left-color: var(--green); }
+.method-item.amber { border-left-color: var(--amber); }
+.method-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.method-text {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* ===== Section label ===== */
+.rd-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rd-section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ===== Primary Direction Card ===== */
+.primary-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.rd-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 8px 28px rgba(0,48,135,0.06);
+  transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s;
+}
+.rd-card:hover {
+  border-color: rgba(0,48,135,0.25);
+  box-shadow: 0 16px 40px rgba(0,48,135,0.10);
+  transform: translateY(-2px);
+}
+
+/* Top accent bar */
+.rd-card-bar {
+  height: 4px;
+  width: 100%;
+}
+.rd-card-bar.agent  { background: linear-gradient(90deg, #003087 0%, #2563eb 100%); }
+.rd-card-bar.ts     { background: linear-gradient(90deg, #003087 0%, #0891b2 100%); }
+
+.rd-card-inner {
+  display: flex;
+  gap: 0;
+}
+
+/* Left icon panel */
+.rd-card-icon-panel {
+  width: 88px;
+  min-height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 28px;
+  background: var(--accent-light);
+  border-right: 1px solid var(--border);
+}
+.rd-card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #c9d8f5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Card body */
+.rd-card-body {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 28px 26px;
+}
+.rd-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0;
+  margin-bottom: 10px;
+}
+.rd-card-desc {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 14px;
+  text-align: justify;
+}
+.rd-card-desc strong { color: var(--accent); }
+
+/* Topic tags */
+.rd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 0;
+}
+.rd-tag {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 8px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid #c9d8f5;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ===== Scenario Cards (smaller grid) ===== */
+.scenario-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.scenario-section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.scenario-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.sc-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 4px 16px rgba(0,48,135,0.05);
+  padding: 0 0 20px;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+}
+.sc-card:hover {
+  border-color: rgba(0,48,135,0.22);
+  box-shadow: 0 12px 30px rgba(0,48,135,0.09);
+  transform: translateY(-2px);
+}
+.sc-card-bar {
+  height: 3px;
+  width: 100%;
+}
+.sc-card-bar.table    { background: linear-gradient(90deg, #003087 0%, #7c3aed 100%); }
+.sc-card-bar.sci      { background: linear-gradient(90deg, #003087 0%, #059669 100%); }
+.sc-card-bar.recsys   { background: linear-gradient(90deg, #003087 0%, #d97706 100%); }
+
+.sc-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px 10px;
+}
+.sc-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== CSS-drawn visual markers ===== */
+.visual-icon i,
+.visual-icon::before,
+.visual-icon::after {
+  content: "";
+  position: absolute;
+  display: block;
+}
+.icon-network {
+  background:
+    radial-gradient(circle at 50% 50%, var(--accent) 0 4px, transparent 4.5px),
+    radial-gradient(circle at 25% 28%, var(--teal) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 75% 28%, var(--purple) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 28% 74%, var(--green) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 72% 74%, var(--amber) 0 3px, transparent 3.5px),
+    #fff;
+}
+.icon-network i {
+  width: 20px;
+  height: 1.5px;
+  background: #b9c8e6;
+  left: 13px;
+  top: 22px;
+  transform-origin: center;
+}
+.icon-network i:nth-child(1) { transform: rotate(34deg); }
+.icon-network i:nth-child(2) { transform: rotate(-34deg); }
+.icon-network i:nth-child(3) { transform: rotate(146deg); }
+.icon-network i:nth-child(4) { transform: rotate(-146deg); }
+
+.icon-series::before {
+  left: 9px;
+  right: 8px;
+  bottom: 10px;
+  height: 1.5px;
+  background: #c9d8f5;
+}
+.icon-series::after {
+  left: 11px;
+  top: 23px;
+  width: 25px;
+  height: 2px;
+  background: var(--teal);
+  transform: rotate(-25deg);
+  transform-origin: left center;
+}
+.icon-series i {
+  bottom: 11px;
+  width: 4px;
+  border-radius: 3px 3px 0 0;
+  background: var(--accent);
+}
+.icon-series i:nth-child(1) { left: 11px; height: 9px; opacity: 0.45; }
+.icon-series i:nth-child(2) { left: 19px; height: 15px; opacity: 0.65; }
+.icon-series i:nth-child(3) { left: 27px; height: 11px; opacity: 0.8; }
+.icon-series i:nth-child(4) { left: 35px; height: 23px; }
+
+.icon-table::before {
+  inset: 8px;
+  border: 1.5px solid var(--purple);
+  border-radius: 4px;
+  background:
+    linear-gradient(var(--purple), var(--purple)) 0 50% / 100% 1px no-repeat,
+    linear-gradient(90deg, var(--purple), var(--purple)) 33% 0 / 1px 100% no-repeat,
+    linear-gradient(90deg, var(--purple), var(--purple)) 66% 0 / 1px 100% no-repeat,
+    rgba(109,74,255,0.08);
+}
+
+.icon-literature::before {
+  left: 9px;
+  top: 7px;
+  width: 15px;
+  height: 20px;
+  border: 1.5px solid var(--green);
+  border-radius: 3px;
+  background:
+    linear-gradient(var(--green), var(--green)) 4px 7px / 7px 1px no-repeat,
+    linear-gradient(var(--green), var(--green)) 4px 11px / 8px 1px no-repeat,
+    linear-gradient(var(--green), var(--green)) 4px 15px / 6px 1px no-repeat,
+    #fff;
+}
+.icon-literature::after {
+  right: 7px;
+  bottom: 8px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--green);
+  border-radius: 50%;
+}
+.icon-literature i {
+  right: 5px;
+  bottom: 6px;
+  width: 8px;
+  height: 2px;
+  background: var(--green);
+  transform: rotate(45deg);
+  transform-origin: right center;
+}
+
+.icon-recommend {
+  background:
+    radial-gradient(circle at 26% 28%, var(--amber) 0 3.5px, transparent 4px),
+    radial-gradient(circle at 72% 24%, var(--accent) 0 3.5px, transparent 4px),
+    radial-gradient(circle at 56% 74%, var(--teal) 0 3.5px, transparent 4px),
+    #fff;
+}
+.icon-recommend::before {
+  left: 11px;
+  top: 16px;
+  width: 18px;
+  height: 1.5px;
+  background: #c9d8f5;
+  transform: rotate(-10deg);
+}
+.icon-recommend::after {
+  left: 16px;
+  top: 23px;
+  width: 15px;
+  height: 1.5px;
+  background: #c9d8f5;
+  transform: rotate(44deg);
+}
+.sc-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+.sc-card-desc {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.75;
+  padding: 0 20px 12px;
+  text-align: left;
+}
+.sc-card-desc strong { color: var(--accent); }
+
+.sc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 20px;
+}
+.sc-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 8px;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ===== Research Note ===== */
+.research-note-box {
+  margin-top: 36px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  background: var(--bg-alt);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.research-note-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.research-note-box a:hover { text-decoration: underline; }
+.research-note-box + .research-note-box { margin-top: 10px; }
+
+/* ===== Back to Top ===== */
+#back-to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #003087;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background-color 0.2s ease;
+  z-index: 999;
+}
+#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top:hover { background-color: #00226b; }
+
+/* ===== Footer ===== */
+.site-footer {
+  margin-top: 0;
+  padding: 18px 0 36px;
+  border-top: 1px solid var(--border);
+  background:
+    radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+.footer-shell {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 14px 0 0;
+}
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+.footer-link:hover { border-color: var(--accent); background: var(--accent-light); }
+.footer-bottom {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 8px 0 0;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 840px) {
+  .research-snapshot, .method-strip { grid-template-columns: repeat(2, 1fr); }
+  .scenario-cards { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 680px) {
+  .rd-card-inner { flex-direction: column; }
+  .rd-card-icon-panel {
+    width: 100%;
+    min-height: unset;
+    padding: 16px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 12px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .rd-card-body { padding: 22px 20px 24px; }
+  .rd-card-desc,
+  .sc-card-desc { text-align: left; }
+  .rd-card,
+  .sc-card,
+  .snapshot-item,
+  .method-item { min-width: 0; }
+  .rd-tag,
+  .sc-tag {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .scenario-cards { grid-template-columns: 1fr; }
+  .nav-links { gap: 14px; }
+  .page-hero-title { font-size: 22px; }
+  .page-hero-sub {
+    text-align: left;
+    text-align-last: left;
+    hyphens: manual;
+  }
+  .research-snapshot, .method-strip { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .container, .footer-shell { padding-left: 20px; padding-right: 20px; }
+}
+  </style>
+</head>
+<body>
+
+<!-- ===== Nav ===== -->
+<header class="site-header">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html#home" class="nav-logo">Homepage</a>
+      <nav class="nav-links">
+        <a href="research.html">Research</a>
+        <a href="news.html">News</a>
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Open Source</a>
+        <a href="awards.html">Award</a>
+        <a href="service.html">Service</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-content">
+      <div class="research-eyebrow">Research Program</div>
+      <h1 class="page-hero-title">Agentic intelligence for complex, structured, and temporal data</h1>
+      <p class="page-hero-sub">
+        My research studies how large language models can reason, act, and learn in data-rich environments. The central thread is
+        <strong>LLM-driven agentic AI</strong>, with a long-running focus on <strong>time series analysis</strong> and broader applications in
+        table mining, scientific literature mining, and recommender systems.
+      </p>
+      <div class="hero-actions">
+        <a class="hero-action primary" href="publications.html">View Publications</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Main ===== -->
+<div class="research-main">
+  <div class="container">
+
+    <div class="research-snapshot">
+      <div class="snapshot-item">
+        <div class="snapshot-label">Core Direction</div>
+        <div class="snapshot-value">LLM Agents</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-label">Long-term Domain</div>
+        <div class="snapshot-value">Time Series</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-label">Research Style</div>
+        <div class="snapshot-value">Models + Systems</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-label">Evaluation Focus</div>
+        <div class="snapshot-value">Real Workflows</div>
+      </div>
+    </div>
+
+    <div class="rd-section-label">Research Methodology</div>
+    <div class="method-strip">
+      <div class="method-item">
+        <div class="method-title">Representation Learning</div>
+        <div class="method-text">Learning transferable signals from temporal, tabular, textual, and multimodal data.</div>
+      </div>
+      <div class="method-item teal">
+        <div class="method-title">Agentic Reasoning</div>
+        <div class="method-text">Designing agents that use tools, memory, feedback, and multi-step reasoning.</div>
+      </div>
+      <div class="method-item green">
+        <div class="method-title">Process-aware RL</div>
+        <div class="method-text">Optimizing agent behavior with step-level and sequence-level reward signals.</div>
+      </div>
+      <div class="method-item amber">
+        <div class="method-title">Benchmarks &amp; Systems</div>
+        <div class="method-text">Building reusable platforms and evaluation tasks grounded in real research workflows.</div>
+      </div>
+    </div>
+
+    <!-- Primary directions label -->
+    <div class="rd-section-label">Primary Research Directions</div>
+
+    <div class="primary-cards">
+
+      <!-- ===== Card 1: LLMs and Agentic AI ===== -->
+      <div class="rd-card">
+        <div class="rd-card-bar agent"></div>
+        <div class="rd-card-inner">
+          <div class="rd-card-icon-panel">
+            <span class="rd-card-icon visual-icon icon-network" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </span>
+          </div>
+          <div class="rd-card-body">
+            <div class="rd-card-title">LLMs and Agentic AI</div>
+            <p class="rd-card-desc">
+              This direction focuses on intelligent systems that <strong>reason, act, and improve through interaction</strong>. We study
+              autonomous learning for large language models, slow-thinking reasoning, process-aware reinforcement learning,
+              tool-augmented execution, memory, and agent runtime mechanisms. The goal is to move from prompt-only behavior
+              toward agents that can plan, recover, and learn from environmental feedback in real workflows.
+            </p>
+            <div class="rd-tags">
+              <span class="rd-tag">Agentic RL</span>
+              <span class="rd-tag">Slow Thinking</span>
+              <span class="rd-tag">Chain-of-Thought</span>
+              <span class="rd-tag">Tool Use</span>
+              <span class="rd-tag">Agent Memory</span>
+              <span class="rd-tag">Self-Evolution</span>
+              <span class="rd-tag">RAG</span>
+              <span class="rd-tag">LLM Evaluation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Card 2: Time Series Analysis ===== -->
+      <div class="rd-card">
+        <div class="rd-card-bar ts"></div>
+        <div class="rd-card-inner">
+          <div class="rd-card-icon-panel">
+            <span class="rd-card-icon visual-icon icon-series" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </span>
+          </div>
+          <div class="rd-card-body">
+            <div class="rd-card-title">Time Series Analysis</div>
+            <p class="rd-card-desc">
+              This direction develops <strong>context-aware time series intelligence</strong> across representation learning,
+              forecasting, classification, and anomaly detection. Earlier work builds neural architectures and self-supervised
+              pre-training methods for temporal signals; recent work connects time series with multimodal language modeling,
+              slow-thinking LLM reasoning, and agentic forecasting systems that select tools, engineer features, and refine
+              predictions through structured interaction.
+            </p>
+            <div class="rd-tags">
+              <span class="rd-tag">Agentic Forecasting</span>
+              <span class="rd-tag">LLM for Time Series</span>
+              <span class="rd-tag">Self-supervised Learning</span>
+              <span class="rd-tag">Multi-modal Reasoning</span>
+              <span class="rd-tag">Anomaly Detection</span>
+              <span class="rd-tag">Classification</span>
+              <span class="rd-tag">Foundation Models</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /primary-cards -->
+
+    <!-- Broader Scenarios -->
+    <div class="scenario-section-label">Broader Application &amp; Evaluation Scenarios</div>
+
+    <div class="scenario-cards">
+
+      <!-- Table Mining -->
+      <div class="sc-card">
+        <div class="sc-card-bar table"></div>
+        <div class="sc-card-head">
+          <span class="sc-card-icon visual-icon icon-table" aria-hidden="true"></span>
+          <div class="sc-card-title">Table Mining</div>
+        </div>
+        <p class="sc-card-desc">
+          LLM-driven <strong>tabular data understanding</strong>, table reasoning, multi-table inference,
+          and scientific table analysis. We explore how LLMs can be augmented with
+          programmatic tools and slow-thinking strategies to tackle complex structured data tasks.
+        </p>
+        <div class="sc-tags">
+          <span class="sc-tag">Table Reasoning</span>
+          <span class="sc-tag">LLM + Tools</span>
+          <span class="sc-tag">Multi-table</span>
+          <span class="sc-tag">ChemTable</span>
+        </div>
+      </div>
+
+      <!-- Scientific Literature Mining -->
+      <div class="sc-card">
+        <div class="sc-card-bar sci"></div>
+        <div class="sc-card-head">
+          <span class="sc-card-icon visual-icon icon-literature" aria-hidden="true"><i></i></span>
+          <div class="sc-card-title">Scientific Literature Mining</div>
+        </div>
+        <p class="sc-card-desc">
+          Literature retrieval, <strong>multimodal scientific document understanding</strong>,
+          knowledge discovery, and evidence-grounded reasoning over scholarly content. We build agentic
+          systems and benchmarks for evaluating tool-augmented reasoning on academic literature.
+        </p>
+        <div class="sc-tags">
+          <span class="sc-tag">RAG</span>
+          <span class="sc-tag">Literature Search</span>
+          <span class="sc-tag">Agentic Retrieval</span>
+          <span class="sc-tag">Benchmark</span>
+        </div>
+      </div>
+
+      <!-- Recommender Systems -->
+      <div class="sc-card">
+        <div class="sc-card-bar recsys"></div>
+        <div class="sc-card-head">
+          <span class="sc-card-icon visual-icon icon-recommend" aria-hidden="true"></span>
+          <div class="sc-card-title">Recommender Systems</div>
+        </div>
+        <p class="sc-card-desc">
+          Sequential modeling, <strong>one-class collaborative filtering</strong>, and LLM-driven reasoning
+          for dynamic user preference understanding. Research covers behavior-level data augmentation,
+          cross-domain recommendation, and LLM-based user simulation.
+        </p>
+        <div class="sc-tags">
+          <span class="sc-tag">Sequential Rec</span>
+          <span class="sc-tag">LLM + RecSys</span>
+          <span class="sc-tag">Cross-domain</span>
+          <span class="sc-tag">RL for Rec</span>
+        </div>
+      </div>
+
+    </div><!-- /scenario-cards -->
+
+    <!-- Notes -->
+    <div class="research-note-box">
+      Research collections:
+      <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> ·
+      <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Analysis</a>
+    </div>
+    <div class="research-note-box">
+      欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGentic Intelligence（AGI）Group</a>。
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== Back to Top ===== -->
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div class="footer-shell">
+    <div class="footer-links">
+      <a class="footer-link" href="index.html">← Back to Homepage</a>
+      <a class="footer-link" href="publications.html">Publications</a>
+      <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
+    </div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+</script>
+</body>
+</html>

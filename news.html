@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>News — Mingyue Cheng</title>
+  <meta name="description" content="Latest news and updates from Mingyue Cheng's research group at USTC.">
+  <meta name="author" content="Mingyue Cheng">
+  <style>
+:root {
+  --accent:      #003087;
+  --accent-dark: #00226b;
+  --accent-light:#e8edf7;
+  --text:        #1a1a1a;
+  --text-muted:  #666;
+  --border:      #e2e5ea;
+  --bg:          #fff;
+  --bg-alt:      #f6f7fb;
+  --radius:      5px;
+  --max-w:       1100px;
+  --font: system-ui, -apple-system, 'Segoe UI', Arial,
+          'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+
+/* Nav */
+.site-header {
+  position: sticky; top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100; padding: 13px 0;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-weight: 700; font-size: 16px; color: var(--accent); text-decoration: none; letter-spacing: 0.01em; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+
+/* Hero */
+.page-hero {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%);
+}
+.page-hero-title { font-size: 28px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; margin-bottom: 8px; }
+.page-hero-sub { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+/* Main */
+.news-main { padding: 32px 0 56px; }
+
+/* Year heading */
+.news-year-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 28px 0 12px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  line-height: 1.3;
+  scroll-margin-top: 80px;
+}
+.news-year-heading:first-child { margin-top: 0; }
+
+/* News list */
+.news-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.news-item {
+  display: flex;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: 8px;
+  transition: background 0.15s;
+  font-size: 14px;
+  line-height: 1.75;
+  border-bottom: 1px solid #f2f4f8;
+}
+.news-item:last-child { border-bottom: none; }
+.news-item:hover { background: var(--bg-alt); }
+.news-item.pinned { background: linear-gradient(90deg, #f0f4fb 0%, #fff 100%); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; }
+.news-item.pinned:hover { background: linear-gradient(90deg, #e4eaf6 0%, #f6f9ff 100%); }
+
+.news-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  margin-top: 8px;
+}
+.news-item.pinned .news-dot { background: var(--accent); }
+
+.news-body { flex: 1; min-width: 0; }
+.news-body a { color: var(--accent); text-decoration: none; }
+.news-body a:hover { text-decoration: underline; }
+
+/* Back to top */
+#back-to-top {
+  position: fixed; right: 28px; bottom: 32px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background-color: #003087; color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease, background-color 0.2s ease; z-index: 999;
+}
+#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top:hover { background-color: #00226b; }
+
+/* Footer */
+.site-footer {
+  margin-top: 0; padding: 18px 0 36px;
+  border-top: 1px solid var(--border);
+  background: radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%),
+              linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+.footer-shell { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 14px 0 0; }
+.footer-link {
+  display: inline-flex; align-items: center; padding: 7px 14px;
+  border-radius: 999px; border: 1px solid var(--border);
+  color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 600;
+  background: #fff; transition: all 0.2s ease;
+}
+.footer-link:hover { border-color: var(--accent); background: var(--accent-light); }
+.footer-bottom { margin-top: 10px; font-size: 12px; color: var(--text-muted); text-align: center; padding: 8px 0 0; }
+
+@media (max-width: 680px) { .nav-links { gap: 14px; } .page-hero-title { font-size: 22px; } }
+@media (max-width: 760px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html#home" class="nav-logo">Homepage</a>
+      <nav class="nav-links">
+        <a href="research.html">Research</a>
+        <a href="news.html">News</a>
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Open Source</a>
+        <a href="awards.html">Award</a>
+        <a href="service.html">Service</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-title">News &amp; Updates</div>
+    <p class="page-hero-sub">Latest news from Mingyue Cheng's research group at USTC.</p>
+  </div>
+</div>
+
+<div class="news-main">
+  <div class="container">
+
+    <div class="news-year-heading">2026</div>
+    <ul class="news-list">
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> on our paper <strong>InstructTime++</strong> being accepted to <strong>ACM TIST</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[May. 2026]</strong> 🚀 We released <strong>CastFactory（炼星坊）</strong>, a framework for <strong>LLM-driven time series forecasting model training</strong>. <a href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener"><strong>GitHub</strong></a></span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> and <strong>Bohou Zhang</strong> on our papers (<strong>TokenCast</strong> and <strong>ScholarSum</strong>) being accepted to <strong>IJCAI 2026</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> and <strong>Yaguo Liu</strong> on our papers (<strong>CoGenCast</strong> and <strong>MemCast</strong>) being accepted to <strong>ICML 2026</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 📄 We released the preprint version of our survey on <strong>LLM-based agents</strong> from the <strong>contextual cognition perspective</strong> on <a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener"><strong>Preprints.org</strong></a>: <strong>"A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective"</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 📄 We released the preprint version of <strong>GeoMind</strong> on <a href="https://arxiv.org/abs/2604.21501" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"GeoMind: An Agentic Workflow for Lithology Classification with Reasoned Tool Invocation"</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 📄 We released the preprint version of <strong>StepPO</strong>, our Agentic RL algorithm, on <a href="https://arxiv.org/abs/2604.18401" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning"</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 📘 We released the <strong>CastClaw（观星阁）</strong> <a href="https://ustc-time-series.github.io/cast-claw/docs/" target="_blank" rel="noopener"><strong>user documentation</strong></a>, covering installation, configuration, and usage for <strong>agentic time series forecasting</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 🎉 Congratulations to <strong>Jiawei Cao</strong> on his paper being accepted to <strong>ACL 2026 Main Conference</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 🎉 Congratulations to <strong>Qingyang Mao</strong> on his paper being accepted to <strong>IEEE TKDE</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 🚀 We released <strong>CastClaw（观星阁）</strong>, an open-source <a href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic time series forecasting</strong>. Check out the <a href="https://ustc-time-series.github.io/cast-claw/" target="_blank" rel="noopener"><strong>project page</strong></a>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2026]</strong> 🚀 We released <strong>Academic Search</strong>, an open-source <a href="https://github.com/ustc-ai4science/academic-search" target="_blank" rel="noopener"><strong>GitHub</strong></a> skill for <strong>AI4Science literature search</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>TabClaw</strong>, an <a href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic table reasoning</strong>, designed to enable <strong>LLM agents</strong> to understand, analyze, and interact with <strong>large-scale tabular data</strong> through structured reasoning and tool-augmented workflows.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Mar. 2026]</strong> 🚀 We open-sourced <strong>Claw-R1</strong>, an <a href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener"><strong>GitHub</strong></a> framework for <strong>agentic reinforcement learning</strong>, extending RL training environments for <strong>reasoning and tool-using LLM agents</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Feb. 2026]</strong> 🎉 We released a <strong>Position Paper</strong> on <a href="https://arxiv.org/abs/2602.01776" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"Beyond Model-Centric Prediction — Agentic Time Series Forecasting"</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jan. 2026]</strong> 📄 We released <strong>PSPO</strong>, our Agentic RL algorithm, and validated it on the <strong>PaperScout</strong> paper search agent on <a href="https://arxiv.org/abs/2601.10029" target="_blank" rel="noopener"><strong>arXiv</strong></a>: <strong>"PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization"</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Li Li</strong> on her paper being accepted to <strong>DASFAA 2026</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Qingyang Mao</strong> and <strong>Zirui Liu</strong> on our paper being accepted to <strong>ICLR 2026</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jan. 2026]</strong> 🎉 I will serve as a <strong>Senior Program Committee (SPC)</strong> member for <strong>IJCAI2026</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jan. 2026]</strong> 🎉 Congratulations to <strong>Huajian Zhang</strong>, <strong>Shuo Yu</strong>, <strong>Qingchuan Li</strong> and <strong>Zhiding Liu</strong> on our paper being accepted to <strong>WWW 2026</strong>!</span></li>
+    </ul>
+
+    <div class="news-year-heading">2025</div>
+    <ul class="news-list">
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Dec. 2025]</strong> 🎉 I will serve as a <strong>AE</strong> for <strong>IEEE SMC2026</strong>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Xiaoyu Tao</strong> on her paper being accepted to <strong>ACM TIST</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Nov. 2025]</strong> 🎉 Congratulations to <strong>Qingchuan Li</strong> and <strong>Yupeng Li</strong> on our paper being accepted to <strong>AAAI 2026</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Oct. 2025]</strong> 🎉 Congratulations to <strong>Chuang Jiang</strong>, <strong>Jiahao Wang</strong>, and collaborators on our paper being accepted to <strong>ACM WSDM2026</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Sep. 2025]</strong> 🎉 Congratulations to <strong>Zhiding Liu</strong> on his paper being accepted to <strong>NeurIPS 2025</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Aug. 2025]</strong> 🎉 Congratulations to <strong>Shuo Yu</strong> and <strong>Jiahao Wang</strong> on our paper being accepted to <strong>CIKM 2025</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jul. 2025]</strong> 🎉 Congratulations to <strong>Mingfan Pan</strong> and <strong>Yue Chen</strong> for our paper acceptance at <strong>RecSys 2025</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jun. 2025]</strong> 📊 We released <strong>ChemTable</strong>, a large-scale dataset and benchmark for evaluating MLLMs on real-world chemical tables. <a href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">[GitHub]</a> <a href="https://arxiv.org/abs/2506.11375" target="_blank" rel="noopener">[arXiv]</a></span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Jun. 2025]</strong> 🚀 We released <strong>Time-R1</strong>, the first time series reasoning model with reinforcement fine-tuning, now available on <a href="https://huggingface.co/ustc-zyt/Time-R1" target="_blank" rel="noopener">Hugging Face</a> and <a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">GitHub</a>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Jie Ouyang</strong> and <strong>Junhao Yu</strong> on our paper being accepted to <strong>ACL 2025</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[May. 2025]</strong> 🎉 Congratulations to <strong>Daoyu Wang</strong> and <strong>Zirui Liu</strong> on our paper being accepted to <strong>ICML 2025</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2025]</strong> 🎉 Congratulations to <strong>Jintao Zhang</strong>, <strong>Yitong Zhou</strong>, and <strong>Hao Zhang</strong> for having our paper accepted by <strong>IJCAI 2025</strong>!</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong> on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174430535.53879341" target="_blank" rel="noopener">TechRxiv</a>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Apr. 2025]</strong> 📄 Our survey <strong>A Survey on Table Mining with Large Language Models</strong> released on <a href="https://www.techrxiv.org/doi/full/10.36227/techrxiv.174352282.22844759" target="_blank" rel="noopener">TechRxiv</a>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Mar. 2025]</strong> 🚀 Our <strong>Agent R1</strong> project officially released on <a href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">GitHub</a>.</span></li>
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Mar. 2025]</strong> 📄 Our survey <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong> released on <a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">arXiv</a>.</span></li>
+    </ul>
+
+    <div class="news-year-heading">2024</div>
+    <ul class="news-list">
+      <li class="news-item"><span class="news-dot"></span><span class="news-body"><strong>[Dec. 2024]</strong> 🏆 Congrats to our students on winning the <strong>Gold Award</strong> in the 2024 <strong>Ascend AI Innovation Competition</strong> finals!</span></li>
+    </ul>
+
+  </div>
+</div>
+
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<footer class="site-footer">
+  <div class="footer-shell">
+    <div class="footer-links">
+      <a class="footer-link" href="index.html">← Back to Homepage</a>
+      <a class="footer-link" href="publications.html">Publications</a>
+      <a class="footer-link" href="research.html">Research</a>
+      <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
+    </div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => { btn.classList.toggle('visible', window.scrollY > 300); });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+</script>
+</body>
+</html>

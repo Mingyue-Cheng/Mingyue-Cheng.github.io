@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Publications — Mingyue Cheng</title>
+  <meta name="description" content="Full publication list of Mingyue Cheng. Research in Time Series Analysis, LLM Agents, Table Mining, and Recommender Systems.">
+  <meta name="author" content="Mingyue Cheng">
+  <style>
+/* ===== Variables ===== */
+:root {
+  --accent:      #003087;
+  --accent-dark: #00226b;
+  --accent-light:#e8edf7;
+  --text:        #1a1a1a;
+  --text-muted:  #666;
+  --border:      #e2e5ea;
+  --bg:          #fff;
+  --bg-alt:      #f6f7fb;
+  --radius:      5px;
+  --max-w:       1100px;
+  --font: system-ui, -apple-system, 'Segoe UI', Arial,
+          'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  text-align: justify;
+}
+
+/* ===== Container ===== */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ===== Sticky Nav ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 13px 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ===== Page Hero ===== */
+.pub-hero {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%);
+}
+.pub-hero-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.pub-hero-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+.pub-hero-sub a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.pub-hero-sub a:hover { text-decoration: underline; }
+
+/* ===== Stats Bar ===== */
+.pub-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.pub-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,48,135,0.05);
+  min-width: 110px;
+}
+.pub-stat-num {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.pub-stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+/* ===== Year Jump Nav ===== */
+.pub-year-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 14px 0 0;
+  margin-top: 4px;
+}
+.pub-year-nav a {
+  display: inline-block;
+  padding: 4px 13px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: #fff;
+  transition: all 0.18s;
+}
+.pub-year-nav a:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ===== Main Content ===== */
+.pub-main {
+  padding: 28px 0 40px;
+}
+
+/* ===== Filters ===== */
+.pub-filters-wrap {
+  position: sticky;
+  top: 52px;
+  z-index: 90;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.pub-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pub-filters-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.pub-filter-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-family: var(--font);
+  transition: all 0.18s;
+}
+.pub-filter-btn:hover, .pub-filter-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ===== Scholar Links ===== */
+.pub-scholar-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.pub-scholar-links a {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  transition: all 0.2s;
+  background: #fff;
+}
+.pub-scholar-links a:hover { background: var(--accent-light); border-color: var(--accent); }
+
+/* ===== Pub Note ===== */
+.pub-note {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* ===== Year Heading ===== */
+.pub-year-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 24px 0 8px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  line-height: 1.3;
+  scroll-margin-top: 120px;
+}
+
+/* ===== Publication List ===== */
+.pub-list {
+  font-size: 15px;
+  line-height: 1.75;
+  padding-left: 22px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+.pub-list li {
+  margin-bottom: 8px;
+  color: var(--text);
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.pub-list li:last-child { border-bottom: none; }
+.pub-list a { color: var(--accent); text-decoration: none; }
+.pub-list a:hover { text-decoration: underline; }
+.pub-list font[color="red"] { color: #b91c1c !important; font-weight: 700; font-style: normal; }
+.pub-list em { color: var(--text-muted); font-style: italic; }
+.pub-list .sktime-note { color: var(--text-muted); }
+
+/* ===== Section Divider ===== */
+.pub-section-gap {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0 4px;
+}
+
+/* ===== Back to Top ===== */
+#back-to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #003087;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, background-color 0.2s ease;
+  z-index: 999;
+}
+#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top:hover { background-color: #00226b; }
+
+/* ===== Footer ===== */
+.site-footer {
+  margin-top: 22px;
+  padding: 18px 0 36px;
+  border-top: 1px solid var(--border);
+  background:
+    radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%),
+    linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+.footer-shell {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.footer-bottom {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 14px 0 0;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 14px 0 0;
+}
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+.footer-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 680px) {
+  .pub-stats { gap: 10px; }
+  .pub-stat { min-width: 90px; padding: 10px 14px; }
+  .pub-stat-num { font-size: 22px; }
+  .nav-links { gap: 14px; }
+  .pub-hero-title { font-size: 22px; }
+  .pub-filters-wrap { top: 48px; }
+}
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+}
+  </style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<header class="site-header">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html#home" class="nav-logo">Homepage</a>
+      <nav class="nav-links">
+        <a href="research.html">Research</a>
+        <a href="news.html">News</a>
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Open Source</a>
+        <a href="awards.html">Award</a>
+        <a href="service.html">Service</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<div class="pub-hero">
+  <div class="container">
+    <div class="pub-hero-title">Publications</div>
+    <p class="pub-hero-sub">
+      Full publication list of <a href="index.html">Mingyue Cheng</a>.
+      (* Corresponding Author, <sup>+</sup> Equal Contribution)
+    </p>
+
+  </div>
+</div>
+
+<!-- ===== Main ===== -->
+<div class="pub-main">
+  <div class="container">
+
+    <!-- Sticky filter bar -->
+    <div class="pub-filters-wrap">
+      <div class="pub-filters">
+        <span class="pub-filters-label">Filter by topic:</span>
+        <button class="pub-filter-btn active" data-filter="all">All</button>
+        <button class="pub-filter-btn" data-filter="llm-agent">LLMs &amp; Agent</button>
+        <button class="pub-filter-btn" data-filter="timeseries">Time Series</button>
+        <button class="pub-filter-btn" data-filter="table">Table Mining</button>
+        <button class="pub-filter-btn" data-filter="recsys">RecSys</button>
+        <button class="pub-filter-btn" data-filter="ai4science">AI4Science</button>
+      </div>
+    </div>
+
+    <p class="pub-note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
+
+    <!-- ===== Preprint ===== -->
+    <h3 id="year-preprint" class="pub-year-heading">📘 Preprint</h3>
+    <ol class="pub-list">
+
+      <li data-tags="timeseries agent"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu, Ze Guo, Enhong Chen, <strong>Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.01776.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+
+      <li data-tags="timeseries agent">Xiaohan Zhang, Tian Gao, <strong>Mingyue Cheng*</strong>, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, Qi Liu, <strong>AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">Code</a>]</li>
+
+      <li data-tags="timeseries agent">Xiaoyu Tao, <strong>Mingyue Cheng</strong>, Chuang Jiang, Tian Gao, Huanjian Zhang, Yaguo Liu, Qi Liu, <strong>Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener">Code</a>]</li>
+
+      <li data-tags="timeseries agent">Bokai Pan, <strong>Mingyue Cheng</strong>, Zhiding Liu, Shuo Yu, Xiaoyu Tao, Yuchong Wu, Qi Liu, Defu Lian, Enhong Chen, <strong>CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2604.27840" target="_blank" rel="noopener">PDF</a>]</li>
+
+      <li data-tags="timeseries agent llm">Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen, <strong>Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs</strong>. (Preprint) [<a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Code</a>]</li>
+
+      <li data-tags="timeseries agent">Xiaoyu Tao, Yuchong Wu, <strong>Mingyue Cheng</strong>, Ze Guo, Tian Gao, <strong>AnomaMind: Agentic Time Series Anomaly Detection with Tool-Augmented Reasoning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2602.13807" target="_blank" rel="noopener">PDF</a>]</li>
+
+      <li data-tags="agent llm">Daoyu Wang, Qingchuan Li, <strong>Mingyue Cheng</strong>, Jie Ouyang, Shuo Yu, Qi Liu, Enhong Chen, <strong>StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2604.18401.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+
+      <li data-tags="agent llm ai4science">Tingyue Pan, Jie Ouyang, <strong>Mingyue Cheng</strong>, Qingchuan Li, Zirui Liu, Daoyu Wang, Mingfan Pan, Shuo Yu, Qi Liu, <strong>PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2601.10029.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+
+      <li data-tags="agent llm ai4science">Daoyu Wang, <strong>Mingyue Cheng*</strong>, Shuo Yu, Zirui Liu, Ze Guo, Xin Li, Qi Liu, <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">Code</a>]</li>
+
+    </ol>
+
+    <div class="pub-section-gap"></div>
+
+    <!-- ===== Released Survey ===== -->
+    <h3 id="year-survey" class="pub-year-heading">📘 Released Survey</h3>
+    <ol class="pub-list">
+
+      <li data-tags="agent llm"><strong>Mingyue Cheng</strong>, Daoyu Wang, Shuo Yu, Qingchuan Li, Jie Ouyang, Yucong Luo, Yiju Zhang, Qi Liu*, Enhong Chen, <strong>A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective</strong>. (Preprint) [<a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener">Preprint</a>]</li>
+
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Zhiding Liu, Xiaoyu Tao, Qi Liu*, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen, <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting" target="_blank" rel="noopener">Code</a>]</li>
+
+      <li data-tags="table llm"><strong>Mingyue Cheng</strong>, Qingyang Mao, Qi Liu*, Yitong Zhou, Yupeng Li, Jiahao Wang, Jiaying Lin, Jiawei Cao, Enhong Chen, <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong>. (Preprint) [<a href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/252177/preprint_pdf/3d9c9b7d57481675d0d6e486c8bb7985.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-LLM-Table-Mining" target="_blank" rel="noopener">Code</a>]</li>
+
+      <li data-tags="llm"><strong>Mingyue Cheng</strong>, Yucong Luo, Jie Ouyang, Qi Liu*, Huijie Liu, Li Li, Shuo Yu, Bohou Zhang, Jiawei Cao, Jie Ma, Daoyu Wang, Enhong Chen, <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Retrieval-Augmented-Generation" target="_blank" rel="noopener">Code</a>]</li>
+
+    </ol>
+
+    <div class="pub-section-gap"></div>
+
+    <!-- ===== 2026 ===== -->
+    <h3 id="year-2026" class="pub-year-heading">🐎 Year of the Fire Horse (Bing Wu Year, 2026)</h3>
+    <ol class="pub-list">
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Huajian Zhang, Qi Liu*, Enhong Chen, <strong>InstructTime++: Time Series Classification with Multimodal Language Modeling via Implicit Feature Enhancement</strong>. <em>ACM TIST Accepted</em>. [<a href="https://arxiv.org/pdf/2601.14968" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries llm">Xiaoyu Tao, <strong>Mingyue Cheng*</strong>, Ze Guo, Shuo Yu, Yaguo Liu, Qi Liu, Shijin Wang, <strong>MemCast: Memory-Driven Time Series Forecasting with Experience-Conditioned Reasoning</strong>. <em>ICML2026 Accepted</em>. [<a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries">Yaguo Liu, <strong>Mingyue Cheng*</strong>, Daoyu Wang, Xiaoyu Tao, Qi Liu, <strong>CoGenCast: A Coupled Autoregressive-Flow Generative Framework for Time Series Forecasting</strong>. <em>ICML2026 Accepted</em>. [<a href="https://arxiv.org/pdf/2602.03564" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries llm">Xiaoyu Tao, Shilong Zhang, <strong>Mingyue Cheng*</strong>, Daoyu Wang, Tingyue Pan, Bokai Pan, Changqing Zhang, Shijin Wang, <strong>From Values to Tokens: An LLM-Driven Framework for Context-aware Time Series Forecasting via Symbolic Discretization</strong>. <em>IJCAI2026 Accepted</em>. [<a href="https://arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Bohou Zhang, Xiaoyu Tao<sup>+</sup>, <strong>Mingyue Cheng*</strong>, Huijie Liu, Qi Liu, <strong>ScholarSum: Student-Teacher Abstractive Summarization via Knowledge Graph Reasoning and Reflective Refinement</strong>. <em>IJCAI2026 Accepted</em>.</li>
+      <li data-tags="llm ai4science">Jiawei Cao, Jie Ouyang, <strong>Mingyue Cheng*</strong>, Zhaomeng Zhou, Chunli Liu, Yupeng Li, Zirui Liu, Shijin Wang, <strong>Re<sup>3</sup>: Relevance &amp; Recency Retrieval for Mitigating Temporal Hallucination</strong>. <em>ACL2026 Accepted</em>.</li>
+      <li data-tags="table llm">Huajian Zhang, <strong>Mingyue Cheng*</strong>, Yucong Luo, Xiaoyu Tao, <strong>STaR: Towards Cognitive Table Reasoning via Slow-Thinking Large Language Models</strong>. <em>ACM WWW2026</em>. [<a href="https://arxiv.org/pdf/2511.11233" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zhjai/STaR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm agent recsys">Zhiding Liu, Ben Chen, <strong>Mingyue Cheng*</strong>, Enhong Chen, Li Li, Chenyi Lei*, Wenwu Ou, Han Li and Kun Gai, <strong>Towards Context-aware Reasoning-enhanced Generative Searching in E-commerce</strong>. <em>ACM WWW2026</em>. [<a href="https://arxiv.org/abs/2510.16925" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm agent recsys">Shuo Yu, <strong>Mingyue Cheng*</strong>, Daoyu Wang, Qi Liu, Zirui Liu, Ze Guo, Xiaoyu Tao, <strong>MemWeaver: A Hierarchical Memory from Textual Interactive Behaviors for Personalized Generation</strong>. <em>ACM WWW2026</em>. [<a href="https://arxiv.org/abs/2510.07713" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Qingchuan Li, Jiatong Li, Zirui Liu, <strong>Mingyue Cheng</strong>, Yitong Zhou, Yuting Zeng, Qi Liu and Tongxuan Liu, <strong>Are LLMs Stable Formal Logic Translators in Logical Reasoning Across Linguistically Diversified Texts?</strong>. <em>ACM WWW2026</em>.</li>
+      <li data-tags="recsys">Li Li, <strong>Mingyue Cheng*</strong>, Yuyang Ye, Zhiding Liu, Enhong Chen, <strong>Preference Trajectory Modeling via Flow Matching for Sequential Recommendation</strong>. <em>DASFAA2026</em>.</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Jiahao Wang, Daoyu Wang, Xiaoyu Tao, Qi Liu*, Enhong Chen, <strong>Can Slow-Thinking LLMs Reason Over Time? Empirical Studies in Time Series Forecasting</strong>. <em>ACM WSDM2026</em>: 99–110, Feb 2026. [<a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Zhiding Liu, Qi Liu*, Hao Zhang, Rujiao Zhang and Enhong Chen, <strong>TimeMAE: Self-Supervised Representations of Time Series with Decoupled Masked Autoencoders</strong>, <em>ACM WSDM2026</em>: 498–508, Feb 2026. [<a href="https://arxiv.org/abs/2303.00320" target="_blank" rel="noopener">arXiv version</a>] [<a href="https://dl.acm.org/doi/10.1145/3773966.3778007" target="_blank" rel="noopener">ACM version</a>] [<a href="https://github.com/Mingyue-Cheng/TimeMAE" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table agent">Chuang Jiang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Qingyang Mao, Jie Ouyang and Qi Liu, <strong>TableMind: An Autonomous Programmatic Agent for Tool-Augmented Table Reasoning</strong>. <em>ACM WSDM2026</em>: 260–270, Feb 2026. [<a href="https://arxiv.org/pdf/2509.06278" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lennendd/TableMind-Repo" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm">Qingyang Mao, Qi Liu, Zhi Li, <strong>Mingyue Cheng</strong>, Zheng Zhang, Rui Li, <strong>PoTable: Programming Standardly on Table-based Reasoning Like a Human Analyst</strong>. <em>IEEE TKDE Accepted</em>. [<a href="https://arxiv.org/pdf/2412.04272" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm agent ai4science">Jie Ouyang, Yucong Luo, <strong>Mingyue Cheng</strong>, Daoyu Wang, Shuo Yu, Qi Liu, Enhong Chen, <strong>Routing-Based RAG for Dynamic Question Answering: Lessons from Meta KDD Cup 2024 CRAG</strong>. <em>FCS Accepted</em>.</li>
+      <li data-tags="llm">Qingchuan Li, <strong>Mingyue Cheng*</strong>, Zirui Liu, Daoyu Wang, Yuting Zeng, Tongxuan Liu, <strong>From Hypothesis to Premises: LLM-based Backward Logical Reasoning with Selective Symbolic Translation</strong>. <em>AAAI2026</em>: 31671–31679, Mar 2026. [<a href="https://ojs.aaai.org/index.php/AAAI/article/download/40434/44395" target="_blank" rel="noopener">PDF</a>] [<a href="https://doi.org/10.1609/aaai.v40i37.40434" target="_blank" rel="noopener">DOI</a>]</li>
+      <li data-tags="recsys">Yupeng Li, <strong>Mingyue Cheng*</strong>, Yucong Luo, Yitong Zhou, Qingyang Mao, Shijin Wang, <strong>BLADE: A Behavior-Level Data Augmentation Framework with Dual Fusion Modeling for Multi-Behavior Sequential Recommendation</strong>. <em>AAAI2026</em>: 15189–15197, Mar 2026. [<a href="https://ojs.aaai.org/index.php/AAAI/article/download/38543/42505" target="_blank" rel="noopener">PDF</a>] [<a href="https://doi.org/10.1609/aaai.v40i18.38543" target="_blank" rel="noopener">DOI</a>]</li>
+      <li data-tags="llm recsys">Xian Guo, Ben Chen, Siyuan Wang, Ying Yang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Yuqing Ding, Han Li, <strong>OneSug: The Unified End-to-End Generative Framework for E-commerce Query Suggestion</strong>. <em>AAAI2026</em>: 14774–14782, Mar 2026. [<a href="https://ojs.aaai.org/index.php/AAAI/article/download/38497/42459" target="_blank" rel="noopener">PDF</a>] [<a href="https://doi.org/10.1609/aaai.v40i17.38497" target="_blank" rel="noopener">DOI</a>]</li>
+      <li data-tags="llm">Zirui Liu, Xianquan Wang, Yan Zhuang, Jiatong Li, Qi Liu, Shuanghong Shen, <strong>Mingyue Cheng</strong>, Shijin Wang, <strong>Fewer Battles, More Gain: An Information-Efficient Framework for Arena-based LLM Evaluation</strong>. <em>ICLR2026</em>. [<a href="#" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Qingyang Mao, Qi Cai, Yehao Li, Yingwei Pan, <strong>Mingyue Cheng</strong>, Ting Yao, Qi Liu, Tao Mei, <strong>Visual Autoregressive Modeling for Instruction-Guided Image Editing</strong>. <em>ICLR2026</em>. [<a href="https://arxiv.org/pdf/2508.15772" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Ruisong Han, Jiahao Zhang, Guofeng Zhang, <strong>Mingyue Cheng</strong>, Changqing Zhang, Zongbo Han, <strong>Retrieval-augmented prompt for out-of-distribution detection</strong>. <em>Pattern Recognition</em>, 179: 113779, Nov 2026. [<a href="https://doi.org/10.1016/j.patcog.2026.113779" target="_blank" rel="noopener">DOI</a>]</li>
+    </ol>
+
+    <div class="pub-section-gap"></div>
+
+    <!-- ===== 2025 ===== -->
+    <h3 id="year-2025" class="pub-year-heading">🐍 Year of the Wood Snake (Yi Si Year, 2025)</h3>
+    <ol class="pub-list">
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Jiqian Yang, Tingyue Pan, Qi Liu*, Zhi Li, <strong>ConvTimeNet: A Deep Hierarchical Fully Convolutional Model for Multivariate Time Series Analysis</strong>, <em>ACM WWW2025</em>, Sydney, 2025. [<a href="https://arxiv.org/pdf/2403.01493" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/ConvTimeNet" target="_blank" rel="noopener">Code</a>] <span class="sktime-note">— Included in <a href="https://www.sktime.net/en/stable/" target="_blank" rel="noopener"><em>sktime</em></a></span></li>
+      <li data-tags="timeseries llm">Xiaoyu Tao, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Yucong Luo, Qi Liu, Enhong Chen, <strong>Hierarchical Multimodal LLMs with Semantic Space Alignment for Enhanced Time Series Classification</strong>. (<em>ACM TIST</em>) [<a href="https://arxiv.org/pdf/2410.18686" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/HiTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Yiheng Chen, Qi Liu*, Zhiding Liu, Yucong Luo, Enhong Chen, <strong>InstrucTime: Advancing Time Series Classification with Multimodal Language Modeling</strong>, <em>ACM WSDM2025</em> (<font color="red"><b>Best of WSDM</b></font>): 792–800, Hannover, 2025. [<a href="https://dl.acm.org/doi/abs/10.1145/3701551.3703499" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>] [<a href="./files/posters/instructtime-poster.pdf" target="_blank" rel="noopener">Poster</a>]</li>
+      <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Qi Liu*, Hao Zhang, Yiheng Chen, Defu Lian, <strong>Cross-Domain Pre-training with Language Models for Transferable Time Series Representations</strong>, <em>ACM WSDM2025</em>: 175–183, Hannover, 2025. [<a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">Code</a>] [<a href="./files/posters/crosstimenet-poster.pdf" target="_blank" rel="noopener">Poster</a>]</li>
+      <li data-tags="timeseries"><strong>Daoyu Wang</strong>, <strong>Mingyue Cheng*</strong>, Zhiding Liu, Qi Liu, <strong>TimeDART: A Diffusion Autoregressive Transformer for Self-supervised Time Series Representation</strong>, <em>ICML 2025</em>, Vancouver, PMLR 267, 2025. [<a href="https://arxiv.org/html/2410.05711v1" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm ai4science">Jie Ouyang, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Ruiran Yan, Yucong Luo, Jiaying Lin, Qi Liu, <strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG</strong>, <em>ACL 2025</em>: 6036–6063, Vienna, 2025. [<a href="https://aclanthology.org/2025.acl-long.301.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Jintao Zhang, Zhiding Liu, Chunli Liu*, <strong>A Hybrid Multi-Factor Framework for Dynamic Intraoperative Hypotension Prediction</strong>, <em>IJCAI 2025</em>: 4923–4931, Montreal, 2025. [<a href="https://www.arxiv.org/pdf/2409.11064" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries">Jintao Zhang, <strong>Mingyue Cheng*</strong>, Xiaoyu Tao, Zhiding Liu, Daoyu Wang, <strong>Conditional Denoising Meets Polynomial Modeling: A Flexible Decoupled Framework for Time Series Forecasting</strong>, <em>IJCAI 2025</em>: 6993–7001, Montreal, 2025. [<a href="https://arxiv.org/pdf/2410.13253" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zjt-gpu/FDF" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm">Yitong Zhou, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Feiyang Xu, Xin Li, <strong>Enhancing Table Recognition with Vision LLMs: A Benchmark and Neighbor-Guided Toolchain Reasoner</strong>, <em>IJCAI 2025</em>: 2503–2511, Montreal, 2025. [<a href="https://arxiv.org/abs/2412.20662" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/lqzxt/NGTR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Hao Zhang, <strong>Mingyue Cheng*</strong>, Qi Liu, Zhiding Liu, Linbo Zhu, Yu Su, <strong>Towards Automatic Sampling of User Behaviors for Sequential Recommender Systems</strong>, <em>IJCAI 2025</em>: 3624–3632, Montreal, 2025. [<a href="https://arxiv.org/abs/2311.00388" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zh-ustc/AutoSAM" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="table llm timeseries">Jiahao Wang, <strong>Mingyue Cheng*</strong>, Qingyang Mao, Qi Liu, Feiyang Xu, Xin Li, Enhong Chen, <strong>TableTime: Reformulating Time Series Classification as Zero-Shot Table Understanding via LLMs</strong>, <em>ACM CIKM 2025</em>. [<a href="https://arxiv.org/pdf/2411.15737" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/realwangjiahao/TableTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm">Shuo Yu, <strong>Mingyue Cheng*</strong>, Jiqian Yang, Jie Ouyang, et al., <strong>Multi-Source Knowledge Pruning for Retrieval-Augmented Generation: A Benchmark and Empirical Study</strong>, <em>ACM CIKM 2025</em>.</li>
+      <li data-tags="timeseries">Zhiding Liu, <strong>Mingyue Cheng</strong>, Guanhao Zhao, Jiqian Yang, Qi Liu, Enhong Chen, <strong>Improving Time Series Forecasting via Instance-aware Post-hoc Revision</strong>. (<em>NeurIPS2025</em>) [<a href="https://arxiv.org/pdf/2505.23583" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Huijie Liu, Shulan Ruan, Qi Liu, <strong>Mingyue Cheng</strong>, Zhenya Huang, Yu Liu, Enhong Chen, You He, <strong>Global Structure-aware and Feature-augmented Graph Neural Network for Heterophilic Graphs</strong>, <em>ACM TOIS</em>. [<a href="https://dl.acm.org/doi/pdf/10.1145/3775057" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="agent llm">Junhao Yu, Yan Zhuang, Yuxuan Sun, Weibo Gao, Qi Liu, <strong>Mingyue Cheng</strong>, Zhenya Huang, Enhong Chen, <strong>TestAgent: An Adaptive and Intelligent Expert for Human Assessment</strong>. (<em>ACL2025</em>) [<a href="https://arxiv.org/pdf/2503.04800" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm">Zirui Liu, Jiatong Li, Yan Zhuang, Qi Liu, Shuanghong Shen, Jie Ouyang, <strong>Mingyue Cheng</strong>, Shijin Wang, <strong>am-ELO: A Stable Framework for Arena-based LLM Evaluation</strong>, <em>ICML 2025</em>, PMLR 267, 2025. [<a href="https://arxiv.org/pdf/2505.03475" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="recsys">Mingfan Pan, Qingyang Mao, Xu An, Jianhui Ma, Gang Zhou, <strong>Mingyue Cheng</strong>, Enhong Chen, <strong>Tag-augmented Dual-target Cross-domain Recommendation</strong>, <em>RecSys 2025</em>, Prague, 2025.</li>
+      <li data-tags="llm recsys">Yue Chen, Susen Yang, Tong Zhang, Chao Wang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Han Li, <strong>Lasso: Large Language Model-based User Simulator for Cross-Domain Recommendation</strong>, <em>RecSys 2025</em>, Prague, 2025.</li>
+    </ol>
+
+    <div class="pub-section-gap"></div>
+
+    <!-- ===== 2024 ===== -->
+    <h3 id="year-2024" class="pub-year-heading">🐉 Year of the Wood Dragon (Jia Chen Year, 2024)</h3>
+    <ol class="pub-list">
+      <li data-tags="llm agent ai4science">Jie Ouyang, Yucong Luo, <strong>Mingyue Cheng*</strong>, Shuo Yu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Revisiting the Solution of Meta KDD Cup 2024: CRAG</strong>. (KDD Cup Workshop, <font color="red"><b>2nd Place in Task 2 &amp; Task 3</b></font>) [<a href="./files/posters/KDD-slide-v4.pdf" target="_blank" rel="noopener">Slides</a>] [<a href="./files/posters/crag_kddcup.pdf" target="_blank" rel="noopener">Poster</a>]</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Qi Liu*, Wenyu Zhang, Zhiding Liu, Hongke Zhao, Enhong Chen, <strong>A General Tail Item Representation Enhancement Framework for Sequential Recommender Systems</strong>, <em>Frontier of Computer Science</em> (<strong>FCS</strong>), 2024, 18(6): 1–12. [<a href="./files/papers/tailrec-fcs2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TailRec" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Rujiao Zhang, Hao Zhang, Yucong Luo, Zhiding Liu, <strong>Mingyue Cheng</strong>, Qi Liu, Enhong Chen*, <strong>Learning the Dynamics in Sequential Recommendation by Exploiting Real-time Information</strong>, <em>ACM CIKM2024</em>: 4288–4292, Oct 2024. [<a href="https://dl.acm.org/doi/pdf/10.1145/3627673.3679955" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="recsys">Jie Wang, Fajie Yuan, <strong>Mingyue Cheng</strong>, et al., <strong>TransRec: Learning Transferable Recommendation from Mixture-of-Modality Feedback</strong>, <em>APWeb-WAIM2024</em>: 193–208, Aug 2024. [<a href="https://arxiv.org/pdf/2206.06190.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="timeseries">Zhiding Liu, Jiqian Yang, <strong>Mingyue Cheng*</strong>, Yucong Luo, Zhi Li, <strong>Generative Pretrained Hierarchical Transformer for Time Series Forecasting</strong>, <em>ACM SIGKDD2024</em>: 2003–2013, Barcelona, 2024. [<a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">PDF</a>]</li>
+      <li data-tags="llm recsys">Yucong Luo, <strong>Mingyue Cheng</strong>, Hao Zhang, Junyu Lu, Enhong Chen*, <strong>Unlocking the Potential of Large Language Models for Explainable Recommendations</strong>. (DASFAA2024) [<a href="https://arxiv.org/pdf/2312.15661" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/GodFire66666/LLM_rec_explanation" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys llm">Junzhe Jiang, Shang Qu, <strong>Mingyue Cheng*</strong>, Qi Liu, et al., <strong>Reformulating Sequential Recommendation: Learning Dynamic User Interest with Content-enriched Language Modeling</strong>. (DASFAA2024) [<a href="https://arxiv.org/pdf/2309.10435" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Gnimixy/lancer" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Hao Zhang, Qi Liu*, Fajie Yuan, Zhi Li, Zhenya Huang, Enhong Chen, Longfei Li, Jun Zhou, <strong>Empowering Sequential Recommender Systems from Mixture of Collaborative Signals and Semantic Relatedness</strong>. (DASFAA2024) [<a href="https://arxiv.org/pdf/2403.07623" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TSSR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Hao Zhang, <strong>Mingyue Cheng*</strong>, Qi Liu, Yucong Luo, Rui Li, Enhong Chen, <strong>Learning Recommender Systems with Soft Target: A Decoupled Perspective</strong>. <em>DASFAA 2024</em>, LNCS 14852, Gifu, Japan, 2024. [<a href="https://arxiv.org/pdf/2410.06536" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/zh-ustc/desorec/" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm"><strong>Mingyue Cheng</strong>, Hao Zhang, Jiqian Yang, Qi Liu*, Li Li, Xin Huang, Liwei Song, Zhi Li, Zhenya Huang, Enhong Chen, <strong>Towards Personalized Evaluation of Large Language Models with An Anonymous Crowd-Sourcing Platform</strong>. (WWW2024)</li>
+      <li data-tags="recsys">Junchen Fu, Fajie Yuan, Yu Song, Zheng Yuan, <strong>Mingyue Cheng</strong>, et al., <strong>Exploring Adapter-based Transfer Learning for Recommender Systems</strong>, <em>ACM WSDM'2024</em>: 208–217, Mar 2024. [<a href="https://arxiv.org/pdf/2305.15036" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/westlake-repl/Adapter4Rec/" target="_blank" rel="noopener">Code</a>]</li>
+    </ol>
+
+    <div class="pub-section-gap"></div>
+
+    <!-- ===== 2023 and Before ===== -->
+    <h3 id="year-2023" class="pub-year-heading">📘 2023 and Before</h3>
+    <ol class="pub-list">
+      <li data-tags="timeseries">Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Zhenya Huang, Qi Liu, Yanhu Xie, Enhong Chen, <strong>Adaptive Normalization for Non-stationary Time Series Forecasting: A Temporal Slice Perspective</strong>, <em>NeurIPS'2023</em>: 36, New Orleans, 2023. [<a href="./files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/icantnamemyself/SAN" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">耿杰, 刘春丽*, 魏雪梅, <strong>程明月</strong>, 袁昆, 李洋, 刘业政, <strong>基于用户重购行为的产品推荐方法</strong>, <em>计算机研究与发展</em> 2023, 60(8): 1795–1807.</li>
+      <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Qi Liu*, Zhiding Liu, Zhi Li, Yucong Luo, Enhong Chen, <strong>FormerTime: Hierarchical Multi-scale Representation for Multivariate Time Series Classification</strong>, <em>ACM WWW'2023</em>: 1437–1445, Austin, 2023. [<a href="./files/papers/formertime-www2023.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/FormerTime" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="timeseries">Wenqiang He, <strong>Mingyue Cheng</strong>, Qi Liu*, Zhi Li, <strong>ShapeWordNet: An Interpretable Shapelet Neural Network for Physiological Signal Classification</strong>, <em>DASFAA'2023</em>: 353–369, Tianjin, 2023.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Zhiding Liu<sup>+</sup>, Qi Liu*, Shenyang Ge, Enhong Chen, <strong>Towards Automatic Designing of Deep Hybrid Network Architecture for Sequential Recommendation</strong>, <em>ACM WWW'2022</em>: 1923–1932. [<a href="https://github.com/Mingyue-Cheng/NASR" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="recsys">Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Qi Liu, Enhong Chen*, <strong>One Person, One Model — Learning Compound Router for Sequential Recommendation</strong>, <em>IEEE ICDM'2022</em>. [<a href="https://github.com/Mingyue-Cheng/CANet" target="_blank" rel="noopener">Code</a>]</li>
+      <li data-tags="llm">Junzhe Jiang, <strong>Mingyue Cheng</strong>, Qi Liu*, Zhi Li, Enhong Chen, <strong>Nested Named Entity Recognition from Medical Texts: A Multi-task Learning Approach</strong>, <em>CAAI CICAI'2022</em>: 248–259.</li>
+      <li data-tags="recsys">Runlong Yu, Qi Liu*, Yuyang Ye, <strong>Mingyue Cheng</strong>, Enhong Chen, Jianhui Ma, <strong>Collaborative List-and-Pairwise Filtering from Implicit Feedback</strong>, <em>IEEE TKDE'2022</em>: 34(6): 2667–2680.</li>
+      <li data-tags="llm">Kai Zhang, Qi Liu*, Zhenya Huang, <strong>Mingyue Cheng</strong>, Kun Zhang, Mengdi Zhang, Wei Wu, Enhong Chen, <strong>Graph Adaptive Semantic Transfer for Cross-domain Sentiment Classification</strong>, <em>ACM SIGIR'2022</em>: 1566–1576.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Fajie Yuan<sup>+</sup>, Qi Liu*, Xin Xin, Enhong Chen, <strong>Learning Transferrable User Representations with Sequential Behaviors via Contrastive Pre-training</strong>, <em>IEEE ICDM'2021</em>: 51–60.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Fajie Yuan<sup>+</sup>, Qi Liu*, Shenyang Ge, Zhi Li, Runlong Yu, Defu Lian, Senchao Yuan, Enhong Chen, <strong>Learning Recommender Systems with Implicit Feedback via Soft Target Enhancement</strong>, <em>ACM SIGIR'2021</em>: 575–584.</li>
+      <li data-tags="llm">Linan Yue, Qi Liu*, Han Wu, Kai Zhang, Yanqing An, <strong>Mingyue Cheng</strong>, Biao Yin, Dayong Wu, <strong>NeurJudge: A Circumstance-aware Neural Framework for Legal Judgment Prediction</strong>, <em>ACM SIGIR'2021</em>: 973–982.</li>
+      <li data-tags="llm">Yanqing An, Qi Liu*, Han Wu, Kai Zhang, Linan Yue, <strong>Mingyue Cheng</strong>, Hongke Zhao, Senchao Yuan, Enhong Chen, <strong>LawyerPAN: A Proficiency Assessment Network for Trial Lawyers</strong>, <em>ACM SIGKDD'2021</em>: 5–13.</li>
+      <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Runlong Yu, Qi Liu*, Hongke Zhao, Hefu Zhang, Enhong Chen, <strong>Alpha-Beta Sampling for Pairwise Ranking in One-Class Collaborative Filtering</strong>, <em>IEEE ICDM'2019</em>: 1000–1005.</li>
+      <li data-tags="recsys"><strong>程明月</strong>, 刘淇*, 李徵, 于润龙, 高维博, 陈恩红, <strong>多重对级贝叶斯个性化排序算法</strong>. (<em>南京信息工程大学学报自然科学版</em>, 2019(03): 302–308)</li>
+    </ol>
+
+  </div>
+</div>
+
+<!-- ===== Back to Top ===== -->
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div class="footer-shell">
+    <div class="footer-links">
+      <a class="footer-link" href="index.html">← Back to Homepage</a>
+      <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl" target="_blank" rel="noopener">Google Scholar</a>
+      <a class="footer-link" href="https://dblp.org/pid/240/6202.html" target="_blank" rel="noopener">DBLP</a>
+      <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
+    </div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+  </div>
+</footer>
+
+<!-- ===== Scripts ===== -->
+<script>
+// Publication filter
+(function() {
+  const filterBtns = document.querySelectorAll('.pub-filter-btn');
+  const pubItems   = document.querySelectorAll('.pub-list li[data-tags]');
+  const yearHeadings = document.querySelectorAll('.pub-year-heading');
+  const sectionGaps  = document.querySelectorAll('.pub-section-gap');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+
+      pubItems.forEach(item => {
+        if (filter === 'all') {
+          item.style.display = '';
+        } else {
+          const tags = item.getAttribute('data-tags') || '';
+          const tagList = tags.split(' ');
+          const isMatch = filter === 'llm-agent'
+            ? tagList.includes('llm') || tagList.includes('agent')
+            : tagList.includes(filter);
+          item.style.display = isMatch ? '' : 'none';
+        }
+      });
+
+      // Hide year headings / lists with no visible items
+      yearHeadings.forEach(heading => {
+        const ol = heading.nextElementSibling;
+        if (!ol) return;
+        const hasVisible = Array.from(ol.querySelectorAll('li')).some(li => li.style.display !== 'none');
+        heading.style.display = hasVisible ? '' : 'none';
+        ol.style.display = hasVisible ? '' : 'none';
+      });
+
+      // Hide dividers when their following section heading is hidden
+      sectionGaps.forEach(gap => {
+        const nextHeading = gap.nextElementSibling;
+        if (nextHeading && nextHeading.classList.contains('pub-year-heading')) {
+          gap.style.display = nextHeading.style.display === 'none' ? 'none' : '';
+        }
+      });
+    });
+  });
+})();
+
+// Back to top
+(function() {
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+</script>
+</body>
+</html>

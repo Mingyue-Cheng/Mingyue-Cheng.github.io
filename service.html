@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Professional Service — Mingyue Cheng</title>
+  <meta name="description" content="Professional service of Mingyue Cheng: program committee, journal reviewer, and editorial roles.">
+  <meta name="author" content="Mingyue Cheng">
+  <style>
+:root {
+  --accent:      #003087;
+  --accent-dark: #00226b;
+  --accent-light:#e8edf7;
+  --text:        #1a1a1a;
+  --text-muted:  #666;
+  --border:      #e2e5ea;
+  --bg:          #fff;
+  --bg-alt:      #f6f7fb;
+  --radius:      5px;
+  --max-w:       1100px;
+  --font: system-ui, -apple-system, 'Segoe UI', Arial,
+          'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.65; font-size: 15px; -webkit-font-smoothing: antialiased; }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+
+/* Nav */
+.site-header { position: sticky; top: 0; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); z-index: 100; padding: 13px 0; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-weight: 700; font-size: 16px; color: var(--accent); text-decoration: none; letter-spacing: 0.01em; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+.nav-links a.active { color: var(--accent); font-weight: 600; }
+
+/* Hero */
+.page-hero { padding: 36px 0 28px; border-bottom: 1px solid var(--border); background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%); }
+.page-hero-title { font-size: 28px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; margin-bottom: 8px; }
+.page-hero-sub { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+/* Main */
+.service-main { padding: 32px 0 56px; }
+
+/* Section heading */
+.section-heading {
+  font-size: 16px; font-weight: 700; color: var(--accent);
+  padding-bottom: 8px; border-bottom: 2px solid var(--accent);
+  display: inline-block; margin-bottom: 20px; letter-spacing: -0.01em;
+  scroll-margin-top: 80px;
+}
+.section-block { margin-bottom: 44px; }
+
+/* ===== Simple Service Lists ===== */
+.venue-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.venue-card {
+  display: grid;
+  grid-template-columns: 120px 1fr 150px;
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.venue-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.venue-abbr {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+.venue-role {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.venue-role::before { content: "· "; }
+.venue-years {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: right;
+  grid-column: 3;
+  grid-row: 1;
+  min-width: 0;
+}
+.venue-years:empty { display: none; }
+.venue-name {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.venue-name a { color: var(--accent); text-decoration: none; }
+.venue-name a:hover { text-decoration: underline; }
+
+/* ===== Journal Cards ===== */
+.journal-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.journal-card {
+  display: block;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.journal-name { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+/* Back to Top */
+#back-to-top { position: fixed; right: 28px; bottom: 32px; width: 44px; height: 44px; border-radius: 50%; background-color: #003087; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, background-color 0.2s ease; z-index: 999; }
+#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top:hover { background-color: #00226b; }
+
+/* Footer */
+.site-footer { margin-top: 0; padding: 18px 0 36px; border-top: 1px solid var(--border); background: radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%), linear-gradient(180deg, #f8fbff 0%, #ffffff 100%); }
+.footer-shell { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; padding: 14px 0 0; }
+.footer-link { color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 600; }
+.footer-link:hover { text-decoration: underline; }
+.footer-bottom { margin-top: 10px; font-size: 12px; color: var(--text-muted); text-align: center; padding: 8px 0 0; }
+
+@media (max-width: 760px) { .venue-card { grid-template-columns: 82px minmax(0, 1fr); } .venue-card-top { grid-row: 1 / span 2; } .venue-name { grid-column: 2; grid-row: 1; } .venue-years { grid-column: 2; grid-row: 2; text-align: left; } }
+@media (max-width: 680px) { .nav-links { gap: 14px; } .page-hero-title { font-size: 22px; } }
+@media (max-width: 760px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html#home" class="nav-logo">Homepage</a>
+      <nav class="nav-links">
+        <a href="research.html">Research</a>
+        <a href="news.html">News</a>
+        <a href="publications.html">Publications</a>
+        <a href="projects.html">Open Source</a>
+        <a href="awards.html">Award</a>
+        <a href="service.html">Service</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero-title">Professional Service</div>
+    <p class="page-hero-sub">Program committee memberships, journal reviewing, and editorial activities.</p>
+  </div>
+</div>
+
+<div class="service-main">
+  <div class="container">
+
+    <!-- Program Committee -->
+    <div class="section-block">
+      <h2 class="section-heading">Program Committee Member</h2>
+      <div class="venue-grid">
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">AAAI</span>
+          </div>
+          <div class="venue-years">2026</div>
+          <div class="venue-name">AAAI Conference on Artificial Intelligence</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">TheWebConf</span>
+          </div>
+          <div class="venue-years">2024, 2025</div>
+          <div class="venue-name">ACM International World Wide Web Conference</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">KDD</span>
+          </div>
+          <div class="venue-years">2023, 2024, 2025, 2026</div>
+          <div class="venue-name">ACM SIGKDD Conference on Knowledge Discovery and Data Mining</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">ICLR</span>
+          </div>
+          <div class="venue-years">2025</div>
+          <div class="venue-name">International Conference on Learning Representations</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">ICML</span>
+          </div>
+          <div class="venue-years">2025, 2026</div>
+          <div class="venue-name">International Conference on Machine Learning</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">NeurIPS</span>
+          </div>
+          <div class="venue-years">2024, 2025</div>
+          <div class="venue-name">Conference on Neural Information Processing Systems</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">ACL</span>
+          </div>
+          <div class="venue-years">2025, 2026</div>
+          <div class="venue-name">Annual Meeting of the Association for Computational Linguistics</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">IJCAI</span>
+            <span class="venue-role">SPC 2026</span>
+          </div>
+          <div class="venue-years">2024, 2025, 2026</div>
+          <div class="venue-name">International Joint Conference on Artificial Intelligence</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">WSDM</span>
+          </div>
+          <div class="venue-years">2025</div>
+          <div class="venue-name">International Conference on Web Search and Data Mining</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">SDM</span>
+          </div>
+          <div class="venue-years">2024</div>
+          <div class="venue-name">SIAM International Conference on Data Mining</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">CIKM</span>
+          </div>
+          <div class="venue-years">2024, 2025</div>
+          <div class="venue-name">ACM International Conference on Information and Knowledge Management</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">DASFAA</span>
+          </div>
+          <div class="venue-years">2024, 2025</div>
+          <div class="venue-name">Database Systems for Advanced Applications</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">IEEE TF</span>
+          </div>
+          <div class="venue-years"></div>
+          <div class="venue-name"><a href="https://cis.taskforce.ieee.org/ai4tst/" target="_blank" rel="noopener">IEEE Task Force on AI for Time Series and Spatio-Temporal Data</a></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Journal Reviewer -->
+    <div class="section-block">
+      <h2 class="section-heading">Journal Reviewer</h2>
+      <div class="journal-grid">
+
+        <div class="journal-card">
+          <span class="journal-name">IEEE Transactions on Knowledge and Data Engineering (TKDE)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">IEEE Transactions on Neural Network and Learning Systems (TNNLS)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">IEEE Transactions on Audio, Speech and Language Processing (T-ASL)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">ACM Transactions on Knowledge Discovery from Data (TKDD)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">ACM Transactions on Intelligent Systems and Technology (TIST)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">Transactions on Machine Learning Research (TMLR)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">Neurocomputing</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">Frontiers of Computer Science (FCS)</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">软件学报</span>
+        </div>
+
+        <div class="journal-card">
+          <span class="journal-name">计算机学报</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<button id="back-to-top" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<footer class="site-footer">
+  <div class="footer-shell">
+    <div class="footer-links">
+      <a class="footer-link" href="index.html">← Back to Homepage</a>
+      <a class="footer-link" href="awards.html">Awards</a>
+      <a class="footer-link" href="publications.html">Publications</a>
+      <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
+    </div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => { btn.classList.toggle('visible', window.scrollY > 300); });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
+</script>
+</body>
+</html>

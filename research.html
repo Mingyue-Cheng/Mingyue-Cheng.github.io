@@ -540,23 +540,6 @@ body {
 }
 .sc-card-desc strong { color: var(--accent); }
 
-.sc-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 0 20px;
-}
-.sc-tag {
-  display: inline-block;
-  padding: 2px 9px;
-  border-radius: 8px;
-  background: var(--bg-alt);
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  font-size: 11px;
-  font-weight: 600;
-}
-
 /* ===== Research Note ===== */
 .research-note-box {
   margin-top: 36px;
@@ -663,8 +646,7 @@ body {
   .sc-card,
   .snapshot-item,
   .method-item { min-width: 0; }
-  .rd-tag,
-  .sc-tag {
+  .rd-tag {
     max-width: 100%;
     overflow-wrap: anywhere;
   }
@@ -830,7 +812,7 @@ body {
     </div><!-- /primary-cards -->
 
     <!-- Broader Scenarios -->
-    <div class="scenario-section-label">Broader Application &amp; Evaluation Scenarios</div>
+    <div class="scenario-section-label">领域应用研究</div>
 
     <div class="scenario-cards">
 
@@ -846,12 +828,6 @@ body {
           and scientific table analysis. We explore how LLMs can be augmented with
           programmatic tools and slow-thinking strategies to tackle complex structured data tasks.
         </p>
-        <div class="sc-tags">
-          <span class="sc-tag">Table Reasoning</span>
-          <span class="sc-tag">LLM + Tools</span>
-          <span class="sc-tag">Multi-table</span>
-          <span class="sc-tag">ChemTable</span>
-        </div>
       </div>
 
       <!-- Scientific Literature Mining -->
@@ -866,12 +842,6 @@ body {
           knowledge discovery, and evidence-grounded reasoning over scholarly content. We build agentic
           systems and benchmarks for evaluating tool-augmented reasoning on academic literature.
         </p>
-        <div class="sc-tags">
-          <span class="sc-tag">RAG</span>
-          <span class="sc-tag">Literature Search</span>
-          <span class="sc-tag">Agentic Retrieval</span>
-          <span class="sc-tag">Benchmark</span>
-        </div>
       </div>
 
       <!-- Recommender Systems -->
@@ -886,12 +856,6 @@ body {
           for dynamic user preference understanding. Research covers behavior-level data augmentation,
           cross-domain recommendation, and LLM-based user simulation.
         </p>
-        <div class="sc-tags">
-          <span class="sc-tag">Sequential Rec</span>
-          <span class="sc-tag">LLM + RecSys</span>
-          <span class="sc-tag">Cross-domain</span>
-          <span class="sc-tag">RL for Rec</span>
-        </div>
       </div>
 
     </div><!-- /scenario-cards -->

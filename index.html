@@ -356,6 +356,9 @@ body {
 }
 .research-framework-figure {
   margin: 16px 0 18px;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #fff;
@@ -853,6 +856,7 @@ html[lang="zh-CN"] .footer-title {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: 10px;
   margin-bottom: 14px;
 }
 .pub-filter-btn {
@@ -910,7 +914,17 @@ html[lang="zh-CN"] .footer-title {
 .pub-note {
   font-size: 14px;
   color: var(--text-muted);
-  margin-bottom: 10px;
+  margin-bottom: 0;
+}
+.pub-heading-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+.pub-heading-row .section-heading {
+  margin-bottom: 0;
 }
 .pub-year-heading {
   font-size: 16px;
@@ -993,7 +1007,7 @@ html[lang="zh-CN"] .footer-title {
 /* ===== Footer ===== */
 .site-footer {
   margin-top: 22px;
-  padding: 18px 0 36px;
+  padding: 14px 0 28px;
   border-top: 1px solid var(--border);
   background:
     radial-gradient(circle at top left, rgba(0, 48, 135, 0.08), transparent 35%),
@@ -1007,9 +1021,9 @@ html[lang="zh-CN"] .footer-title {
 .footer-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(380px, 500px);
-  gap: 18px;
+  gap: 14px;
   align-items: center;
-  padding: 18px;
+  padding: 14px 16px;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -1026,8 +1040,8 @@ html[lang="zh-CN"] .footer-title {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
-  padding: 5px 12px;
+  margin-bottom: 6px;
+  padding: 4px 11px;
   border-radius: 999px;
   background: var(--accent-light);
   color: var(--accent);
@@ -1037,7 +1051,7 @@ html[lang="zh-CN"] .footer-title {
   text-transform: uppercase;
 }
 .footer-title {
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--text);
@@ -1045,21 +1059,21 @@ html[lang="zh-CN"] .footer-title {
 }
 .footer-desc {
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.65;
   color: var(--text-muted);
   max-width: 48ch;
 }
 .footer-highlights {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 8px;
 }
 .footer-highlight {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 12px;
+  padding: 5px 10px;
   border-radius: 999px;
   border: 1px solid rgba(0, 48, 135, 0.12);
   background: rgba(232, 237, 247, 0.55);
@@ -1078,13 +1092,13 @@ html[lang="zh-CN"] .footer-title {
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 8px;
 }
 .footer-link {
   display: inline-flex;
   align-items: center;
-  padding: 7px 14px;
+  padding: 5px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
   color: var(--accent);
@@ -1100,8 +1114,8 @@ html[lang="zh-CN"] .footer-title {
 }
 .footer-map-panel {
   position: relative;
-  min-height: 238px;
-  padding: 12px;
+  min-height: 196px;
+  padding: 10px;
   border-radius: 16px;
   border: 1px solid rgba(0, 48, 135, 0.12);
   background:
@@ -1113,7 +1127,7 @@ html[lang="zh-CN"] .footer-title {
 .footer-map-panel::before {
   content: "";
   position: absolute;
-  inset: 10px;
+  inset: 8px;
   border-radius: 12px;
   border: 1px dashed rgba(0, 48, 135, 0.12);
   pointer-events: none;
@@ -1121,7 +1135,7 @@ html[lang="zh-CN"] .footer-title {
 .footer-map-note {
   position: relative;
   z-index: 1;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-align: left;
 }
 .footer-map-label {
@@ -1139,7 +1153,7 @@ html[lang="zh-CN"] .footer-title {
 .footer-map {
   position: relative;
   z-index: 1;
-  min-height: 170px;
+  min-height: 132px;
   width: 100%;
   padding: 8px;
   border-radius: 14px;
@@ -1147,7 +1161,7 @@ html[lang="zh-CN"] .footer-title {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
 }
 .clustrmaps-shell {
-  min-height: 170px;
+  min-height: 132px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1155,7 +1169,7 @@ html[lang="zh-CN"] .footer-title {
 }
 .clustrmaps-widget {
   width: min(100%, 380px);
-  min-height: 160px;
+  min-height: 124px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1169,7 +1183,7 @@ html[lang="zh-CN"] .footer-title {
 .footer-map-hint {
   position: relative;
   z-index: 1;
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 12px;
   color: var(--text-muted);
   line-height: 1.45;
@@ -1220,13 +1234,13 @@ html[lang="zh-CN"] .footer-title {
   .profile-name { font-size: 22px; }
   .footer-card {
     grid-template-columns: 1fr;
-    padding: 18px;
+    padding: 14px;
   }
   .footer-map-panel {
-    min-height: 228px;
+    min-height: 188px;
   }
   .footer-title {
-    font-size: 21px;
+    font-size: 20px;
   }
 }
 @media (max-width: 760px) {
@@ -1267,15 +1281,15 @@ html[lang="zh-CN"] .footer-title {
     padding: 0 18px;
   }
   .footer-card {
-    padding: 14px;
-    gap: 14px;
+    padding: 12px;
+    gap: 12px;
   }
   .footer-map-panel {
-    padding: 10px;
+    padding: 9px;
   }
   .footer-map {
-    min-height: 176px;
-    padding: 8px;
+    min-height: 132px;
+    padding: 7px;
   }
 }
 
@@ -1381,7 +1395,7 @@ html[lang="zh-CN"] .footer-title {
       <img src="files/assets/research-framework.png" alt="Research framework for cognitively intelligent methods and applications driven by scientific knowledge and time series data">
     </figure>
     <p data-i18n="research.intro">
-      My research focuses on <span class="research-keyword">LLMs and Agentic AI</span> for complex data mining, with a particular emphasis on <span class="research-keyword">Time Series Analysis</span>.
+      My research develops <span class="research-keyword">cognitive intelligence methods</span> for complex data mining, centered on <span class="research-keyword">LLMs and Agentic AI</span> and driven by <span class="research-keyword">Time Series Cognition</span> and <span class="research-keyword">Scientific Knowledge Cognition</span>.
     </p>
     <ul class="research-list primary-directions">
       <li data-i18n="research.agent"><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class="research-keyword">autonomous and continual learning</span> for large language models, <span class="research-keyword">slow-thinking reasoning</span> such as chain-of-thought, and <span class="research-keyword">LLM-driven agents</span>, including agentic RL and agent runtime mechanisms such as memory, skills, and autonomous evolution.</li>
@@ -1470,8 +1484,10 @@ html[lang="zh-CN"] .footer-title {
   <div class="container">
 
     <div id="selected-publications-container">
-      <h2 id="selected-publications" class="section-heading" data-i18n="pub.heading">Selected Publications</h2>
-      <p class="pub-note" data-i18n="pub.note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
+      <div class="pub-heading-row">
+        <h2 id="selected-publications" class="section-heading" data-i18n="pub.heading">Selected Publications</h2>
+        <p class="pub-note" data-i18n="pub.note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
+      </div>
       <div class="pub-filters">
         <button class="pub-filter-btn active" data-filter="all" data-i18n="pub.filterAll">All</button>
         <button class="pub-filter-btn" data-filter="llm-agent" data-i18n="pub.filterAgent">LLMs and Agent</button>
@@ -2124,7 +2140,7 @@ const i18n = {
     "bio.heading": "Biography",
     "bio.body": "I am an Associate Researcher at <a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>the School of Computer Science and Technology</strong></a>, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>USTC</strong></a>. I am also affiliated with the <a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at the side of USTC, working under the leadership of <a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Enhong Chen</strong></a> and <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>.",
     "research.heading": "Research Interests",
-    "research.intro": "My research focuses on <span class=\"research-keyword\">LLMs and Agentic AI</span> for complex data mining, with a particular emphasis on <span class=\"research-keyword\">Time Series Analysis</span>.",
+    "research.intro": "My research develops <span class=\"research-keyword\">cognitive intelligence methods</span> for complex data mining, centered on <span class=\"research-keyword\">LLMs and Agentic AI</span> and driven by <span class=\"research-keyword\">Time Series Cognition</span> and <span class=\"research-keyword\">Scientific Knowledge Cognition</span>.",
     "research.agent": "<span class=\"research-label\">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class=\"research-keyword\">autonomous and continual learning</span> for large language models, <span class=\"research-keyword\">slow-thinking reasoning</span> such as chain-of-thought, and <span class=\"research-keyword\">LLM-driven agents</span>, including agentic RL and agent runtime mechanisms such as memory, skills, and autonomous evolution.",
     "research.timeseries": "<span class=\"research-label\">📊 <strong>Time Series Cognition:</strong></span> Developing <span class=\"research-keyword\">context-aware time series intelligence</span> through <span class=\"research-keyword\">LLM-driven multimodal semantic understanding</span>, <span class=\"research-keyword\">slow-thinking temporal reasoning</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class=\"research-keyword\">agent-ready scientific knowledge intelligence</span> through <span class=\"research-keyword\">LLM-driven literature mining</span>, <span class=\"research-keyword\">multimodal scientific document understanding</span>, and <span class=\"research-keyword\">evidence-grounded reasoning</span>.",
@@ -2192,7 +2208,7 @@ const i18n = {
     "bio.heading": "个人简介",
     "bio.body": "我目前任职于<a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>中国科学技术大学</strong></a><a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>计算机科学与技术学院</strong></a>，担任副研究员。同时，我也隶属于中国科学技术大学侧的<a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>认知智能全国重点实验室</strong></a>，在<a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>陈恩红教授</strong></a>和<a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>刘淇教授</strong></a>指导的团队中开展研究工作。此前，我在<a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>刘淇教授</strong></a>指导下获得博士学位。",
     "research.heading": "研究兴趣",
-    "research.intro": "我的研究主要围绕面向复杂数据挖掘的 <span class=\"research-keyword\">大语言模型与智能体 AI</span>，重点关注 <span class=\"research-keyword\">时序数据分析</span>。",
+    "research.intro": "我的研究主要面向复杂数据挖掘中的<span class=\"research-keyword\">认知智能方法</span>，以 <span class=\"research-keyword\">大语言模型与智能体 AI</span> 为核心，并围绕 <span class=\"research-keyword\">时序认知</span> 与 <span class=\"research-keyword\">科学知识认知</span> 展开。",
     "research.agent": "<span class=\"research-label\">🤖 <strong>大模型与智能体 AI：</strong></span> 关注大语言模型的<span class=\"research-keyword\">自主学习与持续学习</span>、以 chain-of-thought 为代表的<span class=\"research-keyword\">慢思考推理</span>，以及包含 agentic RL、记忆、技能和自主进化等机制的<span class=\"research-keyword\">LLM-driven agents</span>。",
     "research.timeseries": "<span class=\"research-label\">📊 <strong>时序认知：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>科学知识认知：</strong></span> 面向 agent-ready 的科学知识智能，研究<span class=\"research-keyword\">大模型驱动的文献挖掘</span>、<span class=\"research-keyword\">多模态科学文档理解</span>和<span class=\"research-keyword\">证据驱动推理</span>。",

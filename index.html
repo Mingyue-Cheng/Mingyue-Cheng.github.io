@@ -1392,7 +1392,7 @@ html[lang="zh-CN"] .footer-title {
   <div class="container">
     <h2 id="Research" class="section-heading" data-i18n="research.heading">Research Interests</h2>
     <figure class="research-framework-figure">
-      <img src="files/assets/research-framework.png" alt="Research framework for cognitively intelligent methods and applications driven by scientific knowledge and time series data">
+      <img id="researchFrameworkImage" src="files/assets/research-framework-en.svg" data-src-en="files/assets/research-framework-en.svg" data-src-zh="files/assets/research-framework.png" alt="Knowledge- and time-series-driven cognitive intelligence research framework">
     </figure>
     <p data-i18n="research.intro">
       My research develops <span class="research-keyword">cognitive intelligence methods</span> for complex data mining, centered on <span class="research-keyword">LLMs and Agentic AI</span> and driven by <span class="research-keyword">Time Series Cognition</span> and <span class="research-keyword">Scientific Knowledge Cognition</span>.
@@ -2278,6 +2278,18 @@ function translatePage(lang) {
   if (toggle) {
     toggle.textContent = lang === 'zh' ? 'EN' : '中文';
     toggle.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
+  }
+
+  const frameworkImage = document.getElementById('researchFrameworkImage');
+  if (frameworkImage) {
+    const src = lang === 'zh' ? frameworkImage.dataset.srcZh : frameworkImage.dataset.srcEn;
+    frameworkImage.setAttribute('src', src);
+    frameworkImage.setAttribute(
+      'alt',
+      lang === 'zh'
+        ? '科学知识与时序数据双驱的认知智能方法与应用研究框架'
+        : 'Knowledge- and time-series-driven cognitive intelligence research framework'
+    );
   }
 
   updateNewsToggleLabel();

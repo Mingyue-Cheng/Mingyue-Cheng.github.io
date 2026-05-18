@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941" role="img" aria-labelledby="title desc">
+  <title id="title">Knowledge- and Time-Series-Driven Cognitive Intelligence: Methods and Applications</title>
+  <desc id="desc">A research framework connecting time-series cognition, knowledge cognition, LLM reasoning and agents, a unified capability loop, and application domains.</desc>
+  <defs>
+    <linearGradient id="box" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f7fbff"/>
+    </linearGradient>
+    <linearGradient id="circleBlue" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#eaf3ff"/>
+      <stop offset="100%" stop-color="#d9e8ff"/>
+    </linearGradient>
+    <linearGradient id="circleTeal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#e7fbfd"/>
+      <stop offset="100%" stop-color="#d7f2f7"/>
+    </linearGradient>
+    <filter id="softShadow" x="-8%" y="-12%" width="116%" height="124%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#0c3b82" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      .title{font:700 42px Arial,Helvetica,sans-serif;fill:#0a2362}
+      .subtitle{font:700 25px Arial,Helvetica,sans-serif;fill:#3f4e72;letter-spacing:.03em}
+      .side-num{font:700 30px Arial,Helvetica,sans-serif;fill:#0052cc}
+      .side-label{font:700 18px Arial,Helvetica,sans-serif;fill:#0052cc}
+      .box-title{font:700 24px Arial,Helvetica,sans-serif;fill:#0052cc}
+      .box-title-teal{font:700 24px Arial,Helvetica,sans-serif;fill:#00869a}
+      .goal{font:700 26px Arial,Helvetica,sans-serif;fill:#0a2362}
+      .body{font:400 18px Arial,Helvetica,sans-serif;fill:#0a2362}
+      .small{font:700 18px Arial,Helvetica,sans-serif;fill:#0a2362}
+      .theme{font:700 18px Arial,Helvetica,sans-serif;fill:#3f4e72}
+      .outline{fill:url(#box);stroke:#1168ff;stroke-width:1.4}
+      .outline-teal{fill:url(#box);stroke:#00a0b8;stroke-width:1.4}
+      .rule{stroke:#6b7da8;stroke-width:1}
+      .arrow{fill:#1687d9}
+      .icon-blue{stroke:#0d62d8;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .icon-teal{stroke:#008da1;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+      .bullet-blue{fill:#0052cc}
+      .bullet-teal{fill:#00869a}
+    </style>
+  </defs>
+
+  <rect width="1672" height="941" fill="#fff"/>
+  <text x="836" y="65" text-anchor="middle" class="title">Knowledge- and Time-Series-Driven Cognitive Intelligence: Methods &amp; Applications</text>
+  <line x1="560" y1="126" x2="672" y2="126" class="rule"/>
+  <circle cx="672" cy="126" r="4" fill="#0052cc"/>
+  <text x="836" y="138" text-anchor="middle" class="subtitle">RESEARCH FRAMEWORK</text>
+  <circle cx="998" cy="126" r="4" fill="#0052cc"/>
+  <line x1="1002" y1="126" x2="1114" y2="126" class="rule"/>
+
+  <g transform="translate(82 156)">
+    <circle cx="30" cy="26" r="28" fill="url(#circleBlue)"/>
+    <text x="30" y="36" text-anchor="middle" class="side-num">01</text>
+    <text x="30" y="78" text-anchor="middle" class="side-label">Overall</text>
+    <text x="30" y="96" text-anchor="middle" class="side-label">Goal</text>
+  </g>
+  <g transform="translate(82 338)">
+    <circle cx="30" cy="26" r="28" fill="url(#circleBlue)"/>
+    <text x="30" y="36" text-anchor="middle" class="side-num">02</text>
+    <text x="30" y="78" text-anchor="middle" class="side-label">Core</text>
+    <text x="30" y="96" text-anchor="middle" class="side-label">Methods</text>
+  </g>
+  <g transform="translate(82 548)">
+    <circle cx="30" cy="26" r="28" fill="url(#circleTeal)"/>
+    <text x="30" y="36" text-anchor="middle" class="side-num">03</text>
+    <text x="30" y="78" text-anchor="middle" class="side-label">Unified Capability</text>
+    <text x="30" y="96" text-anchor="middle" class="side-label">Loop</text>
+  </g>
+  <g transform="translate(82 716)">
+    <circle cx="30" cy="26" r="28" fill="url(#circleBlue)"/>
+    <text x="30" y="36" text-anchor="middle" class="side-num">04</text>
+    <text x="30" y="86" text-anchor="middle" class="side-label">Application</text>
+    <text x="30" y="106" text-anchor="middle" class="side-label">Domains</text>
+  </g>
+
+  <rect x="224" y="156" width="1388" height="114" rx="10" class="outline" filter="url(#softShadow)"/>
+  <circle cx="343" cy="213" r="46" fill="url(#circleBlue)"/>
+  <path d="M343 233a20 20 0 1 1 16-32m-16 32 35-35m-15 0h15v15m-47 20h24" class="icon-blue"/>
+  <text x="1030" y="222" text-anchor="middle" class="goal">Cognitive Intelligence for Complex-System Understanding, Forecasting, and Decision-Making</text>
+
+  <path d="M842 272v26h-15l20 24 20-24h-15v-26z" class="arrow"/>
+
+  <g transform="translate(224 300)">
+    <rect width="405" height="210" rx="10" class="outline"/>
+    <circle cx="83" cy="101" r="65" fill="url(#circleBlue)"/>
+    <path d="M78 58c-30 6-45 29-44 58 1 22 12 42 31 51v20h38m-2-87a25 25 0 1 1 8 19m-8-19v-26m0 26h22" class="icon-blue"/>
+    <text x="186" y="40" class="box-title">Time-Series Cognition</text>
+    <circle cx="187" cy="78" r="3.5" class="bullet-blue"/>
+    <text x="210" y="84" class="body">Dynamic modeling</text>
+    <circle cx="187" cy="106" r="3.5" class="bullet-blue"/>
+    <text x="210" y="112" class="body">Trend / Cycle / Anomaly</text>
+    <circle cx="187" cy="134" r="3.5" class="bullet-blue"/>
+    <text x="210" y="140" class="body">Context-aware forecasting</text>
+    <circle cx="187" cy="162" r="3.5" class="bullet-blue"/>
+    <text x="210" y="168" class="body">Slow-thinking TS reasoning</text>
+  </g>
+  <path d="M642 393h25v-13l25 20-25 20v-13h-25z" class="arrow"/>
+  <g transform="translate(667 300)">
+    <rect width="428" height="210" rx="10" class="outline-teal"/>
+    <circle cx="78" cy="101" r="65" fill="url(#circleTeal)"/>
+    <path d="M38 137v-44c22 0 37 8 40 21 3-13 18-21 40-21v44c-18 0-31 4-40 13-9-9-22-13-40-13zm40-23V59m-32 22 32 33 32-33m-32-22a7 7 0 1 0 0-1m-32 23a7 7 0 1 0 0-1m64 1a7 7 0 1 0 0-1" class="icon-teal"/>
+    <text x="184" y="40" class="box-title-teal">Knowledge Cognition</text>
+    <circle cx="184" cy="78" r="3.5" class="bullet-teal"/>
+    <text x="207" y="84" class="body">Scientific literature mining</text>
+    <circle cx="184" cy="106" r="3.5" class="bullet-teal"/>
+    <text x="207" y="112" class="body">Scientific knowledge retrieval</text>
+    <circle cx="184" cy="134" r="3.5" class="bullet-teal"/>
+    <text x="207" y="140" class="body">Multimodal paper understanding</text>
+    <circle cx="184" cy="162" r="3.5" class="bullet-teal"/>
+    <text x="207" y="168" class="body">Agent-ready paper search</text>
+  </g>
+  <path d="M1118 393h25v-13l25 20-25 20v-13h-25z" class="arrow"/>
+  <g transform="translate(1130 300)">
+    <rect width="482" height="210" rx="10" class="outline"/>
+    <circle cx="78" cy="101" r="65" fill="url(#circleBlue)"/>
+    <path d="M50 90h56a25 25 0 0 1 25 25v40H25v-40a25 25 0 0 1 25-25zm0 0V63h56v27M48 63h-9a17 17 0 0 0 0 34h9m60-34h9a17 17 0 0 1 0 34h-9m-31-34V44m-22 71h1m44 0h1" class="icon-blue"/>
+    <text x="183" y="40" class="box-title">LLM Reasoning &amp; Agents</text>
+    <circle cx="184" cy="78" r="3.5" class="bullet-blue"/>
+    <text x="207" y="84" class="body">Slow-thinking reasoning</text>
+    <circle cx="184" cy="106" r="3.5" class="bullet-blue"/>
+    <text x="207" y="112" class="body">Tool use</text>
+    <circle cx="184" cy="134" r="3.5" class="bullet-blue"/>
+    <text x="207" y="140" class="body">Memory interaction</text>
+    <circle cx="184" cy="162" r="3.5" class="bullet-blue"/>
+    <text x="207" y="168" class="body">Agentic RL</text>
+    <circle cx="184" cy="190" r="3.5" class="bullet-blue"/>
+    <text x="207" y="196" class="body">Continual learning</text>
+  </g>
+
+  <path d="M842 512v26h-15l20 24 20-24h-15v-26z" class="arrow"/>
+  <rect x="222" y="542" width="1390" height="122" rx="10" class="outline-teal"/>
+  <g transform="translate(264 564)">
+    <rect width="260" height="86" rx="10" class="outline-teal"/>
+    <path d="M40 23h43v42H40zm43 20h22m-22 22 35 20m-15-40a20 20 0 1 0 0 1" class="icon-teal"/>
+    <text x="134" y="49" text-anchor="middle" class="small">Knowledge</text>
+    <text x="134" y="68" text-anchor="middle" class="small">Acquisition</text>
+  </g>
+  <path d="M540 597h35v-13l25 20-25 20v-13h-35z" class="arrow"/>
+  <g transform="translate(604 564)">
+    <rect width="270" height="86" rx="10" class="outline-teal"/>
+    <path d="M56 63 96 24l43 50m-83-11 54-12m-14-27 14 27 29 23M56 63a7 7 0 1 0 0-1m40-39a7 7 0 1 0 0-1m14 29a7 7 0 1 0 0-1m29 23a7 7 0 1 0 0-1" class="icon-teal"/>
+    <text x="151" y="49" text-anchor="middle" class="small">Dynamic</text>
+    <text x="151" y="68" text-anchor="middle" class="small">Modeling</text>
+  </g>
+  <path d="M887 597h35v-13l25 20-25 20v-13h-35z" class="arrow"/>
+  <g transform="translate(952 564)">
+    <rect width="270" height="86" rx="10" class="outline-teal"/>
+    <path d="M55 67c-16-8-26-23-26-40a42 42 0 0 1 84 0c0 17-10 32-26 40v16H55zm16-57v34m-16-17h32" class="icon-teal"/>
+    <text x="162" y="49" text-anchor="middle" class="small">Reasoning</text>
+    <text x="162" y="68" text-anchor="middle" class="small">Forecasting</text>
+  </g>
+  <path d="M1236 597h35v-13l25 20-25 20v-13h-35z" class="arrow"/>
+  <g transform="translate(1298 564)">
+    <rect width="270" height="86" rx="10" class="outline-teal"/>
+    <path d="M45 68V47m28 21V31m28 37V22m28-1h-28v28m28-28-31 31" class="icon-teal"/>
+    <text x="178" y="49" text-anchor="middle" class="small">Decision</text>
+    <text x="178" y="68" text-anchor="middle" class="small">Feedback</text>
+  </g>
+
+  <path d="M842 668v26h-15l20 24 20-24h-15v-26z" class="arrow"/>
+  <g transform="translate(224 697)">
+    <rect width="426" height="154" rx="10" class="outline"/>
+    <circle cx="82" cy="77" r="60" fill="url(#circleBlue)"/>
+    <path d="M57 112h52m-35 0V82m-18 0h55m-43-11 40-40 20 20-40 40zm50-50 13-13m-1 0 20 20" class="icon-blue"/>
+    <text x="186" y="39" class="box-title">Scientific Intelligence</text>
+    <circle cx="187" cy="77" r="3.5" class="bullet-blue"/>
+    <text x="210" y="83" class="body">Research knowledge acquisition</text>
+    <circle cx="187" cy="107" r="3.5" class="bullet-blue"/>
+    <text x="210" y="113" class="body">Research agents</text>
+    <circle cx="187" cy="137" r="3.5" class="bullet-blue"/>
+    <text x="210" y="143" class="body">AI4Science</text>
+  </g>
+  <g transform="translate(678 697)">
+    <rect width="428" height="154" rx="10" class="outline-teal"/>
+    <circle cx="82" cy="77" r="60" fill="url(#circleTeal)"/>
+    <path d="M82 37a28 28 0 1 0 0 56 28 28 0 0 0 0-56zm-45 104c6-30 23-45 45-45s39 15 45 45m8-55 11 22 24 3-18 17 5 24-22-12-21 12 4-24-17-17 24-3z" class="icon-teal"/>
+    <text x="207" y="39" class="box-title-teal">Recommender Systems</text>
+    <circle cx="207" cy="77" r="3.5" class="bullet-teal"/>
+    <text x="230" y="83" class="body">User behavior modeling</text>
+    <circle cx="207" cy="107" r="3.5" class="bullet-teal"/>
+    <text x="230" y="113" class="body">Personalized recommendation</text>
+    <circle cx="207" cy="137" r="3.5" class="bullet-teal"/>
+    <text x="230" y="143" class="body">Interactive decision-making</text>
+  </g>
+  <g transform="translate(1136 697)">
+    <rect width="476" height="154" rx="10" class="outline"/>
+    <circle cx="82" cy="77" r="60" fill="url(#circleBlue)"/>
+    <path d="M82 24v104M43 55l39-31 39 31M51 91h62M56 69h52M45 129l37-105 37 105M57 118h50" class="icon-blue"/>
+    <text x="184" y="39" class="box-title">Electric Power &amp; Energy</text>
+    <circle cx="186" cy="77" r="3.5" class="bullet-blue"/>
+    <text x="209" y="83" class="body">Load forecasting</text>
+    <circle cx="186" cy="107" r="3.5" class="bullet-blue"/>
+    <text x="209" y="113" class="body">Generation power forecasting</text>
+    <circle cx="186" cy="137" r="3.5" class="bullet-blue"/>
+    <text x="209" y="143" class="body">Dispatch decision support</text>
+  </g>
+
+  <line x1="430" y1="900" x2="468" y2="900" class="rule"/>
+  <text x="836" y="905" text-anchor="middle" class="theme">Core Theme: Knowledge Cognition · Time-Series Cognition · Agentic Reasoning</text>
+  <line x1="1204" y1="900" x2="1290" y2="900" class="rule"/>
+</svg>

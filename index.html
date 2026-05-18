@@ -74,6 +74,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
   position: relative;
 }
 .nav-logo {
@@ -85,16 +86,43 @@ body {
 }
 .nav-links {
   display: flex;
+  flex: 1;
   gap: 24px;
+  justify-content: flex-end;
+  min-width: 0;
 }
 .nav-links a {
   text-decoration: none;
   color: var(--text-muted);
   font-size: 14px;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .nav-links a:hover { color: var(--accent); }
+.language-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--accent);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.language-toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
 .nav-toggle {
+  flex-shrink: 0;
   display: none;
   align-items: center;
   justify-content: center;
@@ -394,6 +422,38 @@ body {
 }
 .research-note a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .research-note a:hover { text-decoration: underline; }
+
+html[lang="zh-CN"] body,
+html[lang="zh-CN"] .section p,
+html[lang="zh-CN"] .research-section p,
+html[lang="zh-CN"] .research-section li,
+html[lang="zh-CN"] .research-section .research-note,
+html[lang="zh-CN"] .os-card-desc,
+html[lang="zh-CN"] .dataset-card-desc,
+html[lang="zh-CN"] .timeline-list,
+html[lang="zh-CN"] .services-list,
+html[lang="zh-CN"] .footer-desc {
+  text-align: left;
+  text-justify: auto;
+}
+html[lang="zh-CN"] .nav-links {
+  gap: 18px;
+}
+html[lang="zh-CN"] .research-list,
+html[lang="zh-CN"] .scenario-list {
+  line-height: 1.75;
+}
+html[lang="zh-CN"] .research-list li,
+html[lang="zh-CN"] .scenario-list li {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+html[lang="zh-CN"] .section-heading {
+  letter-spacing: 0;
+}
+html[lang="zh-CN"] .footer-title {
+  letter-spacing: 0;
+}
 
 /* ===== News ===== */
 .news-list {
@@ -1170,18 +1230,20 @@ body {
   }
 }
 @media (max-width: 760px) {
-  .nav-links { display: none; }
-}
-@media (max-width: 480px) {
   .nav-inner {
     flex-wrap: wrap;
     gap: 10px;
   }
-  .nav-toggle {
-    display: inline-flex;
+  .language-toggle {
+    order: 2;
     margin-left: auto;
   }
+  .nav-toggle {
+    display: inline-flex;
+    order: 3;
+  }
   .nav-links {
+    order: 4;
     flex-basis: 100%;
     flex-wrap: wrap;
     gap: 10px 16px;
@@ -1199,6 +1261,8 @@ body {
     padding: 8px 0;
     border-top: 1px solid var(--border);
   }
+}
+@media (max-width: 480px) {
   .footer-shell {
     padding: 0 18px;
   }
@@ -1250,15 +1314,19 @@ body {
 <header class="site-header">
   <div class="container">
     <div class="nav-inner">
-      <a href="index.html#home" class="nav-logo">Homepage</a>
-      <nav class="nav-links">
-        <a href="research.html">Research</a>
-        <a href="news.html">News</a>
-        <a href="publications.html">Publications</a>
-        <a href="projects.html">Open Source</a>
-        <a href="awards.html">Award</a>
-        <a href="service.html">Service</a>
+      <a href="index.html#home" class="nav-logo" data-i18n="nav.logo">Homepage</a>
+      <nav class="nav-links" id="primary-nav">
+        <a href="research.html" data-i18n="nav.research">Research</a>
+        <a href="news.html" data-i18n="nav.news">News</a>
+        <a href="publications.html" data-i18n="nav.publications">Publications</a>
+        <a href="projects.html" data-i18n="nav.opensource">Open Source</a>
+        <a href="awards.html" data-i18n="nav.award">Award</a>
+        <a href="service.html" data-i18n="nav.service">Service</a>
       </nav>
+      <button class="language-toggle" type="button" id="languageToggle" aria-label="Switch language">中文</button>
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="nav-toggle-lines"></span>
+      </button>
     </div>
   </div>
 </header>
@@ -1272,7 +1340,7 @@ body {
         <h1 class="profile-name">
           Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span>
         </h1>
-        <div class="profile-title">Ph.D &nbsp;·&nbsp; Associate Researcher</div>
+        <div class="profile-title" data-i18n="profile.title">Ph.D &nbsp;·&nbsp; Associate Researcher</div>
         <div class="profile-affil">
           <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener">State Key Laboratory of Cognitive Intelligence</a><br>
           <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener">School of Computer Science and Technology</a>,&nbsp;
@@ -1285,8 +1353,8 @@ body {
           <a href="https://ustcagi.github.io/" target="_blank" rel="noopener" class="badge">USTC-AGentic Intelligence（AGI） Group</a>
         </div>
         <div class="profile-contact">
-          <strong>Email:</strong> <a href="mailto:mycheng@ustc.edu.cn">mycheng@ustc.edu.cn</a><br>
-          <strong>Address:</strong> B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031
+          <strong data-i18n="profile.emailLabel">Email:</strong> <a href="mailto:mycheng@ustc.edu.cn">mycheng@ustc.edu.cn</a><br>
+          <strong data-i18n="profile.addressLabel">Address:</strong> <span data-i18n="profile.address">B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031</span>
         </div>
       </div>
     </div>
@@ -1297,8 +1365,8 @@ body {
 <!-- ===== Biography ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="biography" class="section-heading">Biography</h2>
-    <p>
+    <h2 id="biography" class="section-heading" data-i18n="bio.heading">Biography</h2>
+    <p data-i18n="bio.body">
       I am an Associate Researcher at <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener"><strong>the School of Computer Science and Technology</strong></a>, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>USTC</strong></a>. I am also affiliated with the <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at the side of USTC, working under the leadership of <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener"><strong>Prof. Enhong Chen</strong></a> and <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>.
     </p>
   </div>
@@ -1308,32 +1376,32 @@ body {
 <!-- ===== Research Interests ===== -->
 <div class="section research-section">
   <div class="container">
-    <h2 id="Research" class="section-heading">Research Interests</h2>
+    <h2 id="Research" class="section-heading" data-i18n="research.heading">Research Interests</h2>
     <figure class="research-framework-figure">
       <img src="files/assets/research-framework.png" alt="Research framework for cognitively intelligent methods and applications driven by scientific knowledge and time series data">
     </figure>
-    <p>
+    <p data-i18n="research.intro">
       My research focuses on <span class="research-keyword">LLMs and Agentic AI</span> for complex data mining, with a particular emphasis on <span class="research-keyword">Time Series Analysis</span>.
     </p>
     <ul class="research-list primary-directions">
-      <li><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class="research-keyword">autonomous and continual learning</span> for large language models, <span class="research-keyword">slow-thinking reasoning</span> such as chain-of-thought, and <span class="research-keyword">LLM-driven agents</span>, including agentic RL and agent runtime mechanisms such as memory, skills, and autonomous evolution.</li>
-      <li><span class="research-label">📊 <strong>Time Series Cognition:</strong></span> Developing <span class="research-keyword">context-aware time series intelligence</span> through <span class="research-keyword">LLM-driven multimodal semantic understanding</span>, <span class="research-keyword">slow-thinking temporal reasoning</span>, and <span class="research-keyword">autonomous agentic interaction</span>.</li>
-      <li><span class="research-label">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class="research-keyword">agent-ready scientific knowledge intelligence</span> through <span class="research-keyword">LLM-driven literature mining</span>, <span class="research-keyword">multimodal scientific document understanding</span>, and <span class="research-keyword">evidence-grounded reasoning</span>.</li>
+      <li data-i18n="research.agent"><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class="research-keyword">autonomous and continual learning</span> for large language models, <span class="research-keyword">slow-thinking reasoning</span> such as chain-of-thought, and <span class="research-keyword">LLM-driven agents</span>, including agentic RL and agent runtime mechanisms such as memory, skills, and autonomous evolution.</li>
+      <li data-i18n="research.timeseries"><span class="research-label">📊 <strong>Time Series Cognition:</strong></span> Developing <span class="research-keyword">context-aware time series intelligence</span> through <span class="research-keyword">LLM-driven multimodal semantic understanding</span>, <span class="research-keyword">slow-thinking temporal reasoning</span>, and <span class="research-keyword">autonomous agentic interaction</span>.</li>
+      <li data-i18n="research.knowledge"><span class="research-label">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class="research-keyword">agent-ready scientific knowledge intelligence</span> through <span class="research-keyword">LLM-driven literature mining</span>, <span class="research-keyword">multimodal scientific document understanding</span>, and <span class="research-keyword">evidence-grounded reasoning</span>.</li>
     </ul>
     <div class="research-scenarios">
-      <div class="research-scenarios-title">Broader Application and Evaluation Scenarios</div>
+      <div class="research-scenarios-title" data-i18n="research.scenarioTitle">Broader Application and Evaluation Scenarios</div>
       <ul class="scenario-list">
-        <li><span class="scenario-label">🔬 AI for Science</span> Scientific knowledge acquisition, multimodal scientific document understanding, research knowledge discovery, and evidence-grounded reasoning for AI4Science.</li>
-        <li><span class="scenario-label">🎯 Recommender Systems</span> Sequential behavior modeling, dynamic user preference understanding, personalized recommendation, and LLM-driven reasoning for interactive decision-making.</li>
-        <li><span class="scenario-label">⚡ Power and Energy</span> Electricity load forecasting, power generation prediction, renewable energy analytics, and agentic decision support for energy management and dispatch.</li>
+        <li data-i18n="research.science"><span class="scenario-label">🔬 AI for Science</span> Scientific knowledge acquisition, multimodal scientific document understanding, research knowledge discovery, and evidence-grounded reasoning for AI4Science.</li>
+        <li data-i18n="research.recsys"><span class="scenario-label">🎯 Recommender Systems</span> Sequential behavior modeling, dynamic user preference understanding, personalized recommendation, and LLM-driven reasoning for interactive decision-making.</li>
+        <li data-i18n="research.energy"><span class="scenario-label">⚡ Power and Energy</span> Electricity load forecasting, power generation prediction, renewable energy analytics, and agentic decision support for energy management and dispatch.</li>
       </ul>
     </div>
-    <div class="research-note">
+    <div class="research-note" data-i18n="research.collections">
       Research collections:
       🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> ·
       📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Analysis</a>
     </div>
-    <div class="research-note">
+    <div class="research-note" data-i18n="research.join">
       欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室
       <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGentic Intelligence（AGI） Group</a>。
     </div>
@@ -1344,7 +1412,7 @@ body {
 <!-- ===== Latest News ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="news" class="section-heading">Latest News</h2>
+    <h2 id="news" class="section-heading" data-i18n="news.heading">Latest News</h2>
 
     <ul class="news-list" id="newsList">
       <li><strong>[May. 2026]</strong> 🎉 Congratulations to <strong>Yitong Zhou</strong> on our paper <strong>ChemTable</strong> being accepted to <strong>KDD 2026</strong>!</li>
@@ -1390,8 +1458,8 @@ body {
     </ul>
 
     <div style="display:flex;align-items:center;gap:16px;margin-top:8px;flex-wrap:wrap;">
-      <button class="toggle-button" onclick="toggleMoreNews()" id="toggleBtn">Show More ▼</button>
-      <a href="news.html" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;">View All News →</a>
+      <button class="toggle-button" onclick="toggleMoreNews()" id="toggleBtn" data-i18n-open="news.showMore" data-i18n-close="news.showLess">Show More ▼</button>
+      <a href="news.html" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;" data-i18n="news.viewAll">View All News →</a>
     </div>
   </div>
 </div>
@@ -1401,13 +1469,13 @@ body {
   <div class="container">
 
     <div id="selected-publications-container">
-      <h2 id="selected-publications" class="section-heading">Selected Publications</h2>
-      <p class="pub-note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
+      <h2 id="selected-publications" class="section-heading" data-i18n="pub.heading">Selected Publications</h2>
+      <p class="pub-note" data-i18n="pub.note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
       <div class="pub-filters">
-        <button class="pub-filter-btn active" data-filter="all">All</button>
-        <button class="pub-filter-btn" data-filter="llm-agent">LLMs and Agent</button>
-        <button class="pub-filter-btn" data-filter="timeseries">Time Series</button>
-        <button class="pub-filter-btn" data-filter="table">Table Mining</button>
+        <button class="pub-filter-btn active" data-filter="all" data-i18n="pub.filterAll">All</button>
+        <button class="pub-filter-btn" data-filter="llm-agent" data-i18n="pub.filterAgent">LLMs and Agent</button>
+        <button class="pub-filter-btn" data-filter="timeseries" data-i18n="pub.filterTime">Time Series</button>
+        <button class="pub-filter-btn" data-filter="table" data-i18n="pub.filterTable">Table Mining</button>
         <button class="pub-filter-btn" data-filter="recsys">RecSys</button>
         <button class="pub-filter-btn" data-filter="ai4science">AI4Science</button>
       </div>
@@ -1543,7 +1611,7 @@ body {
 <!-- ===== Open Source Projects ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="opensource" class="section-heading">Open Source</h2>
+    <h2 id="opensource" class="section-heading" data-i18n="opensource.heading">Open Source</h2>
     <div class="os-grid">
 
       <div class="os-card">
@@ -1730,7 +1798,7 @@ body {
 <!-- ===== Datasets ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="datasets" class="section-heading">Benchmarks &amp; Datasets</h2>
+    <h2 id="datasets" class="section-heading" data-i18n="datasets.heading">Benchmarks &amp; Datasets</h2>
     <div class="dataset-grid">
 
 
@@ -1832,10 +1900,10 @@ body {
 <!-- ===== Education ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="education" class="section-heading">Education</h2>
+    <h2 id="education" class="section-heading" data-i18n="education.heading">Education</h2>
     <ul class="timeline-list">
-      <li>Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
-      <li>Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
+      <li data-i18n="education.phd">Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
+      <li data-i18n="education.bachelor">Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
     </ul>
   </div>
 </div>
@@ -1843,12 +1911,12 @@ body {
 <!-- ===== Working Experience ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="experience" class="section-heading">Working Experiences</h2>
+    <h2 id="experience" class="section-heading" data-i18n="experience.heading">Working Experiences</h2>
     <ul class="timeline-list">
-      <li>Jun. 2023 ~ Present, Associate Researcher, School of Computer Science and Technology, USTC, Hefei, China</li>
-      <li>Jan. 2021 ~ Jun. 2023, Research Assistant, Research Center for Big Data in Intelligent Healthcare, USTC, Hefei, China</li>
-      <li>Jun. 2019 ~ Oct. 2019, Research Intern, Data Service Center (DSC), Platform and Content Group (PCG), Tencent, Shenzhen, China</li>
-      <li>Jul. 2018 ~ Sep. 2018, Engineer Intern, Lab of Big Data, Core Technology R&amp;D Platform, iFLYTEK, Hefei, China</li>
+      <li data-i18n="experience.current">Jun. 2023 ~ Present, Associate Researcher, School of Computer Science and Technology, USTC, Hefei, China</li>
+      <li data-i18n="experience.assistant">Jan. 2021 ~ Jun. 2023, Research Assistant, Research Center for Big Data in Intelligent Healthcare, USTC, Hefei, China</li>
+      <li data-i18n="experience.tencent">Jun. 2019 ~ Oct. 2019, Research Intern, Data Service Center (DSC), Platform and Content Group (PCG), Tencent, Shenzhen, China</li>
+      <li data-i18n="experience.iflytek">Jul. 2018 ~ Sep. 2018, Engineer Intern, Lab of Big Data, Core Technology R&amp;D Platform, iFLYTEK, Hefei, China</li>
     </ul>
   </div>
 </div>
@@ -1857,7 +1925,7 @@ body {
 <!-- ===== Teaching ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="teaching" class="section-heading">Teaching</h2>
+    <h2 id="teaching" class="section-heading" data-i18n="teaching.heading">Teaching</h2>
     <ul class="timeline-list">
       <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2024.</li>
       <li>Introduction to Data Science（数据分析及实践）, Undergraduate Course, Spring 2025.</li>
@@ -1870,7 +1938,7 @@ body {
 <!-- ===== Honors ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="honors" class="section-heading">Honors and Awards</h2>
+    <h2 id="honors" class="section-heading" data-i18n="honors.heading">Honors and Awards</h2>
     <ul class="timeline-list">
       <li>Aug. 2025, 中国科学技术大学红专青年人才</li>
       <li>Mar. 2025, Best of WSDM2025（优秀论文奖）</li>
@@ -1894,10 +1962,10 @@ body {
 <!-- ===== Professional Activities ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="services" class="section-heading">Professional Service</h2>
+    <h2 id="services" class="section-heading" data-i18n="service.heading">Professional Service</h2>
 
     <div class="services-group">
-      <div class="services-label">Program Committee Member</div>
+      <div class="services-label" data-i18n="service.pc">Program Committee Member</div>
       <ul class="services-list">
         <li>AAAI Conference on Artificial Intelligence (AAAI): 2026</li>
         <li>ACM International World Wide Web Conference (TheWebConf): 2024, 2025</li>
@@ -1916,7 +1984,7 @@ body {
     </div>
 
     <div class="services-group">
-      <div class="services-label">Journal Reviewer</div>
+      <div class="services-label" data-i18n="service.journal">Journal Reviewer</div>
       <ul class="services-list">
         <li>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</li>
         <li>IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</li>
@@ -1938,12 +2006,12 @@ body {
 <!-- ===== Research Grants ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="grants" class="section-heading">Research Grants</h2>
+    <h2 id="grants" class="section-heading" data-i18n="grants.heading">Research Grants</h2>
     <ul class="timeline-list">
-      <li>2026.01–2028.12, the Natural Science Foundation of China</li>
-      <li>2025.01–2027.12, USTC New Medicine Joint Fund Cultivation Project (Double First-Class Initiative Special Project)</li>
-      <li>2024.09–2026.08, Anhui Provincial Natural Science Foundation</li>
-      <li>In addition, my research has been partially supported by industrial grants from leading companies such as iFlyTek, Huawei and Kuaishou.</li>
+      <li data-i18n="grants.nsfc">2026.01–2028.12, the Natural Science Foundation of China</li>
+      <li data-i18n="grants.ustc">2025.01–2027.12, USTC New Medicine Joint Fund Cultivation Project (Double First-Class Initiative Special Project)</li>
+      <li data-i18n="grants.anhui">2024.09–2026.08, Anhui Provincial Natural Science Foundation</li>
+      <li data-i18n="grants.industry">In addition, my research has been partially supported by industrial grants from leading companies such as iFlyTek, Huawei and Kuaishou.</li>
     </ul>
   </div>
 </div>
@@ -1952,7 +2020,7 @@ body {
 <!-- ===== Related Links ===== -->
 <div class="section">
   <div class="container">
-    <h2 class="section-heading">Related Links</h2>
+    <h2 class="section-heading" data-i18n="related.heading">Related Links</h2>
     <div class="related-grid">
       <a class="related-card" href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener">
         <div class="related-card-main">
@@ -1999,27 +2067,27 @@ body {
   <div class="footer-shell">
     <div class="footer-card">
       <div class="footer-copy">
-        <div class="footer-kicker">Live Visitor Map</div>
-        <h2 class="footer-title">A real world map of readers, collaborators, and visitors</h2>
-        <p class="footer-desc">
+        <div class="footer-kicker" data-i18n="footer.kicker">Live Visitor Map</div>
+        <h2 class="footer-title" data-i18n="footer.title">A real world map of readers, collaborators, and visitors</h2>
+        <p class="footer-desc" data-i18n="footer.desc">
           The footer now keeps a real visitor map widget based on ClustrMaps.
           It gives a more natural snapshot of global access while staying compact inside the existing homepage layout.
         </p>
         <div class="footer-highlights">
-          <span class="footer-highlight">Live Tracking</span>
-          <span class="footer-highlight">World Map</span>
-          <span class="footer-highlight">Global Reach</span>
+          <span class="footer-highlight" data-i18n="footer.live">Live Tracking</span>
+          <span class="footer-highlight" data-i18n="footer.map">World Map</span>
+          <span class="footer-highlight" data-i18n="footer.global">Global Reach</span>
         </div>
         <div class="footer-links">
           <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl" target="_blank" rel="noopener">Google Scholar</a>
           <a class="footer-link" href="https://dblp.org/pid/240/6202.html" target="_blank" rel="noopener">DBLP</a>
-          <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
+          <a class="footer-link" href="mailto:mycheng@ustc.edu.cn" data-i18n="footer.contact">Contact</a>
         </div>
       </div>
       <div class="footer-map-panel" aria-label="Live visitor world map">
         <div class="footer-map-note">
-          <div class="footer-map-label">Visitor Distribution</div>
-          <div class="footer-map-subtitle">Live world map for this homepage.</div>
+          <div class="footer-map-label" data-i18n="footer.visitorLabel">Visitor Distribution</div>
+          <div class="footer-map-subtitle" data-i18n="footer.visitorSubtitle">Live world map for this homepage.</div>
         </div>
         <div class="footer-map">
           <div class="clustrmaps-shell">
@@ -2029,26 +2097,211 @@ body {
             </noscript>
           </div>
         </div>
-        <div class="footer-map-hint">Powered by <a href="https://clustrmaps.com/" target="_blank" rel="noopener">ClustrMaps</a>. Click the map for details.</div>
+        <div class="footer-map-hint" data-i18n="footer.hint">Powered by <a href="https://clustrmaps.com/" target="_blank" rel="noopener">ClustrMaps</a>. Click the map for details.</div>
       </div>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+    <div class="footer-bottom" data-i18n="footer.bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
   </div>
 </footer>
 
 
 <!-- ===== Scripts ===== -->
 <script>
-function toggleMoreNews() {
+const i18n = {
+  en: {
+    "nav.logo": "Homepage",
+    "nav.research": "Research",
+    "nav.news": "News",
+    "nav.publications": "Publications",
+    "nav.opensource": "Open Source",
+    "nav.award": "Award",
+    "nav.service": "Service",
+    "profile.title": "Ph.D &nbsp;·&nbsp; Associate Researcher",
+    "profile.emailLabel": "Email:",
+    "profile.addressLabel": "Address:",
+    "profile.address": "B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031",
+    "bio.heading": "Biography",
+    "bio.body": "I am an Associate Researcher at <a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>the School of Computer Science and Technology</strong></a>, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>USTC</strong></a>. I am also affiliated with the <a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at the side of USTC, working under the leadership of <a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Enhong Chen</strong></a> and <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>.",
+    "research.heading": "Research Interests",
+    "research.intro": "My research focuses on <span class=\"research-keyword\">LLMs and Agentic AI</span> for complex data mining, with a particular emphasis on <span class=\"research-keyword\">Time Series Analysis</span>.",
+    "research.agent": "<span class=\"research-label\">🤖 <strong>LLMs and Agentic AI:</strong></span> Focused on <span class=\"research-keyword\">autonomous and continual learning</span> for large language models, <span class=\"research-keyword\">slow-thinking reasoning</span> such as chain-of-thought, and <span class=\"research-keyword\">LLM-driven agents</span>, including agentic RL and agent runtime mechanisms such as memory, skills, and autonomous evolution.",
+    "research.timeseries": "<span class=\"research-label\">📊 <strong>Time Series Cognition:</strong></span> Developing <span class=\"research-keyword\">context-aware time series intelligence</span> through <span class=\"research-keyword\">LLM-driven multimodal semantic understanding</span>, <span class=\"research-keyword\">slow-thinking temporal reasoning</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
+    "research.knowledge": "<span class=\"research-label\">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class=\"research-keyword\">agent-ready scientific knowledge intelligence</span> through <span class=\"research-keyword\">LLM-driven literature mining</span>, <span class=\"research-keyword\">multimodal scientific document understanding</span>, and <span class=\"research-keyword\">evidence-grounded reasoning</span>.",
+    "research.scenarioTitle": "Broader Application and Evaluation Scenarios",
+    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> Scientific knowledge acquisition, multimodal scientific document understanding, research knowledge discovery, and evidence-grounded reasoning for AI4Science.",
+    "research.recsys": "<span class=\"scenario-label\">🎯 Recommender Systems</span> Sequential behavior modeling, dynamic user preference understanding, personalized recommendation, and LLM-driven reasoning for interactive decision-making.",
+    "research.energy": "<span class=\"scenario-label\">⚡ Power and Energy</span> Electricity load forecasting, power generation prediction, renewable energy analytics, and agentic decision support for energy management and dispatch.",
+    "research.collections": "Research collections: 🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Analysis</a>",
+    "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGentic Intelligence（AGI） Group</a>。",
+    "news.heading": "Latest News",
+    "news.showMore": "Show More ▼",
+    "news.showLess": "Show Less ▲",
+    "news.viewAll": "View All News →",
+    "pub.heading": "Selected Publications",
+    "pub.note": "(* Corresponding Author, <sup>+</sup> Equal Contribution)",
+    "pub.filterAll": "All",
+    "pub.filterAgent": "LLMs and Agent",
+    "pub.filterTime": "Time Series",
+    "pub.filterTable": "Table Mining",
+    "opensource.heading": "Open Source",
+    "datasets.heading": "Benchmarks &amp; Datasets",
+    "education.heading": "Education",
+    "education.phd": "Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D Degree, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>University of Science and Technology of China (USTC)</strong></a>, China",
+    "education.bachelor": "Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href=\"http://www.hfut.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>Hefei University of Technology (HFUT)</strong></a>, China",
+    "experience.heading": "Working Experiences",
+    "experience.current": "Jun. 2023 ~ Present, Associate Researcher, School of Computer Science and Technology, USTC, Hefei, China",
+    "experience.assistant": "Jan. 2021 ~ Jun. 2023, Research Assistant, Research Center for Big Data in Intelligent Healthcare, USTC, Hefei, China",
+    "experience.tencent": "Jun. 2019 ~ Oct. 2019, Research Intern, Data Service Center (DSC), Platform and Content Group (PCG), Tencent, Shenzhen, China",
+    "experience.iflytek": "Jul. 2018 ~ Sep. 2018, Engineer Intern, Lab of Big Data, Core Technology R&amp;D Platform, iFLYTEK, Hefei, China",
+    "teaching.heading": "Teaching",
+    "honors.heading": "Honors and Awards",
+    "service.heading": "Professional Service",
+    "service.pc": "Program Committee Member",
+    "service.journal": "Journal Reviewer",
+    "grants.heading": "Research Grants",
+    "grants.nsfc": "2026.01–2028.12, the Natural Science Foundation of China",
+    "grants.ustc": "2025.01–2027.12, USTC New Medicine Joint Fund Cultivation Project (Double First-Class Initiative Special Project)",
+    "grants.anhui": "2024.09–2026.08, Anhui Provincial Natural Science Foundation",
+    "grants.industry": "In addition, my research has been partially supported by industrial grants from leading companies such as iFlyTek, Huawei and Kuaishou.",
+    "related.heading": "Related Links",
+    "footer.kicker": "Live Visitor Map",
+    "footer.title": "A real world map of readers, collaborators, and visitors",
+    "footer.desc": "The footer now keeps a real visitor map widget based on ClustrMaps. It gives a more natural snapshot of global access while staying compact inside the existing homepage layout.",
+    "footer.live": "Live Tracking",
+    "footer.map": "World Map",
+    "footer.global": "Global Reach",
+    "footer.contact": "Contact",
+    "footer.visitorLabel": "Visitor Distribution",
+    "footer.visitorSubtitle": "Live world map for this homepage.",
+    "footer.hint": "Powered by <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a>. Click the map for details.",
+    "footer.bottom": "© 2026 Mingyue Cheng. Last updated in May 2026."
+  },
+  zh: {
+    "nav.logo": "主页",
+    "nav.research": "研究方向",
+    "nav.news": "新闻",
+    "nav.publications": "论文",
+    "nav.opensource": "开源项目",
+    "nav.award": "奖励",
+    "nav.service": "学术服务",
+    "profile.title": "博士 &nbsp;·&nbsp; 副研究员",
+    "profile.emailLabel": "邮箱：",
+    "profile.addressLabel": "地址：",
+    "profile.address": "安徽省合肥市中国科学技术大学高新校区信智楼 B709，230031",
+    "bio.heading": "个人简介",
+    "bio.body": "我目前任职于<a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>中国科学技术大学</strong></a><a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>计算机科学与技术学院</strong></a>，担任副研究员。同时，我也隶属于中国科学技术大学侧的<a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>认知智能全国重点实验室</strong></a>，在<a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>陈恩红教授</strong></a>和<a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>刘淇教授</strong></a>指导的团队中开展研究工作。此前，我在<a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>刘淇教授</strong></a>指导下获得博士学位。",
+    "research.heading": "研究兴趣",
+    "research.intro": "我的研究主要围绕面向复杂数据挖掘的 <span class=\"research-keyword\">大语言模型与智能体 AI</span>，重点关注 <span class=\"research-keyword\">时序数据分析</span>。",
+    "research.agent": "<span class=\"research-label\">🤖 <strong>大模型与智能体 AI：</strong></span> 关注大语言模型的<span class=\"research-keyword\">自主学习与持续学习</span>、以 chain-of-thought 为代表的<span class=\"research-keyword\">慢思考推理</span>，以及包含 agentic RL、记忆、技能和自主进化等机制的<span class=\"research-keyword\">LLM-driven agents</span>。",
+    "research.timeseries": "<span class=\"research-label\">📊 <strong>时序认知：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
+    "research.knowledge": "<span class=\"research-label\">📚 <strong>科学知识认知：</strong></span> 面向 agent-ready 的科学知识智能，研究<span class=\"research-keyword\">大模型驱动的文献挖掘</span>、<span class=\"research-keyword\">多模态科学文档理解</span>和<span class=\"research-keyword\">证据驱动推理</span>。",
+    "research.scenarioTitle": "应用与评测场景",
+    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> 科学知识获取、多模态科学文档理解、科研知识发现，以及面向 AI4Science 的证据驱动推理。",
+    "research.recsys": "<span class=\"scenario-label\">🎯 推荐系统</span> 序列行为建模、动态用户偏好理解、个性化推荐，以及面向交互式决策的大模型推理。",
+    "research.energy": "<span class=\"scenario-label\">⚡ 电力能源</span> 电力负荷预测、发电功率预测、可再生能源分析，以及面向能源管理与调度的智能体决策支持。",
+    "research.collections": "研究主页：🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Analysis</a>",
+    "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGentic Intelligence（AGI） Group</a>。",
+    "news.heading": "最新动态",
+    "news.showMore": "展开更多 ▼",
+    "news.showLess": "收起 ▲",
+    "news.viewAll": "查看全部动态 →",
+    "pub.heading": "代表性论文",
+    "pub.note": "（* 通讯作者，<sup>+</sup> 共同一作）",
+    "pub.filterAll": "全部",
+    "pub.filterAgent": "大模型与智能体",
+    "pub.filterTime": "时序分析",
+    "pub.filterTable": "表格挖掘",
+    "opensource.heading": "开源项目",
+    "datasets.heading": "基准与数据集",
+    "education.heading": "教育经历",
+    "education.phd": "2017.09 ~ 2023.06，计算机科学与技术专业，博士，<a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>中国科学技术大学（USTC）</strong></a>",
+    "education.bachelor": "2013.09 ~ 2017.07，市场营销专业，管理学学士，<a href=\"http://www.hfut.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>合肥工业大学（HFUT）</strong></a>",
+    "experience.heading": "工作经历",
+    "experience.current": "2023.06 ~ 至今，中国科学技术大学计算机科学与技术学院，副研究员，合肥",
+    "experience.assistant": "2021.01 ~ 2023.06，中国科学技术大学智能医疗大数据研究中心，研究助理，合肥",
+    "experience.tencent": "2019.06 ~ 2019.10，腾讯 PCG 数据服务中心（DSC），研究实习生，深圳",
+    "experience.iflytek": "2018.07 ~ 2018.09，科大讯飞核心技术研发平台大数据实验室，工程实习生，合肥",
+    "teaching.heading": "教学",
+    "honors.heading": "荣誉与奖励",
+    "service.heading": "学术服务",
+    "service.pc": "程序委员会委员",
+    "service.journal": "期刊审稿人",
+    "grants.heading": "科研项目",
+    "grants.nsfc": "2026.01–2028.12，国家自然科学基金",
+    "grants.ustc": "2025.01–2027.12，中国科学技术大学新医学联合基金培育项目（双一流专项）",
+    "grants.anhui": "2024.09–2026.08，安徽省自然科学基金",
+    "grants.industry": "此外，我的研究也得到了科大讯飞、华为、快手等企业科研项目的支持。",
+    "related.heading": "相关链接",
+    "footer.kicker": "实时访问地图",
+    "footer.title": "读者、合作者与访问者的全球分布",
+    "footer.desc": "页面底部保留了基于 ClustrMaps 的实时访问地图，用更紧凑的形式展示主页的全球访问情况。",
+    "footer.live": "实时统计",
+    "footer.map": "世界地图",
+    "footer.global": "全球访问",
+    "footer.contact": "联系我",
+    "footer.visitorLabel": "访问者分布",
+    "footer.visitorSubtitle": "本主页的实时全球访问地图。",
+    "footer.hint": "由 <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a> 提供支持。点击地图可查看详情。",
+    "footer.bottom": "© 2026 程明月。最后更新于 2026 年 5 月。"
+  }
+};
+
+let currentLang = localStorage.getItem('homepage-language') || 'en';
+
+function translatePage(lang) {
+  const dictionary = i18n[lang] || i18n.en;
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dictionary[key]) el.innerHTML = dictionary[key];
+  });
+
+  const toggle = document.getElementById('languageToggle');
+  if (toggle) {
+    toggle.textContent = lang === 'zh' ? 'EN' : '中文';
+    toggle.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
+  }
+
+  updateNewsToggleLabel();
+}
+
+function updateNewsToggleLabel() {
   const moreNews = document.getElementById("moreNews");
   const btn = document.getElementById("toggleBtn");
+  if (!moreNews || !btn) return;
+  const dictionary = i18n[currentLang] || i18n.en;
+  const isOpen = moreNews.style.display !== "none";
+  const key = isOpen ? btn.dataset.i18nClose : btn.dataset.i18nOpen;
+  btn.textContent = dictionary[key] || (isOpen ? "Show Less ▲" : "Show More ▼");
+}
+
+function toggleMoreNews() {
+  const moreNews = document.getElementById("moreNews");
   if (moreNews.style.display === "none") {
     moreNews.style.display = "block";
-    btn.textContent = "Show Less ▲";
   } else {
     moreNews.style.display = "none";
-    btn.textContent = "Show More ▼";
   }
+  updateNewsToggleLabel();
+}
+
+function initLanguageToggle() {
+  const toggle = document.getElementById('languageToggle');
+  translatePage(currentLang);
+  if (!toggle) return;
+
+  toggle.addEventListener('click', function () {
+    currentLang = currentLang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('homepage-language', currentLang);
+    translatePage(currentLang);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLanguageToggle);
+} else {
+  initLanguageToggle();
 }
 
 // ===== Publication Year Collapse + Filter =====

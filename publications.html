@@ -59,6 +59,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
+  position: relative;
 }
 .nav-logo {
   font-weight: 700;
@@ -69,15 +71,70 @@ body {
 }
 .nav-links {
   display: flex;
+  flex: 1;
   gap: 24px;
+  justify-content: flex-end;
+  min-width: 0;
 }
 .nav-links a {
   text-decoration: none;
   color: var(--text-muted);
   font-size: 14px;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .nav-links a:hover { color: var(--accent); }
+.language-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--accent);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.language-toggle:hover {
+  border-color: rgba(0,48,135,0.35);
+  background: var(--accent-light);
+}
+.nav-toggle {
+  display: none;
+  width: 32px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.nav-toggle-lines,
+.nav-toggle-lines::before,
+.nav-toggle-lines::after {
+  display: block;
+  width: 15px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+  position: relative;
+}
+.nav-toggle-lines::before,
+.nav-toggle-lines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.nav-toggle-lines::before { top: -5px; }
+.nav-toggle-lines::after { top: 5px; }
 
 /* ===== Page Hero ===== */
 .pub-hero {
@@ -358,7 +415,37 @@ body {
   .pub-filters-wrap { top: 48px; }
 }
 @media (max-width: 760px) {
-  .nav-links { display: none; }
+  .nav-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .language-toggle {
+    order: 2;
+    margin-left: auto;
+  }
+  .nav-toggle {
+    display: inline-flex;
+    order: 3;
+  }
+  .nav-links {
+    order: 4;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+  .site-header.js-mobile-nav .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 6px;
+  }
+  .site-header.nav-open .nav-links {
+    display: flex;
+  }
+  .site-header.js-mobile-nav .nav-links a {
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+  }
 }
   </style>
 </head>
@@ -369,7 +456,7 @@ body {
   <div class="container">
     <div class="nav-inner">
       <a href="index.html#home" class="nav-logo">Homepage</a>
-      <nav class="nav-links">
+      <nav class="nav-links" id="primary-nav">
         <a href="research.html">Research</a>
         <a href="news.html">News</a>
         <a href="publications.html">Publications</a>
@@ -377,6 +464,10 @@ body {
         <a href="awards.html">Award</a>
         <a href="service.html">Service</a>
       </nav>
+      <button class="language-toggle" type="button" id="languageToggle" aria-label="Switch language">中文</button>
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="nav-toggle-lines"></span>
+      </button>
     </div>
   </div>
 </header>
@@ -628,5 +719,6 @@ body {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
+<script src="files/assets/site-language.js"></script>
 </body>
 </html>

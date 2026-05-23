@@ -6,11 +6,11 @@
   <title>Research — Mingyue Cheng</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#003087">
-  <meta name="description" content="Research directions of Mingyue Cheng: LLMs and Agentic AI, Time Series Analysis, Table Mining, Scientific Literature Mining, and Recommender Systems.">
+  <meta name="description" content="Research directions of Mingyue Cheng: LLMs and Agentic AI, Time Series Cognition, Scientific Knowledge Cognition, and broader applications in AI for Science, recommender systems, and power and energy.">
   <meta name="author" content="Mingyue Cheng">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Research — Mingyue Cheng">
-  <meta property="og:description" content="Agentic intelligence for complex, structured, and temporal data, spanning LLM agents, time series analysis, table mining, scientific literature mining, and recommender systems.">
+  <meta property="og:description" content="Agentic intelligence for complex, structured, and temporal data, spanning LLM agents, time series cognition, scientific knowledge cognition, and broader application scenarios.">
   <meta property="og:url" content="https://mingyue-cheng.github.io/research.html">
   <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
   <meta name="twitter:card" content="summary">
@@ -157,35 +157,9 @@ body {
   padding: 36px 0 56px;
 }
 
-/* ===== Orientation ===== */
-.research-snapshot {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 34px;
-}
-.snapshot-item {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #fff;
-  padding: 14px 15px;
-}
-.snapshot-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-.snapshot-value {
-  font-size: 15px;
-  color: var(--text);
-  font-weight: 800;
-  line-height: 1.35;
-}
-
 .method-strip {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   margin-bottom: 38px;
 }
@@ -197,7 +171,6 @@ body {
 }
 .method-item.teal { border-left-color: var(--teal); }
 .method-item.green { border-left-color: var(--green); }
-.method-item.amber { border-left-color: var(--amber); }
 .method-title {
   font-size: 13px;
   font-weight: 800;
@@ -259,6 +232,7 @@ body {
 }
 .rd-card-bar.agent  { background: linear-gradient(90deg, #003087 0%, #2563eb 100%); }
 .rd-card-bar.ts     { background: linear-gradient(90deg, #003087 0%, #0891b2 100%); }
+.rd-card-bar.sci    { background: linear-gradient(90deg, #003087 0%, #12805c 100%); }
 
 .rd-card-inner {
   display: flex;
@@ -380,6 +354,7 @@ body {
 .sc-card-bar.table    { background: linear-gradient(90deg, #003087 0%, #7c3aed 100%); }
 .sc-card-bar.sci      { background: linear-gradient(90deg, #003087 0%, #059669 100%); }
 .sc-card-bar.recsys   { background: linear-gradient(90deg, #003087 0%, #d97706 100%); }
+.sc-card-bar.energy   { background: linear-gradient(90deg, #003087 0%, #0891b2 100%); }
 
 .sc-card-head {
   display: flex;
@@ -524,6 +499,24 @@ body {
   background: #c9d8f5;
   transform: rotate(44deg);
 }
+.icon-energy::before {
+  left: 15px;
+  top: 5px;
+  width: 16px;
+  height: 25px;
+  border: 3px solid #0d62d8;
+  border-top: none;
+  transform: skewX(-12deg);
+}
+.icon-energy::after {
+  left: 8px;
+  bottom: 6px;
+  width: 28px;
+  height: 17px;
+  border-left: 3px solid #087f8c;
+  border-bottom: 3px solid #087f8c;
+  transform: rotate(-34deg);
+}
 .sc-card-title {
   font-size: 16px;
   font-weight: 800;
@@ -623,7 +616,7 @@ body {
 
 /* ===== Responsive ===== */
 @media (max-width: 840px) {
-  .research-snapshot, .method-strip { grid-template-columns: repeat(2, 1fr); }
+  .method-strip { grid-template-columns: repeat(2, 1fr); }
   .scenario-cards { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 680px) {
@@ -644,7 +637,6 @@ body {
   .sc-card-desc { text-align: left; }
   .rd-card,
   .sc-card,
-  .snapshot-item,
   .method-item { min-width: 0; }
   .rd-tag {
     max-width: 100%;
@@ -658,7 +650,7 @@ body {
     text-align-last: left;
     hyphens: manual;
   }
-  .research-snapshot, .method-strip { grid-template-columns: 1fr; }
+  .method-strip { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   .nav-links { display: none; }
@@ -693,8 +685,9 @@ body {
       <h1 class="page-hero-title">Agentic intelligence for complex, structured, and temporal data</h1>
       <p class="page-hero-sub">
         My research studies how large language models can reason, act, and learn in data-rich environments. The central thread is
-        <strong>LLM-driven agentic AI</strong>, with a long-running focus on <strong>time series analysis</strong> and broader applications in
-        table mining, scientific literature mining, and recommender systems.
+        <strong>LLM-driven agentic AI</strong>, driven by <strong>Time Series Cognition</strong> and
+        <strong>Scientific Knowledge Cognition</strong>, with broader applications in AI for Science, recommender systems,
+        and power and energy.
       </p>
       <div class="hero-actions">
         <a class="hero-action primary" href="publications.html">View Publications</a>
@@ -706,25 +699,6 @@ body {
 <!-- ===== Main ===== -->
 <div class="research-main">
   <div class="container">
-
-    <div class="research-snapshot">
-      <div class="snapshot-item">
-        <div class="snapshot-label">Core Direction</div>
-        <div class="snapshot-value">LLM Agents</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-label">Long-term Domain</div>
-        <div class="snapshot-value">Time Series</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-label">Research Style</div>
-        <div class="snapshot-value">Models + Systems</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-label">Evaluation Focus</div>
-        <div class="snapshot-value">Real Workflows</div>
-      </div>
-    </div>
 
     <div class="rd-section-label">Research Methodology</div>
     <div class="method-strip">
@@ -739,10 +713,6 @@ body {
       <div class="method-item green">
         <div class="method-title">大模型智能体</div>
         <div class="method-text">Optimizing agent behavior with step-level and sequence-level reward signals.</div>
-      </div>
-      <div class="method-item amber">
-        <div class="method-title">Benchmarks &amp; Systems</div>
-        <div class="method-text">Building reusable platforms and evaluation tasks grounded in real research workflows.</div>
       </div>
     </div>
 
@@ -780,7 +750,7 @@ body {
         </div>
       </div>
 
-      <!-- ===== Card 2: Time Series Analysis ===== -->
+      <!-- ===== Card 2: Time Series Cognition ===== -->
       <div class="rd-card">
         <div class="rd-card-bar ts"></div>
         <div class="rd-card-inner">
@@ -790,13 +760,12 @@ body {
             </span>
           </div>
           <div class="rd-card-body">
-            <div class="rd-card-title">Time Series Analysis</div>
+            <div class="rd-card-title">Time Series Cognition</div>
             <p class="rd-card-desc">
-              This direction develops <strong>context-aware time series intelligence</strong> across representation learning,
-              forecasting, classification, and anomaly detection. Earlier work builds neural architectures and self-supervised
-              pre-training methods for temporal signals; recent work connects time series with multimodal language modeling,
-              slow-thinking LLM reasoning, and agentic forecasting systems that select tools, engineer features, and refine
-              predictions through structured interaction.
+              This direction develops <strong>context-aware time series intelligence</strong> through LLM-driven multimodal
+              semantic understanding, slow-thinking temporal reasoning, and autonomous agentic interaction. The goal is to
+              connect temporal signals with knowledge, language, and tool use for forecasting, classification, anomaly
+              detection, and decision support.
             </p>
             <div class="rd-tags">
               <span class="rd-tag">Context-aware Forecasting</span>
@@ -809,38 +778,48 @@ body {
         </div>
       </div>
 
+      <!-- ===== Card 3: Scientific Knowledge Cognition ===== -->
+      <div class="rd-card">
+        <div class="rd-card-bar sci"></div>
+        <div class="rd-card-inner">
+          <div class="rd-card-icon-panel">
+            <span class="rd-card-icon visual-icon icon-literature" aria-hidden="true"><i></i></span>
+          </div>
+          <div class="rd-card-body">
+            <div class="rd-card-title">Scientific Knowledge Cognition</div>
+            <p class="rd-card-desc">
+              This direction develops <strong>agent-ready scientific knowledge intelligence</strong> through LLM-driven
+              literature mining, multimodal scientific document understanding, and evidence-grounded reasoning. We study how
+              agents can retrieve, interpret, and organize scientific evidence for robust research workflows.
+            </p>
+            <div class="rd-tags">
+              <span class="rd-tag">Literature Mining</span>
+              <span class="rd-tag">Scientific Knowledge Retrieval</span>
+              <span class="rd-tag">Multimodal Documents</span>
+              <span class="rd-tag">Evidence-grounded Reasoning</span>
+              <span class="rd-tag">Agent-ready Paper Search</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /primary-cards -->
 
     <!-- Broader Scenarios -->
-    <div class="scenario-section-label">领域应用研究</div>
+    <div class="scenario-section-label">Broader Application and Evaluation Scenarios</div>
 
     <div class="scenario-cards">
 
-      <!-- Table Mining -->
-      <div class="sc-card">
-        <div class="sc-card-bar table"></div>
-        <div class="sc-card-head">
-          <span class="sc-card-icon visual-icon icon-table" aria-hidden="true"></span>
-          <div class="sc-card-title">Table Mining</div>
-        </div>
-        <p class="sc-card-desc">
-          LLM-driven <strong>tabular data understanding</strong>, table reasoning, multi-table inference,
-          and scientific table analysis. We explore how LLMs can be augmented with
-          programmatic tools and slow-thinking strategies to tackle complex structured data tasks.
-        </p>
-      </div>
-
-      <!-- Scientific Literature Mining -->
+      <!-- AI for Science -->
       <div class="sc-card">
         <div class="sc-card-bar sci"></div>
         <div class="sc-card-head">
           <span class="sc-card-icon visual-icon icon-literature" aria-hidden="true"><i></i></span>
-          <div class="sc-card-title">Scientific Literature Mining</div>
+          <div class="sc-card-title">AI for Science</div>
         </div>
         <p class="sc-card-desc">
-          Literature retrieval, <strong>multimodal scientific document understanding</strong>,
-          knowledge discovery, and evidence-grounded reasoning over scholarly content. We build agentic
-          systems and benchmarks for evaluating tool-augmented reasoning on academic literature.
+          Scientific knowledge acquisition, <strong>multimodal scientific document understanding</strong>,
+          research knowledge discovery, and evidence-grounded reasoning for AI4Science.
         </p>
       </div>
 
@@ -852,9 +831,21 @@ body {
           <div class="sc-card-title">Recommender Systems</div>
         </div>
         <p class="sc-card-desc">
-          Sequential modeling, <strong>one-class collaborative filtering</strong>, and LLM-driven reasoning
-          for dynamic user preference understanding. Research covers behavior-level data augmentation,
-          cross-domain recommendation, and LLM-based user simulation.
+          Sequential behavior modeling, <strong>dynamic user preference understanding</strong>,
+          personalized recommendation, and LLM-driven reasoning for interactive decision-making.
+        </p>
+      </div>
+
+      <!-- Power and Energy -->
+      <div class="sc-card">
+        <div class="sc-card-bar energy"></div>
+        <div class="sc-card-head">
+          <span class="sc-card-icon visual-icon icon-energy" aria-hidden="true"></span>
+          <div class="sc-card-title">Power and Energy</div>
+        </div>
+        <p class="sc-card-desc">
+          Electricity load forecasting, <strong>power generation prediction</strong>,
+          renewable energy analytics, and agentic decision support for energy management and dispatch.
         </p>
       </div>
 
@@ -864,7 +855,8 @@ body {
     <div class="research-note-box">
       Research collections:
       <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> ·
-      <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Analysis</a>
+      <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Cognition</a> ·
+      <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Scientific Knowledge Cognition</a>
     </div>
     <div class="research-note-box">
       欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室

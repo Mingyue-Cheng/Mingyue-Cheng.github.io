@@ -88,13 +88,12 @@ body {
 
 /* ===== Hero ===== */
 .page-hero {
-  padding: 42px 0 34px;
+  padding: 32px 0 28px;
   border-bottom: 1px solid var(--border);
-  background:
-    linear-gradient(150deg, #eef4fb 0%, #ffffff 58%, #f6faf8 100%);
+  background: #fff;
 }
 .page-hero-content {
-  max-width: 76ch;
+  max-width: 880px;
 }
 .research-eyebrow {
   font-size: 12px;
@@ -102,85 +101,32 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--teal);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .page-hero-title {
-  font-size: 32px;
-  line-height: 1.16;
+  font-size: 28px;
+  line-height: 1.22;
   font-weight: 800;
   color: var(--accent);
   letter-spacing: 0;
   max-width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   text-wrap: balance;
 }
 .page-hero-sub {
   font-size: 15px;
   color: var(--text);
-  line-height: 1.8;
-  max-width: 100%;
-  text-align: justify;
-  text-align-last: justify;
-  text-justify: inter-word;
-  hyphens: auto;
+  line-height: 1.72;
+  max-width: 74ch;
+  text-align: left;
+  text-align-last: left;
+  hyphens: manual;
 }
 .page-hero-sub a { color: var(--accent); text-decoration: none; font-weight: 500; }
 .page-hero-sub a:hover { text-decoration: underline; }
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-}
-.hero-action {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 7px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 700;
-}
-.hero-action.primary {
-  color: #fff;
-  background: var(--accent);
-  border-color: var(--accent);
-}
-.hero-action:hover { background: var(--accent-light); }
-.hero-action.primary:hover { background: var(--accent-dark); }
 /* ===== Main ===== */
 .research-main {
-  padding: 36px 0 56px;
-}
-
-.method-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 38px;
-}
-.method-item {
-  border-left: 3px solid var(--accent);
-  background: var(--bg-alt);
-  border-radius: 0 8px 8px 0;
-  padding: 13px 15px;
-}
-.method-item.teal { border-left-color: var(--teal); }
-.method-item.green { border-left-color: var(--green); }
-.method-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 3px;
-}
-.method-text {
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.65;
+  padding: 30px 0 56px;
 }
 
 /* ===== Section label ===== */
@@ -287,25 +233,6 @@ body {
   text-align: justify;
 }
 .rd-card-desc strong { color: var(--accent); }
-
-/* Topic tags */
-.rd-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-bottom: 0;
-}
-.rd-tag {
-  display: inline-block;
-  padding: 3px 11px;
-  border-radius: 8px;
-  background: var(--accent-light);
-  color: var(--accent);
-  border: 1px solid #c9d8f5;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.5;
-}
 
 /* ===== Scenario Cards (smaller grid) ===== */
 .scenario-section-label {
@@ -616,7 +543,6 @@ body {
 
 /* ===== Responsive ===== */
 @media (max-width: 840px) {
-  .method-strip { grid-template-columns: repeat(2, 1fr); }
   .scenario-cards { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 680px) {
@@ -636,12 +562,7 @@ body {
   .rd-card-desc,
   .sc-card-desc { text-align: left; }
   .rd-card,
-  .sc-card,
-  .method-item { min-width: 0; }
-  .rd-tag {
-    max-width: 100%;
-    overflow-wrap: anywhere;
-  }
+  .sc-card { min-width: 0; }
   .scenario-cards { grid-template-columns: 1fr; }
   .nav-links { gap: 14px; }
   .page-hero-title { font-size: 22px; }
@@ -650,7 +571,6 @@ body {
     text-align-last: left;
     hyphens: manual;
   }
-  .method-strip { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   .nav-links { display: none; }
@@ -682,16 +602,12 @@ body {
   <div class="container">
     <div class="page-hero-content">
       <div class="research-eyebrow">Research Program</div>
-      <h1 class="page-hero-title">Agentic intelligence for complex, structured, and temporal data</h1>
+      <h1 class="page-hero-title">Research Interests</h1>
       <p class="page-hero-sub">
-        My research studies how large language models can reason, act, and learn in data-rich environments. The central thread is
-        <strong>LLM-driven agentic AI</strong>, driven by <strong>Time Series Cognition</strong> and
-        <strong>Scientific Knowledge Cognition</strong>, with broader applications in AI for Science, recommender systems,
-        and power and energy.
+        My research develops <strong>cognitive intelligence methods</strong> for complex data mining, centered on
+        <strong>LLMs and Agentic AI</strong> and driven by <strong>Time Series Cognition</strong> and
+        <strong>Scientific Knowledge Cognition</strong>.
       </p>
-      <div class="hero-actions">
-        <a class="hero-action primary" href="publications.html">View Publications</a>
-      </div>
     </div>
   </div>
 </div>
@@ -700,23 +616,6 @@ body {
 <div class="research-main">
   <div class="container">
 
-    <div class="rd-section-label">Research Methodology</div>
-    <div class="method-strip">
-      <div class="method-item">
-        <div class="method-title">深度表示学习</div>
-        <div class="method-text">Learning transferable signals from temporal, tabular, textual, and multimodal data.</div>
-      </div>
-      <div class="method-item teal">
-        <div class="method-title">大模型推理</div>
-        <div class="method-text">Designing agents that use tools, memory, feedback, and multi-step reasoning.</div>
-      </div>
-      <div class="method-item green">
-        <div class="method-title">大模型智能体</div>
-        <div class="method-text">Optimizing agent behavior with step-level and sequence-level reward signals.</div>
-      </div>
-    </div>
-
-    <!-- Primary directions label -->
     <div class="rd-section-label">Primary Research Directions</div>
 
     <div class="primary-cards">
@@ -738,14 +637,6 @@ body {
               tool-augmented execution, memory, and agent runtime mechanisms. The goal is to move from prompt-only behavior
               toward agents that can plan, recover, and learn from environmental feedback in real workflows.
             </p>
-            <div class="rd-tags">
-              <span class="rd-tag">LLMs</span>
-              <span class="rd-tag">Agentic AI</span>
-              <span class="rd-tag">Agentic RL</span>
-              <span class="rd-tag">Agent Runtime</span>
-              <span class="rd-tag">Harness Engineer</span>
-              <span class="rd-tag">Domain Applications</span>
-            </div>
           </div>
         </div>
       </div>
@@ -767,13 +658,6 @@ body {
               connect temporal signals with knowledge, language, and tool use for forecasting, classification, anomaly
               detection, and decision support.
             </p>
-            <div class="rd-tags">
-              <span class="rd-tag">Context-aware Forecasting</span>
-              <span class="rd-tag">Knowledge-driven Forecasting</span>
-              <span class="rd-tag">Multimodal Understanding</span>
-              <span class="rd-tag">Slow-thinking Reasoning</span>
-              <span class="rd-tag">Agentic Interaction</span>
-            </div>
           </div>
         </div>
       </div>
@@ -792,13 +676,6 @@ body {
               literature mining, multimodal scientific document understanding, and evidence-grounded reasoning. We study how
               agents can retrieve, interpret, and organize scientific evidence for robust research workflows.
             </p>
-            <div class="rd-tags">
-              <span class="rd-tag">Literature Mining</span>
-              <span class="rd-tag">Scientific Knowledge Retrieval</span>
-              <span class="rd-tag">Multimodal Documents</span>
-              <span class="rd-tag">Evidence-grounded Reasoning</span>
-              <span class="rd-tag">Agent-ready Paper Search</span>
-            </div>
           </div>
         </div>
       </div>

@@ -21,7 +21,7 @@
           subtitle: 'My research develops cognitive intelligence methods for complex data mining, centered on LLMs and Agentic AI, with a methodological focus on context representation and reasoning, and driven by Time Series Cognition and Scientific Knowledge Cognition.',
           labels: ['Primary Research Directions', 'Broader Application and Evaluation Scenarios'],
           collections: 'Research collections:',
-          join: 'Welcome motivated undergraduate and graduate students to join the State Key Laboratory of Cognitive Intelligence <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGentic Intelligence（AGI） Group</a>.'
+          join: 'Welcome motivated undergraduate and graduate students to join the State Key Laboratory of Cognitive Intelligence <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>.'
         },
         'news.html': {
           title: 'News & Updates',
@@ -67,7 +67,7 @@
           subtitle: '我的研究主要面向复杂数据挖掘中的认知智能方法，以 LLMs and Agentic AI 为核心，并围绕 Time Series Cognition 与 Scientific Knowledge Cognition 展开。',
           labels: ['主要研究方向', '应用与评测场景'],
           collections: '研究主页：',
-          join: '欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGentic Intelligence（AGI）Group</a>。'
+          join: '欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>。'
         },
         'news.html': {
           title: '最新动态',

@@ -1656,6 +1656,7 @@ html[lang="zh-CN"] .footer-title {
                 <span class="os-year">2026.05</span>
                 <a class="os-github" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://ustc-time-series.github.io/future-cast/" target="_blank" rel="noopener">Website</a>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/Future-Cast">…</span></span>
               </div>
             </div>
           </div>
@@ -2313,10 +2314,14 @@ if (document.readyState === 'loading') {
   const pubItems = document.querySelectorAll('.pub-list li[data-tags]');
   const yearHeadings = document.querySelectorAll('.pub-year-heading');
 
-  // collapsed state: all sections except 2026 start collapsed
+  // collapsed state: Preprint, Released Survey, and 2026 start expanded
   const collapsedState = new Map();
   yearHeadings.forEach(h => {
-    collapsedState.set(h, !h.textContent.includes('2026'));
+    const headingText = h.textContent;
+    const startsExpanded = headingText.includes('Preprint') ||
+      headingText.includes('Released Survey') ||
+      headingText.includes('2026');
+    collapsedState.set(h, !startsExpanded);
   });
 
   function applyCollapseState() {

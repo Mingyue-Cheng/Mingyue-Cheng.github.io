@@ -7,7 +7,7 @@
         news: 'News',
         publications: 'Publications',
         projects: 'Open Source',
-        awards: 'Award',
+        awards: 'Awards',
         service: 'Service'
       },
       common: {

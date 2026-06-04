@@ -8,7 +8,8 @@
         publications: 'Publications',
         projects: 'Open Source',
         awards: 'Awards',
-        service: 'Service'
+        service: 'Service',
+        resources: 'Resources'
       },
       common: {
         back: '← Back to Homepage',
@@ -43,6 +44,11 @@
         'service.html': {
           title: 'Professional Service',
           subtitle: 'Selected program committee service, journal reviewing, teaching, and academic community contributions.'
+        },
+        'resources.html': {
+          title: 'Resources',
+          subtitle: 'Selected documents and references for students and collaborators.',
+          headings: ['Shared Resources']
         }
       }
     },
@@ -54,7 +60,8 @@
         publications: '论文',
         projects: '开源',
         awards: '奖励',
-        service: '服务'
+        service: '服务',
+        resources: '资源'
       },
       common: {
         back: '← 返回主页',
@@ -89,6 +96,11 @@
         'service.html': {
           title: '学术服务',
           subtitle: '代表性程序委员会、期刊审稿、教学与学术共同体服务。'
+        },
+        'resources.html': {
+          title: '资源',
+          subtitle: '面向学生和合作者的常用文档与参考资料。',
+          headings: ['共享资源']
         }
       }
     }
@@ -100,7 +112,8 @@
     ['publications.html', 'publications'],
     ['projects.html', 'projects'],
     ['awards.html', 'awards'],
-    ['service.html', 'service']
+    ['service.html', 'service'],
+    ['resources.html', 'resources']
   ];
 
   function pageName() {

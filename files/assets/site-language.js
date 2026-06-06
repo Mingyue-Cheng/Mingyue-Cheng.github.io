@@ -19,7 +19,7 @@
       pages: {
         'research.html': {
           title: 'Research Interests',
-          subtitle: 'My research develops cognitive intelligence methods for complex data mining, centered on LLMs and Agentic AI, with a methodological focus on context representation and reasoning, and driven by Time Series Cognition and Scientific Knowledge Cognition.',
+          subtitle: 'My research develops cognitive intelligence methods for complex data mining, centered on LLMs and Agentic AI, and driven by the dual foundations of time-series observations and scientific knowledge. My methodological focus lies in context representation and reasoning, aiming to build predictive intelligence for complex systems through multimodal semantic understanding, slow-thinking temporal reasoning, and autonomous agentic interaction.',
           labels: ['Primary Research Directions', 'Broader Application and Evaluation Scenarios'],
           collections: 'Research collections:',
           join: 'Welcome motivated undergraduate and graduate students to join the State Key Laboratory of Cognitive Intelligence <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>.'

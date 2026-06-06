@@ -358,8 +358,8 @@ body {
   border-left: 3px solid var(--accent);
 }
 .research-scenarios {
-  margin: 12px 0 8px;
-  padding: 12px 15px;
+  margin: 14px 0 8px;
+  padding: 14px 16px 16px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-alt);
@@ -369,33 +369,40 @@ body {
   font-size: 14px;
   font-weight: 700;
   line-height: 1.6;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  text-align: left;
 }
 .scenario-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: stretch;
+  gap: 12px;
   padding: 0;
   margin: 0;
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.58;
+  text-align: left;
 }
 .scenario-list li {
-  padding: 10px 12px;
+  min-height: 100%;
+  padding: 14px 15px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #fff;
-}
-.scenario-list li:nth-child(2),
-.scenario-list li:nth-child(3) {
-  margin-top: 12px;
+  box-shadow: 0 5px 14px rgba(0,48,135,0.035);
+  text-align: left;
+  text-align-last: auto;
+  text-justify: auto;
 }
 .scenario-label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: var(--accent);
   font-weight: 700;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
+  line-height: 1.35;
 }
 .research-note {
   font-size: 14px;
@@ -1365,7 +1372,7 @@ html[lang="zh-CN"] .footer-title {
   <div class="container">
     <h2 id="biography" class="section-heading" data-i18n="bio.heading">Biography</h2>
     <p data-i18n="bio.body">
-      I am an Associate Researcher at <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener"><strong>the School of Computer Science and Technology</strong></a>, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>USTC</strong></a>. I am also affiliated with the <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at USTC, working under the leadership of <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener"><strong>Prof. Enhong Chen</strong></a> and <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>.
+      I am an Associate Researcher at <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener"><strong>the School of Computer Science and Technology</strong></a>, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>. I am also affiliated with the <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at USTC, working under the leadership of <a href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener"><strong>Prof. Enhong Chen</strong></a> and <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener"><strong>Prof. Qi Liu</strong></a>.
     </p>
   </div>
 </div>
@@ -2092,7 +2099,7 @@ const i18n = {
     "profile.addressLabel": "Address:",
     "profile.address": "B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031",
     "bio.heading": "Biography",
-    "bio.body": "I am an Associate Researcher at <a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>the School of Computer Science and Technology</strong></a>, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>USTC</strong></a>. I am also affiliated with the <a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at USTC, working under the leadership of <a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Enhong Chen</strong></a> and <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>.",
+    "bio.body": "I am an Associate Researcher at <a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>the School of Computer Science and Technology</strong></a>, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>University of Science and Technology of China (USTC)</strong></a>. I am also affiliated with the <a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at USTC, working under the leadership of <a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Enhong Chen</strong></a> and <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>.",
     "research.heading": "Research Interests",
     "research.intro": "My research develops <span class=\"research-keyword\">cognitive intelligence methods</span> for complex data mining, centered on <span class=\"research-keyword\">LLMs and Agentic AI</span>, and driven by the dual foundations of <span class=\"research-keyword\">time-series observations</span> and <span class=\"research-keyword\">scientific knowledge</span>. My methodological focus lies in <span class=\"research-keyword\">context representation and reasoning</span>, aiming to build <span class=\"research-keyword\">predictive intelligence for complex systems</span> through <span class=\"research-keyword\">multimodal semantic understanding</span>, <span class=\"research-keyword\">slow-thinking temporal reasoning</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
     "research.agent": "<span class=\"research-label\">🤖 <strong>LLMs and Agentic AI:</strong></span> Developing <span class=\"research-keyword\">autonomous interactive learning and reasoning mechanisms</span> for large language models, including <span class=\"research-keyword\">environment-interactive Agentic RL</span>, <span class=\"research-keyword\">tool-augmented reasoning</span>, <span class=\"research-keyword\">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.",

@@ -382,7 +382,7 @@ body {
   margin: 0;
   font-size: 14px;
   line-height: 1.58;
-  text-align: left;
+  text-align: justify;
 }
 .scenario-list li {
   min-height: 100%;
@@ -391,9 +391,12 @@ body {
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 5px 14px rgba(0,48,135,0.035);
-  text-align: left;
-  text-align-last: auto;
-  text-justify: auto;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 .scenario-label {
   display: flex;
@@ -403,6 +406,8 @@ body {
   font-weight: 700;
   margin-bottom: 6px;
   line-height: 1.35;
+  text-align: left;
+  text-align-last: left;
 }
 .research-note {
   font-size: 14px;
@@ -1394,8 +1399,8 @@ html[lang="zh-CN"] .footer-title {
       <div class="research-scenarios-title" data-i18n="research.scenarioTitle">Broader Application and Evaluation Scenarios</div>
       <ul class="scenario-list">
         <li data-i18n="research.science"><span class="scenario-label">🔬 AI for Science</span> Scientific knowledge acquisition, multimodal scientific document understanding, research knowledge discovery, and evidence-grounded reasoning for AI4Science.</li>
-        <li data-i18n="research.recsys"><span class="scenario-label">🎯 Recommender Systems</span> Sequential behavior modeling, dynamic user preference understanding, personalized recommendation, and LLM-driven reasoning for interactive decision-making.</li>
         <li data-i18n="research.energy"><span class="scenario-label">⚡ AI for Energy Systems</span> Electricity load forecasting, photovoltaic generation prediction, wind power forecasting, renewable energy analytics, and agentic decision support for power dispatch, storage scheduling, and supply-demand balancing in complex energy systems.</li>
+        <li data-i18n="research.recsys"><span class="scenario-label">🎯 Recommender Systems</span> Sequential behavior modeling, dynamic user preference understanding, personalized recommendation, and LLM-driven reasoning for interactive decision-making.</li>
       </ul>
     </div>
     <div class="research-note" data-i18n="research.collections">

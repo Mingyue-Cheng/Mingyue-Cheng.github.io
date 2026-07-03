@@ -1,7 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="USTC logo">
-  <circle cx="32" cy="32" r="30" fill="#b01e23"/>
-  <circle cx="32" cy="32" r="25" fill="none" stroke="#fff" stroke-width="2"/>
-  <path d="M32 13l3.8 11.3h11.9l-9.6 7 3.7 11.3-9.8-7-9.8 7 3.7-11.3-9.6-7h11.9z" fill="#fff"/>
-  <path d="M16 42c8.8 6.3 23.2 6.3 32 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-  <text x="32" y="56" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" fill="#fff" letter-spacing=".6">USTC</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="USTC logo">
+  <image href="favicon.png" width="256" height="256" preserveAspectRatio="xMidYMid meet"/>
 </svg>

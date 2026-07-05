@@ -184,6 +184,19 @@ body {
   letter-spacing: -0.02em;
   margin-bottom: 4px;
 }
+.profile-home-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.profile-home-link:hover {
+  color: var(--accent-dark);
+}
+.profile-home-link:focus-visible {
+  outline: 2px solid rgba(0,48,135,0.28);
+  outline-offset: 4px;
+  border-radius: var(--radius);
+}
 .profile-name-cn {
   font-size: 20px;
   color: var(--text-muted);
@@ -1350,7 +1363,7 @@ html[lang="zh-CN"] .footer-title {
       <img class="profile-photo" src="./HomePage_files/Mycheng-6.png" alt="Mingyue Cheng">
       <div class="profile-info">
         <h1 class="profile-name">
-          Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span>
+          <a class="profile-home-link" href="index.html" aria-label="Refresh homepage">Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span></a>
         </h1>
         <div class="profile-title" data-i18n="profile.title">Ph.D &nbsp;·&nbsp; Associate Researcher</div>
         <div class="profile-affil">
@@ -2289,6 +2302,28 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initLanguageToggle);
 } else {
   initLanguageToggle();
+}
+
+function initProfileHomeRefresh() {
+  const link = document.querySelector('.profile-home-link');
+  if (!link) return;
+
+  link.addEventListener('click', function (event) {
+    const targetUrl = new URL(link.getAttribute('href'), window.location.href);
+    const currentPath = window.location.pathname.replace(/\/$/, '/index.html');
+    const targetPath = targetUrl.pathname.replace(/\/$/, '/index.html');
+
+    if (currentPath === targetPath) {
+      event.preventDefault();
+      window.location.reload();
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initProfileHomeRefresh);
+} else {
+  initProfileHomeRefresh();
 }
 
 // ===== Publication Year Collapse + Filter =====

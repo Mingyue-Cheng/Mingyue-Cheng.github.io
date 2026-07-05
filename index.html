@@ -167,14 +167,14 @@ body {
   align-items: flex-start;
 }
 .profile-photo {
-  width: 175px;
-  height: 210px;
+  width: 190px;
+  height: 234px;
   border-radius: var(--radius);
   object-fit: cover;
   flex-shrink: 0;
   border: 1px solid var(--border);
   box-shadow: 0 2px 12px rgba(0,48,135,0.08);
-  margin-top: 16px;
+  margin-top: 10px;
 }
 .profile-info { flex: 1; min-width: 0; }
 .profile-name {
@@ -1203,7 +1203,7 @@ html[lang="zh-CN"] .footer-title {
 /* ===== Responsive ===== */
 @media (max-width: 680px) {
   .profile-wrap { flex-direction: column; }
-  .profile-photo { width: 120px; height: 145px; }
+  .profile-photo { width: 132px; height: 163px; }
   .os-grid { grid-template-columns: 1fr; }
   .os-card {
     flex-direction: column;
@@ -1399,9 +1399,9 @@ html[lang="zh-CN"] .footer-title {
     <div class="research-scenarios">
       <div class="research-scenarios-title" data-i18n="research.scenarioTitle">Broader Application and Evaluation Scenarios</div>
       <ul class="scenario-list">
-        <li data-i18n="research.science"><span class="scenario-label">🔬 AI for Science</span> Scientific literature knowledge mining and time-series scientific data modeling, with a focus on extracting evidence from research documents and building predictive models for scientific discovery and decision support.</li>
-        <li data-i18n="research.energy"><span class="scenario-label">⚡ AI for Energy Systems</span> Electricity load, photovoltaic, and wind power forecasting; renewable energy analytics; and agentic support for dispatch, storage, and supply-demand balancing.</li>
-        <li data-i18n="research.recsys"><span class="scenario-label">🎯 AI for User Modeling</span> Sequential behavior modeling, dynamic user preference understanding, personalized recommendation, and LLM-driven reasoning for interactive decision-making.</li>
+        <li data-i18n="research.science"><span class="scenario-label">🔬 AI for Science</span> Scientific literature mining and time-series modeling for evidence extraction, predictive modeling, scientific discovery, and decision support.</li>
+        <li data-i18n="research.energy"><span class="scenario-label">⚡ AI for Energy Systems</span> Load, solar, and wind power forecasting; renewable energy analytics; and agentic support for dispatch, storage, and balancing.</li>
+        <li data-i18n="research.recsys"><span class="scenario-label">🎯 AI for User Modeling</span> Sequential behavior modeling, preference understanding, personalized recommendation, and LLM-driven interactive decision-making.</li>
       </ul>
     </div>
     <div class="research-note" data-i18n="research.collections">
@@ -2132,9 +2132,9 @@ const i18n = {
     "research.timeseries": "<span class=\"research-label\">📊 <strong>Time-Series Cognition:</strong></span> Developing <span class=\"research-keyword\">context-aware predictive intelligence for complex systems</span> by modeling time-series data as <span class=\"research-keyword\">dynamic system observations</span>, with a focus on <span class=\"research-keyword\">multimodal context representation</span>, <span class=\"research-keyword\">slow-thinking temporal reasoning</span>, <span class=\"research-keyword\">uncertainty-aware forecasting</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class=\"research-keyword\">agent-ready scientific knowledge intelligence</span> through <span class=\"research-keyword\">LLM-driven literature mining</span>, <span class=\"research-keyword\">multimodal scientific document understanding</span>, <span class=\"research-keyword\">evidence-grounded reasoning</span>, and <span class=\"research-keyword\">scientific knowledge integration</span> for <span class=\"research-keyword\">predictive modeling and decision support</span>.",
     "research.scenarioTitle": "Broader Application and Evaluation Scenarios",
-    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> Scientific literature knowledge mining and time-series scientific data modeling, with a focus on extracting evidence from research documents and building predictive models for scientific discovery and decision support.",
-    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> Sequential behavior modeling, dynamic user preference understanding, personalized recommendation, and LLM-driven reasoning for interactive decision-making.",
-    "research.energy": "<span class=\"scenario-label\">⚡ AI for Energy Systems</span> Electricity load, photovoltaic, and wind power forecasting; renewable energy analytics; and agentic support for dispatch, storage, and supply-demand balancing.",
+    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> Scientific literature mining and time-series modeling for evidence extraction, predictive modeling, scientific discovery, and decision support.",
+    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> Sequential behavior modeling, preference understanding, personalized recommendation, and LLM-driven interactive decision-making.",
+    "research.energy": "<span class=\"scenario-label\">⚡ AI for Energy Systems</span> Load, solar, and wind power forecasting; renewable energy analytics; and agentic support for dispatch, storage, and balancing.",
     "research.collections": "Research collections: 🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Cognition</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">Scientific Knowledge Cognition</a> · 🧮 <a href=\"https://ustc-table-mining.github.io/\" target=\"_blank\" rel=\"noopener\">Tabular Data Mining</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "Latest News",
@@ -2203,9 +2203,9 @@ const i18n = {
     "research.timeseries": "<span class=\"research-label\">📊 <strong>时序认知：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>科学知识认知：</strong></span> 面向 agent-ready 的科学知识智能，研究<span class=\"research-keyword\">大模型驱动的文献挖掘</span>、<span class=\"research-keyword\">多模态科学文档理解</span>和<span class=\"research-keyword\">证据驱动推理</span>。",
     "research.scenarioTitle": "应用与评测场景",
-    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> 科技文献知识挖掘与时序科学数据建模，重点从科研文档中抽取证据，并构建面向科学发现与决策支持的预测模型。",
-    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> 序列行为建模、动态用户偏好理解、个性化推荐，以及面向交互式决策的大模型推理。",
-    "research.energy": "<span class=\"scenario-label\">⚡ 电力能源</span> 电力负荷预测、发电功率预测、可再生能源分析，以及面向能源管理与调度的智能体决策支持。",
+    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> 科技文献挖掘与时序建模，支撑证据抽取、预测建模、科学发现与决策支持。",
+    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> 序列行为建模、用户偏好理解、个性化推荐与大模型驱动的交互式决策。",
+    "research.energy": "<span class=\"scenario-label\">⚡ 电力能源</span> 负荷、光伏与风电预测，可再生能源分析，以及面向调度、储能与平衡的智能体支持。",
     "research.collections": "研究主页：🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Cognition</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">Scientific Knowledge Cognition</a> · 🧮 <a href=\"https://ustc-table-mining.github.io/\" target=\"_blank\" rel=\"noopener\">Tabular Data Mining</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "最新动态",

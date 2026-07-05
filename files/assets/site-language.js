@@ -26,7 +26,7 @@
         },
         'news.html': {
           title: 'News & Updates',
-          subtitle: "Latest news from Mingyue Cheng's research group at USTC."
+          subtitle: 'Latest news from USTC AGI Research Group.'
         },
         'publications.html': {
           title: 'Publications',
@@ -78,7 +78,7 @@
         },
         'news.html': {
           title: '最新动态',
-          subtitle: '程明月在中国科学技术大学研究团队的最新动态。'
+          subtitle: 'USTC AGI Research Group 的最新动态。'
         },
         'publications.html': {
           title: '论文发表',

@@ -404,12 +404,14 @@ body {
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 5px 14px rgba(0,48,135,0.035);
-  text-align: left;
+  text-align: justify;
   text-align-last: left;
-  text-justify: auto;
-  hyphens: none;
-  overflow-wrap: normal;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: break-word;
   word-break: normal;
+  text-wrap: pretty;
 }
 .scenario-label {
   display: flex;
@@ -458,6 +460,11 @@ html[lang="zh-CN"] .research-list li,
 html[lang="zh-CN"] .scenario-list li {
   word-break: normal;
   overflow-wrap: anywhere;
+}
+html[lang="zh-CN"] .scenario-list li {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: auto;
 }
 html[lang="zh-CN"] .section-heading {
   letter-spacing: 0;
@@ -582,8 +589,7 @@ html[lang="zh-CN"] .footer-title {
 .os-card-title .os-year {
   margin-left: 0;
 }
-.os-card-title .os-github,
-.os-card-title .os-stars {
+.os-card-title .os-github {
   padding: 3px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -607,10 +613,17 @@ html[lang="zh-CN"] .footer-title {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
-.github-stars img {
-  display: block;
-  height: 15px;
+.github-stars {
+  display: inline-block;
+  min-width: 1ch;
+  color: var(--accent);
+  font-weight: 700;
+  line-height: 1;
+  background: transparent;
 }
 .os-card-desc {
   font-size: 14px;
@@ -755,8 +768,7 @@ html[lang="zh-CN"] .footer-title {
   margin-left: auto;
 }
 .dataset-card-title .os-year,
-.dataset-repo-link,
-.dataset-stars {
+.dataset-repo-link {
   padding: 3px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -784,6 +796,9 @@ html[lang="zh-CN"] .footer-title {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
 .dataset-card-title a.dataset-inline-link {
   border-bottom: 1px solid transparent;
@@ -836,8 +851,7 @@ html[lang="zh-CN"] .footer-title {
 }
 .dataset-card:hover .dataset-topic,
 .dataset-card:hover .dataset-card-title .os-year,
-.dataset-card:hover .dataset-repo-link,
-.dataset-card:hover .dataset-stars {
+.dataset-card:hover .dataset-repo-link {
   border-color: #c9d8f5;
   background: #f5f9ff;
   box-shadow: 0 6px 18px rgba(0, 48, 135, 0.08);
@@ -1457,9 +1471,9 @@ html[lang="zh-CN"] .footer-title {
     <div class="research-scenarios">
       <div class="research-scenarios-title" data-i18n="research.scenarioTitle">Broader Application and Evaluation Scenarios</div>
       <ul class="scenario-list">
-        <li data-i18n="research.science"><span class="scenario-label">🔬 AI for Science</span> Scientific literature mining and time-series modeling for evidence extraction, predictive modeling, scientific discovery, and decision support.</li>
-        <li data-i18n="research.energy"><span class="scenario-label">⚡ AI for Energy Systems</span> Load, solar, and wind power forecasting; renewable energy analytics; and agentic support for dispatch, storage, and balancing.</li>
-        <li data-i18n="research.recsys"><span class="scenario-label">🎯 AI for User Modeling</span> Sequential behavior modeling, preference understanding, personalized recommendation, and LLM-driven interactive decision-making.</li>
+        <li data-i18n="research.science"><span class="scenario-label">🔬 AI for Science</span> Mining scientific literature, tables, and multimodal scientific documents to ground evidence, connect hypotheses with time-series observations, and support discovery-oriented modeling.</li>
+        <li data-i18n="research.energy"><span class="scenario-label">⚡ AI for Energy Systems</span> Building context-aware forecasting agents for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.</li>
+        <li data-i18n="research.recsys"><span class="scenario-label">🎯 AI for User Modeling</span> Modeling behavioral sequences and preference dynamics to support explainable recommendation, user simulation, and LLM-based interactive decision support.</li>
       </ul>
     </div>
     <div class="research-note" data-i18n="research.collections">
@@ -1664,7 +1678,7 @@ html[lang="zh-CN"] .footer-title {
                 <a class="os-github" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://ustc-time-series.github.io/cast-claw/" target="_blank" rel="noopener">Website</a>
                 <a class="os-github" href="https://ustc-time-series.github.io/cast-claw/docs/" target="_blank" rel="noopener">Docs</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastClaw">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastClaw" data-stars="45">45</span></span>
               </div>
             </div>
           </div>
@@ -1681,7 +1695,7 @@ html[lang="zh-CN"] .footer-title {
                 <span class="os-year">2026.05</span>
                 <a class="os-github" href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://ustc-time-series.github.io/cast-factory/" target="_blank" rel="noopener">Website</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastFactory">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastFactory" data-stars="3">3</span></span>
               </div>
             </div>
           </div>
@@ -1698,7 +1712,7 @@ html[lang="zh-CN"] .footer-title {
                 <span class="os-year">2026.05</span>
                 <a class="os-github" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://ustc-time-series.github.io/future-cast/" target="_blank" rel="noopener">Website</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/Future-Cast">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/Future-Cast" data-stars="2">2</span></span>
               </div>
             </div>
           </div>
@@ -1729,7 +1743,7 @@ html[lang="zh-CN"] .footer-title {
               <div class="os-card-meta">
                 <span class="os-year">2026.04</span>
                 <a class="os-github" href="https://github.com/ustc-ai4science/academic-search" target="_blank" rel="noopener">GitHub</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-ai4science/academic-search">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-ai4science/academic-search" data-stars="436">436</span></span>
               </div>
             </div>
           </div>
@@ -1747,7 +1761,7 @@ html[lang="zh-CN"] .footer-title {
                 <a class="os-github" href="https://github.com/pty12345/PaperScout" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://agentr1.github.io/paperscout/" target="_blank" rel="noopener">Website</a>
                 <a class="os-github" href="https://arxiv.org/abs/2601.10029" target="_blank" rel="noopener">Paper</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="pty12345/PaperScout">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="pty12345/PaperScout" data-stars="5">5</span></span>
               </div>
             </div>
           </div>
@@ -1765,7 +1779,7 @@ html[lang="zh-CN"] .footer-title {
               <div class="os-card-meta">
                 <span class="os-year">2026.03</span>
                 <a class="os-github" href="https://github.com/Xiaoyu-Tao/CrabShrimp" target="_blank" rel="noopener">GitHub</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="Xiaoyu-Tao/CrabShrimp">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="Xiaoyu-Tao/CrabShrimp" data-stars="3">3</span></span>
               </div>
             </div>
           </div>
@@ -1785,7 +1799,7 @@ html[lang="zh-CN"] .footer-title {
                 <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://agentr1.github.io/tab-claw/" target="_blank" rel="noopener">Website</a>
                 <a class="os-github" href="https://tabclaw.bdaa.pro/" target="_blank" rel="noopener">Platform</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw" data-stars="58">58</span></span>
               </div>
             </div>
           </div>
@@ -1803,7 +1817,7 @@ html[lang="zh-CN"] .footer-title {
                 <span class="os-year">2026.03</span>
                 <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://agentr1.github.io/claw-r1/" target="_blank" rel="noopener">Website</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1" data-stars="192">192</span></span>
               </div>
             </div>
           </div>
@@ -1821,7 +1835,7 @@ html[lang="zh-CN"] .footer-title {
                 <span class="os-year">2025.07</span>
                 <a class="os-github" href="https://github.com/Melmaphother/Science-star" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://agentr1.github.io/agent-runtime/#science-star" target="_blank" rel="noopener">Website</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Science-star">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="Melmaphother/Science-star" data-stars="748">748</span></span>
               </div>
             </div>
           </div>
@@ -1841,7 +1855,7 @@ html[lang="zh-CN"] .footer-title {
                 <a class="os-github" href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">GitHub</a>
                 <a class="os-github" href="https://agentr1.github.io/agent-r1/" target="_blank" rel="noopener">Website</a>
                 <a class="os-github" href="https://agentr1.github.io/agent-r1/docs/" target="_blank" rel="noopener">Docs</a>
-                <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Agent-R1">…</span></span>
+                <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Agent-R1" data-stars="1520">1520</span></span>
               </div>
             </div>
           </div>
@@ -1877,7 +1891,7 @@ html[lang="zh-CN"] .footer-title {
               <span class="os-year">2026.02</span>
               <a class="dataset-repo-link" href="https://benchen4395.github.io/KuaiSearch/" target="_blank" rel="noopener">Website</a>
               <a class="dataset-repo-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">GitHub</a>
-              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="benchen4395/KuaiSearch">…</span></span>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="benchen4395/KuaiSearch" data-stars="18">18</span></span>
             </div>
           </div>
         </div>
@@ -1900,7 +1914,7 @@ html[lang="zh-CN"] .footer-title {
               <span class="os-year">2025.10</span>
               <a class="dataset-repo-link" href="https://paperarena-ai.github.io/" target="_blank" rel="noopener">Website</a>
               <a class="dataset-repo-link" href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">GitHub</a>
-              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="Melmaphother/PaperArena">…</span></span>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="Melmaphother/PaperArena" data-stars="17">17</span></span>
             </div>
           </div>
         </div>
@@ -1923,7 +1937,7 @@ html[lang="zh-CN"] .footer-title {
             <div class="dataset-card-meta">
               <span class="os-year">2025.06</span>
               <a class="dataset-repo-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">GitHub</a>
-              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="lqzxt/ChemTable">…</span></span>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="lqzxt/ChemTable" data-stars="6">6</span></span>
             </div>
           </div>
         </div>
@@ -1945,7 +1959,7 @@ html[lang="zh-CN"] .footer-title {
             <div class="dataset-card-meta">
               <span class="os-year">2025.06</span>
               <a class="dataset-repo-link" href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">GitHub</a>
-              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="0russwest0/HoH">…</span></span>
+              <span class="dataset-stars">⭐ <span class="github-stars" data-repo="0russwest0/HoH" data-stars="6">6</span></span>
             </div>
           </div>
         </div>
@@ -2194,9 +2208,9 @@ const i18n = {
     "research.timeseries": "<span class=\"research-label\">📊 <strong>Time-Series Cognition:</strong></span> Developing <span class=\"research-keyword\">context-aware predictive intelligence for complex systems</span> by modeling time-series data as <span class=\"research-keyword\">dynamic system observations</span>, with a focus on <span class=\"research-keyword\">multimodal context representation</span>, <span class=\"research-keyword\">slow-thinking temporal reasoning</span>, <span class=\"research-keyword\">uncertainty-aware forecasting</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class=\"research-keyword\">agent-ready scientific knowledge intelligence</span> through <span class=\"research-keyword\">LLM-driven literature mining</span>, <span class=\"research-keyword\">multimodal scientific document understanding</span>, <span class=\"research-keyword\">evidence-grounded reasoning</span>, and <span class=\"research-keyword\">scientific knowledge integration</span> for <span class=\"research-keyword\">predictive modeling and decision support</span>.",
     "research.scenarioTitle": "Broader Application and Evaluation Scenarios",
-    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> Scientific literature mining and time-series modeling for evidence extraction, predictive modeling, scientific discovery, and decision support.",
-    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> Sequential behavior modeling, preference understanding, personalized recommendation, and LLM-driven interactive decision-making.",
-    "research.energy": "<span class=\"scenario-label\">⚡ AI for Energy Systems</span> Load, solar, and wind power forecasting; renewable energy analytics; and agentic support for dispatch, storage, and balancing.",
+    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> Mining scientific literature, tables, and multimodal scientific documents to ground evidence, connect hypotheses with time-series observations, and support discovery-oriented modeling.",
+    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> Modeling behavioral sequences and preference dynamics to support explainable recommendation, user simulation, and LLM-based interactive decision support.",
+    "research.energy": "<span class=\"scenario-label\">⚡ AI for Energy Systems</span> Building context-aware forecasting agents for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.",
     "research.collections": "Research collections: 🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Cognition</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">Scientific Knowledge Cognition</a> · 🧮 <a href=\"https://ustc-table-mining.github.io/\" target=\"_blank\" rel=\"noopener\">Tabular Data Mining</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "Latest News",
@@ -2267,9 +2281,9 @@ const i18n = {
     "research.timeseries": "<span class=\"research-label\">📊 <strong>时序认知：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>科学知识认知：</strong></span> 面向 agent-ready 的科学知识智能，研究<span class=\"research-keyword\">大模型驱动的文献挖掘</span>、<span class=\"research-keyword\">多模态科学文档理解</span>和<span class=\"research-keyword\">证据驱动推理</span>。",
     "research.scenarioTitle": "应用与评测场景",
-    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> 科技文献挖掘与时序建模，支撑证据抽取、预测建模、科学发现与决策支持。",
-    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> 序列行为建模、用户偏好理解、个性化推荐与大模型驱动的交互式决策。",
-    "research.energy": "<span class=\"scenario-label\">⚡ 电力能源</span> 负荷、光伏与风电预测，可再生能源分析，以及面向调度、储能与平衡的智能体支持。",
+    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> 挖掘科研文献、表格与多模态文档，将证据链、科学假设与时序观测结合，支撑发现导向的建模与决策。",
+    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> 刻画用户行为序列与偏好演化，支撑可解释推荐、用户模拟，以及大模型驱动的人机交互式决策支持。",
+    "research.energy": "<span class=\"scenario-label\">⚡ 电力能源智能</span> 构建面向负荷、光伏与风电的上下文感知预测智能体，服务可再生能源分析、调度优化、储能控制、平衡与风险管理。",
     "research.collections": "研究主页：🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Cognition</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">Scientific Knowledge Cognition</a> · 🧮 <a href=\"https://ustc-table-mining.github.io/\" target=\"_blank\" rel=\"noopener\">Tabular Data Mining</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "最新动态",
@@ -2459,22 +2473,24 @@ if (document.readyState === 'loading') {
   });
 })();
 
-function renderStarBadge(el, repo) {
-  el.innerHTML = `<img src="https://img.shields.io/github/stars/${repo}?style=flat&label=&color=003087" alt="GitHub stars for ${repo}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+function renderStarCount(el) {
+  const count = el.dataset.stars || el.textContent.trim();
+  if (!count) return;
+  el.textContent = count;
+  el.setAttribute('aria-label', `${count} GitHub stars`);
 }
 
-function renderGitHubStarBadges() {
+function renderGitHubStarCounts() {
   const elements = document.querySelectorAll('.github-stars');
   elements.forEach(el => {
-    const repo = el.dataset.repo;
-    if (repo) renderStarBadge(el, repo);
+    renderStarCount(el);
   });
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', renderGitHubStarBadges);
+  document.addEventListener('DOMContentLoaded', renderGitHubStarCounts);
 } else {
-  renderGitHubStarBadges();
+  renderGitHubStarCounts();
 }
 
 function initClustrMaps() {

@@ -200,9 +200,12 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 .os-stars {
   font-size: 13px; color: var(--text-muted); font-weight: 400;
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
+  padding: 0; border: 0; background: transparent;
 }
-.github-stars img { display: block; height: 15px; }
+.github-stars {
+  display: inline-block; min-width: 1ch; color: var(--accent); font-weight: 700;
+  line-height: 1; background: transparent;
+}
 .os-card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 0; text-align: justify; text-align-last: left; }
 .os-card-desc strong { color: var(--accent); }
 .os-inline-highlight {
@@ -263,7 +266,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 .dataset-stars {
   font-size: 13px; color: var(--text-muted); font-weight: 400;
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
+  padding: 0; border: 0; background: transparent;
 }
 .dataset-card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 10px; }
 .dataset-card-desc strong { color: var(--text); }
@@ -400,7 +403,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                   <a class="os-github" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
                   <a class="os-github" href="https://ustc-time-series.github.io/cast-claw/" target="_blank" rel="noopener">Website</a>
                   <a class="os-github" href="https://ustc-time-series.github.io/cast-claw/docs/" target="_blank" rel="noopener">Docs</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastClaw">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastClaw" data-stars="45">45</span></span>
                 </div>
               </div>
             </div>
@@ -417,7 +420,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                   <span class="os-year">2026.05</span>
                   <a class="os-github" href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener">GitHub</a>
                   <a class="os-github" href="https://ustc-time-series.github.io/cast-factory/" target="_blank" rel="noopener">Website</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastFactory">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/CastFactory" data-stars="3">3</span></span>
                 </div>
               </div>
             </div>
@@ -434,7 +437,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                   <span class="os-year">2026.05</span>
                   <a class="os-github" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
                   <a class="os-github" href="https://ustc-time-series.github.io/future-cast/" target="_blank" rel="noopener">Website</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/Future-Cast">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-time-series/Future-Cast" data-stars="2">2</span></span>
                 </div>
               </div>
             </div>
@@ -465,7 +468,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                 <div class="os-card-meta">
                   <span class="os-year">2026.04</span>
                   <a class="os-github" href="https://github.com/ustc-ai4science/academic-search" target="_blank" rel="noopener">GitHub</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-ai4science/academic-search">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="ustc-ai4science/academic-search" data-stars="436">436</span></span>
                 </div>
               </div>
             </div>
@@ -483,7 +486,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                   <a class="os-github" href="https://github.com/pty12345/PaperScout" target="_blank" rel="noopener">GitHub</a>
                   <a class="os-github" href="https://agentr1.github.io/paperscout/" target="_blank" rel="noopener">Website</a>
                   <a class="os-github" href="https://arxiv.org/abs/2601.10029" target="_blank" rel="noopener">Paper</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="pty12345/PaperScout">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="pty12345/PaperScout" data-stars="5">5</span></span>
                 </div>
               </div>
             </div>
@@ -501,7 +504,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                   <a class="os-github" href="https://github.com/fishsure/TabClaw" target="_blank" rel="noopener">GitHub</a>
                   <a class="os-github" href="https://agentr1.github.io/tab-claw/" target="_blank" rel="noopener">Website</a>
                   <a class="os-github" href="https://tabclaw.bdaa.pro/" target="_blank" rel="noopener">Platform</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="fishsure/TabClaw" data-stars="58">58</span></span>
                 </div>
               </div>
             </div>
@@ -518,7 +521,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                   <span class="os-year">2026.03</span>
                   <a class="os-github" href="https://github.com/AgentR1/Claw-R1" target="_blank" rel="noopener">GitHub</a>
                   <a class="os-github" href="https://agentr1.github.io/claw-r1/" target="_blank" rel="noopener">Website</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Claw-R1" data-stars="192">192</span></span>
                 </div>
               </div>
             </div>
@@ -536,7 +539,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                   <a class="os-github" href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">GitHub</a>
                   <a class="os-github" href="https://agentr1.github.io/agent-r1/" target="_blank" rel="noopener">Website</a>
                   <a class="os-github" href="https://agentr1.github.io/agent-r1/docs/" target="_blank" rel="noopener">Docs</a>
-                  <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Agent-R1">…</span></span>
+                  <span class="os-stars">⭐ <span class="github-stars" data-repo="AgentR1/Agent-R1" data-stars="1520">1520</span></span>
                 </div>
               </div>
             </div>
@@ -565,7 +568,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                 <span class="os-year">2026.02</span>
                 <a class="dataset-repo-link" href="https://benchen4395.github.io/KuaiSearch/" target="_blank" rel="noopener">Website</a>
                 <a class="dataset-repo-link" href="https://github.com/benchen4395/KuaiSearch" target="_blank" rel="noopener">GitHub</a>
-                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="benchen4395/KuaiSearch">…</span></span>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="benchen4395/KuaiSearch" data-stars="18">18</span></span>
               </div>
             </div>
           </div>
@@ -588,7 +591,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
                 <span class="os-year">2025.10</span>
                 <a class="dataset-repo-link" href="https://paperarena-ai.github.io/" target="_blank" rel="noopener">Website</a>
                 <a class="dataset-repo-link" href="https://github.com/Melmaphother/PaperArena" target="_blank" rel="noopener">GitHub</a>
-                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="Melmaphother/PaperArena">…</span></span>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="Melmaphother/PaperArena" data-stars="17">17</span></span>
               </div>
             </div>
           </div>
@@ -610,7 +613,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
               <div class="dataset-card-meta">
                 <span class="os-year">2025.06</span>
                 <a class="dataset-repo-link" href="https://github.com/lqzxt/ChemTable" target="_blank" rel="noopener">GitHub</a>
-                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="lqzxt/ChemTable">…</span></span>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="lqzxt/ChemTable" data-stars="6">6</span></span>
               </div>
             </div>
           </div>
@@ -632,7 +635,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
               <div class="dataset-card-meta">
                 <span class="os-year">2025.06</span>
                 <a class="dataset-repo-link" href="https://github.com/0russwest0/HoH" target="_blank" rel="noopener">GitHub</a>
-                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="0russwest0/HoH">…</span></span>
+                <span class="dataset-stars">⭐ <span class="github-stars" data-repo="0russwest0/HoH" data-stars="6">6</span></span>
               </div>
             </div>
           </div>
@@ -675,20 +678,22 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 })();
 
 // GitHub Stars
-function renderStarBadge(el, repo) {
-  el.innerHTML = `<img src="https://img.shields.io/github/stars/${repo}?style=flat&label=&color=003087" alt="GitHub stars for ${repo}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+function renderStarCount(el) {
+  const count = el.dataset.stars || el.textContent.trim();
+  if (!count) return;
+  el.textContent = count;
+  el.setAttribute('aria-label', `${count} GitHub stars`);
 }
-function renderGitHubStarBadges() {
+function renderGitHubStarCounts() {
   const elements = document.querySelectorAll('.github-stars');
   elements.forEach(el => {
-    const repo = el.dataset.repo;
-    if (repo) renderStarBadge(el, repo);
+    renderStarCount(el);
   });
 }
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', renderGitHubStarBadges);
+  document.addEventListener('DOMContentLoaded', renderGitHubStarCounts);
 } else {
-  renderGitHubStarBadges();
+  renderGitHubStarCounts();
 }
 </script>
 <script src="files/assets/site-language.js?v=20260604"></script>

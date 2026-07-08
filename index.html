@@ -1178,11 +1178,53 @@ html[lang="zh-CN"] .footer-title {
   padding: 2px;
 }
 .clustrmaps-widget {
+  position: relative;
   width: min(100%, 380px);
   min-height: 124px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.clustrmaps-fallback {
+  width: 100%;
+  min-height: 124px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px dashed rgba(0, 48, 135, 0.24);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(0, 48, 135, 0.08), rgba(58, 204, 58, 0.08)),
+    #fff;
+  color: var(--text-muted);
+  text-align: center;
+}
+.clustrmaps-fallback-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.clustrmaps-fallback-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.clustrmaps-fallback-link:hover {
+  background: var(--accent-2);
+}
+.clustrmaps-widget.is-live .clustrmaps-fallback {
+  display: none;
 }
 .clustrmaps-widget > div,
 .clustrmaps-widget > iframe,
@@ -2107,7 +2149,12 @@ html[lang="zh-CN"] .footer-title {
         </div>
         <div class="footer-map">
           <div class="clustrmaps-shell">
-            <div id="clustrmaps-widget" class="clustrmaps-widget" aria-label="ClustrMaps visitor map"></div>
+            <div id="clustrmaps-widget" class="clustrmaps-widget" aria-label="ClustrMaps visitor map">
+              <div class="clustrmaps-fallback" id="clustrmaps-fallback">
+                <div class="clustrmaps-fallback-title" data-i18n="footer.mapFallbackTitle">Visitor map is available externally</div>
+                <a class="clustrmaps-fallback-link" href="https://clustrmaps.com/site/1c6vu" target="_blank" rel="noopener" data-i18n="footer.mapFallbackLink">Open visitor map</a>
+              </div>
+            </div>
             <noscript>
               <a href="https://clustrmaps.com/site/1c6vu" target="_blank" rel="noopener">View visitor map</a>
             </noscript>
@@ -2116,7 +2163,7 @@ html[lang="zh-CN"] .footer-title {
         <div class="footer-map-hint" data-i18n="footer.hint">Powered by <a href="https://clustrmaps.com/" target="_blank" rel="noopener">ClustrMaps</a>. Click the map for details.</div>
       </div>
     </div>
-    <div class="footer-bottom" data-i18n="footer.bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+    <div class="footer-bottom" data-i18n="footer.bottom">© 2026 Mingyue Cheng. Last updated in July 2026.</div>
   </div>
 </footer>
 
@@ -2192,8 +2239,10 @@ const i18n = {
     "footer.contact": "Contact",
     "footer.visitorLabel": "Visitor Distribution",
     "footer.visitorSubtitle": "Live world map for this homepage.",
+    "footer.mapFallbackTitle": "Visitor map is available externally",
+    "footer.mapFallbackLink": "Open visitor map",
     "footer.hint": "Powered by <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a>. Click the map for details.",
-    "footer.bottom": "© 2026 Mingyue Cheng. Last updated in May 2026."
+    "footer.bottom": "© 2026 Mingyue Cheng. Last updated in July 2026."
   },
   zh: {
     "nav.logo": "主页",
@@ -2263,8 +2312,10 @@ const i18n = {
     "footer.contact": "联系我",
     "footer.visitorLabel": "访问者分布",
     "footer.visitorSubtitle": "本主页的实时全球访问地图。",
+    "footer.mapFallbackTitle": "访问地图可在外部页面查看",
+    "footer.mapFallbackLink": "打开访问地图",
     "footer.hint": "由 <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a> 提供支持。点击地图可查看详情。",
-    "footer.bottom": "© 2026 程明月。最后更新于 2026 年 5 月。"
+    "footer.bottom": "© 2026 程明月。最后更新于 2026 年 7 月。"
   }
 };
 
@@ -2406,96 +2457,49 @@ if (document.readyState === 'loading') {
   });
 })();
 
-function getStarCacheKey(repo) {
-  return `github-stars:${repo}`;
-}
-
-function readCachedStars(repo) {
-  try {
-    const raw = localStorage.getItem(getStarCacheKey(repo));
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return Number.isFinite(parsed?.count) ? parsed.count : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeCachedStars(repo, count) {
-  try {
-    localStorage.setItem(getStarCacheKey(repo), JSON.stringify({
-      count,
-      updatedAt: Date.now()
-    }));
-  } catch {}
-}
-
-function renderStarCount(el, count) {
-  el.textContent = String(count);
-}
-
-function renderStarBadgeFallback(el, repo) {
+function renderStarBadge(el, repo) {
   el.innerHTML = `<img src="https://img.shields.io/github/stars/${repo}?style=flat&label=&color=003087" alt="GitHub stars for ${repo}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
 }
 
-async function fetchRepoStars(repo) {
-  const controller = new AbortController();
-  const timeoutId = window.setTimeout(() => controller.abort(), 6000);
-  try {
-    const response = await fetch(`https://api.github.com/repos/${repo}`, {
-      signal: controller.signal,
-      headers: {
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    });
-    if (!response.ok) throw new Error(`GitHub API ${response.status}`);
-    const data = await response.json();
-    const count = data?.stargazers_count;
-    if (!Number.isFinite(count)) throw new Error('Invalid GitHub star count');
-    return count;
-  } finally {
-    window.clearTimeout(timeoutId);
-  }
-}
-
-async function loadGitHubStars() {
+function renderGitHubStarBadges() {
   const elements = document.querySelectorAll('.github-stars');
-  await Promise.all(Array.from(elements).map(async el => {
+  elements.forEach(el => {
     const repo = el.dataset.repo;
-    const cachedCount = readCachedStars(repo);
-
-    if (cachedCount !== null) {
-      renderStarCount(el, cachedCount);
-    }
-
-    try {
-      const liveCount = await fetchRepoStars(repo);
-      renderStarCount(el, liveCount);
-      writeCachedStars(repo, liveCount);
-    } catch (e) {
-      if (cachedCount === null) {
-        renderStarBadgeFallback(el, repo);
-      }
-    }
-  }));
+    if (repo) renderStarBadge(el, repo);
+  });
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadGitHubStars);
+  document.addEventListener('DOMContentLoaded', renderGitHubStarBadges);
 } else {
-  loadGitHubStars();
+  renderGitHubStarBadges();
 }
 
 function initClustrMaps() {
   const container = document.getElementById('clustrmaps-widget');
   if (!container || container.querySelector('#clustrmaps')) return;
 
+  const hasRenderedMap = () => Array.from(container.querySelectorAll('iframe, img, canvas, svg, object, embed, a'))
+    .some(node => !node.closest('.clustrmaps-fallback'));
+
+  let observer;
+  const markLiveWhenReady = () => {
+    if (!hasRenderedMap()) return;
+    container.classList.add('is-live');
+    if (observer) observer.disconnect();
+  };
+
   const script = document.createElement('script');
   script.type = 'text/javascript';
   script.id = 'clustrmaps';
   script.async = true;
   script.src = 'https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=360&t=n&d=yzpRvK6tscYP95eJAtp2KO6oJy1DQIIoLhPD5S-3EG8&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353';
+  script.onload = () => window.setTimeout(markLiveWhenReady, 400);
+  script.onerror = () => container.classList.remove('is-live');
+
+  observer = new MutationObserver(markLiveWhenReady);
+  observer.observe(container, { childList: true, subtree: true });
+
   container.appendChild(script);
 }
 document.addEventListener("DOMContentLoaded", initClustrMaps);

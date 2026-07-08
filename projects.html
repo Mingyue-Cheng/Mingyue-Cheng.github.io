@@ -662,7 +662,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
       <a class="footer-link" href="research.html">Research</a>
       <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in May 2026.</div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in July 2026.</div>
   </div>
 </footer>
 
@@ -675,55 +675,20 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 })();
 
 // GitHub Stars
-function readCachedStars(repo) {
-  try {
-    const raw = localStorage.getItem(`github-stars:${repo}`);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    return Number.isFinite(parsed?.count) ? parsed.count : null;
-  } catch { return null; }
+function renderStarBadge(el, repo) {
+  el.innerHTML = `<img src="https://img.shields.io/github/stars/${repo}?style=flat&label=&color=003087" alt="GitHub stars for ${repo}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
 }
-function writeCachedStars(repo, count) {
-  try { localStorage.setItem(`github-stars:${repo}`, JSON.stringify({ count, updatedAt: Date.now() })); } catch {}
-}
-function renderStarCount(el, count) { el.textContent = String(count); }
-function renderStarBadgeFallback(el, repo) {
-  el.innerHTML = `<img src="https://img.shields.io/github/stars/${repo}?style=flat&label=&color=003087" alt="GitHub stars" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
-}
-async function fetchRepoStars(repo) {
-  const controller = new AbortController();
-  const timeoutId = window.setTimeout(() => controller.abort(), 6000);
-  try {
-    const response = await fetch(`https://api.github.com/repos/${repo}`, {
-      signal: controller.signal,
-      headers: { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
-    });
-    if (!response.ok) throw new Error(`GitHub API ${response.status}`);
-    const data = await response.json();
-    const count = data?.stargazers_count;
-    if (!Number.isFinite(count)) throw new Error('Invalid count');
-    return count;
-  } finally { window.clearTimeout(timeoutId); }
-}
-async function loadGitHubStars() {
+function renderGitHubStarBadges() {
   const elements = document.querySelectorAll('.github-stars');
-  await Promise.all(Array.from(elements).map(async el => {
+  elements.forEach(el => {
     const repo = el.dataset.repo;
-    const cachedCount = readCachedStars(repo);
-    if (cachedCount !== null) renderStarCount(el, cachedCount);
-    try {
-      const liveCount = await fetchRepoStars(repo);
-      renderStarCount(el, liveCount);
-      writeCachedStars(repo, liveCount);
-    } catch (e) {
-      if (cachedCount === null) renderStarBadgeFallback(el, repo);
-    }
-  }));
+    if (repo) renderStarBadge(el, repo);
+  });
 }
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadGitHubStars);
+  document.addEventListener('DOMContentLoaded', renderGitHubStarBadges);
 } else {
-  loadGitHubStars();
+  renderGitHubStarBadges();
 }
 </script>
 <script src="files/assets/site-language.js?v=20260604"></script>

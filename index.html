@@ -395,7 +395,7 @@ body {
   margin: 0;
   font-size: 14px;
   line-height: 1.58;
-  text-align: justify;
+  text-align: left;
 }
 .scenario-list li {
   min-height: 100%;
@@ -404,9 +404,9 @@ body {
   border-radius: 8px;
   background: #fff;
   box-shadow: 0 5px 14px rgba(0,48,135,0.035);
-  text-align: justify;
+  text-align: left;
   text-align-last: left;
-  text-justify: inter-word;
+  text-justify: auto;
   hyphens: none;
   overflow-wrap: normal;
   word-break: normal;
@@ -1186,9 +1186,9 @@ html[lang="zh-CN"] .footer-title {
   justify-content: center;
 }
 .clustrmaps-fallback {
+  display: none;
   width: 100%;
   min-height: 124px;
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -1201,6 +1201,12 @@ html[lang="zh-CN"] .footer-title {
     #fff;
   color: var(--text-muted);
   text-align: center;
+}
+.footer-map-panel.is-map-unavailable .clustrmaps-widget {
+  display: none;
+}
+.footer-map-panel.is-map-unavailable .clustrmaps-fallback {
+  display: flex;
 }
 .clustrmaps-fallback-title {
   font-size: 13px;
@@ -1222,9 +1228,6 @@ html[lang="zh-CN"] .footer-title {
 }
 .clustrmaps-fallback-link:hover {
   background: var(--accent-2);
-}
-.clustrmaps-widget.is-live .clustrmaps-fallback {
-  display: none;
 }
 .clustrmaps-widget > div,
 .clustrmaps-widget > iframe,
@@ -2149,11 +2152,10 @@ html[lang="zh-CN"] .footer-title {
         </div>
         <div class="footer-map">
           <div class="clustrmaps-shell">
-            <div id="clustrmaps-widget" class="clustrmaps-widget" aria-label="ClustrMaps visitor map">
-              <div class="clustrmaps-fallback" id="clustrmaps-fallback">
-                <div class="clustrmaps-fallback-title" data-i18n="footer.mapFallbackTitle">Visitor map is available externally</div>
-                <a class="clustrmaps-fallback-link" href="https://clustrmaps.com/site/1c6vu" target="_blank" rel="noopener" data-i18n="footer.mapFallbackLink">Open visitor map</a>
-              </div>
+            <div id="clustrmaps-widget" class="clustrmaps-widget" aria-label="ClustrMaps visitor map"></div>
+            <div class="clustrmaps-fallback" id="clustrmaps-fallback" role="status" aria-live="polite">
+              <div class="clustrmaps-fallback-title" data-i18n="footer.mapFallbackTitle">Live visitor map is temporarily unavailable</div>
+              <a class="clustrmaps-fallback-link" href="https://clustrmaps.com/site/1c6vu" target="_blank" rel="noopener" data-i18n="footer.mapFallbackLink">Open ClustrMaps</a>
             </div>
             <noscript>
               <a href="https://clustrmaps.com/site/1c6vu" target="_blank" rel="noopener">View visitor map</a>
@@ -2239,8 +2241,8 @@ const i18n = {
     "footer.contact": "Contact",
     "footer.visitorLabel": "Visitor Distribution",
     "footer.visitorSubtitle": "Live world map for this homepage.",
-    "footer.mapFallbackTitle": "Visitor map is available externally",
-    "footer.mapFallbackLink": "Open visitor map",
+    "footer.mapFallbackTitle": "Live visitor map is temporarily unavailable",
+    "footer.mapFallbackLink": "Open ClustrMaps",
     "footer.hint": "Powered by <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a>. Click the map for details.",
     "footer.bottom": "© 2026 Mingyue Cheng. Last updated in July 2026."
   },
@@ -2312,8 +2314,8 @@ const i18n = {
     "footer.contact": "联系我",
     "footer.visitorLabel": "访问者分布",
     "footer.visitorSubtitle": "本主页的实时全球访问地图。",
-    "footer.mapFallbackTitle": "访问地图可在外部页面查看",
-    "footer.mapFallbackLink": "打开访问地图",
+    "footer.mapFallbackTitle": "实时访问地图暂时不可用",
+    "footer.mapFallbackLink": "打开 ClustrMaps",
     "footer.hint": "由 <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a> 提供支持。点击地图可查看详情。",
     "footer.bottom": "© 2026 程明月。最后更新于 2026 年 7 月。"
   }
@@ -2477,16 +2479,27 @@ if (document.readyState === 'loading') {
 
 function initClustrMaps() {
   const container = document.getElementById('clustrmaps-widget');
+  const panel = container?.closest('.footer-map-panel');
   if (!container || container.querySelector('#clustrmaps')) return;
 
-  const hasRenderedMap = () => Array.from(container.querySelectorAll('iframe, img, canvas, svg, object, embed, a'))
-    .some(node => !node.closest('.clustrmaps-fallback'));
+  const hasRenderedMap = () => Boolean(container.querySelector('iframe, img, canvas, svg, object, embed, a'));
 
   let observer;
-  const markLiveWhenReady = () => {
+  let fallbackTimer;
+  const markAvailable = () => {
     if (!hasRenderedMap()) return;
+    panel?.classList.remove('is-map-unavailable');
     container.classList.add('is-live');
     if (observer) observer.disconnect();
+    window.clearTimeout(fallbackTimer);
+  };
+
+  const markUnavailable = () => {
+    if (hasRenderedMap()) {
+      markAvailable();
+      return;
+    }
+    panel?.classList.add('is-map-unavailable');
   };
 
   const script = document.createElement('script');
@@ -2494,11 +2507,12 @@ function initClustrMaps() {
   script.id = 'clustrmaps';
   script.async = true;
   script.src = 'https://cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=360&t=n&d=yzpRvK6tscYP95eJAtp2KO6oJy1DQIIoLhPD5S-3EG8&co=2d78ad&ct=ffffff&cmo=3acc3a&cmn=ff5353';
-  script.onload = () => window.setTimeout(markLiveWhenReady, 400);
-  script.onerror = () => container.classList.remove('is-live');
+  script.onload = () => window.setTimeout(markAvailable, 400);
+  script.onerror = markUnavailable;
 
-  observer = new MutationObserver(markLiveWhenReady);
+  observer = new MutationObserver(markAvailable);
   observer.observe(container, { childList: true, subtree: true });
+  fallbackTimer = window.setTimeout(markUnavailable, 8000);
 
   container.appendChild(script);
 }

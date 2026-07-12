@@ -291,76 +291,6 @@ body {
 }
 .rd-card-desc strong { color: var(--accent); }
 
-/* ===== Scenario Cards (smaller grid) ===== */
-.scenario-section-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.scenario-section-label::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.scenario-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.sc-card {
-  position: relative;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 4px 16px rgba(0,48,135,0.05);
-  padding: 0 0 20px;
-  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
-}
-.sc-card:hover {
-  border-color: rgba(0,48,135,0.22);
-  box-shadow: 0 12px 30px rgba(0,48,135,0.09);
-  transform: translateY(-2px);
-}
-.sc-card-bar {
-  height: 3px;
-  width: 100%;
-}
-.sc-card-bar.table    { background: linear-gradient(90deg, #003087 0%, #7c3aed 100%); }
-.sc-card-bar.sci      { background: linear-gradient(90deg, #003087 0%, #059669 100%); }
-.sc-card-bar.recsys   { background: linear-gradient(90deg, #003087 0%, #d97706 100%); }
-.sc-card-bar.energy   { background: linear-gradient(90deg, #003087 0%, #0891b2 100%); }
-
-.sc-card-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 18px 20px 10px;
-}
-.sc-card-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-
 /* ===== CSS-drawn visual markers ===== */
 .visual-icon i,
 .visual-icon::before,
@@ -460,63 +390,6 @@ body {
   transform-origin: right center;
 }
 
-.icon-recommend {
-  background:
-    radial-gradient(circle at 26% 28%, var(--amber) 0 3.5px, transparent 4px),
-    radial-gradient(circle at 72% 24%, var(--accent) 0 3.5px, transparent 4px),
-    radial-gradient(circle at 56% 74%, var(--teal) 0 3.5px, transparent 4px),
-    #fff;
-}
-.icon-recommend::before {
-  left: 11px;
-  top: 16px;
-  width: 18px;
-  height: 1.5px;
-  background: #c9d8f5;
-  transform: rotate(-10deg);
-}
-.icon-recommend::after {
-  left: 16px;
-  top: 23px;
-  width: 15px;
-  height: 1.5px;
-  background: #c9d8f5;
-  transform: rotate(44deg);
-}
-.icon-energy::before {
-  left: 15px;
-  top: 5px;
-  width: 16px;
-  height: 25px;
-  border: 3px solid #0d62d8;
-  border-top: none;
-  transform: skewX(-12deg);
-}
-.icon-energy::after {
-  left: 8px;
-  bottom: 6px;
-  width: 28px;
-  height: 17px;
-  border-left: 3px solid #087f8c;
-  border-bottom: 3px solid #087f8c;
-  transform: rotate(-34deg);
-}
-.sc-card-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: 0;
-  line-height: 1.3;
-}
-.sc-card-desc {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.75;
-  padding: 0 20px 12px;
-  text-align: left;
-}
-.sc-card-desc strong { color: var(--accent); }
-
 /* ===== Research Note ===== */
 .research-note-box {
   margin-top: 36px;
@@ -599,9 +472,6 @@ body {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 840px) {
-  .scenario-cards { grid-template-columns: 1fr 1fr; }
-}
 @media (max-width: 680px) {
   .rd-card-inner { flex-direction: column; }
   .rd-card-icon-panel {
@@ -616,11 +486,8 @@ body {
     border-bottom: 1px solid var(--border);
   }
   .rd-card-body { padding: 22px 20px 24px; }
-  .rd-card-desc,
-  .sc-card-desc { text-align: left; }
-  .rd-card,
-  .sc-card { min-width: 0; }
-  .scenario-cards { grid-template-columns: 1fr; }
+  .rd-card-desc { text-align: left; }
+  .rd-card { min-width: 0; }
   .nav-links { gap: 14px; }
   .page-hero-title { font-size: 22px; }
   .page-hero-sub {
@@ -780,50 +647,50 @@ body {
     </div><!-- /primary-cards -->
 
     <!-- Broader Scenarios -->
-    <div class="scenario-section-label">Broader Application and Evaluation Scenarios</div>
-
-    <div class="scenario-cards">
-
-      <!-- AI for Science -->
-      <div class="sc-card">
-        <div class="sc-card-bar sci"></div>
-        <div class="sc-card-head">
-          <span class="sc-card-icon visual-icon icon-literature" aria-hidden="true"><i></i></span>
-          <div class="sc-card-title">AI for Science</div>
-        </div>
-        <p class="sc-card-desc">
-          Scientific literature mining and <strong>time-series modeling</strong> for evidence extraction,
-          predictive modeling, scientific discovery, and decision support.
-        </p>
+    <section class="scenario-section" aria-labelledby="research-scenario-heading">
+      <div class="scenario-heading-row">
+        <h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">Broader Application and Evaluation Scenarios</h2>
       </div>
-
-      <!-- AI for User Modeling -->
-      <div class="sc-card">
-        <div class="sc-card-bar recsys"></div>
-        <div class="sc-card-head">
-          <span class="sc-card-icon visual-icon icon-recommend" aria-hidden="true"></span>
-          <div class="sc-card-title">AI for User Modeling</div>
-        </div>
-        <p class="sc-card-desc">
-          Sequential behavior modeling, <strong>preference understanding</strong>,
-          personalized recommendation, and LLM-driven interactive decision-making.
-        </p>
+      <div class="scenario-grid">
+        <article class="scenario-card scenario-card--science">
+          <div class="scenario-card-accent" aria-hidden="true"></div>
+          <div class="scenario-card-header">
+            <span class="scenario-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path>
+              </svg>
+            </span>
+            <h3 class="scenario-card-title">AI for Science</h3>
+          </div>
+          <p class="scenario-card-body">Using <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> as the technical foundation for structured scientific data modeling and scientific literature mining.</p>
+        </article>
+        <article class="scenario-card scenario-card--energy">
+          <div class="scenario-card-accent" aria-hidden="true"></div>
+          <div class="scenario-card-header">
+            <span class="scenario-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="m13 2-7 12h6l-1 8 7-12h-6z"></path>
+              </svg>
+            </span>
+            <h3 class="scenario-card-title">AI for Energy Systems</h3>
+          </div>
+          <p class="scenario-card-body">Building <strong class="scenario-card-emphasis">context-aware forecasting agents</strong> for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.</p>
+        </article>
+        <article class="scenario-card scenario-card--user">
+          <div class="scenario-card-accent" aria-hidden="true"></div>
+          <div class="scenario-card-header">
+            <span class="scenario-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="8" r="3"></circle>
+                <path d="M6 20c.7-4 2.7-6 6-6s5.3 2 6 6M4 8h2m12 0h2"></path>
+              </svg>
+            </span>
+            <h3 class="scenario-card-title">AI for User Modeling</h3>
+          </div>
+          <p class="scenario-card-body">Modeling <strong class="scenario-card-emphasis">behavioral sequences and preference dynamics</strong> to support explainable recommendation, user simulation, and LLM-based interactive decision support.</p>
+        </article>
       </div>
-
-      <!-- AI for Energy Systems -->
-      <div class="sc-card">
-        <div class="sc-card-bar energy"></div>
-        <div class="sc-card-head">
-          <span class="sc-card-icon visual-icon icon-energy" aria-hidden="true"></span>
-          <div class="sc-card-title">AI for Energy Systems</div>
-        </div>
-        <p class="sc-card-desc">
-          Load, solar, and wind power forecasting; renewable energy analytics;
-          and agentic support for dispatch, storage, and balancing.
-        </p>
-      </div>
-
-    </div><!-- /scenario-cards -->
+    </section>
 
     <!-- Notes -->
     <div class="research-note-box">

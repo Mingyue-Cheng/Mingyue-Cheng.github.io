@@ -8,6 +8,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (relativePath) => readFileSync(join(root, relativePath), 'utf8');
 const indexHtml = read('index.html');
 const researchHtml = read('research.html');
+const siteLanguageJs = read('files/assets/site-language.js');
 const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css">';
@@ -47,6 +48,10 @@ function articleFor(source, modifier) {
   const match = source.match(pattern);
   assert.ok(match, `Missing ${modifier} article`);
   return match[0];
+}
+
+function visibleText(html) {
+  return html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function decodedTranslationEntries(key) {
@@ -137,4 +142,47 @@ test('homepage dictionaries provide complete split scenario translations', () =>
   for (const oldKey of ['research.science', 'research.energy', 'research.recsys']) {
     assert.doesNotMatch(indexHtml, new RegExp(`"${escapeRegex(oldKey)}"\\s*:`));
   }
+});
+
+test('research page matches the homepage scenario contract', () => {
+  const homepageSection = sectionBetween(
+    indexHtml,
+    '<!-- ===== Research Interests ===== -->',
+    '<!-- ===== Latest News ===== -->'
+  );
+  const researchSection = sectionBetween(researchHtml, '<!-- Broader Scenarios -->', '<!-- Notes -->');
+
+  assert.match(researchSection, /<section class="scenario-section" aria-labelledby="research-scenario-heading">/);
+  assert.match(researchSection, /<h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">/);
+  assert.equal(matchCount(researchSection, /<article class="scenario-card scenario-card--/g), 3);
+  assert.equal(matchCount(researchSection, /<h3 class="scenario-card-title">/g), 3);
+  assert.equal(matchCount(researchSection, /<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">/g), 3);
+  assert.equal(matchCount(researchSection, /class="scenario-card-emphasis"/g), 3);
+  assert.doesNotMatch(researchSection, /role="list(item)?"/);
+  assertCanonicalOrder(researchSection);
+
+  for (const modifier of ['science', 'energy', 'user']) {
+    assert.equal(
+      visibleText(articleFor(researchSection, modifier)),
+      visibleText(articleFor(homepageSection, modifier)),
+      `${modifier} copy must match across pages`
+    );
+  }
+});
+
+test('research page keeps shared primary icons and partial label translation', () => {
+  assert.ok(!researchHtml.includes('.sc-card'), 'Obsolete .sc-card styles must be removed');
+  assert.ok(!researchHtml.includes('.scenario-cards'), 'Obsolete .scenario-cards styles must be removed');
+  assert.ok(!researchHtml.includes('.icon-recommend'), 'Obsolete recommendation icon CSS must be removed');
+  assert.ok(!researchHtml.includes('.icon-energy'), 'Obsolete energy icon CSS must be removed');
+
+  for (const selector of ['.visual-icon i', '.icon-network', '.icon-series', '.icon-literature']) {
+    assert.ok(researchHtml.includes(selector), `Shared primary icon rule must remain: ${selector}`);
+  }
+
+  assert.ok(
+    siteLanguageJs.includes("document.querySelectorAll('.rd-section-label, .scenario-section-label')"),
+    'Research heading must remain compatible with site-language.js'
+  );
+  assert.ok(siteLanguageJs.includes("labels: ['主要研究方向', '应用与评测场景']"));
 });

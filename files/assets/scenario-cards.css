@@ -1,0 +1,162 @@
+.scenario-section {
+  margin: 18px 0 8px;
+}
+
+.scenario-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.scenario-heading-row::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.scenario-heading,
+.scenario-heading.scenario-section-label {
+  margin: 0;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+}
+
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
+}
+
+.scenario-card {
+  --scenario-color: var(--accent);
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 7px 22px rgba(0, 48, 135, 0.055);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.scenario-card--science { --scenario-color: #059669; }
+.scenario-card--energy { --scenario-color: #0891b2; }
+.scenario-card--user { --scenario-color: #d97706; }
+
+.scenario-card-accent {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--scenario-color) 100%);
+}
+
+.scenario-card-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 18px 19px 10px;
+}
+
+.scenario-card-icon {
+  flex: 0 0 36px;
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--scenario-color);
+}
+
+.scenario-card-icon svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.scenario-card-title {
+  margin: 0;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.scenario-card-body {
+  margin: 0;
+  padding: 0 19px 20px;
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.67;
+  text-align: left;
+  text-align-last: auto;
+  text-justify: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.research-section .scenario-card-body {
+  text-align: left;
+  text-align-last: auto;
+  text-justify: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+.scenario-card-emphasis {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .scenario-card:hover {
+    border-color: rgba(0, 48, 135, 0.22);
+    box-shadow: 0 12px 30px rgba(0, 48, 135, 0.09);
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 900px) {
+  .scenario-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scenario-heading-row {
+    gap: 10px;
+    margin-bottom: 13px;
+  }
+
+  .scenario-card-header {
+    padding: 16px 16px 9px;
+  }
+
+  .scenario-card-body {
+    padding: 0 16px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scenario-card {
+    transition: none;
+  }
+}

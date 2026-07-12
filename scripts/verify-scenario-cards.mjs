@@ -199,3 +199,50 @@ test('research hero introduction keeps clean two-edge alignment', () => {
     assert.ok(rule.includes(declaration), `Missing Research intro alignment rule: ${declaration}`);
   }
 });
+
+test('research hero includes an accessible responsive cognitive pipeline', () => {
+  const hero = sectionBetween(researchHtml, '<!-- ===== Hero ===== -->', '<!-- ===== Main ===== -->');
+
+  assert.equal(matchCount(hero, /class="page-hero-copy"/g), 1);
+  assert.equal(matchCount(hero, /class="page-hero-visual"/g), 1);
+  assert.equal(matchCount(hero, /<svg class="cognitive-pipeline"/g), 1);
+  assert.ok(hero.includes('<svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">'));
+  assert.ok(hero.includes('<title id="cognitive-pipeline-title">Research cognition pipeline</title>'));
+  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">Time-series data and knowledge understanding converge into cognitive reasoning, supporting AI for Science and energy systems.</desc>'));
+  assert.equal(matchCount(hero, /<rect class="pipeline-node(?: |")/g), 5);
+  assert.equal(matchCount(hero, /<path class="pipeline-path(?: |")/g), 4);
+  assert.equal(matchCount(hero, /class="pipeline-stage"/g), 3);
+  assert.equal(matchCount(hero, /pipeline-node--core/g), 1);
+  assert.equal(matchCount(hero, /pipeline-node--application/g), 2);
+
+  const heroText = visibleText(hero);
+  for (const label of [
+    'Time-Series Data',
+    'Knowledge Understanding',
+    'Cognitive Reasoning',
+    'AI for Science',
+    'Energy Systems'
+  ]) {
+    assert.ok(heroText.includes(label), `Missing cognitive pipeline label: ${label}`);
+  }
+
+  const contentRule = cssRule(researchHtml, '.page-hero-content');
+  for (const declaration of [
+    'display: grid;',
+    'grid-template-columns: minmax(0, 1fr) minmax(290px, 320px);',
+    'gap: clamp(32px, 4vw, 56px);',
+    'align-items: center;'
+  ]) {
+    assert.ok(contentRule.includes(declaration), `Missing research hero layout rule: ${declaration}`);
+  }
+
+  const stageRule = cssRule(researchHtml, '.pipeline-stage');
+  assert.ok(stageRule.includes('fill: #4f6074;'));
+  assert.ok(stageRule.includes('font-size: 10px;'));
+  assert.ok(cssRule(researchHtml, '.pipeline-label').includes('font-size: 11px;'));
+  assert.ok(cssRule(researchHtml, '.pipeline-label--core').includes('font-size: 11.5px;'));
+
+  const responsive = sectionBetween(researchHtml, '@media (max-width: 960px)', '@media (max-width: 680px)');
+  assert.ok(cssRule(responsive, '.page-hero-content').includes('grid-template-columns: 1fr;'));
+  assert.ok(cssRule(responsive, '.page-hero-visual').includes('display: none;'));
+});

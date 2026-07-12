@@ -150,7 +150,81 @@ body {
   background: #fff;
 }
 .page-hero-content {
-  max-width: 880px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 320px);
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+}
+.page-hero-copy {
+  min-width: 0;
+}
+.page-hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.cognitive-pipeline {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pipeline-panel {
+  fill: #f8fbff;
+  stroke: #dbe5f1;
+  stroke-width: 1.5;
+}
+.pipeline-grid {
+  fill: url(#pipeline-dots);
+  opacity: 0.58;
+}
+.pipeline-path {
+  fill: none;
+  stroke: #b7c8dc;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.pipeline-path--accent {
+  stroke: #6eb6b2;
+}
+.pipeline-node {
+  fill: #fff;
+  stroke: #cbd8e8;
+  stroke-width: 1.4;
+}
+.pipeline-node--core {
+  fill: var(--accent-light);
+  stroke: var(--accent);
+  stroke-width: 1.8;
+}
+.pipeline-node--application {
+  fill: #f2faf8;
+  stroke: #9ccfc5;
+}
+.pipeline-stage {
+  font-family: var(--font);
+  fill: #4f6074;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-anchor: middle;
+}
+.pipeline-label {
+  font-family: var(--font);
+  fill: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+.pipeline-label--core {
+  font-size: 11.5px;
+  font-weight: 800;
+}
+.pipeline-signal {
+  fill: var(--accent);
+}
+.pipeline-signal--teal {
+  fill: var(--teal);
 }
 .research-eyebrow {
   font-size: 12px;
@@ -474,6 +548,15 @@ body {
 }
 
 /* ===== Responsive ===== */
+@media (max-width: 960px) {
+  .page-hero-content {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .page-hero-visual {
+    display: none;
+  }
+}
 @media (max-width: 680px) {
   .rd-card-inner { flex-direction: column; }
   .rd-card-icon-panel {
@@ -565,16 +648,75 @@ body {
 <div class="page-hero">
   <div class="container">
     <div class="page-hero-content">
-      <div class="research-eyebrow">Research Program</div>
-      <h1 class="page-hero-title">Research Interests</h1>
-      <p class="page-hero-sub">
-        My research develops <strong>cognitive intelligence methods</strong> for complex data mining, centered on
-        <strong>LLMs and Agentic AI</strong>, and driven by the dual foundations of <strong>time-series observations</strong>
-        and <strong>scientific knowledge</strong>. My methodological focus lies in
-        <strong>context representation and reasoning</strong>, aiming to build <strong>predictive intelligence for complex systems</strong>
-        through <strong>multimodal semantic understanding</strong>, <strong>slow-thinking temporal reasoning</strong>, and
-        <strong>autonomous agentic interaction</strong>.
-      </p>
+      <div class="page-hero-copy">
+        <div class="research-eyebrow">Research Program</div>
+        <h1 class="page-hero-title">Research Interests</h1>
+        <p class="page-hero-sub">
+          My research develops <strong>cognitive intelligence methods</strong> for complex data mining, centered on
+          <strong>LLMs and Agentic AI</strong>, and driven by the dual foundations of <strong>time-series observations</strong>
+          and <strong>scientific knowledge</strong>. My methodological focus lies in
+          <strong>context representation and reasoning</strong>, aiming to build <strong>predictive intelligence for complex systems</strong>
+          through <strong>multimodal semantic understanding</strong>, <strong>slow-thinking temporal reasoning</strong>, and
+          <strong>autonomous agentic interaction</strong>.
+        </p>
+      </div>
+      <div class="page-hero-visual">
+        <svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">
+          <title id="cognitive-pipeline-title">Research cognition pipeline</title>
+          <desc id="cognitive-pipeline-desc">Time-series data and knowledge understanding converge into cognitive reasoning, supporting AI for Science and energy systems.</desc>
+          <defs>
+            <pattern id="pipeline-dots" width="16" height="16" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="#d5e2f0"></circle>
+            </pattern>
+          </defs>
+          <rect class="pipeline-panel" x="1" y="1" width="318" height="238" rx="18"></rect>
+          <rect class="pipeline-grid" x="2" y="2" width="316" height="236" rx="17"></rect>
+
+          <text class="pipeline-stage" x="64" y="25">INPUTS</text>
+          <text class="pipeline-stage" x="165" y="25">REASONING</text>
+          <text class="pipeline-stage" x="262" y="25">APPLICATIONS</text>
+
+          <path class="pipeline-path" d="M112 75 C120 75 118 104 126 108"></path>
+          <path class="pipeline-path" d="M112 165 C120 165 118 136 126 132"></path>
+          <path class="pipeline-path pipeline-path--accent" d="M204 108 C212 104 212 75 220 75"></path>
+          <path class="pipeline-path pipeline-path--accent" d="M204 132 C212 136 212 165 220 165"></path>
+
+          <rect class="pipeline-node" x="16" y="42" width="96" height="66" rx="12"></rect>
+          <circle class="pipeline-signal" cx="30" cy="56" r="3"></circle>
+          <text class="pipeline-label" x="64" y="70">
+            <tspan x="64" dy="0">Time-Series</tspan>
+            <tspan x="64" dy="14">Data</tspan>
+          </text>
+
+          <rect class="pipeline-node" x="16" y="132" width="96" height="66" rx="12"></rect>
+          <circle class="pipeline-signal pipeline-signal--teal" cx="30" cy="146" r="3"></circle>
+          <text class="pipeline-label" x="64" y="160">
+            <tspan x="64" dy="0">Knowledge</tspan>
+            <tspan x="64" dy="14">Understanding</tspan>
+          </text>
+
+          <rect class="pipeline-node pipeline-node--core" x="126" y="82" width="78" height="76" rx="16"></rect>
+          <circle class="pipeline-signal" cx="140" cy="96" r="3"></circle>
+          <text class="pipeline-label pipeline-label--core" x="165" y="115">
+            <tspan x="165" dy="0">Cognitive</tspan>
+            <tspan x="165" dy="15">Reasoning</tspan>
+          </text>
+
+          <rect class="pipeline-node pipeline-node--application" x="220" y="42" width="84" height="66" rx="12"></rect>
+          <circle class="pipeline-signal pipeline-signal--teal" cx="234" cy="56" r="3"></circle>
+          <text class="pipeline-label" x="262" y="70">
+            <tspan x="262" dy="0">AI for</tspan>
+            <tspan x="262" dy="14">Science</tspan>
+          </text>
+
+          <rect class="pipeline-node pipeline-node--application" x="220" y="132" width="84" height="66" rx="12"></rect>
+          <circle class="pipeline-signal pipeline-signal--teal" cx="234" cy="146" r="3"></circle>
+          <text class="pipeline-label" x="262" y="160">
+            <tspan x="262" dy="0">Energy</tspan>
+            <tspan x="262" dy="14">Systems</tspan>
+          </text>
+        </svg>
+      </div>
     </div>
   </div>
 </div>

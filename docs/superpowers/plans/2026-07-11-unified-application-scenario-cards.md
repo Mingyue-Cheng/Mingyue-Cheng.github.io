@@ -842,6 +842,66 @@ Send `Ctrl-C` to the server terminal session.
 
 Expected: the server exits cleanly and port `8017` is released.
 
+## User-requested follow-up: Clean two-edge Research intro alignment
+
+**Allowed files:**
+- Modify: `scripts/verify-scenario-cards.mjs`
+- Modify: `research.html`
+- Modify: `docs/superpowers/plans/2026-07-11-unified-application-scenario-cards.md`
+
+- [ ] **RED: Append the Research intro alignment regression test**
+
+Append this exact test, which reads the base `.page-hero-sub` rule and requires the clean two-edge alignment declarations:
+
+```js
+test('research hero introduction keeps clean two-edge alignment', () => {
+  const rule = cssRule(researchHtml, '.page-hero-sub');
+  for (const declaration of [
+    'text-align: justify;',
+    'text-align-last: left;',
+    'text-justify: inter-word;',
+    'hyphens: none;',
+    '-webkit-hyphens: none;'
+  ]) {
+    assert.ok(rule.includes(declaration), `Missing Research intro alignment rule: ${declaration}`);
+  }
+});
+```
+
+Run:
+
+```bash
+node --test --test-name-pattern="research hero introduction" scripts/verify-scenario-cards.mjs
+```
+
+Expected RED: exactly `1` test fails because the base rule lacks `text-justify: inter-word;`, uses `hyphens: auto;`, and lacks `-webkit-hyphens: none;`.
+
+- [ ] **GREEN: Refine only the base Research intro rule**
+
+Keep the existing font size, color, line height, and max width. Make the base `.page-hero-sub` rule end exactly with:
+
+```css
+  max-width: 74ch;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+```
+
+Preserve the existing `@media (max-width:680px)` behavior unchanged:
+
+```css
+.page-hero-sub {
+  text-align: left;
+  text-align-last: left;
+  hyphens: manual;
+}
+```
+
+Rerun the targeted test and the full static verifier. Expected GREEN: targeted `1/1` pass and full suite `7/7` pass. Recheck `research.html` at `1187px` desktop width to confirm clean two-edge alignment without automatic word splits; the `<=680px` view must remain left-aligned. Stage only the three allowed files, verify cached diff and scope, and commit with exact subject `Refine research intro alignment`.
+
 ## Task 5: Final repository verification and scope audit
 
 **Files:**
@@ -857,7 +917,7 @@ Expected: the server exits cleanly and port `8017` is released.
 node --test scripts/verify-scenario-cards.mjs
 ```
 
-Expected: `6` tests pass, `0` fail, and the process exits `0`.
+Expected: `7` tests pass, `0` fail, and the process exits `0`.
 
 - [ ] **Step 2: Run whitespace and patch-integrity checks**
 
@@ -904,13 +964,14 @@ Expected in an isolated implementation worktree: no output. Expected in the curr
 git log --format='%s' 162ca94..HEAD
 ```
 
-Expected four commits, newest first:
+Expected five commits, newest first:
 
 ```text
+Refine research intro alignment
 Unify research scenario cards
 Refine homepage scenario cards
 Add shared scenario card styles
 Document unified scenario cards implementation plan
 ```
 
-Verify the four exact subjects and that no push has occurred because publication was not requested.
+Verify the five exact subjects and that no push has occurred because publication was not requested.

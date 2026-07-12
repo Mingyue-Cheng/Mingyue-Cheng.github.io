@@ -186,3 +186,16 @@ test('research page keeps shared primary icons and partial label translation', (
   );
   assert.ok(siteLanguageJs.includes("labels: ['主要研究方向', '应用与评测场景']"));
 });
+
+test('research hero introduction keeps clean two-edge alignment', () => {
+  const rule = cssRule(researchHtml, '.page-hero-sub');
+  for (const declaration of [
+    'text-align: justify;',
+    'text-align-last: left;',
+    'text-justify: inter-word;',
+    'hyphens: none;',
+    '-webkit-hyphens: none;'
+  ]) {
+    assert.ok(rule.includes(declaration), `Missing Research intro alignment rule: ${declaration}`);
+  }
+});

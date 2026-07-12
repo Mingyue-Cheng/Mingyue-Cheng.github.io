@@ -370,60 +370,6 @@ body {
 .primary-directions li {
   border-left: 3px solid var(--accent);
 }
-.research-scenarios {
-  margin: 14px 0 8px;
-  padding: 14px 16px 16px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-alt);
-}
-.research-scenarios-title {
-  color: var(--accent);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.6;
-  margin-bottom: 10px;
-  text-align: left;
-}
-.scenario-list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  align-items: stretch;
-  gap: 12px;
-  padding: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.58;
-  text-align: left;
-}
-.scenario-list li {
-  min-height: 100%;
-  padding: 14px 15px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 5px 14px rgba(0,48,135,0.035);
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-word;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  overflow-wrap: break-word;
-  word-break: normal;
-  text-wrap: pretty;
-}
-.scenario-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--accent);
-  font-weight: 700;
-  margin-bottom: 6px;
-  line-height: 1.35;
-  text-align: left;
-  text-align-last: left;
-}
 .research-note {
   font-size: 14px;
   color: var(--text);
@@ -452,19 +398,12 @@ html[lang="zh-CN"] .footer-desc {
 html[lang="zh-CN"] .nav-links {
   gap: 18px;
 }
-html[lang="zh-CN"] .research-list,
-html[lang="zh-CN"] .scenario-list {
+html[lang="zh-CN"] .research-list {
   line-height: 1.75;
 }
-html[lang="zh-CN"] .research-list li,
-html[lang="zh-CN"] .scenario-list li {
+html[lang="zh-CN"] .research-list li {
   word-break: normal;
   overflow-wrap: anywhere;
-}
-html[lang="zh-CN"] .scenario-list li {
-  text-align: justify;
-  text-align-last: left;
-  text-justify: auto;
 }
 html[lang="zh-CN"] .section-heading {
   letter-spacing: 0;
@@ -1311,7 +1250,6 @@ html[lang="zh-CN"] .footer-title {
     margin-left: 0;
   }
   .related-grid { grid-template-columns: 1fr; }
-  .scenario-list { grid-template-columns: 1fr; }
   .nav-links { gap: 14px; }
   .profile-name { font-size: 22px; }
   .footer-card {
@@ -1482,14 +1420,50 @@ html[lang="zh-CN"] .footer-title {
       <li data-i18n="research.timeseries"><span class="research-label">📊 <strong>Time-Series Cognition:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence for complex systems</span> by modeling time-series data as <span class="research-keyword">dynamic system observations</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking temporal reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.</li>
       <li data-i18n="research.knowledge" hidden><span class="research-label">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class="research-keyword">agent-ready scientific knowledge intelligence</span> through <span class="research-keyword">LLM-driven literature mining</span>, <span class="research-keyword">multimodal scientific document understanding</span>, <span class="research-keyword">evidence-grounded reasoning</span>, and <span class="research-keyword">scientific knowledge integration</span> for <span class="research-keyword">predictive modeling and decision support</span>.</li>
     </ul>
-    <div class="research-scenarios">
-      <div class="research-scenarios-title" data-i18n="research.scenarioTitle">Broader Application and Evaluation Scenarios</div>
-      <ul class="scenario-list">
-        <li data-i18n="research.science"><span class="scenario-label">🔬 AI for Science</span> Using <span class="research-keyword">LLMs and Agentic AI</span> as the technical foundation for <span class="research-keyword">structured scientific data modeling</span> and <span class="research-keyword">scientific literature mining</span>.</li>
-        <li data-i18n="research.energy"><span class="scenario-label">⚡ AI for Energy Systems</span> Building context-aware forecasting agents for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.</li>
-        <li data-i18n="research.recsys"><span class="scenario-label">🎯 AI for User Modeling</span> Modeling behavioral sequences and preference dynamics to support explainable recommendation, user simulation, and LLM-based interactive decision support.</li>
-      </ul>
-    </div>
+    <section class="scenario-section" aria-labelledby="homepage-scenario-heading">
+      <div class="scenario-heading-row">
+        <h3 id="homepage-scenario-heading" class="scenario-heading" data-i18n="research.scenarioTitle">Broader Application and Evaluation Scenarios</h3>
+      </div>
+      <div class="scenario-grid">
+        <article class="scenario-card scenario-card--science">
+          <div class="scenario-card-accent" aria-hidden="true"></div>
+          <div class="scenario-card-header">
+            <span class="scenario-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path>
+              </svg>
+            </span>
+            <h4 class="scenario-card-title" data-i18n="research.scienceTitle">AI for Science</h4>
+          </div>
+          <p class="scenario-card-body" data-i18n="research.scienceBody">Using <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> as the technical foundation for structured scientific data modeling and scientific literature mining.</p>
+        </article>
+        <article class="scenario-card scenario-card--energy">
+          <div class="scenario-card-accent" aria-hidden="true"></div>
+          <div class="scenario-card-header">
+            <span class="scenario-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="m13 2-7 12h6l-1 8 7-12h-6z"></path>
+              </svg>
+            </span>
+            <h4 class="scenario-card-title" data-i18n="research.energyTitle">AI for Energy Systems</h4>
+          </div>
+          <p class="scenario-card-body" data-i18n="research.energyBody">Building <strong class="scenario-card-emphasis">context-aware forecasting agents</strong> for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.</p>
+        </article>
+        <article class="scenario-card scenario-card--user">
+          <div class="scenario-card-accent" aria-hidden="true"></div>
+          <div class="scenario-card-header">
+            <span class="scenario-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="8" r="3"></circle>
+                <path d="M6 20c.7-4 2.7-6 6-6s5.3 2 6 6M4 8h2m12 0h2"></path>
+              </svg>
+            </span>
+            <h4 class="scenario-card-title" data-i18n="research.userTitle">AI for User Modeling</h4>
+          </div>
+          <p class="scenario-card-body" data-i18n="research.userBody">Modeling <strong class="scenario-card-emphasis">behavioral sequences and preference dynamics</strong> to support explainable recommendation, user simulation, and LLM-based interactive decision support.</p>
+        </article>
+      </div>
+    </section>
     <div class="research-note" data-i18n="research.collections">
       Research collections:
       🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> ·
@@ -2236,9 +2210,12 @@ const i18n = {
     "research.timeseries": "<span class=\"research-label\">📊 <strong>Time-Series Cognition:</strong></span> Developing <span class=\"research-keyword\">context-aware predictive intelligence for complex systems</span> by modeling time-series data as <span class=\"research-keyword\">dynamic system observations</span>, with a focus on <span class=\"research-keyword\">multimodal context representation</span>, <span class=\"research-keyword\">slow-thinking temporal reasoning</span>, <span class=\"research-keyword\">uncertainty-aware forecasting</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class=\"research-keyword\">agent-ready scientific knowledge intelligence</span> through <span class=\"research-keyword\">LLM-driven literature mining</span>, <span class=\"research-keyword\">multimodal scientific document understanding</span>, <span class=\"research-keyword\">evidence-grounded reasoning</span>, and <span class=\"research-keyword\">scientific knowledge integration</span> for <span class=\"research-keyword\">predictive modeling and decision support</span>.",
     "research.scenarioTitle": "Broader Application and Evaluation Scenarios",
-    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> Using <span class=\"research-keyword\">LLMs and Agentic AI</span> as the technical foundation for <span class=\"research-keyword\">structured scientific data modeling</span> and <span class=\"research-keyword\">scientific literature mining</span>.",
-    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> Modeling behavioral sequences and preference dynamics to support explainable recommendation, user simulation, and LLM-based interactive decision support.",
-    "research.energy": "<span class=\"scenario-label\">⚡ AI for Energy Systems</span> Building context-aware forecasting agents for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.",
+    "research.scienceTitle": "AI for Science",
+    "research.scienceBody": "Using <strong class=\"scenario-card-emphasis\">LLMs and Agentic AI</strong> as the technical foundation for structured scientific data modeling and scientific literature mining.",
+    "research.energyTitle": "AI for Energy Systems",
+    "research.energyBody": "Building <strong class=\"scenario-card-emphasis\">context-aware forecasting agents</strong> for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.",
+    "research.userTitle": "AI for User Modeling",
+    "research.userBody": "Modeling <strong class=\"scenario-card-emphasis\">behavioral sequences and preference dynamics</strong> to support explainable recommendation, user simulation, and LLM-based interactive decision support.",
     "research.collections": "Research collections: 🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Analysis</a> · 🧮 <a href=\"https://ustc-table-mining.github.io/\" target=\"_blank\" rel=\"noopener\">Tabular Data Mining</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">AI for Science</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "Latest News",
@@ -2309,9 +2286,12 @@ const i18n = {
     "research.timeseries": "<span class=\"research-label\">📊 <strong>时序认知：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>科学知识认知：</strong></span> 面向 agent-ready 的科学知识智能，研究<span class=\"research-keyword\">大模型驱动的文献挖掘</span>、<span class=\"research-keyword\">多模态科学文档理解</span>和<span class=\"research-keyword\">证据驱动推理</span>。",
     "research.scenarioTitle": "应用与评测场景",
-    "research.science": "<span class=\"scenario-label\">🔬 AI for Science</span> 以 <span class=\"research-keyword\">LLMs and Agentic AI</span> 为技术，面向<span class=\"research-keyword\">结构化科学数据建模</span>以及<span class=\"research-keyword\">科技文献挖掘</span>。",
-    "research.recsys": "<span class=\"scenario-label\">🎯 AI for User Modeling</span> 刻画用户行为序列与偏好演化，支撑可解释推荐、用户模拟，以及大模型驱动的人机交互式决策支持。",
-    "research.energy": "<span class=\"scenario-label\">⚡ 电力能源智能</span> 构建面向负荷、光伏与风电的上下文感知预测智能体，服务可再生能源分析、调度优化、储能控制、平衡与风险管理。",
+    "research.scienceTitle": "AI for Science",
+    "research.scienceBody": "以 <strong class=\"scenario-card-emphasis\">LLMs and Agentic AI</strong> 为技术，面向结构化科学数据建模以及科技文献挖掘。",
+    "research.energyTitle": "电力能源智能",
+    "research.energyBody": "构建面向负荷、光伏与风电的<strong class=\"scenario-card-emphasis\">上下文感知预测智能体</strong>，服务可再生能源分析、调度优化、储能控制、平衡与风险管理。",
+    "research.userTitle": "AI for User Modeling",
+    "research.userBody": "刻画<strong class=\"scenario-card-emphasis\">用户行为序列与偏好演化</strong>，支撑可解释推荐、用户模拟，以及大模型驱动的人机交互式决策支持。",
     "research.collections": "研究主页：🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Analysis</a> · 🧮 <a href=\"https://ustc-table-mining.github.io/\" target=\"_blank\" rel=\"noopener\">Tabular Data Mining</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">AI for Science</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "最新动态",

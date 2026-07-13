@@ -120,18 +120,18 @@ test('homepage dictionaries provide complete split scenario translations', () =>
   const expected = {
     'research.scienceTitle': ['AI for Science', 'AI for Science'],
     'research.scienceBody': [
-      'Using <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> as the technical foundation for structured scientific data modeling and scientific literature mining.',
-      '以 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 为技术，面向结构化科学数据建模以及科技文献挖掘。'
+      'Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to structured scientific data modeling, scientific literature mining, and evidence-grounded discovery.',
+      '以 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 为技术，面向结构化科学数据建模、科技文献挖掘与证据驱动发现。'
     ],
     'research.energyTitle': ['AI for Energy Systems', '电力能源智能'],
     'research.energyBody': [
-      'Building <strong class="scenario-card-emphasis">context-aware forecasting agents</strong> for load, solar, and wind systems, with renewable analytics for dispatch, storage, grid balancing, and risk-aware operation.',
-      '构建面向负荷、光伏与风电的<strong class="scenario-card-emphasis">上下文感知预测智能体</strong>，服务可再生能源分析、调度优化、储能控制、平衡与风险管理。'
+      'Building <strong class="scenario-card-emphasis">context-aware forecasting agents</strong> for load, solar, and wind systems, renewable analytics, grid balancing, and risk-aware operation.',
+      '构建面向负荷、光伏与风电的<strong class="scenario-card-emphasis">上下文感知预测智能体</strong>，支撑可再生能源分析、调度与风险管理。'
     ],
     'research.userTitle': ['AI for User Modeling', 'AI for User Modeling'],
     'research.userBody': [
-      'Modeling <strong class="scenario-card-emphasis">behavioral sequences and preference dynamics</strong> to support explainable recommendation, user simulation, and LLM-based interactive decision support.',
-      '刻画<strong class="scenario-card-emphasis">用户行为序列与偏好演化</strong>，支撑可解释推荐、用户模拟，以及大模型驱动的人机交互式决策支持。'
+      'Modeling <strong class="scenario-card-emphasis">behavioral sequences and preference dynamics</strong> for explainable recommendation, user simulation, and interactive decision support.',
+      '刻画<strong class="scenario-card-emphasis">用户行为序列与偏好演化</strong>，支撑可解释推荐、用户模拟与交互式决策支持。'
     ]
   };
 

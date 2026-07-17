@@ -126,6 +126,12 @@
   word-break: normal;
 }
 
+html[lang="zh-CN"] .research-section .scenario-card-body {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+}
+
 .scenario-card-emphasis {
   color: var(--accent);
   font-weight: 700;

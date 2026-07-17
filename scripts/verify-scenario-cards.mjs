@@ -90,6 +90,14 @@ test('shared stylesheet implements the approved visual and responsive contract',
   const header = cssRule(scenarioCss, '.scenario-card-header');
   assert.ok(header.includes('min-height: 68px;'), 'Desktop card headers must share a minimum height');
 
+  const oneColumnLayout = sectionBetween(
+    scenarioCss,
+    '@media (max-width: 900px)',
+    '@media (max-width: 480px)'
+  );
+  const oneColumnHeader = cssRule(oneColumnLayout, '.scenario-card-header');
+  assert.ok(oneColumnHeader.includes('min-height: 0;'), 'One-column headers must release the desktop minimum height');
+
   for (const selector of ['.scenario-card-body', '.research-section .scenario-card-body']) {
     const body = cssRule(scenarioCss, selector);
     for (const declaration of [
@@ -102,6 +110,18 @@ test('shared stylesheet implements the approved visual and responsive contract',
     ]) {
       assert.ok(body.includes(declaration), `Missing ${selector} declaration: ${declaration}`);
     }
+  }
+
+  const chineseBody = cssRule(
+    scenarioCss,
+    'html[lang="zh-CN"] .research-section .scenario-card-body'
+  );
+  for (const declaration of [
+    'text-align: justify;',
+    'text-align-last: left;',
+    'text-justify: inter-word;'
+  ]) {
+    assert.ok(chineseBody.includes(declaration), `Missing Chinese-mode body declaration: ${declaration}`);
   }
 });
 

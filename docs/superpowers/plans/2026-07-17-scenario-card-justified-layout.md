@@ -18,7 +18,7 @@
 - Modify: `scripts/verify-scenario-cards.mjs:74-96`
 - Test: `scripts/verify-scenario-cards.mjs`
 
-- [ ] **Step 1: Replace the old left-alignment assertions with the new contract**
+- [x] **Step 1: Replace the old left-alignment assertions with the new contract**
 
 Inside `shared stylesheet implements the approved visual and responsive contract`, add these exact checks:
 
@@ -48,7 +48,7 @@ Inside `shared stylesheet implements the approved visual and responsive contract
 
 Retain the existing grid, breakpoint, hover, reduced-motion, modifier, and pointer-cursor assertions.
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 Run:
 
@@ -64,7 +64,7 @@ Expected: FAIL because `.scenario-card` does not yet declare `display: flex` and
 - Modify: `files/assets/scenario-cards.css`
 - Test: `scripts/verify-scenario-cards.mjs`
 
-- [ ] **Step 1: Update the shared card shell and accent**
+- [x] **Step 1: Update the shared card shell and accent**
 
 Add the following declarations to the existing rules:
 
@@ -79,7 +79,7 @@ Add the following declarations to the existing rules:
 }
 ```
 
-- [ ] **Step 2: Align desktop headers and normalize horizontal padding**
+- [x] **Step 2: Align desktop headers and normalize horizontal padding**
 
 Update the header rule to include the shared minimum height and `20px` horizontal padding:
 
@@ -93,7 +93,7 @@ Update the header rule to include the shared minimum height and `20px` horizonta
 }
 ```
 
-- [ ] **Step 3: Apply controlled two-edge alignment to body copy**
+- [x] **Step 3: Apply controlled two-edge alignment to body copy**
 
 Replace the existing body alignment declarations with:
 
@@ -124,7 +124,7 @@ Replace the existing body alignment declarations with:
 }
 ```
 
-- [ ] **Step 4: Release the shared header height in one-column layouts**
+- [x] **Step 4: Release the shared header height in one-column layouts**
 
 Inside the existing `@media (max-width: 900px)` block, add:
 
@@ -136,7 +136,7 @@ Inside the existing `@media (max-width: 900px)` block, add:
 
 Keep the existing `480px` padding overrides.
 
-- [ ] **Step 5: Run the complete verifier and confirm GREEN**
+- [x] **Step 5: Run the complete verifier and confirm GREEN**
 
 Run:
 
@@ -154,7 +154,7 @@ Expected: all focused tests pass with zero failures and `git diff --check` emits
 - Modify: `files/assets/scenario-cards.css`
 - Modify: `scripts/verify-scenario-cards.mjs`
 
-- [ ] **Step 1: Preview both pages at desktop and mobile widths**
+- [x] **Step 1: Preview both pages at desktop and mobile widths**
 
 Run a local static server and inspect `index.html` and `research.html` at `1440px`, `901px`, `834px`, and `390px`. Confirm:
 
@@ -164,7 +164,7 @@ Run a local static server and inspect `index.html` and `research.html` at `1440p
 - one-column layout at `834px` and `390px`;
 - no horizontal overflow.
 
-- [ ] **Step 2: Stage only the intended files and commit**
+- [x] **Step 2: Stage only the intended files and commit**
 
 Run:
 

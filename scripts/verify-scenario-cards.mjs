@@ -82,15 +82,26 @@ test('shared stylesheet implements the approved visual and responsive contract',
     assert.match(scenarioCss, new RegExp(`\\.scenario-card--${modifier}\\s*\\{`));
   }
 
-  const reset = cssRule(scenarioCss, '.research-section .scenario-card-body');
-  for (const declaration of [
-    'text-align: left;',
-    'text-align-last: auto;',
-    'text-justify: auto;',
-    'hyphens: none;',
-    '-webkit-hyphens: none;'
-  ]) {
-    assert.ok(reset.includes(declaration), `Missing high-specificity reset: ${declaration}`);
+  const card = cssRule(scenarioCss, '.scenario-card');
+  for (const declaration of ['display: flex;', 'flex-direction: column;']) {
+    assert.ok(card.includes(declaration), `Missing card layout declaration: ${declaration}`);
+  }
+
+  const header = cssRule(scenarioCss, '.scenario-card-header');
+  assert.ok(header.includes('min-height: 68px;'), 'Desktop card headers must share a minimum height');
+
+  for (const selector of ['.scenario-card-body', '.research-section .scenario-card-body']) {
+    const body = cssRule(scenarioCss, selector);
+    for (const declaration of [
+      'text-align: justify;',
+      'text-align-last: left;',
+      'text-justify: inter-word;',
+      'hyphens: none;',
+      '-webkit-hyphens: none;',
+      'word-break: normal;'
+    ]) {
+      assert.ok(body.includes(declaration), `Missing ${selector} declaration: ${declaration}`);
+    }
   }
 });
 

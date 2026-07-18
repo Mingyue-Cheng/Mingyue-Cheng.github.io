@@ -30,7 +30,10 @@
 
 .scenario-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
   gap: 16px;
 }
@@ -50,7 +53,6 @@
 }
 
 .scenario-card--science { --scenario-color: #059669; }
-.scenario-card--energy { --scenario-color: #0891b2; }
 .scenario-card--user { --scenario-color: #d97706; }
 
 .scenario-card-accent {
@@ -147,7 +149,8 @@ html[lang="zh-CN"] .research-section .scenario-card-body {
 
 @media (max-width: 900px) {
   .scenario-grid {
-    grid-template-columns: 1fr;
+    max-width: 720px;
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 

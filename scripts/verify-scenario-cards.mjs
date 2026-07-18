@@ -242,11 +242,19 @@ test('shared stylesheet implements the approved visual and responsive contract',
     baseGridRules[0].body,
     {
       'grid-template-columns': 'repeat(2, minmax(0, 1fr))',
-      width: '100%',
-      'max-width': '900px',
-      margin: '0 auto'
+      width: '100%'
     },
     'Base scenario grid'
+  );
+  assert.equal(
+    finalDeclarationValue(baseGridRules[0].body, 'max-width'),
+    undefined,
+    'Base scenario grid must not set max-width so desktop cards align to both section edges'
+  );
+  assert.equal(
+    finalDeclarationValue(baseGridRules[0].body, 'margin'),
+    undefined,
+    'Base scenario grid must not set margin so desktop cards align to both section edges'
   );
 
   assert.match(scenarioCss, /@media \(hover:\s*hover\) and \(pointer:\s*fine\)/);
@@ -279,11 +287,13 @@ test('shared stylesheet implements the approved visual and responsive contract',
   );
   assertFinalDeclarations(
     responsiveGridRules[0].body,
-    {
-      'max-width': '720px',
-      'grid-template-columns': 'minmax(0, 1fr)'
-    },
+    { 'grid-template-columns': 'minmax(0, 1fr)' },
     'Responsive scenario grid'
+  );
+  assert.equal(
+    finalDeclarationValue(responsiveGridRules[0].body, 'max-width'),
+    undefined,
+    'Responsive scenario grid must not set max-width so the single column uses the full available width'
   );
 
   const oneColumnHeader = cssRule(oneColumnLayout, '.scenario-card-header');

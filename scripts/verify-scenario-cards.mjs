@@ -175,6 +175,30 @@ test('homepage dictionaries provide complete split scenario translations', () =>
   }
 });
 
+test('research collections omit Tabular Data Mining without changing publication taxonomy', () => {
+  const homepageSection = sectionBetween(
+    indexHtml,
+    '<!-- ===== Research Interests ===== -->',
+    '<!-- ===== Latest News ===== -->'
+  );
+  const collectionTranslations = decodedTranslationEntries('research.collections');
+
+  for (const [name, source] of [
+    ['homepage collection', homepageSection],
+    ['research page', researchHtml],
+    ...collectionTranslations.map((source, index) => [`collection translation ${index + 1}`, source])
+  ]) {
+    assert.doesNotMatch(source, /ustc-table-mining\.github\.io|🧮/, `${name} must omit Tabular Data Mining`);
+  }
+
+  assert.match(
+    indexHtml,
+    /<button class="pub-filter-btn" data-filter="table" data-i18n="pub\.filterTable">Tabular Data Mining<\/button>/
+  );
+  assert.match(indexHtml, /<meta property="og:description" content="[^"]*Tabular Data Mining\."/);
+  assert.match(indexHtml, /<meta name="twitter:description" content="[^"]*Tabular Data Mining\."/);
+});
+
 test('research page matches the homepage scenario contract', () => {
   const homepageSection = sectionBetween(
     indexHtml,

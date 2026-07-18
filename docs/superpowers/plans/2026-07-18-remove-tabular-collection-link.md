@@ -16,7 +16,7 @@
 - Modify: `scripts/verify-scenario-cards.mjs`
 - Test: `scripts/verify-scenario-cards.mjs`
 
-- [ ] **Step 1: Add a focused failing test**
+- [x] **Step 1: Add a focused failing test**
 
 Add this test after the homepage dictionary test:
 
@@ -46,7 +46,7 @@ test('research collections omit Tabular Data Mining without changing publication
 });
 ```
 
-- [ ] **Step 2: Run the focused test and verify RED**
+- [x] **Step 2: Run the focused test and verify RED**
 
 Run:
 
@@ -63,7 +63,7 @@ Expected: FAIL because the collection link still appears in the homepage, transl
 - Modify: `research.html`
 - Test: `scripts/verify-scenario-cards.mjs`
 
-- [ ] **Step 1: Remove the homepage anchor and separator**
+- [x] **Step 1: Remove the homepage anchor and separator**
 
 Delete this line from the visible `research.collections` block in `index.html`:
 
@@ -71,7 +71,7 @@ Delete this line from the visible `research.collections` block in `index.html`:
       🧮 <a href="https://ustc-table-mining.github.io/" target="_blank" rel="noopener">Tabular Data Mining</a> ·
 ```
 
-- [ ] **Step 2: Remove the link from both homepage translation strings**
+- [x] **Step 2: Remove the link from both homepage translation strings**
 
 In both English and Chinese `research.collections` values, remove:
 
@@ -81,7 +81,7 @@ In both English and Chinese `research.collections` values, remove:
 
 Keep the separator between `Time Series Analysis` and `AI for Science`.
 
-- [ ] **Step 3: Remove the Research page anchor**
+- [x] **Step 3: Remove the Research page anchor**
 
 In `research.html`, remove the separator after `Scientific Knowledge Cognition` and delete:
 
@@ -89,7 +89,7 @@ In `research.html`, remove the separator after `Scientific Knowledge Cognition` 
       <a href="https://ustc-table-mining.github.io/" target="_blank" rel="noopener">Tabular Data Mining</a>
 ```
 
-- [ ] **Step 4: Run the complete verifier and formatting check**
+- [x] **Step 4: Run the complete verifier and formatting check**
 
 Run:
 
@@ -108,11 +108,11 @@ Expected: all tests pass with zero failures and `git diff --check` emits no outp
 - Modify: `research.html`
 - Modify: `scripts/verify-scenario-cards.mjs`
 
-- [ ] **Step 1: Preview the homepage collection line in English and Chinese**
+- [x] **Step 1: Preview the homepage collection line in English and Chinese**
 
 Open `index.html` locally, verify `LLMs and Agentic AI`, `Time Series Analysis`, and `AI for Science` remain in order, then switch to Chinese and confirm the removed link does not return.
 
-- [ ] **Step 2: Stage only the intended implementation files and commit**
+- [x] **Step 2: Stage only the intended implementation files and commit**
 
 ```bash
 git add docs/superpowers/plans/2026-07-18-remove-tabular-collection-link.md index.html research.html scripts/verify-scenario-cards.mjs

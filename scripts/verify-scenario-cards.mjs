@@ -361,8 +361,8 @@ test('homepage dictionaries provide complete split scenario translations', () =>
   const expected = {
     'research.scienceTitle': ['AI for Science', 'AI for Science'],
     'research.scienceBody': [
-      'Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to structured scientific data modeling, scientific literature mining, and evidence-grounded discovery.',
-      '以 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 为技术，面向结构化科学数据建模、科技文献挖掘与证据驱动发现。'
+      'Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to structured scientific data modeling, scientific literature mining.',
+      '以 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 为技术，面向结构化科学数据建模与科技文献挖掘。'
     ],
     'research.userTitle': ['AI for User Modeling', 'AI for User Modeling'],
     'research.userBody': [

@@ -376,8 +376,8 @@ test('homepage dictionaries provide complete split scenario translations', () =>
     ],
     'research.userTitle': ['Big Data Applications', 'Big Data Applications'],
     'research.userBody': [
-      '<strong class="scenario-card-emphasis">推荐系统、电力能源决策辅助应用</strong>',
-      '<strong class="scenario-card-emphasis">推荐系统、电力能源决策辅助应用</strong>'
+      '<strong class="scenario-card-emphasis">Recommendation systems and decision-support applications for power and energy systems</strong>',
+      '<strong class="scenario-card-emphasis">Recommendation systems and decision-support applications for power and energy systems</strong>'
     ]
   };
 

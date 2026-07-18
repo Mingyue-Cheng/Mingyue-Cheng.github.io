@@ -31,8 +31,6 @@
 .scenario-grid {
   display: grid;
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
   gap: 16px;
@@ -149,7 +147,6 @@ html[lang="zh-CN"] .research-section .scenario-card-body {
 
 @media (max-width: 900px) {
   .scenario-grid {
-    max-width: 720px;
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }

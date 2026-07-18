@@ -182,6 +182,7 @@ test('research collections omit Tabular Data Mining without changing publication
     '<!-- ===== Latest News ===== -->'
   );
   const collectionTranslations = decodedTranslationEntries('research.collections');
+  assert.equal(collectionTranslations.length, 2, 'Homepage must keep English and Chinese collection translations');
 
   for (const [name, source] of [
     ['homepage collection', homepageSection],

@@ -364,7 +364,7 @@ test('homepage dictionaries provide complete split scenario translations', () =>
       'Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to structured scientific data modeling, scientific literature mining.',
       '以 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 为技术，面向结构化科学数据建模与科技文献挖掘。'
     ],
-    'research.userTitle': ['AI for User Modeling', 'AI for User Modeling'],
+    'research.userTitle': ['Big Data Applications', 'Big Data Applications'],
     'research.userBody': [
       'Modeling <strong class="scenario-card-emphasis">behavioral sequences and preference dynamics</strong> for explainable recommendation, user simulation, and interactive decision support.',
       '刻画<strong class="scenario-card-emphasis">用户行为序列与偏好演化</strong>，支撑可解释推荐、用户模拟与交互式决策支持。'

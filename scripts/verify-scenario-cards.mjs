@@ -302,28 +302,46 @@ test('shared stylesheet implements the approved visual and responsive contract',
   for (const selector of ['.scenario-card-body', '.research-section .scenario-card-body']) {
     const body = cssRule(scenarioCss, selector);
     for (const declaration of [
-      'text-align: justify;',
+      'text-align: left;',
       'text-align-last: left;',
-      'text-justify: inter-word;',
       'hyphens: none;',
       '-webkit-hyphens: none;',
       'word-break: normal;'
     ]) {
       assert.ok(body.includes(declaration), `Missing ${selector} declaration: ${declaration}`);
     }
+    assert.equal(
+      finalDeclarationValue(body, 'text-align'),
+      'left',
+      `${selector} must not justify short scenario card text`
+    );
+    assert.equal(
+      finalDeclarationValue(body, 'text-justify'),
+      undefined,
+      `${selector} must not force inter-word spacing`
+    );
   }
+  assert.equal(
+    finalDeclarationValue(cssRule(scenarioCss, '.scenario-card-body'), 'overflow-wrap'),
+    'break-word',
+    'Scenario card text must wrap safely within narrow card widths'
+  );
 
   const chineseBody = cssRule(
     scenarioCss,
     'html[lang="zh-CN"] .research-section .scenario-card-body'
   );
   for (const declaration of [
-    'text-align: justify;',
-    'text-align-last: left;',
-    'text-justify: inter-word;'
+    'text-align: left;',
+    'text-align-last: left;'
   ]) {
     assert.ok(chineseBody.includes(declaration), `Missing Chinese-mode body declaration: ${declaration}`);
   }
+  assert.equal(
+    finalDeclarationValue(chineseBody, 'text-justify'),
+    undefined,
+    'Chinese-mode scenario bodies must not force inter-word spacing'
+  );
 });
 
 test('homepage uses semantic scenario cards in canonical order', () => {

@@ -434,6 +434,51 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
   assert.equal(indexHtml.includes(newAgentFocus), true, 'New agent focus wording must be present');
 });
 
+test('Time-Series Analysis direction copy stays synchronized', () => {
+  const oldTitle = 'Time-Series Cognition';
+  const oldFocus = 'context-aware predictive intelligence for complex systems';
+  const oldObservationFrame = 'dynamic system observations';
+  const oldReasoning = 'slow-thinking temporal reasoning';
+  const expectedEnglishTimeseries =
+    '<span class="research-label">📊 <strong>Time-Series Analysis:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
+  const expectedResearchCard =
+    'This direction develops <strong>context-aware predictive intelligence</strong>, with a focus on multimodal context representation, slow-thinking reasoning, uncertainty-aware forecasting, and autonomous agentic interaction.';
+  const homepageSection = sectionBetween(
+    indexHtml,
+    '<!-- ===== Research Interests ===== -->',
+    '<!-- ===== Latest News ===== -->'
+  );
+  const visibleTimeseriesMatch = homepageSection.match(/<li data-i18n="research\.timeseries">[\s\S]*?<\/li>/);
+  assert.ok(visibleTimeseriesMatch, 'Homepage must include a visible research.timeseries list item');
+  const visibleTimeseries = visibleTimeseriesMatch[0];
+  const researchDirectionsSection = sectionBetween(
+    researchHtml,
+    '<div class="rd-section-label">Primary Research Directions</div>',
+    '<!-- Broader Scenarios -->'
+  );
+  const normalizedResearchDirectionsSection = researchDirectionsSection.replace(/\s+/g, ' ');
+
+  assert.match(visibleTimeseries, new RegExp(escapeRegex(expectedEnglishTimeseries)));
+  assert.equal(
+    decodedTranslationEntries('research.timeseries')[0],
+    expectedEnglishTimeseries,
+    'English research.timeseries translation must match the visible homepage copy'
+  );
+  assert.match(researchDirectionsSection, /<div class="rd-card-title">Time-Series Analysis<\/div>/);
+  assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
+
+  for (const [label, source] of [
+    ['homepage research.timeseries item', visibleTimeseries],
+    ['English research.timeseries translation', decodedTranslationEntries('research.timeseries')[0]],
+    ['research direction cards', researchDirectionsSection]
+  ]) {
+    assert.equal(source.includes(oldTitle), false, `${label} must not use the old title`);
+    assert.equal(source.includes(oldFocus), false, `${label} must not use the old predictive-intelligence wording`);
+    assert.equal(source.includes(oldObservationFrame), false, `${label} must not keep the old observation framing`);
+    assert.equal(source.includes(oldReasoning), false, `${label} must not keep the old reasoning wording`);
+  }
+});
+
 test('research collections omit Tabular Data Mining without changing publication taxonomy', () => {
   const homepageSection = sectionBetween(
     indexHtml,

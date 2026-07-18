@@ -376,8 +376,8 @@ test('homepage dictionaries provide complete split scenario translations', () =>
     ],
     'research.userTitle': ['Big Data Applications', 'Big Data Applications'],
     'research.userBody': [
-      'Modeling <strong class="scenario-card-emphasis">behavioral sequences and preference dynamics</strong> for explainable recommendation, user simulation, and interactive decision support.',
-      '刻画<strong class="scenario-card-emphasis">用户行为序列与偏好演化</strong>，支撑可解释推荐、用户模拟与交互式决策支持。'
+      '<strong class="scenario-card-emphasis">推荐系统、电力能源决策辅助应用</strong>',
+      '<strong class="scenario-card-emphasis">推荐系统、电力能源决策辅助应用</strong>'
     ]
   };
 

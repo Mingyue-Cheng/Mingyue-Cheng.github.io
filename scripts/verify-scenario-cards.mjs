@@ -413,6 +413,27 @@ test('homepage dictionaries provide complete split scenario translations', () =>
   }
 });
 
+test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
+  const oldAgentFocus = 'autonomous interactive learning and reasoning mechanisms';
+  const newAgentFocus = 'autonomous interactive learning';
+  const expectedEnglishAgent =
+    '<span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.';
+  const homepageSection = sectionBetween(
+    indexHtml,
+    '<!-- ===== Research Interests ===== -->',
+    '<!-- ===== Latest News ===== -->'
+  );
+
+  assert.match(homepageSection, new RegExp(escapeRegex(expectedEnglishAgent)));
+  assert.equal(
+    decodedTranslationEntries('research.agent')[0],
+    expectedEnglishAgent,
+    'English research.agent translation must match the visible homepage copy'
+  );
+  assert.equal(indexHtml.includes(oldAgentFocus), false, 'Old agent focus wording must be absent');
+  assert.equal(indexHtml.includes(newAgentFocus), true, 'New agent focus wording must be present');
+});
+
 test('research collections omit Tabular Data Mining without changing publication taxonomy', () => {
   const homepageSection = sectionBetween(
     indexHtml,

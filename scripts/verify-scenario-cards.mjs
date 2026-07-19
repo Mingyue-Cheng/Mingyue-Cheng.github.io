@@ -473,11 +473,19 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
   const newAgentFocus = 'autonomous interactive learning';
   const expectedEnglishAgent =
     '<span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.';
+  const expectedResearchCard =
+    'Developing <strong>autonomous interactive learning</strong> for large language models, including <strong>environment-interactive Agentic RL</strong>, <strong>tool-augmented reasoning</strong>, <strong>multi-agent orchestration</strong>, and continual capability evolution through context, knowledge, and memory.';
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
     '<!-- ===== Latest News ===== -->'
   );
+  const researchDirectionsSection = sectionBetween(
+    researchHtml,
+    '<div class="rd-section-label">Primary Research Directions</div>',
+    '<!-- Broader Scenarios -->'
+  );
+  const normalizedResearchDirectionsSection = researchDirectionsSection.replace(/\s+/g, ' ');
 
   assert.match(homepageSection, new RegExp(escapeRegex(expectedEnglishAgent)));
   assert.equal(
@@ -485,6 +493,8 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
     expectedEnglishAgent,
     'English research.agent translation must match the visible homepage copy'
   );
+  assert.match(researchDirectionsSection, /<div class="rd-card-title">LLMs and Agentic AI<\/div>/);
+  assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
   assert.equal(indexHtml.includes(oldAgentFocus), false, 'Old agent focus wording must be absent');
   assert.equal(indexHtml.includes(newAgentFocus), true, 'New agent focus wording must be present');
 });
@@ -497,7 +507,7 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
   const expectedEnglishTimeseries =
     '<span class="research-label">📊 <strong>Time-Series Analysis:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
   const expectedResearchCard =
-    'This direction develops <strong>context-aware predictive intelligence</strong>, with a focus on multimodal context representation, slow-thinking reasoning, uncertainty-aware forecasting, and autonomous agentic interaction.';
+    'Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.';
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -532,6 +542,92 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
     assert.equal(source.includes(oldObservationFrame), false, `${label} must not keep the old observation framing`);
     assert.equal(source.includes(oldReasoning), false, `${label} must not keep the old reasoning wording`);
   }
+});
+
+test('research page visible directions and notes match the homepage content', () => {
+  const homepageSection = sectionBetween(
+    indexHtml,
+    '<!-- ===== Research Interests ===== -->',
+    '<!-- ===== Latest News ===== -->'
+  );
+  const homepageDirections = sectionBetween(
+    homepageSection,
+    '<ul class="research-list primary-directions">',
+    '</ul>'
+  );
+  const researchDirections = sectionBetween(
+    researchHtml,
+    '<div class="primary-cards">',
+    '</div><!-- /primary-cards -->'
+  );
+
+  assert.equal(
+    matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
+    2,
+    'Homepage must expose exactly 2 primary directions'
+  );
+  assert.equal(
+    matchCount(researchDirections, /<div class="rd-card"(?![^>]*\bhidden\b)[^>]*>/g),
+    2,
+    'Research page must expose the same 2 primary directions as the homepage'
+  );
+  assert.match(
+    researchDirections,
+    /<div class="rd-card" hidden>[\s\S]*?<div class="rd-card-title">Scientific Knowledge Cognition<\/div>/,
+    'Scientific Knowledge Cognition must remain hidden on the Research page while it is hidden on the homepage'
+  );
+
+  const homepageCollection = homepageSection.match(
+    /<div class="research-note" data-i18n="research\.collections">[\s\S]*?<\/div>/
+  );
+  const researchCollection = researchHtml.match(
+    /<div class="research-note-box">\s*Research collections:[\s\S]*?<\/div>/
+  );
+  assert.ok(homepageCollection, 'Homepage research collections block must exist');
+  assert.ok(researchCollection, 'Research-page collections block must exist');
+  assert.equal(
+    visibleText(researchCollection[0]),
+    visibleText(homepageCollection[0]),
+    'Research collections must match the homepage labels, icons, and order'
+  );
+
+  const expectedEnglishCollectionHtml =
+    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Analysis</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">AI for Science</a>';
+  const expectedChineseCollectionHtml = expectedEnglishCollectionHtml.replace(
+    'Research collections: ',
+    '研究主页：'
+  );
+  assert.ok(
+    siteLanguageJs.includes(`collections: '${expectedEnglishCollectionHtml}'`),
+    'English Research-page collections translation must match the homepage'
+  );
+  assert.ok(
+    siteLanguageJs.includes(`collections: '${expectedChineseCollectionHtml}'`),
+    'Chinese Research-page collections translation must match the homepage'
+  );
+  assert.ok(
+    siteLanguageJs.includes('note.innerHTML = page.collections;'),
+    'Research-page language switching must preserve the complete aligned collections markup'
+  );
+  assert.doesNotMatch(
+    siteLanguageJs,
+    /const links = Array\.from\(note\.querySelectorAll\('a'\)\)/,
+    'Research-page language switching must not rebuild collections from links alone'
+  );
+
+  assert.equal(
+    matchCount(
+      siteLanguageJs,
+      /join: '欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 /g
+    ),
+    2,
+    'English and Chinese Research-page join copy must match the homepage'
+  );
+  assert.doesNotMatch(siteLanguageJs, /join: 'Welcome motivated undergraduate and graduate students/);
+  assert.match(
+    siteLanguageJs,
+    /subtitle: '我的研究主要面向复杂数据挖掘中的认知智能方法，以 大语言模型与智能体 AI 为核心，并围绕 时序认知 与 科学知识认知 展开。'/
+  );
 });
 
 test('research collections omit Tabular Data Mining without changing publication taxonomy', () => {
@@ -609,6 +705,10 @@ test('research page keeps shared primary icons and partial label translation', (
   assert.ok(
     siteLanguageJs.includes("document.querySelectorAll('.rd-section-label, .scenario-section-label')"),
     'Research heading must remain compatible with site-language.js'
+  );
+  assert.ok(
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20260719"></script>'),
+    'Research page must request the current site-language.js content version'
   );
   assert.ok(siteLanguageJs.includes("labels: ['主要研究方向', '应用与评测场景']"));
 });

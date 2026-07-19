@@ -385,6 +385,26 @@ test('homepage uses semantic scenario cards in canonical order', () => {
   }
 });
 
+test('homepage scenario bodies use consistent selective emphasis', () => {
+  const researchArea = sectionBetween(
+    indexHtml,
+    '<!-- ===== Research Interests ===== -->',
+    '<!-- ===== Latest News ===== -->'
+  );
+  const userArticle = articleFor(researchArea, 'user');
+
+  assert.match(
+    userArticle,
+    /<p class="scenario-card-body" data-i18n="research\.userBody">Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems<\/strong>\.<\/p>/,
+    'The Big Data Applications body must use regular text with one emphasized key phrase'
+  );
+  assert.doesNotMatch(
+    userArticle,
+    /<p class="scenario-card-body"[^>]*>\s*<strong class="scenario-card-emphasis">/,
+    'The Big Data Applications body must not render the full sentence as emphasized text'
+  );
+});
+
 test('homepage dictionaries provide complete split scenario translations', () => {
   const expected = {
     'research.scienceTitle': ['AI for Science', 'AI for Science'],
@@ -394,8 +414,8 @@ test('homepage dictionaries provide complete split scenario translations', () =>
     ],
     'research.userTitle': ['Big Data Applications', 'Big Data Applications'],
     'research.userBody': [
-      '<strong class="scenario-card-emphasis">Recommendation systems and decision-support applications for power and energy systems</strong>',
-      '<strong class="scenario-card-emphasis">Recommendation systems and decision-support applications for power and energy systems</strong>'
+      'Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems</strong>.',
+      'Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems</strong>.'
     ]
   };
 
@@ -525,6 +545,12 @@ test('research page matches the homepage scenario contract', () => {
   assert.match(researchSection, /<section class="scenario-section" aria-labelledby="research-scenario-heading">/);
   assert.match(researchSection, /<h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">/);
   const researchArticles = assertScenarioStructure(researchSection, 'Research page', 'h3');
+
+  assert.match(
+    researchArticles.user,
+    /<p class="scenario-card-body">Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems<\/strong>\.<\/p>/,
+    'The research-page Big Data Applications body must use the shared selective-emphasis pattern'
+  );
 
   for (const modifier of ['science', 'user']) {
     assert.equal(

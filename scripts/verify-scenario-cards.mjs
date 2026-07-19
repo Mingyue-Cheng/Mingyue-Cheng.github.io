@@ -11,7 +11,7 @@ const researchHtml = read('research.html');
 const siteLanguageJs = read('files/assets/site-language.js');
 const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
-const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css">';
+const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260719">';
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -225,6 +225,32 @@ test('shared stylesheet is linked by both pages', () => {
   }
 });
 
+test('research page keeps the homepage container alignment contract', () => {
+  const homepageInlineCss = sectionBetween(indexHtml, '<style>', '</style>');
+  const researchInlineCss = sectionBetween(researchHtml, '<style>', '</style>');
+
+  for (const [pageLabel, inlineCss] of [
+    ['Homepage', homepageInlineCss],
+    ['Research page', researchInlineCss]
+  ]) {
+    assertFinalDeclarations(
+      cssRule(inlineCss, '.container'),
+      {
+        'max-width': 'var(--max-w)',
+        margin: '0 auto',
+        padding: '0 28px'
+      },
+      `${pageLabel} container`
+    );
+  }
+
+  assert.equal(
+    matchCount(researchInlineCss, /\.container\b/g),
+    matchCount(homepageInlineCss, /\.container\b/g),
+    'Research page must not add a breakpoint-only container padding override'
+  );
+});
+
 test('shared stylesheet implements the approved visual and responsive contract', () => {
   const gridRules = cssRuleBlocks(scenarioCss, '.scenario-grid');
   assert.equal(
@@ -325,6 +351,15 @@ test('shared stylesheet implements the approved visual and responsive contract',
     finalDeclarationValue(cssRule(scenarioCss, '.scenario-card-body'), 'overflow-wrap'),
     'break-word',
     'Scenario card text must wrap safely within narrow card widths'
+  );
+  assertFinalDeclarations(
+    cssRule(scenarioCss, '.scenario-card-body'),
+    {
+      margin: '0 0 10px',
+      'font-size': '14px',
+      'line-height': '1.8'
+    },
+    'Scenario card body typography'
   );
 
   const chineseBody = cssRule(

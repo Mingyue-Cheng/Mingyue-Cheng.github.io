@@ -103,11 +103,11 @@
 
 .scenario-card-body {
   flex: 1;
-  margin: 0;
+  margin: 0 0 10px;
   padding: 0 20px 21px;
   color: var(--text);
-  font-size: 13.5px;
-  line-height: 1.67;
+  font-size: 14px;
+  line-height: 1.8;
   text-align: left;
   text-align-last: left;
   hyphens: none;

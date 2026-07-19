@@ -734,7 +734,7 @@ test('research hero includes an accessible responsive cognitive pipeline', () =>
   assert.equal(matchCount(hero, /<svg class="cognitive-pipeline"/g), 1);
   assert.ok(hero.includes('<svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">'));
   assert.ok(hero.includes('<title id="cognitive-pipeline-title">Research cognition pipeline</title>'));
-  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">Time-series data and knowledge understanding converge into cognitive reasoning, supporting AI for Science and energy systems.</desc>'));
+  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">Time Series Analysis and knowledge understanding converge into cognitive reasoning, supporting AI for Science and energy systems.</desc>'));
   assert.equal(matchCount(hero, /<rect class="pipeline-node(?: |")/g), 5);
   assert.equal(matchCount(hero, /<path class="pipeline-path(?: |")/g), 4);
   assert.equal(matchCount(hero, /class="pipeline-stage"/g), 3);
@@ -743,7 +743,7 @@ test('research hero includes an accessible responsive cognitive pipeline', () =>
 
   const heroText = visibleText(hero);
   for (const label of [
-    'Time-Series Data',
+    'Time Series Analysis',
     'Knowledge Understanding',
     'Cognitive Reasoning',
     'AI for Science',

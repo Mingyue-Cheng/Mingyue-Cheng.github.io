@@ -187,6 +187,9 @@ body {
 .pipeline-path--accent {
   stroke: #6eb6b2;
 }
+.pipeline-path--orange {
+  stroke: #d7a14f;
+}
 .pipeline-node {
   fill: #fff;
   stroke: #cbd8e8;
@@ -200,6 +203,10 @@ body {
 .pipeline-node--application {
   fill: #f2faf8;
   stroke: #9ccfc5;
+}
+.pipeline-node--bigdata {
+  fill: #fff8ed;
+  stroke: #e5b86a;
 }
 .pipeline-stage {
   font-family: var(--font);
@@ -217,7 +224,7 @@ body {
   text-anchor: middle;
 }
 .pipeline-label--core {
-  font-size: 11.5px;
+  font-size: 10px;
   font-weight: 800;
 }
 .pipeline-signal {
@@ -225,6 +232,9 @@ body {
 }
 .pipeline-signal--teal {
   fill: var(--teal);
+}
+.pipeline-signal--orange {
+  fill: #d97706;
 }
 .research-eyebrow {
   font-size: 12px;
@@ -662,8 +672,8 @@ body {
       </div>
       <div class="page-hero-visual">
         <svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">
-          <title id="cognitive-pipeline-title">Research cognition pipeline</title>
-          <desc id="cognitive-pipeline-desc">Time Series Analysis and Scientific Knowledge Cognition converge into cognitive reasoning, supporting AI for Science and energy systems.</desc>
+          <title id="cognitive-pipeline-title">Research program pipeline</title>
+          <desc id="cognitive-pipeline-desc">LLMs and Agentic AI and Time-Series Analysis converge into context representation and reasoning, supporting AI for Science and Big Data Applications.</desc>
           <defs>
             <pattern id="pipeline-dots" width="16" height="16" patternUnits="userSpaceOnUse">
               <circle cx="2" cy="2" r="1" fill="#d5e2f0"></circle>
@@ -672,35 +682,35 @@ body {
           <rect class="pipeline-panel" x="1" y="1" width="318" height="238" rx="18"></rect>
           <rect class="pipeline-grid" x="2" y="2" width="316" height="236" rx="17"></rect>
 
-          <text class="pipeline-stage" x="64" y="25">INPUTS</text>
-          <text class="pipeline-stage" x="165" y="25">REASONING</text>
+          <text class="pipeline-stage" x="64" y="25">DIRECTIONS</text>
+          <text class="pipeline-stage" x="165" y="25">CORE</text>
           <text class="pipeline-stage" x="262" y="25">APPLICATIONS</text>
 
-          <path class="pipeline-path" d="M112 75 C120 75 118 104 126 108"></path>
-          <path class="pipeline-path" d="M112 165 C120 165 118 136 126 132"></path>
-          <path class="pipeline-path pipeline-path--accent" d="M204 108 C212 104 212 75 220 75"></path>
-          <path class="pipeline-path pipeline-path--accent" d="M204 132 C212 136 212 165 220 165"></path>
+          <path class="pipeline-path" d="M112 75 C118 75 116 104 120 108"></path>
+          <path class="pipeline-path" d="M112 165 C118 165 116 136 120 132"></path>
+          <path class="pipeline-path pipeline-path--accent" d="M210 108 C214 104 214 75 220 75"></path>
+          <path class="pipeline-path pipeline-path--orange" d="M210 132 C214 136 214 165 220 165"></path>
 
           <rect class="pipeline-node" x="16" y="42" width="96" height="66" rx="12"></rect>
           <circle class="pipeline-signal" cx="30" cy="56" r="3"></circle>
           <text class="pipeline-label" x="64" y="70">
-            <tspan x="64" dy="0">Time Series</tspan>
-            <tspan x="64" dy="14">Analysis</tspan>
+            <tspan x="64" dy="0">LLMs &amp;</tspan>
+            <tspan x="64" dy="14">Agentic AI</tspan>
           </text>
 
           <rect class="pipeline-node" x="16" y="132" width="96" height="66" rx="12"></rect>
           <circle class="pipeline-signal pipeline-signal--teal" cx="30" cy="146" r="3"></circle>
-          <text class="pipeline-label" x="64" y="153">
-            <tspan x="64" dy="0">Scientific</tspan>
-            <tspan x="64" dy="13">Knowledge</tspan>
-            <tspan x="64" dy="13">Cognition</tspan>
+          <text class="pipeline-label" x="64" y="160">
+            <tspan x="64" dy="0">Time-Series</tspan>
+            <tspan x="64" dy="14">Analysis</tspan>
           </text>
 
-          <rect class="pipeline-node pipeline-node--core" x="126" y="82" width="78" height="76" rx="16"></rect>
-          <circle class="pipeline-signal" cx="140" cy="96" r="3"></circle>
-          <text class="pipeline-label pipeline-label--core" x="165" y="115">
-            <tspan x="165" dy="0">Cognitive</tspan>
-            <tspan x="165" dy="15">Reasoning</tspan>
+          <rect class="pipeline-node pipeline-node--core" x="120" y="82" width="90" height="76" rx="16"></rect>
+          <circle class="pipeline-signal" cx="134" cy="96" r="3"></circle>
+          <text class="pipeline-label pipeline-label--core" x="165" y="108">
+            <tspan x="165" dy="0">Context</tspan>
+            <tspan x="165" dy="13">Representation</tspan>
+            <tspan x="165" dy="13">&amp; Reasoning</tspan>
           </text>
 
           <rect class="pipeline-node pipeline-node--application" x="220" y="42" width="84" height="66" rx="12"></rect>
@@ -710,11 +720,11 @@ body {
             <tspan x="262" dy="14">Science</tspan>
           </text>
 
-          <rect class="pipeline-node pipeline-node--application" x="220" y="132" width="84" height="66" rx="12"></rect>
-          <circle class="pipeline-signal pipeline-signal--teal" cx="234" cy="146" r="3"></circle>
+          <rect class="pipeline-node pipeline-node--application pipeline-node--bigdata" x="220" y="132" width="84" height="66" rx="12"></rect>
+          <circle class="pipeline-signal pipeline-signal--orange" cx="234" cy="146" r="3"></circle>
           <text class="pipeline-label" x="262" y="160">
-            <tspan x="262" dy="0">Energy</tspan>
-            <tspan x="262" dy="14">Systems</tspan>
+            <tspan x="262" dy="0">Big Data</tspan>
+            <tspan x="262" dy="14">Applications</tspan>
           </text>
         </svg>
       </div>
@@ -806,7 +816,7 @@ body {
             </span>
             <h3 class="scenario-card-title">AI for Science</h3>
           </div>
-          <p class="scenario-card-body">Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to structured scientific data modeling, scientific literature mining.</p>
+          <p class="scenario-card-body">Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to <strong class="scenario-card-emphasis">scientific literature mining</strong>, <strong class="scenario-card-emphasis">scientific data modeling</strong>, and <strong class="scenario-card-emphasis">autonomous scientific research systems</strong> for scientific discovery and experimentation.</p>
         </article>
         <article class="scenario-card scenario-card--user">
           <div class="scenario-card-accent" aria-hidden="true"></div>
@@ -819,7 +829,7 @@ body {
             </span>
             <h3 class="scenario-card-title">Big Data Applications</h3>
           </div>
-          <p class="scenario-card-body">Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems</strong>.</p>
+          <p class="scenario-card-body">Studying <strong class="scenario-card-emphasis">online user modeling</strong> for Internet applications, including <strong class="scenario-card-emphasis">personalized recommendation systems</strong>, and cognition and decision support for complex systems such as <strong class="scenario-card-emphasis">power and energy</strong>.</p>
         </article>
       </div>
     </section>

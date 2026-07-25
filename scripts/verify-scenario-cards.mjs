@@ -179,25 +179,26 @@ function assertScenarioStructure(section, pageLabel, cardTitleTagName) {
   );
   assert.equal(
     startTagsWithClass(section, 'strong', 'scenario-card-emphasis').length,
-    2,
-    `${pageLabel} scenario section must contain exactly 2 emphasized strong elements`
+    7,
+    `${pageLabel} scenario section must contain exactly 7 emphasized strong elements`
   );
   assert.equal(
     classTokenCount(section, 'scenario-card-emphasis'),
-    2,
-    `${pageLabel} scenario section must contain exactly 2 scenario-card-emphasis class tokens`
+    7,
+    `${pageLabel} scenario section must contain exactly 7 scenario-card-emphasis class tokens`
   );
   assert.doesNotMatch(section, /role="list(item)?"/, `${pageLabel} cards must not use list roles`);
   assert.doesNotMatch(section, /scenario-card--energy/, `${pageLabel} must not contain an Energy card`);
   assertCanonicalOrder(section, pageLabel);
 
   const articles = {};
+  const expectedEmphasisCounts = { science: 4, user: 3 };
   for (const modifier of ['science', 'user']) {
     const article = articleFor(section, modifier);
     assert.equal(
       classTokenCount(article, 'scenario-card-emphasis'),
-      1,
-      `${pageLabel} ${modifier} article must contain exactly 1 emphasis class token`
+      expectedEmphasisCounts[modifier],
+      `${pageLabel} ${modifier} article must contain exactly ${expectedEmphasisCounts[modifier]} emphasis class tokens`
     );
     articles[modifier] = article;
   }
@@ -430,8 +431,8 @@ test('homepage scenario bodies use consistent selective emphasis', () => {
 
   assert.match(
     userArticle,
-    /<p class="scenario-card-body" data-i18n="research\.userBody">Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems<\/strong>\.<\/p>/,
-    'The Big Data Applications body must use regular text with one emphasized key phrase'
+    /<p class="scenario-card-body" data-i18n="research\.userBody">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> for Internet applications, including <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong>, and cognition and decision support for complex systems such as <strong class="scenario-card-emphasis">power and energy<\/strong>\.<\/p>/,
+    'The Big Data Applications body must emphasize its three key concepts'
   );
   assert.doesNotMatch(
     userArticle,
@@ -444,13 +445,13 @@ test('homepage dictionaries provide complete split scenario translations', () =>
   const expected = {
     'research.scienceTitle': ['AI for Science', 'AI for Science'],
     'research.scienceBody': [
-      'Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to structured scientific data modeling, scientific literature mining.',
-      '以 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 为技术，面向结构化科学数据建模与科技文献挖掘。'
+      'Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to <strong class="scenario-card-emphasis">scientific literature mining</strong>, <strong class="scenario-card-emphasis">scientific data modeling</strong>, and <strong class="scenario-card-emphasis">autonomous scientific research systems</strong> for scientific discovery and experimentation.',
+      '利用 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 开展<strong class="scenario-card-emphasis">科技文献挖掘</strong>、<strong class="scenario-card-emphasis">科学数据建模</strong>与<strong class="scenario-card-emphasis">自主科研系统</strong>研究，服务于科学发现与实验探索。'
     ],
     'research.userTitle': ['Big Data Applications', 'Big Data Applications'],
     'research.userBody': [
-      'Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems</strong>.',
-      'Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems</strong>.'
+      'Studying <strong class="scenario-card-emphasis">online user modeling</strong> for Internet applications, including <strong class="scenario-card-emphasis">personalized recommendation systems</strong>, and cognition and decision support for complex systems such as <strong class="scenario-card-emphasis">power and energy</strong>.',
+      '关注互联网场景下的<strong class="scenario-card-emphasis">在线用户建模</strong>与<strong class="scenario-card-emphasis">个性化推荐系统</strong>，以及<strong class="scenario-card-emphasis">电力能源</strong>等复杂系统的认知与决策辅助。'
     ]
   };
 
@@ -679,7 +680,7 @@ test('research page matches the homepage scenario contract', () => {
 
   assert.match(
     researchArticles.user,
-    /<p class="scenario-card-body">Recommendation systems and decision-support applications for <strong class="scenario-card-emphasis">power and energy systems<\/strong>\.<\/p>/,
+    /<p class="scenario-card-body">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> for Internet applications, including <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong>, and cognition and decision support for complex systems such as <strong class="scenario-card-emphasis">power and energy<\/strong>\.<\/p>/,
     'The research-page Big Data Applications body must use the shared selective-emphasis pattern'
   );
 
@@ -733,27 +734,32 @@ test('research hero includes an accessible responsive cognitive pipeline', () =>
   assert.equal(matchCount(hero, /class="page-hero-visual"/g), 1);
   assert.equal(matchCount(hero, /<svg class="cognitive-pipeline"/g), 1);
   assert.ok(hero.includes('<svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">'));
-  assert.ok(hero.includes('<title id="cognitive-pipeline-title">Research cognition pipeline</title>'));
-  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">Time Series Analysis and Scientific Knowledge Cognition converge into cognitive reasoning, supporting AI for Science and energy systems.</desc>'));
+  assert.ok(hero.includes('<title id="cognitive-pipeline-title">Research program pipeline</title>'));
+  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">LLMs and Agentic AI and Time-Series Analysis converge into context representation and reasoning, supporting AI for Science and Big Data Applications.</desc>'));
   assert.equal(matchCount(hero, /<rect class="pipeline-node(?: |")/g), 5);
   assert.equal(matchCount(hero, /<path class="pipeline-path(?: |")/g), 4);
   assert.equal(matchCount(hero, /class="pipeline-stage"/g), 3);
   assert.equal(matchCount(hero, /pipeline-node--core/g), 1);
   assert.equal(matchCount(hero, /pipeline-node--application/g), 2);
+  assert.equal(matchCount(hero, /pipeline-node--bigdata/g), 1);
+  assert.equal(matchCount(hero, /pipeline-signal--orange/g), 1);
 
   const heroText = visibleText(hero);
   for (const label of [
-    'Time Series Analysis',
-    'Scientific Knowledge Cognition',
-    'Cognitive Reasoning',
+    'DIRECTIONS',
+    'CORE',
+    'APPLICATIONS',
+    'LLMs &amp; Agentic AI',
+    'Time-Series Analysis',
+    'Context Representation &amp; Reasoning',
     'AI for Science',
-    'Energy Systems'
+    'Big Data Applications'
   ]) {
-    assert.ok(heroText.includes(label), `Missing cognitive pipeline label: ${label}`);
+    assert.ok(heroText.includes(label), `Missing research pipeline label: ${label}`);
   }
   assert.match(
     hero,
-    /<text class="pipeline-label" x="64" y="153">\s*<tspan x="64" dy="0">Scientific<\/tspan>\s*<tspan x="64" dy="13">Knowledge<\/tspan>\s*<tspan x="64" dy="13">Cognition<\/tspan>\s*<\/text>/
+    /<text class="pipeline-label pipeline-label--core" x="165" y="108">\s*<tspan x="165" dy="0">Context<\/tspan>\s*<tspan x="165" dy="13">Representation<\/tspan>\s*<tspan x="165" dy="13">&amp; Reasoning<\/tspan>\s*<\/text>/
   );
 
   const contentRule = cssRule(researchHtml, '.page-hero-content');
@@ -770,7 +776,9 @@ test('research hero includes an accessible responsive cognitive pipeline', () =>
   assert.ok(stageRule.includes('fill: #4f6074;'));
   assert.ok(stageRule.includes('font-size: 10px;'));
   assert.ok(cssRule(researchHtml, '.pipeline-label').includes('font-size: 11px;'));
-  assert.ok(cssRule(researchHtml, '.pipeline-label--core').includes('font-size: 11.5px;'));
+  assert.ok(cssRule(researchHtml, '.pipeline-label--core').includes('font-size: 10px;'));
+  assert.ok(cssRule(researchHtml, '.pipeline-node--bigdata').includes('fill: #fff8ed;'));
+  assert.ok(cssRule(researchHtml, '.pipeline-signal--orange').includes('fill: #d97706;'));
 
   const responsive = sectionBetween(researchHtml, '@media (max-width: 960px)', '@media (max-width: 680px)');
   assert.ok(cssRule(responsive, '.page-hero-content').includes('grid-template-columns: 1fr;'));

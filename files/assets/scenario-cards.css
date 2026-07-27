@@ -108,8 +108,9 @@
   color: var(--text);
   font-size: 14px;
   line-height: 1.8;
-  text-align: left;
+  text-align: justify;
   text-align-last: left;
+  text-justify: inter-word;
   hyphens: none;
   -webkit-hyphens: none;
   overflow-wrap: break-word;
@@ -117,8 +118,9 @@
 }
 
 .research-section .scenario-card-body {
-  text-align: left;
+  text-align: justify;
   text-align-last: left;
+  text-justify: inter-word;
   hyphens: none;
   -webkit-hyphens: none;
   word-break: normal;

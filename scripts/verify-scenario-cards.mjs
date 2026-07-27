@@ -11,7 +11,7 @@ const researchHtml = read('research.html');
 const siteLanguageJs = read('files/assets/site-language.js');
 const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
-const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260719">';
+const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260726">';
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -179,20 +179,20 @@ function assertScenarioStructure(section, pageLabel, cardTitleTagName) {
   );
   assert.equal(
     startTagsWithClass(section, 'strong', 'scenario-card-emphasis').length,
-    7,
-    `${pageLabel} scenario section must contain exactly 7 emphasized strong elements`
+    9,
+    `${pageLabel} scenario section must contain exactly 9 emphasized strong elements`
   );
   assert.equal(
     classTokenCount(section, 'scenario-card-emphasis'),
-    7,
-    `${pageLabel} scenario section must contain exactly 7 scenario-card-emphasis class tokens`
+    9,
+    `${pageLabel} scenario section must contain exactly 9 scenario-card-emphasis class tokens`
   );
   assert.doesNotMatch(section, /role="list(item)?"/, `${pageLabel} cards must not use list roles`);
   assert.doesNotMatch(section, /scenario-card--energy/, `${pageLabel} must not contain an Energy card`);
   assertCanonicalOrder(section, pageLabel);
 
   const articles = {};
-  const expectedEmphasisCounts = { science: 4, user: 3 };
+  const expectedEmphasisCounts = { science: 5, user: 4 };
   for (const modifier of ['science', 'user']) {
     const article = articleFor(section, modifier);
     assert.equal(
@@ -329,8 +329,9 @@ test('shared stylesheet implements the approved visual and responsive contract',
   for (const selector of ['.scenario-card-body', '.research-section .scenario-card-body']) {
     const body = cssRule(scenarioCss, selector);
     for (const declaration of [
-      'text-align: left;',
+      'text-align: justify;',
       'text-align-last: left;',
+      'text-justify: inter-word;',
       'hyphens: none;',
       '-webkit-hyphens: none;',
       'word-break: normal;'
@@ -339,13 +340,13 @@ test('shared stylesheet implements the approved visual and responsive contract',
     }
     assert.equal(
       finalDeclarationValue(body, 'text-align'),
-      'left',
-      `${selector} must not justify short scenario card text`
+      'justify',
+      `${selector} must justify scenario card text across both edges`
     );
     assert.equal(
       finalDeclarationValue(body, 'text-justify'),
-      undefined,
-      `${selector} must not force inter-word spacing`
+      'inter-word',
+      `${selector} must distribute spacing between words`
     );
   }
   assert.equal(
@@ -427,12 +428,18 @@ test('homepage scenario bodies use consistent selective emphasis', () => {
     '<!-- ===== Research Interests ===== -->',
     '<!-- ===== Latest News ===== -->'
   );
+  const scienceArticle = articleFor(researchArea, 'science');
   const userArticle = articleFor(researchArea, 'user');
 
   assert.match(
+    scienceArticle,
+    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Using <strong class="scenario-card-emphasis">LLMs and Agentic AI<\/strong> for <strong class="scenario-card-emphasis">scientific literature mining<\/strong>, <strong class="scenario-card-emphasis">time-series and tabular data modeling<\/strong>, and <strong class="scenario-card-emphasis">autonomous research agents<\/strong> for <strong class="scenario-card-emphasis">scientific task solving and discovery<\/strong>\.<\/p>/,
+    'The AI for Science body must distinguish methods, research contents, and goals'
+  );
+  assert.match(
     userArticle,
-    /<p class="scenario-card-body" data-i18n="research\.userBody">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> for Internet applications, including <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong>, and cognition and decision support for complex systems such as <strong class="scenario-card-emphasis">power and energy<\/strong>\.<\/p>/,
-    'The Big Data Applications body must emphasize its three key concepts'
+    /<p class="scenario-card-body" data-i18n="research\.userBody">Research on <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>; cognition and decision support for <strong class="scenario-card-emphasis">power and energy industries<\/strong>\.<\/p>/,
+    'The Big Data Applications body must distinguish Internet and industrial applications'
   );
   assert.doesNotMatch(
     userArticle,
@@ -445,13 +452,13 @@ test('homepage dictionaries provide complete split scenario translations', () =>
   const expected = {
     'research.scienceTitle': ['AI for Science', 'AI for Science'],
     'research.scienceBody': [
-      'Applying <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> to <strong class="scenario-card-emphasis">scientific literature mining</strong>, <strong class="scenario-card-emphasis">scientific data modeling</strong>, and <strong class="scenario-card-emphasis">autonomous scientific research systems</strong> for scientific discovery and experimentation.',
-      '利用 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 开展<strong class="scenario-card-emphasis">科技文献挖掘</strong>、<strong class="scenario-card-emphasis">科学数据建模</strong>与<strong class="scenario-card-emphasis">自主科研系统</strong>研究，服务于科学发现与实验探索。'
+      'Using <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> for <strong class="scenario-card-emphasis">scientific literature mining</strong>, <strong class="scenario-card-emphasis">time-series and tabular data modeling</strong>, and <strong class="scenario-card-emphasis">autonomous research agents</strong> for <strong class="scenario-card-emphasis">scientific task solving and discovery</strong>.',
+      '利用 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 开展<strong class="scenario-card-emphasis">科技文献挖掘</strong>、<strong class="scenario-card-emphasis">时序与表格数据建模</strong>和<strong class="scenario-card-emphasis">自主科研智能体</strong>研究，服务于<strong class="scenario-card-emphasis">科学任务求解与科学发现</strong>。'
     ],
     'research.userTitle': ['Big Data Applications', 'Big Data Applications'],
     'research.userBody': [
-      'Studying <strong class="scenario-card-emphasis">online user modeling</strong> for Internet applications, including <strong class="scenario-card-emphasis">personalized recommendation systems</strong>, and cognition and decision support for complex systems such as <strong class="scenario-card-emphasis">power and energy</strong>.',
-      '关注互联网场景下的<strong class="scenario-card-emphasis">在线用户建模</strong>与<strong class="scenario-card-emphasis">个性化推荐系统</strong>，以及<strong class="scenario-card-emphasis">电力能源</strong>等复杂系统的认知与决策辅助。'
+      'Research on <strong class="scenario-card-emphasis">online user modeling</strong> and <strong class="scenario-card-emphasis">personalized recommendation systems</strong> for <strong class="scenario-card-emphasis">Internet applications</strong>; cognition and decision support for <strong class="scenario-card-emphasis">power and energy industries</strong>.',
+      '面向<strong class="scenario-card-emphasis">互联网应用</strong>的<strong class="scenario-card-emphasis">在线用户建模</strong>与<strong class="scenario-card-emphasis">个性化推荐系统</strong>；面向<strong class="scenario-card-emphasis">电力能源等工业应用</strong>的认知与决策辅助。'
     ]
   };
 
@@ -680,7 +687,7 @@ test('research page matches the homepage scenario contract', () => {
 
   assert.match(
     researchArticles.user,
-    /<p class="scenario-card-body">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> for Internet applications, including <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong>, and cognition and decision support for complex systems such as <strong class="scenario-card-emphasis">power and energy<\/strong>\.<\/p>/,
+    /<p class="scenario-card-body">Research on <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>; cognition and decision support for <strong class="scenario-card-emphasis">power and energy industries<\/strong>\.<\/p>/,
     'The research-page Big Data Applications body must use the shared selective-emphasis pattern'
   );
 

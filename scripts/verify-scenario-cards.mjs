@@ -11,7 +11,7 @@ const researchHtml = read('research.html');
 const siteLanguageJs = read('files/assets/site-language.js');
 const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
-const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260726">';
+const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260728">';
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -118,8 +118,12 @@ function assertCanonicalOrder(source, pageLabel) {
   );
   assert.deepEqual(
     modifierTokens,
-    [['scenario-card--science'], ['scenario-card--user']],
-    `${pageLabel} card modifiers must be exactly Science, User`
+    [
+      ['scenario-card--prediction'],
+      ['scenario-card--science'],
+      ['scenario-card--user']
+    ],
+    `${pageLabel} card modifiers must be exactly Prediction, Science, User`
   );
 }
 
@@ -134,66 +138,66 @@ function articleFor(source, modifier) {
 function assertScenarioStructure(section, pageLabel, cardTitleTagName) {
   assert.equal(
     matchCount(section, /<article\b/g),
-    2,
-    `${pageLabel} scenario section must contain exactly 2 article start tags`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 article start tags`
   );
   assert.equal(
     startTagsWithClass(section, 'article', 'scenario-card').length,
-    2,
-    `${pageLabel} scenario section must contain exactly 2 scenario-card articles`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 scenario-card articles`
   );
   assert.equal(
     matchCount(section, new RegExp(`<${escapeRegex(cardTitleTagName)}\\b`, 'g')),
-    2,
-    `${pageLabel} scenario section must contain exactly 2 ${cardTitleTagName} start tags`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 ${cardTitleTagName} start tags`
   );
   assert.equal(
     startTagsWithClass(section, cardTitleTagName, 'scenario-card-title').length,
-    2,
-    `${pageLabel} scenario section must contain exactly 2 scenario-card-title elements`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 scenario-card-title elements`
   );
   assert.equal(
     matchCount(section, /<p\b/g),
-    2,
-    `${pageLabel} scenario section must contain exactly 2 paragraph start tags`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 paragraph start tags`
   );
   assert.equal(
     startTagsWithClass(section, 'p', 'scenario-card-body').length,
-    2,
-    `${pageLabel} scenario section must contain exactly 2 scenario-card-body paragraphs`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 scenario-card-body paragraphs`
   );
   assert.equal(
     startTagsWithClass(section, 'span', 'scenario-card-icon').length,
-    2,
-    `${pageLabel} scenario section must contain exactly 2 scenario-card-icon spans`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 scenario-card-icon spans`
   );
   assert.equal(
     classTokenCount(section, 'scenario-card-icon'),
-    2,
-    `${pageLabel} scenario section must contain exactly 2 scenario-card-icon class tokens`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 scenario-card-icon class tokens`
   );
   assert.equal(
     matchCount(section, /<svg\b/g),
-    2,
-    `${pageLabel} scenario section must contain exactly 2 SVG start tags`
+    3,
+    `${pageLabel} scenario section must contain exactly 3 SVG start tags`
   );
   assert.equal(
     startTagsWithClass(section, 'strong', 'scenario-card-emphasis').length,
-    9,
-    `${pageLabel} scenario section must contain exactly 9 emphasized strong elements`
+    14,
+    `${pageLabel} scenario section must contain exactly 14 emphasized strong elements`
   );
   assert.equal(
     classTokenCount(section, 'scenario-card-emphasis'),
-    9,
-    `${pageLabel} scenario section must contain exactly 9 scenario-card-emphasis class tokens`
+    14,
+    `${pageLabel} scenario section must contain exactly 14 scenario-card-emphasis class tokens`
   );
   assert.doesNotMatch(section, /role="list(item)?"/, `${pageLabel} cards must not use list roles`);
   assert.doesNotMatch(section, /scenario-card--energy/, `${pageLabel} must not contain an Energy card`);
   assertCanonicalOrder(section, pageLabel);
 
   const articles = {};
-  const expectedEmphasisCounts = { science: 5, user: 4 };
-  for (const modifier of ['science', 'user']) {
+  const expectedEmphasisCounts = { science: 5, user: 4, prediction: 5 };
+  for (const modifier of ['science', 'user', 'prediction']) {
     const article = articleFor(section, modifier);
     assert.equal(
       classTokenCount(article, 'scenario-card-emphasis'),
@@ -268,7 +272,7 @@ test('shared stylesheet implements the approved visual and responsive contract',
   assertFinalDeclarations(
     baseGridRules[0].body,
     {
-      'grid-template-columns': 'repeat(2, minmax(0, 1fr))',
+      'grid-template-columns': 'repeat(3, minmax(0, 1fr))',
       width: '100%'
     },
     'Base scenario grid'
@@ -289,7 +293,7 @@ test('shared stylesheet implements the approved visual and responsive contract',
   assert.doesNotMatch(scenarioCss, /cursor:\s*pointer/);
   assert.doesNotMatch(scenarioCss, /\.scenario-card--energy\b/);
 
-  for (const modifier of ['science', 'user']) {
+  for (const modifier of ['science', 'user', 'prediction']) {
     assert.match(scenarioCss, new RegExp(`\\.scenario-card--${modifier}\\s*\\{`));
   }
 
@@ -397,7 +401,7 @@ test('homepage uses semantic scenario cards in canonical order', () => {
   assert.match(section, /<h3 id="homepage-scenario-heading" class="scenario-heading" data-i18n="research\.scenarioTitle">/);
   const articles = assertScenarioStructure(section, 'Homepage', 'h4');
 
-  for (const modifier of ['science', 'user']) {
+  for (const modifier of ['science', 'user', 'prediction']) {
     const article = articles[modifier];
     for (const [tagName, className, suffix] of [
       ['h4', 'scenario-card-title', 'Title'],
@@ -430,6 +434,7 @@ test('homepage scenario bodies use consistent selective emphasis', () => {
   );
   const scienceArticle = articleFor(researchArea, 'science');
   const userArticle = articleFor(researchArea, 'user');
+  const predictionArticle = articleFor(researchArea, 'prediction');
 
   assert.match(
     scienceArticle,
@@ -446,6 +451,11 @@ test('homepage scenario bodies use consistent selective emphasis', () => {
     /<p class="scenario-card-body"[^>]*>\s*<strong class="scenario-card-emphasis">/,
     'The Big Data Applications body must not render the full sentence as emphasized text'
   );
+  assert.match(
+    predictionArticle,
+    /<p class="scenario-card-body" data-i18n="research\.predictionBody">Building <strong class="scenario-card-emphasis">context-aware predictive intelligence<\/strong> for <strong class="scenario-card-emphasis">complex systems<\/strong> through <strong class="scenario-card-emphasis">multimodal context representation<\/strong>, <strong class="scenario-card-emphasis">slow-thinking temporal reasoning<\/strong>, <strong class="scenario-card-emphasis">uncertainty-aware forecasting<\/strong>, and autonomous agentic interaction\.<\/p>/,
+    'The Prediction Intelligence body must distinguish its goal, scope, and core methods'
+  );
 });
 
 test('homepage dictionaries provide complete split scenario translations', () => {
@@ -459,6 +469,11 @@ test('homepage dictionaries provide complete split scenario translations', () =>
     'research.userBody': [
       'Research on <strong class="scenario-card-emphasis">online user modeling</strong> and <strong class="scenario-card-emphasis">personalized recommendation systems</strong> for <strong class="scenario-card-emphasis">Internet applications</strong>; cognition and decision support for <strong class="scenario-card-emphasis">power and energy industries</strong>.',
       '面向<strong class="scenario-card-emphasis">互联网应用</strong>的<strong class="scenario-card-emphasis">在线用户建模</strong>与<strong class="scenario-card-emphasis">个性化推荐系统</strong>；面向<strong class="scenario-card-emphasis">电力能源等工业应用</strong>的认知与决策辅助。'
+    ],
+    'research.predictionTitle': ['Prediction Intelligence', '预测智能'],
+    'research.predictionBody': [
+      'Building <strong class="scenario-card-emphasis">context-aware predictive intelligence</strong> for <strong class="scenario-card-emphasis">complex systems</strong> through <strong class="scenario-card-emphasis">multimodal context representation</strong>, <strong class="scenario-card-emphasis">slow-thinking temporal reasoning</strong>, <strong class="scenario-card-emphasis">uncertainty-aware forecasting</strong>, and autonomous agentic interaction.',
+      '面向<strong class="scenario-card-emphasis">复杂系统</strong>构建<strong class="scenario-card-emphasis">情境感知预测智能</strong>，研究<strong class="scenario-card-emphasis">多模态情境表征</strong>、<strong class="scenario-card-emphasis">慢思考时序推理</strong>与<strong class="scenario-card-emphasis">不确定性感知预测</strong>，并结合自主智能体交互。'
     ]
   };
 
@@ -691,7 +706,7 @@ test('research page matches the homepage scenario contract', () => {
     'The research-page Big Data Applications body must use the shared selective-emphasis pattern'
   );
 
-  for (const modifier of ['science', 'user']) {
+  for (const modifier of ['science', 'user', 'prediction']) {
     assert.equal(
       visibleText(researchArticles[modifier]),
       visibleText(articleFor(homepageSection, modifier)),

@@ -31,7 +31,7 @@
 .scenario-grid {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: stretch;
   gap: 16px;
 }
@@ -52,6 +52,7 @@
 
 .scenario-card--science { --scenario-color: #059669; }
 .scenario-card--user { --scenario-color: #d97706; }
+.scenario-card--prediction { --scenario-color: #7c3aed; }
 
 .scenario-card-accent {
   flex: 0 0 4px;
@@ -99,6 +100,25 @@
   line-height: 1.35;
   letter-spacing: 0;
   text-align: left;
+}
+
+.scenario-card-title-link {
+  display: inline-flex;
+  min-width: 0;
+  border-radius: 4px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.scenario-card-title-link:hover .scenario-card-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+.scenario-card-title-link:focus-visible {
+  outline: 3px solid rgba(109, 74, 255, 0.35);
+  outline-offset: 3px;
 }
 
 .scenario-card-body {

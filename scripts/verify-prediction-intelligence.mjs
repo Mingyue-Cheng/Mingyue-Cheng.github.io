@@ -160,18 +160,23 @@ test('page-specific language switching covers the full research narrative', () =
   }
 });
 
-test('homepage and Research cards link to the new subpage', () => {
-  for (const [label, source] of [
-    ['Homepage', indexHtml],
-    ['Research page', researchHtml]
-  ]) {
-    const article = predictionArticle(source);
-    assert.match(
-      article,
-      /<a class="scenario-card-title-link" href="prediction-intelligence\.html">[\s\S]*?Prediction Intelligence[\s\S]*?<\/a>/,
-      `${label} Prediction Intelligence card must link to the subpage`
-    );
-  }
+test('homepage scenario card and Research primary direction link to the new subpage', () => {
+  const homepageArticle = predictionArticle(indexHtml);
+  assert.match(
+    homepageArticle,
+    /<a class="scenario-card-title-link" href="prediction-intelligence\.html">[\s\S]*?Prediction Intelligence[\s\S]*?<\/a>/,
+    'Homepage Prediction Intelligence scenario card must link to the subpage'
+  );
+  assert.match(
+    researchHtml,
+    /<div class="rd-card rd-card--prediction">[\s\S]*?<a class="rd-card-title rd-card-title-link" href="prediction-intelligence\.html">Prediction Intelligence<\/a>/,
+    'Research-page Prediction Intelligence primary direction must link to the subpage'
+  );
+  assert.doesNotMatch(
+    researchHtml,
+    /<article class="scenario-card scenario-card--prediction">/,
+    'Research page must not duplicate Prediction Intelligence in the application scenarios'
+  );
 });
 
 test('visual system is responsive, accessible, and consistent with the site', () => {

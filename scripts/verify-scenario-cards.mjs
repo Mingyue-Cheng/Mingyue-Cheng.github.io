@@ -111,19 +111,19 @@ function hasAttributeValue(tag, attribute, value) {
   return pattern.test(tag);
 }
 
-function assertCanonicalOrder(source, pageLabel) {
+function assertCanonicalOrder(
+  source,
+  pageLabel,
+  expectedModifiers = ['prediction', 'science', 'user']
+) {
   const cardTags = startTagsWithClass(source, 'article', 'scenario-card');
   const modifierTokens = cardTags.map((tag) =>
     classTokens(tag).filter((token) => token.startsWith('scenario-card--'))
   );
   assert.deepEqual(
     modifierTokens,
-    [
-      ['scenario-card--prediction'],
-      ['scenario-card--science'],
-      ['scenario-card--user']
-    ],
-    `${pageLabel} card modifiers must be exactly Prediction, Science, User`
+    expectedModifiers.map((modifier) => [`scenario-card--${modifier}`]),
+    `${pageLabel} card modifiers must follow the expected canonical order`
   );
 }
 
@@ -135,69 +135,80 @@ function articleFor(source, modifier) {
   return article;
 }
 
-function assertScenarioStructure(section, pageLabel, cardTitleTagName) {
+function assertScenarioStructure(
+  section,
+  pageLabel,
+  cardTitleTagName,
+  expectedModifiers = ['prediction', 'science', 'user']
+) {
+  const expectedCardCount = expectedModifiers.length;
+  const expectedEmphasisCounts = { science: 5, user: 6, prediction: 5 };
+  const expectedEmphasisTotal = expectedModifiers.reduce(
+    (total, modifier) => total + expectedEmphasisCounts[modifier],
+    0
+  );
+
   assert.equal(
     matchCount(section, /<article\b/g),
-    3,
-    `${pageLabel} scenario section must contain exactly 3 article start tags`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} article start tags`
   );
   assert.equal(
     startTagsWithClass(section, 'article', 'scenario-card').length,
-    3,
-    `${pageLabel} scenario section must contain exactly 3 scenario-card articles`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} scenario-card articles`
   );
   assert.equal(
     matchCount(section, new RegExp(`<${escapeRegex(cardTitleTagName)}\\b`, 'g')),
-    3,
-    `${pageLabel} scenario section must contain exactly 3 ${cardTitleTagName} start tags`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} ${cardTitleTagName} start tags`
   );
   assert.equal(
     startTagsWithClass(section, cardTitleTagName, 'scenario-card-title').length,
-    3,
-    `${pageLabel} scenario section must contain exactly 3 scenario-card-title elements`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} scenario-card-title elements`
   );
   assert.equal(
     matchCount(section, /<p\b/g),
-    3,
-    `${pageLabel} scenario section must contain exactly 3 paragraph start tags`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} paragraph start tags`
   );
   assert.equal(
     startTagsWithClass(section, 'p', 'scenario-card-body').length,
-    3,
-    `${pageLabel} scenario section must contain exactly 3 scenario-card-body paragraphs`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} scenario-card-body paragraphs`
   );
   assert.equal(
     startTagsWithClass(section, 'span', 'scenario-card-icon').length,
-    3,
-    `${pageLabel} scenario section must contain exactly 3 scenario-card-icon spans`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} scenario-card-icon spans`
   );
   assert.equal(
     classTokenCount(section, 'scenario-card-icon'),
-    3,
-    `${pageLabel} scenario section must contain exactly 3 scenario-card-icon class tokens`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} scenario-card-icon class tokens`
   );
   assert.equal(
     matchCount(section, /<svg\b/g),
-    3,
-    `${pageLabel} scenario section must contain exactly 3 SVG start tags`
+    expectedCardCount,
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} SVG start tags`
   );
   assert.equal(
     startTagsWithClass(section, 'strong', 'scenario-card-emphasis').length,
-    16,
-    `${pageLabel} scenario section must contain exactly 16 emphasized strong elements`
+    expectedEmphasisTotal,
+    `${pageLabel} scenario section must contain exactly ${expectedEmphasisTotal} emphasized strong elements`
   );
   assert.equal(
     classTokenCount(section, 'scenario-card-emphasis'),
-    16,
-    `${pageLabel} scenario section must contain exactly 16 scenario-card-emphasis class tokens`
+    expectedEmphasisTotal,
+    `${pageLabel} scenario section must contain exactly ${expectedEmphasisTotal} scenario-card-emphasis class tokens`
   );
   assert.doesNotMatch(section, /role="list(item)?"/, `${pageLabel} cards must not use list roles`);
   assert.doesNotMatch(section, /scenario-card--energy/, `${pageLabel} must not contain an Energy card`);
-  assertCanonicalOrder(section, pageLabel);
+  assertCanonicalOrder(section, pageLabel, expectedModifiers);
 
   const articles = {};
-  const expectedEmphasisCounts = { science: 5, user: 6, prediction: 5 };
-  for (const modifier of ['science', 'user', 'prediction']) {
+  for (const modifier of expectedModifiers) {
     const article = articleFor(section, modifier);
     assert.equal(
       classTokenCount(article, 'scenario-card-emphasis'),
@@ -568,11 +579,16 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
     assert.equal(source.includes(oldTitle), false, `${label} must not use the old title`);
     assert.equal(source.includes(oldFocus), false, `${label} must not use the old predictive-intelligence wording`);
     assert.equal(source.includes(oldObservationFrame), false, `${label} must not keep the old observation framing`);
+  }
+  for (const [label, source] of [
+    ['homepage research.timeseries item', visibleTimeseries],
+    ['English research.timeseries translation', decodedTranslationEntries('research.timeseries')[0]]
+  ]) {
     assert.equal(source.includes(oldReasoning), false, `${label} must not keep the old reasoning wording`);
   }
 });
 
-test('research page visible directions and notes match the homepage content', () => {
+test('research page promotes Prediction Intelligence beside Time-Series Analysis', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -588,6 +604,7 @@ test('research page visible directions and notes match the homepage content', ()
     '<div class="primary-cards">',
     '</div><!-- /primary-cards -->'
   );
+  const normalizedResearchDirections = researchDirections.replace(/\s+/g, ' ');
 
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
@@ -595,15 +612,49 @@ test('research page visible directions and notes match the homepage content', ()
     'Homepage must expose exactly 2 primary directions'
   );
   assert.equal(
-    matchCount(researchDirections, /<div class="rd-card"(?![^>]*\bhidden\b)[^>]*>/g),
-    2,
-    'Research page must expose the same 2 primary directions as the homepage'
+    startTagsWithClass(researchDirections, 'div', 'rd-card')
+      .filter((tag) => !/\shidden(?:\s|>)/.test(tag)).length,
+    3,
+    'Research page must expose LLMs, Time-Series Analysis, and Prediction Intelligence as primary directions'
+  );
+  assert.match(researchDirections, /<div class="rd-card rd-card--agent">/);
+  assert.match(researchDirections, /<div class="rd-card rd-card--timeseries">/);
+  assert.match(
+    normalizedResearchDirections,
+    /<div class="rd-card rd-card--prediction">[\s\S]*?<a class="rd-card-title rd-card-title-link" href="prediction-intelligence\.html">Prediction Intelligence<\/a>[\s\S]*?<p class="rd-card-desc">\s*Building <strong>context-aware predictive intelligence<\/strong> for <strong>complex systems<\/strong> through <strong>multimodal context representation<\/strong>, <strong>slow-thinking temporal reasoning<\/strong>, <strong>uncertainty-aware forecasting<\/strong>, and autonomous agentic interaction\.\s*<\/p>/
   );
   assert.match(
     researchDirections,
     /<div class="rd-card" hidden>[\s\S]*?<div class="rd-card-title">Scientific Knowledge Cognition<\/div>/,
     'Scientific Knowledge Cognition must remain hidden on the Research page while it is hidden on the homepage'
   );
+  assert.ok(
+    cssRule(researchHtml, '.rd-card[hidden]').includes('display: none;'),
+    'Author styles must preserve the hidden Scientific Knowledge Cognition card'
+  );
+  assert.ok(
+    researchDirections.indexOf('LLMs and Agentic AI') <
+      researchDirections.indexOf('Time-Series Analysis') &&
+      researchDirections.indexOf('Time-Series Analysis') <
+        researchDirections.indexOf('Prediction Intelligence'),
+    'Primary directions must keep LLMs first, followed by Time-Series Analysis and Prediction Intelligence'
+  );
+
+  const primaryGridRule = cssRule(researchHtml, '.primary-cards');
+  assert.ok(primaryGridRule.includes('display: grid;'));
+  assert.ok(primaryGridRule.includes('grid-template-columns: repeat(2, minmax(0, 1fr));'));
+  assert.ok(cssRule(researchHtml, '.rd-card--agent').includes('grid-column: 1 / -1;'));
+  const responsivePrimary = sectionBetween(
+    researchHtml,
+    '@media (max-width: 960px)',
+    '@media (max-width: 680px)'
+  );
+  assert.ok(
+    cssRule(responsivePrimary, '.primary-cards').includes(
+      'grid-template-columns: minmax(0, 1fr);'
+    )
+  );
+  assert.ok(cssRule(responsivePrimary, '.rd-card--agent').includes('grid-column: auto;'));
 
   const homepageCollection = homepageSection.match(
     /<div class="research-note" data-i18n="research\.collections">[\s\S]*?<\/div>/
@@ -703,7 +754,23 @@ test('research page matches the homepage scenario contract', () => {
 
   assert.match(researchSection, /<section class="scenario-section" aria-labelledby="research-scenario-heading">/);
   assert.match(researchSection, /<h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">/);
-  const researchArticles = assertScenarioStructure(researchSection, 'Research page', 'h3');
+  const researchArticles = assertScenarioStructure(
+    researchSection,
+    'Research page',
+    'h3',
+    ['science', 'user']
+  );
+  assert.doesNotMatch(
+    researchSection,
+    /scenario-card--prediction|Prediction Intelligence/,
+    'Prediction Intelligence must not remain duplicated in the Research-page application scenarios'
+  );
+  assert.ok(
+    cssRule(researchHtml, '.research-main .scenario-grid').includes(
+      'grid-template-columns: repeat(2, minmax(0, 1fr));'
+    ),
+    'The two remaining Research-page scenarios must use a balanced two-column layout'
+  );
 
   assert.match(
     researchArticles.user,
@@ -716,7 +783,7 @@ test('research page matches the homepage scenario contract', () => {
     'The research-page Recommender Systems body must use the shared selective-emphasis pattern'
   );
 
-  for (const modifier of ['science', 'user', 'prediction']) {
+  for (const modifier of ['science', 'user']) {
     assert.equal(
       visibleText(researchArticles[modifier]),
       visibleText(articleFor(homepageSection, modifier)),

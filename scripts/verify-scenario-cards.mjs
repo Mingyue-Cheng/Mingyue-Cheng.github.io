@@ -410,9 +410,9 @@ test('homepage uses semantic scenario cards in canonical order', () => {
 
   assert.match(section, /<section class="scenario-section" aria-labelledby="homepage-scenario-heading">/);
   assert.match(section, /<h3 id="homepage-scenario-heading" class="scenario-heading" data-i18n="research\.scenarioTitle">/);
-  const articles = assertScenarioStructure(section, 'Homepage', 'h4');
+  const articles = assertScenarioStructure(section, 'Homepage', 'h4', ['science', 'user']);
 
-  for (const modifier of ['science', 'user', 'prediction']) {
+  for (const modifier of ['science', 'user']) {
     const article = articles[modifier];
     for (const [tagName, className, suffix] of [
       ['h4', 'scenario-card-title', 'Title'],
@@ -445,7 +445,6 @@ test('homepage scenario bodies use consistent selective emphasis', () => {
   );
   const scienceArticle = articleFor(researchArea, 'science');
   const userArticle = articleFor(researchArea, 'user');
-  const predictionArticle = articleFor(researchArea, 'prediction');
 
   assert.match(
     userArticle,
@@ -467,11 +466,6 @@ test('homepage scenario bodies use consistent selective emphasis', () => {
     /<p class="scenario-card-body"[^>]*>\s*<strong class="scenario-card-emphasis">/,
     'The Recommender Systems body must not render the full sentence as emphasized text'
   );
-  assert.match(
-    predictionArticle,
-    /<p class="scenario-card-body" data-i18n="research\.predictionBody">Building <strong class="scenario-card-emphasis">context-aware predictive intelligence<\/strong> for <strong class="scenario-card-emphasis">complex systems<\/strong> through <strong class="scenario-card-emphasis">multimodal context representation<\/strong>, <strong class="scenario-card-emphasis">slow-thinking temporal reasoning<\/strong>, <strong class="scenario-card-emphasis">uncertainty-aware forecasting<\/strong>, and autonomous agentic interaction\.<\/p>/,
-    'The Prediction Intelligence body must distinguish its goal, scope, and core methods'
-  );
 });
 
 test('homepage dictionaries provide complete split scenario translations', () => {
@@ -488,8 +482,8 @@ test('homepage dictionaries provide complete split scenario translations', () =>
     ],
     'research.predictionTitle': ['Prediction Intelligence', '预测智能'],
     'research.predictionBody': [
-      'Building <strong class="scenario-card-emphasis">context-aware predictive intelligence</strong> for <strong class="scenario-card-emphasis">complex systems</strong> through <strong class="scenario-card-emphasis">multimodal context representation</strong>, <strong class="scenario-card-emphasis">slow-thinking temporal reasoning</strong>, <strong class="scenario-card-emphasis">uncertainty-aware forecasting</strong>, and autonomous agentic interaction.',
-      '面向<strong class="scenario-card-emphasis">复杂系统</strong>构建<strong class="scenario-card-emphasis">情境感知预测智能</strong>，研究<strong class="scenario-card-emphasis">多模态情境表征</strong>、<strong class="scenario-card-emphasis">慢思考时序推理</strong>与<strong class="scenario-card-emphasis">不确定性感知预测</strong>，并结合自主智能体交互。'
+      'Building <span class="research-keyword">context-aware predictive intelligence</span> for <span class="research-keyword">complex systems</span> through <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking temporal reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and autonomous agentic interaction.',
+      '面向<span class="research-keyword">复杂系统</span>构建<span class="research-keyword">情境感知预测智能</span>，研究<span class="research-keyword">多模态情境表征</span>、<span class="research-keyword">慢思考时序推理</span>与<span class="research-keyword">不确定性感知预测</span>，并结合自主智能体交互。'
     ]
   };
 
@@ -552,7 +546,9 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
     '<!-- ===== Research Interests ===== -->',
     '<!-- ===== Latest News ===== -->'
   );
-  const visibleTimeseriesMatch = homepageSection.match(/<li data-i18n="research\.timeseries">[\s\S]*?<\/li>/);
+  const visibleTimeseriesMatch = homepageSection.match(
+    /<li\b[^>]*data-i18n="research\.timeseries"[^>]*>[\s\S]*?<\/li>/
+  );
   assert.ok(visibleTimeseriesMatch, 'Homepage must include a visible research.timeseries list item');
   const visibleTimeseries = visibleTimeseriesMatch[0];
   const researchDirectionsSection = sectionBetween(
@@ -588,7 +584,7 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
   }
 });
 
-test('research page promotes Prediction Intelligence beside Time-Series Analysis', () => {
+test('homepage and research page promote Prediction Intelligence beside Time-Series Analysis', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -608,8 +604,53 @@ test('research page promotes Prediction Intelligence beside Time-Series Analysis
 
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
-    2,
-    'Homepage must expose exactly 2 primary directions'
+    3,
+    'Homepage must expose LLMs, Time-Series Analysis, and Prediction Intelligence as primary directions'
+  );
+  assert.match(homepageDirections, /<li class="primary-direction primary-direction--agent" data-i18n="research\.agent">/);
+  assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
+  assert.match(
+    homepageDirections,
+    /<li class="primary-direction primary-direction--prediction">[\s\S]*?<a class="research-direction-link" href="prediction-intelligence\.html">[\s\S]*?<strong data-i18n="research\.predictionTitle">Prediction Intelligence<\/strong>[\s\S]*?<\/a>[\s\S]*?<span data-i18n="research\.predictionBody">Building <span class="research-keyword">context-aware predictive intelligence<\/span> for <span class="research-keyword">complex systems<\/span> through <span class="research-keyword">multimodal context representation<\/span>, <span class="research-keyword">slow-thinking temporal reasoning<\/span>, <span class="research-keyword">uncertainty-aware forecasting<\/span>, and autonomous agentic interaction\.<\/span>[\s\S]*?<\/li>/
+  );
+  assert.match(
+    homepageDirections,
+    /<li class="primary-direction primary-direction--knowledge" data-i18n="research\.knowledge" hidden>/,
+    'Scientific Knowledge Cognition must remain hidden on the homepage'
+  );
+  assert.ok(
+    homepageDirections.indexOf('LLMs and Agentic AI') <
+      homepageDirections.indexOf('Time-Series Analysis') &&
+      homepageDirections.indexOf('Time-Series Analysis') <
+        homepageDirections.indexOf('Prediction Intelligence'),
+    'Homepage primary directions must keep LLMs first, followed by Time-Series Analysis and Prediction Intelligence'
+  );
+
+  const homepagePrimaryGridRule = cssRule(indexHtml, '.primary-directions');
+  assert.ok(homepagePrimaryGridRule.includes('grid-template-columns: repeat(2, minmax(0, 1fr));'));
+  assert.ok(
+    cssRule(indexHtml, '.primary-directions .primary-direction--agent').includes(
+      'grid-column: 1 / -1;'
+    )
+  );
+  assert.ok(
+    cssRule(indexHtml, '.primary-directions li[hidden]').includes('display: none;'),
+    'Homepage author styles must preserve the hidden Scientific Knowledge Cognition direction'
+  );
+  const homepageResponsive = sectionBetween(
+    indexHtml,
+    '@media (max-width: 900px)',
+    '@media (max-width: 680px)'
+  );
+  assert.ok(
+    cssRule(homepageResponsive, '.primary-directions').includes(
+      'grid-template-columns: minmax(0, 1fr);'
+    )
+  );
+  assert.ok(
+    cssRule(homepageResponsive, '.primary-directions .primary-direction--agent').includes(
+      'grid-column: auto;'
+    )
   );
   assert.equal(
     startTagsWithClass(researchDirections, 'div', 'rd-card')
@@ -754,6 +795,12 @@ test('research page matches the homepage scenario contract', () => {
 
   assert.match(researchSection, /<section class="scenario-section" aria-labelledby="research-scenario-heading">/);
   assert.match(researchSection, /<h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">/);
+  const homepageArticles = assertScenarioStructure(
+    homepageSection,
+    'Homepage',
+    'h4',
+    ['science', 'user']
+  );
   const researchArticles = assertScenarioStructure(
     researchSection,
     'Research page',
@@ -764,6 +811,28 @@ test('research page matches the homepage scenario contract', () => {
     researchSection,
     /scenario-card--prediction|Prediction Intelligence/,
     'Prediction Intelligence must not remain duplicated in the Research-page application scenarios'
+  );
+  assert.doesNotMatch(
+    homepageSection,
+    /scenario-card--prediction|Prediction Intelligence/,
+    'Prediction Intelligence must not remain duplicated in the Homepage application scenarios'
+  );
+  assert.ok(
+    cssRule(indexHtml, '.research-section .scenario-grid').includes(
+      'grid-template-columns: repeat(2, minmax(0, 1fr));'
+    ),
+    'The two remaining Homepage scenarios must use a balanced two-column layout'
+  );
+  const homepageResponsive = sectionBetween(
+    indexHtml,
+    '@media (max-width: 900px)',
+    '@media (max-width: 680px)'
+  );
+  assert.ok(
+    cssRule(homepageResponsive, '.research-section .scenario-grid').includes(
+      'grid-template-columns: minmax(0, 1fr);'
+    ),
+    'Homepage scenarios must stack into one column on narrow screens'
   );
   assert.ok(
     cssRule(researchHtml, '.research-main .scenario-grid').includes(
@@ -786,7 +855,7 @@ test('research page matches the homepage scenario contract', () => {
   for (const modifier of ['science', 'user']) {
     assert.equal(
       visibleText(researchArticles[modifier]),
-      visibleText(articleFor(homepageSection, modifier)),
+      visibleText(homepageArticles[modifier]),
       `${modifier} copy must match across pages`
     );
   }

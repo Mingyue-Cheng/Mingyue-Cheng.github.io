@@ -21,14 +21,6 @@ const researchHtml = readIfPresent('research.html');
 
 const count = (source, pattern) => (source.match(pattern) || []).length;
 
-function predictionArticle(source) {
-  const match = source.match(
-    /<article class="scenario-card scenario-card--prediction">[\s\S]*?<\/article>/
-  );
-  assert.ok(match, 'Prediction Intelligence scenario card must exist');
-  return match[0];
-}
-
 test('Prediction Intelligence page and focused assets exist', () => {
   for (const relativePath of [pagePath, cssPath, scriptPath]) {
     assert.ok(existsSync(join(root, relativePath)), `${relativePath} must exist`);
@@ -160,17 +152,21 @@ test('page-specific language switching covers the full research narrative', () =
   }
 });
 
-test('homepage scenario card and Research primary direction link to the new subpage', () => {
-  const homepageArticle = predictionArticle(indexHtml);
+test('homepage and Research primary directions link to the new subpage', () => {
   assert.match(
-    homepageArticle,
-    /<a class="scenario-card-title-link" href="prediction-intelligence\.html">[\s\S]*?Prediction Intelligence[\s\S]*?<\/a>/,
-    'Homepage Prediction Intelligence scenario card must link to the subpage'
+    indexHtml,
+    /<li class="primary-direction primary-direction--prediction">[\s\S]*?<a class="research-direction-link" href="prediction-intelligence\.html">[\s\S]*?Prediction Intelligence[\s\S]*?<\/a>/,
+    'Homepage Prediction Intelligence primary direction must link to the subpage'
   );
   assert.match(
     researchHtml,
     /<div class="rd-card rd-card--prediction">[\s\S]*?<a class="rd-card-title rd-card-title-link" href="prediction-intelligence\.html">Prediction Intelligence<\/a>/,
     'Research-page Prediction Intelligence primary direction must link to the subpage'
+  );
+  assert.doesNotMatch(
+    indexHtml,
+    /<article class="scenario-card scenario-card--prediction">/,
+    'Homepage must not duplicate Prediction Intelligence in the application scenarios'
   );
   assert.doesNotMatch(
     researchHtml,

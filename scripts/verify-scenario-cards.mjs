@@ -183,20 +183,20 @@ function assertScenarioStructure(section, pageLabel, cardTitleTagName) {
   );
   assert.equal(
     startTagsWithClass(section, 'strong', 'scenario-card-emphasis').length,
-    14,
-    `${pageLabel} scenario section must contain exactly 14 emphasized strong elements`
+    16,
+    `${pageLabel} scenario section must contain exactly 16 emphasized strong elements`
   );
   assert.equal(
     classTokenCount(section, 'scenario-card-emphasis'),
-    14,
-    `${pageLabel} scenario section must contain exactly 14 scenario-card-emphasis class tokens`
+    16,
+    `${pageLabel} scenario section must contain exactly 16 scenario-card-emphasis class tokens`
   );
   assert.doesNotMatch(section, /role="list(item)?"/, `${pageLabel} cards must not use list roles`);
   assert.doesNotMatch(section, /scenario-card--energy/, `${pageLabel} must not contain an Energy card`);
   assertCanonicalOrder(section, pageLabel);
 
   const articles = {};
-  const expectedEmphasisCounts = { science: 5, user: 4, prediction: 5 };
+  const expectedEmphasisCounts = { science: 5, user: 6, prediction: 5 };
   for (const modifier of ['science', 'user', 'prediction']) {
     const article = articleFor(section, modifier);
     assert.equal(
@@ -437,19 +437,24 @@ test('homepage scenario bodies use consistent selective emphasis', () => {
   const predictionArticle = articleFor(researchArea, 'prediction');
 
   assert.match(
+    userArticle,
+    /<h4 class="scenario-card-title" data-i18n="research\.userTitle">Recommender Systems<\/h4>/,
+    'The homepage user-modeling card must be titled Recommender Systems'
+  );
+  assert.match(
     scienceArticle,
     /<p class="scenario-card-body" data-i18n="research\.scienceBody">Using <strong class="scenario-card-emphasis">LLMs and Agentic AI<\/strong> for <strong class="scenario-card-emphasis">scientific literature mining<\/strong>, <strong class="scenario-card-emphasis">time-series and tabular data modeling<\/strong>, and <strong class="scenario-card-emphasis">autonomous research agents<\/strong> for <strong class="scenario-card-emphasis">scientific task solving and discovery<\/strong>\.<\/p>/,
     'The AI for Science body must distinguish methods, research contents, and goals'
   );
   assert.match(
     userArticle,
-    /<p class="scenario-card-body" data-i18n="research\.userBody">Research on <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>; cognition and decision support for <strong class="scenario-card-emphasis">power and energy industries<\/strong>\.<\/p>/,
-    'The Big Data Applications body must distinguish Internet and industrial applications'
+    /<p class="scenario-card-body" data-i18n="research\.userBody">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommender systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>, with a focus on <strong class="scenario-card-emphasis">user behavior understanding<\/strong>, <strong class="scenario-card-emphasis">preference learning<\/strong>, and <strong class="scenario-card-emphasis">context-aware recommendation<\/strong>\.<\/p>/,
+    'The Recommender Systems body must describe its application scope and research themes'
   );
   assert.doesNotMatch(
     userArticle,
     /<p class="scenario-card-body"[^>]*>\s*<strong class="scenario-card-emphasis">/,
-    'The Big Data Applications body must not render the full sentence as emphasized text'
+    'The Recommender Systems body must not render the full sentence as emphasized text'
   );
   assert.match(
     predictionArticle,
@@ -465,10 +470,10 @@ test('homepage dictionaries provide complete split scenario translations', () =>
       'Using <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> for <strong class="scenario-card-emphasis">scientific literature mining</strong>, <strong class="scenario-card-emphasis">time-series and tabular data modeling</strong>, and <strong class="scenario-card-emphasis">autonomous research agents</strong> for <strong class="scenario-card-emphasis">scientific task solving and discovery</strong>.',
       '利用 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 开展<strong class="scenario-card-emphasis">科技文献挖掘</strong>、<strong class="scenario-card-emphasis">时序与表格数据建模</strong>和<strong class="scenario-card-emphasis">自主科研智能体</strong>研究，服务于<strong class="scenario-card-emphasis">科学任务求解与科学发现</strong>。'
     ],
-    'research.userTitle': ['Big Data Applications', 'Big Data Applications'],
+    'research.userTitle': ['Recommender Systems', '推荐系统'],
     'research.userBody': [
-      'Research on <strong class="scenario-card-emphasis">online user modeling</strong> and <strong class="scenario-card-emphasis">personalized recommendation systems</strong> for <strong class="scenario-card-emphasis">Internet applications</strong>; cognition and decision support for <strong class="scenario-card-emphasis">power and energy industries</strong>.',
-      '面向<strong class="scenario-card-emphasis">互联网应用</strong>的<strong class="scenario-card-emphasis">在线用户建模</strong>与<strong class="scenario-card-emphasis">个性化推荐系统</strong>；面向<strong class="scenario-card-emphasis">电力能源等工业应用</strong>的认知与决策辅助。'
+      'Studying <strong class="scenario-card-emphasis">online user modeling</strong> and <strong class="scenario-card-emphasis">personalized recommender systems</strong> for <strong class="scenario-card-emphasis">Internet applications</strong>, with a focus on <strong class="scenario-card-emphasis">user behavior understanding</strong>, <strong class="scenario-card-emphasis">preference learning</strong>, and <strong class="scenario-card-emphasis">context-aware recommendation</strong>.',
+      '面向<strong class="scenario-card-emphasis">互联网应用</strong>开展<strong class="scenario-card-emphasis">在线用户建模</strong>与<strong class="scenario-card-emphasis">个性化推荐系统</strong>研究，重点关注<strong class="scenario-card-emphasis">用户行为理解</strong>、<strong class="scenario-card-emphasis">偏好学习</strong>与<strong class="scenario-card-emphasis">情境感知推荐</strong>。'
     ],
     'research.predictionTitle': ['Prediction Intelligence', '预测智能'],
     'research.predictionBody': [
@@ -702,8 +707,13 @@ test('research page matches the homepage scenario contract', () => {
 
   assert.match(
     researchArticles.user,
-    /<p class="scenario-card-body">Research on <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommendation systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>; cognition and decision support for <strong class="scenario-card-emphasis">power and energy industries<\/strong>\.<\/p>/,
-    'The research-page Big Data Applications body must use the shared selective-emphasis pattern'
+    /<h3 class="scenario-card-title">Recommender Systems<\/h3>/,
+    'The research-page user-modeling card must be titled Recommender Systems'
+  );
+  assert.match(
+    researchArticles.user,
+    /<p class="scenario-card-body">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommender systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>, with a focus on <strong class="scenario-card-emphasis">user behavior understanding<\/strong>, <strong class="scenario-card-emphasis">preference learning<\/strong>, and <strong class="scenario-card-emphasis">context-aware recommendation<\/strong>\.<\/p>/,
+    'The research-page Recommender Systems body must use the shared selective-emphasis pattern'
   );
 
   for (const modifier of ['science', 'user', 'prediction']) {

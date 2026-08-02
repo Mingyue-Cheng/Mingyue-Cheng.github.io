@@ -505,7 +505,7 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
   const oldAgentFocus = 'autonomous interactive learning and reasoning mechanisms';
   const newAgentFocus = 'autonomous interactive learning';
   const expectedEnglishAgent =
-    '<span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.';
+    '<span class="research-label">🤖<strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.';
   const expectedResearchCard =
     'Developing <strong>autonomous interactive learning</strong> for large language models, including <strong>environment-interactive Agentic RL</strong>, <strong>tool-augmented reasoning</strong>, <strong>multi-agent orchestration</strong>, and continual capability evolution through context, knowledge, and memory.';
   const homepageSection = sectionBetween(
@@ -526,6 +526,11 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
     expectedEnglishAgent,
     'English research.agent translation must match the visible homepage copy'
   );
+  assert.match(
+    decodedTranslationEntries('research.agent')[1],
+    /^<span class="research-label">🤖<strong>/,
+    'Chinese research.agent translation must not include a space between the icon and title'
+  );
   assert.match(researchDirectionsSection, /<div class="rd-card-title">LLMs and Agentic AI<\/div>/);
   assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
   assert.equal(indexHtml.includes(oldAgentFocus), false, 'Old agent focus wording must be absent');
@@ -538,7 +543,7 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
   const oldObservationFrame = 'dynamic system observations';
   const oldReasoning = 'slow-thinking temporal reasoning';
   const expectedEnglishTimeseries =
-    '<span class="research-label">📊 <strong>Time-Series Analysis:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
+    '<span class="research-label">📊<strong>Time-Series Analysis:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
   const expectedResearchCard =
     'Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.';
   const homepageSection = sectionBetween(
@@ -564,6 +569,11 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
     expectedEnglishTimeseries,
     'English research.timeseries translation must match the visible homepage copy'
   );
+  assert.match(
+    decodedTranslationEntries('research.timeseries')[1],
+    /^<span class="research-label">📊<strong>/,
+    'Chinese research.timeseries translation must not include a space between the icon and title'
+  );
   assert.match(researchDirectionsSection, /<div class="rd-card-title">Time-Series Analysis<\/div>/);
   assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
 
@@ -584,7 +594,7 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
   }
 });
 
-test('homepage and research page promote Prediction Intelligence beside Time-Series Analysis', () => {
+test('homepage stacks Prediction Intelligence below Time-Series Analysis', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -615,6 +625,11 @@ test('homepage and research page promote Prediction Intelligence beside Time-Ser
   );
   assert.match(
     homepageDirections,
+    /<span class="research-label">📈<a class="research-direction-link" href="prediction-intelligence\.html">/,
+    'Prediction Intelligence must not include a space between its icon and title'
+  );
+  assert.match(
+    homepageDirections,
     /<li class="primary-direction primary-direction--knowledge" data-i18n="research\.knowledge" hidden>/,
     'Scientific Knowledge Cognition must remain hidden on the homepage'
   );
@@ -627,30 +642,18 @@ test('homepage and research page promote Prediction Intelligence beside Time-Ser
   );
 
   const homepagePrimaryGridRule = cssRule(indexHtml, '.primary-directions');
-  assert.ok(homepagePrimaryGridRule.includes('grid-template-columns: repeat(2, minmax(0, 1fr));'));
   assert.ok(
-    cssRule(indexHtml, '.primary-directions .primary-direction--agent').includes(
-      'grid-column: 1 / -1;'
-    )
+    homepagePrimaryGridRule.includes('grid-template-columns: minmax(0, 1fr);'),
+    'Homepage primary directions must use one full-width column'
+  );
+  assert.doesNotMatch(
+    indexHtml,
+    /\.primary-directions \.primary-direction--agent\s*\{/,
+    'The LLM direction must not need a special grid span in a single-column layout'
   );
   assert.ok(
     cssRule(indexHtml, '.primary-directions li[hidden]').includes('display: none;'),
     'Homepage author styles must preserve the hidden Scientific Knowledge Cognition direction'
-  );
-  const homepageResponsive = sectionBetween(
-    indexHtml,
-    '@media (max-width: 900px)',
-    '@media (max-width: 680px)'
-  );
-  assert.ok(
-    cssRule(homepageResponsive, '.primary-directions').includes(
-      'grid-template-columns: minmax(0, 1fr);'
-    )
-  );
-  assert.ok(
-    cssRule(homepageResponsive, '.primary-directions .primary-direction--agent').includes(
-      'grid-column: auto;'
-    )
   );
   assert.equal(
     startTagsWithClass(researchDirections, 'div', 'rd-card')

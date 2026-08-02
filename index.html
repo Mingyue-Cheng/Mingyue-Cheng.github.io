@@ -343,7 +343,7 @@ body {
   margin: 14px 0 8px;
 }
 .primary-directions {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
 }
 .research-list li {
@@ -373,9 +373,6 @@ body {
 }
 .primary-directions li {
   border-left: 3px solid var(--accent);
-}
-.primary-directions .primary-direction--agent {
-  grid-column: 1 / -1;
 }
 .primary-directions li[hidden] {
   display: none;
@@ -1253,14 +1250,8 @@ html[lang="zh-CN"] .footer-title {
 
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
-  .primary-directions {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .research-section .scenario-grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .primary-directions .primary-direction--agent {
-    grid-column: auto;
   }
 }
 @media (max-width: 680px) {
@@ -1454,10 +1445,10 @@ html[lang="zh-CN"] .footer-title {
       My research develops <span class="research-keyword">cognitive intelligence methods</span> for complex data mining, centered on <span class="research-keyword">LLMs and Agentic AI</span>, and driven by the dual foundations of <span class="research-keyword">time-series observations</span> and <span class="research-keyword">scientific knowledge</span>. My methodological focus lies in <span class="research-keyword">context representation and reasoning</span>, aiming to build <span class="research-keyword">predictive intelligence for complex systems</span> through <span class="research-keyword">multimodal semantic understanding</span>, <span class="research-keyword">slow-thinking temporal reasoning</span>, and <span class="research-keyword">autonomous agentic interaction</span>.
     </p>
     <ul class="research-list primary-directions">
-      <li class="primary-direction primary-direction--agent" data-i18n="research.agent"><span class="research-label">🤖 <strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.</li>
-      <li class="primary-direction primary-direction--timeseries" data-i18n="research.timeseries"><span class="research-label">📊 <strong>Time-Series Analysis:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.</li>
+      <li class="primary-direction primary-direction--agent" data-i18n="research.agent"><span class="research-label">🤖<strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.</li>
+      <li class="primary-direction primary-direction--timeseries" data-i18n="research.timeseries"><span class="research-label">📊<strong>Time-Series Analysis:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.</li>
       <li class="primary-direction primary-direction--prediction">
-        <span class="research-label">📈 <a class="research-direction-link" href="prediction-intelligence.html"><strong data-i18n="research.predictionTitle">Prediction Intelligence</strong></a>:</span>
+        <span class="research-label">📈<a class="research-direction-link" href="prediction-intelligence.html"><strong data-i18n="research.predictionTitle">Prediction Intelligence</strong></a>:</span>
         <span data-i18n="research.predictionBody">Building <span class="research-keyword">context-aware predictive intelligence</span> for <span class="research-keyword">complex systems</span> through <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking temporal reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and autonomous agentic interaction.</span>
       </li>
       <li class="primary-direction primary-direction--knowledge" data-i18n="research.knowledge" hidden><span class="research-label">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class="research-keyword">agent-ready scientific knowledge intelligence</span> through <span class="research-keyword">LLM-driven literature mining</span>, <span class="research-keyword">multimodal scientific document understanding</span>, <span class="research-keyword">evidence-grounded reasoning</span>, and <span class="research-keyword">scientific knowledge integration</span> for <span class="research-keyword">predictive modeling and decision support</span>.</li>
@@ -2238,8 +2229,8 @@ const i18n = {
     "bio.body": "I am an Associate Researcher at <a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>the School of Computer Science and Technology</strong></a>, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>University of Science and Technology of China (USTC)</strong></a>. I am also affiliated with the <a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>State Key Laboratory of Cognitive Intelligence</strong></a> at USTC, working under the guidance of <a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Enhong Chen</strong></a> and <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>. Previously, I obtained my Ph.D. degree under the supervision of <a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>Prof. Qi Liu</strong></a>.",
     "research.heading": "Research Interests",
     "research.intro": "My research develops <span class=\"research-keyword\">cognitive intelligence methods</span> for complex data mining, centered on <span class=\"research-keyword\">LLMs and Agentic AI</span>, and driven by the dual foundations of <span class=\"research-keyword\">time-series observations</span> and <span class=\"research-keyword\">scientific knowledge</span>. My methodological focus lies in <span class=\"research-keyword\">context representation and reasoning</span>, aiming to build <span class=\"research-keyword\">predictive intelligence for complex systems</span> through <span class=\"research-keyword\">multimodal semantic understanding</span>, <span class=\"research-keyword\">slow-thinking temporal reasoning</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
-    "research.agent": "<span class=\"research-label\">🤖 <strong>LLMs and Agentic AI:</strong></span> Developing <span class=\"research-keyword\">autonomous interactive learning</span> for large language models, including <span class=\"research-keyword\">environment-interactive Agentic RL</span>, <span class=\"research-keyword\">tool-augmented reasoning</span>, <span class=\"research-keyword\">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.",
-    "research.timeseries": "<span class=\"research-label\">📊 <strong>Time-Series Analysis:</strong></span> Developing <span class=\"research-keyword\">context-aware predictive intelligence</span>, with a focus on <span class=\"research-keyword\">multimodal context representation</span>, <span class=\"research-keyword\">slow-thinking reasoning</span>, <span class=\"research-keyword\">uncertainty-aware forecasting</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
+    "research.agent": "<span class=\"research-label\">🤖<strong>LLMs and Agentic AI:</strong></span> Developing <span class=\"research-keyword\">autonomous interactive learning</span> for large language models, including <span class=\"research-keyword\">environment-interactive Agentic RL</span>, <span class=\"research-keyword\">tool-augmented reasoning</span>, <span class=\"research-keyword\">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.",
+    "research.timeseries": "<span class=\"research-label\">📊<strong>Time-Series Analysis:</strong></span> Developing <span class=\"research-keyword\">context-aware predictive intelligence</span>, with a focus on <span class=\"research-keyword\">multimodal context representation</span>, <span class=\"research-keyword\">slow-thinking reasoning</span>, <span class=\"research-keyword\">uncertainty-aware forecasting</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class=\"research-keyword\">agent-ready scientific knowledge intelligence</span> through <span class=\"research-keyword\">LLM-driven literature mining</span>, <span class=\"research-keyword\">multimodal scientific document understanding</span>, <span class=\"research-keyword\">evidence-grounded reasoning</span>, and <span class=\"research-keyword\">scientific knowledge integration</span> for <span class=\"research-keyword\">predictive modeling and decision support</span>.",
     "research.scenarioTitle": "Broader Application and Evaluation Scenarios",
     "research.scienceTitle": "AI for Science",
@@ -2314,8 +2305,8 @@ const i18n = {
     "bio.body": "我目前任职于<a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>中国科学技术大学</strong></a><a href=\"http://cs.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>计算机科学与技术学院</strong></a>，担任副研究员。同时，我也隶属于中国科学技术大学侧的<a href=\"http://cogskl.iflytek.com/\" target=\"_blank\" rel=\"noopener\"><strong>认知智能全国重点实验室</strong></a>，在<a href=\"http://staff.ustc.edu.cn/~cheneh/\" target=\"_blank\" rel=\"noopener\"><strong>陈恩红教授</strong></a>和<a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>刘淇教授</strong></a>指导的团队中开展研究工作。此前，我在<a href=\"http://staff.ustc.edu.cn/~qiliuql/\" target=\"_blank\" rel=\"noopener\"><strong>刘淇教授</strong></a>指导下获得博士学位。",
     "research.heading": "研究兴趣",
     "research.intro": "我的研究主要面向复杂数据挖掘中的<span class=\"research-keyword\">认知智能方法</span>，以 <span class=\"research-keyword\">大语言模型与智能体 AI</span> 为核心，并围绕 <span class=\"research-keyword\">时序认知</span> 与 <span class=\"research-keyword\">科学知识认知</span> 展开。",
-    "research.agent": "<span class=\"research-label\">🤖 <strong>大模型与智能体 AI：</strong></span> 关注大语言模型的<span class=\"research-keyword\">自主学习与持续学习</span>、以 chain-of-thought 为代表的<span class=\"research-keyword\">慢思考推理</span>，以及包含 agentic RL、记忆、技能和自主进化等机制的<span class=\"research-keyword\">LLM-driven agents</span>。",
-    "research.timeseries": "<span class=\"research-label\">📊 <strong>时序认知：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
+    "research.agent": "<span class=\"research-label\">🤖<strong>大模型与智能体 AI：</strong></span> 关注大语言模型的<span class=\"research-keyword\">自主学习与持续学习</span>、以 chain-of-thought 为代表的<span class=\"research-keyword\">慢思考推理</span>，以及包含 agentic RL、记忆、技能和自主进化等机制的<span class=\"research-keyword\">LLM-driven agents</span>。",
+    "research.timeseries": "<span class=\"research-label\">📊<strong>时序认知：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>科学知识认知：</strong></span> 面向 agent-ready 的科学知识智能，研究<span class=\"research-keyword\">大模型驱动的文献挖掘</span>、<span class=\"research-keyword\">多模态科学文档理解</span>和<span class=\"research-keyword\">证据驱动推理</span>。",
     "research.scenarioTitle": "应用与评测场景",
     "research.scienceTitle": "AI for Science",

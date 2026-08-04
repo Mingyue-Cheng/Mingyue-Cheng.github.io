@@ -772,10 +772,17 @@ test('research collections omit Tabular Data Mining without changing publication
 
   assert.match(
     indexHtml,
-    /<button class="pub-filter-btn" data-filter="table" data-i18n="pub\.filterTable">Tabular Data Mining<\/button>/
+    /<button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub\.filterTable">Tabular Data Mining<\/button>/
   );
-  assert.match(indexHtml, /<meta property="og:description" content="[^"]*Tabular Data Mining\."/);
-  assert.match(indexHtml, /<meta name="twitter:description" content="[^"]*Tabular Data Mining\."/);
+  assert.match(indexHtml, /<li data-tags="[^"]*\btable\b[^"]*">/);
+  assert.match(
+    indexHtml,
+    /<meta property="og:description" content="[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
+  );
+  assert.match(
+    indexHtml,
+    /<meta name="twitter:description" content="[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
+  );
 });
 
 test('research page matches the homepage scenario contract', () => {

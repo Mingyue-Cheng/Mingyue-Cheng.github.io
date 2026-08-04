@@ -5,23 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mingyue Cheng | Homepage</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="canonical" href="https://mingyue-cheng.github.io/">
   <meta name="theme-color" content="#003087">
   <meta name="google-site-verification" content="kyHylTDUEgzODHrPnUw-S_22ahgQoswvjR1ui-JvdNk" />
-  <meta name="description" content="Mingyue Cheng's academic homepage. Associate Researcher at USTC State Key Laboratory of Cognitive Intelligence. Research in Time Series Analysis, LLM Agents, and Table Mining.">
-  <meta name="keywords" content="Mingyue Cheng, Time Series, LLM Agent, Table Mining, USTC, Machine Learning, Deep Learning">
+  <meta name="description" content="Mingyue Cheng's academic homepage at USTC, featuring research on LLMs and Agentic AI, time-series analysis, prediction intelligence, AI for Science, and recommender systems.">
+  <meta name="keywords" content="Mingyue Cheng, LLMs and Agentic AI, Time Series Analysis, Prediction Intelligence, AI for Science, Recommender Systems, USTC">
   <meta name="author" content="Mingyue Cheng">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mingyue Cheng | USTC">
-  <meta property="og:description" content="Associate Researcher at USTC. Research in Time Series Analysis, LLM Agents, and Tabular Data Mining.">
+  <meta property="og:description" content="Associate Researcher at USTC working on LLMs and Agentic AI, time-series analysis, prediction intelligence, and AI for Science.">
   <meta property="og:url" content="https://mingyue-cheng.github.io/">
   <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
+  <meta property="og:image:alt" content="Portrait of Mingyue Cheng">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Mingyue Cheng | USTC">
-  <meta name="twitter:description" content="Associate Researcher at USTC. Research in Time Series Analysis, LLM Agents, and Tabular Data Mining.">
+  <meta name="twitter:description" content="Associate Researcher at USTC working on LLMs and Agentic AI, time-series analysis, prediction intelligence, and AI for Science.">
   <meta name="twitter:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
   <style>
 /* ===== Variables ===== */
@@ -51,6 +53,31 @@ body {
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
   text-align: justify;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+:focus-visible {
+  outline: 3px solid rgba(0, 48, 135, 0.36);
+  outline-offset: 3px;
+}
+[id] {
+  scroll-margin-top: 78px;
 }
 
 /* ===== Container ===== */
@@ -857,7 +884,9 @@ html[lang="zh-CN"] .footer-title {
   font-family: var(--font);
   transition: all 0.2s;
 }
-.pub-filter-btn:hover, .pub-filter-btn.active {
+.pub-filter-btn:hover,
+.pub-filter-btn.active,
+.pub-filter-btn[aria-pressed="true"] {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
@@ -921,17 +950,33 @@ html[lang="zh-CN"] .footer-title {
   padding-left: 10px;
   border-left: 3px solid var(--accent);
   line-height: 1.3;
+}
+.pub-year-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 4px 2px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: left;
   cursor: pointer;
   user-select: none;
 }
-.pub-year-heading::after {
-  content: ' ▲';
+.pub-year-toggle::after {
+  content: '▲';
   font-size: 11px;
   opacity: 0.45;
-  margin-left: 5px;
 }
-.pub-year-heading.pub-year-collapsed::after {
-  content: ' ▼';
+.pub-year-heading.pub-year-collapsed .pub-year-toggle::after {
+  content: '▼';
+}
+.pub-year-toggle:disabled {
+  color: inherit;
+  opacity: 1;
+  cursor: default;
 }
 .pub-list {
   font-size: 15px;
@@ -1369,17 +1414,30 @@ html[lang="zh-CN"] .footer-title {
 #back-to-top:hover {
   background-color: #00226b;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
   </style>
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260728">
 </head>
 <body>
+<a class="skip-link" href="#main-content" data-i18n="nav.skip">Skip to main content</a>
 
 <!-- ===== Navigation ===== -->
 <header class="site-header">
   <div class="container">
     <div class="nav-inner">
-      <a href="index.html#home" class="nav-logo" data-i18n="nav.logo">Homepage</a>
-      <nav class="nav-links" id="primary-nav">
+      <a href="index.html#home" class="nav-logo" aria-current="page" data-i18n="nav.logo">Homepage</a>
+      <nav class="nav-links" id="primary-nav" aria-label="Primary navigation" data-i18n-aria-label="a11y.primaryNav">
         <a href="research.html" data-i18n="nav.research">Research</a>
         <a href="news.html" data-i18n="nav.news">News</a>
         <a href="publications.html" data-i18n="nav.publications">Publications</a>
@@ -1388,24 +1446,25 @@ html[lang="zh-CN"] .footer-title {
         <a href="service.html" data-i18n="nav.service">Service</a>
         <a href="resources.html" data-i18n="nav.resources">Resources</a>
       </nav>
-      <button class="language-toggle" type="button" id="languageToggle" aria-label="Switch language">中文</button>
-      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+      <button class="language-toggle" type="button" id="languageToggle" aria-label="Switch language" data-i18n-aria-label="a11y.switchLanguage">中文</button>
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation" data-i18n-aria-label="a11y.toggleNav" aria-controls="primary-nav" aria-expanded="false">
         <span class="nav-toggle-lines"></span>
       </button>
     </div>
   </div>
 </header>
 
+<main id="main-content" tabindex="-1">
 <!-- ===== Profile ===== -->
 <div id="home" class="profile-section">
   <div class="container">
     <div class="profile-wrap">
-      <img class="profile-photo" src="./HomePage_files/Mycheng-6.png" alt="Mingyue Cheng">
+      <img class="profile-photo" src="./HomePage_files/Mycheng-6.png" alt="Mingyue Cheng" width="358" height="441" decoding="async">
       <div class="profile-info">
         <h1 class="profile-name">
-          <a class="profile-home-link" href="index.html" aria-label="Refresh homepage">Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span></a>
+          <a class="profile-home-link" href="index.html" aria-label="Refresh homepage" data-i18n-aria-label="a11y.profileHome">Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span></a>
         </h1>
-        <div class="profile-title" data-i18n="profile.title">Ph.D &nbsp;·&nbsp; Associate Researcher</div>
+        <div class="profile-title" data-i18n="profile.title">Ph.D. &nbsp;·&nbsp; Associate Researcher</div>
         <div class="profile-affil">
           <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener">State Key Laboratory of Cognitive Intelligence</a><br>
           <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener">School of Computer Science and Technology</a>,&nbsp;
@@ -1413,7 +1472,7 @@ html[lang="zh-CN"] .footer-title {
         </div>
         <div class="profile-badges">
           <a href="https://ustcagi.github.io/" target="_blank" rel="noopener" class="badge">USTC-AGI Group</a>
-          <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl" target="_blank" rel="noopener" class="badge">Google Scholar</a>
+          <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl" target="_blank" rel="noopener" class="badge">Google Scholar</a>
           <a href="https://github.com/Mingyue-Cheng/" target="_blank" rel="noopener" class="badge">GitHub</a>
         </div>
         <div class="profile-contact">
@@ -1535,18 +1594,18 @@ html[lang="zh-CN"] .footer-title {
         <h2 id="selected-publications" class="section-heading" data-i18n="pub.heading">Selected Publications</h2>
         <p class="pub-note" data-i18n="pub.note">(* Corresponding Author, <sup>+</sup> Equal Contribution)</p>
       </div>
-      <div class="pub-filters">
-        <button class="pub-filter-btn active" data-filter="all" data-i18n="pub.filterAll">All</button>
-        <button class="pub-filter-btn" data-filter="llm-agent" data-i18n="pub.filterAgent">LLMs and Agentic AI</button>
-        <button class="pub-filter-btn" data-filter="timeseries" data-i18n="pub.filterTime">Time Series Analysis</button>
-        <button class="pub-filter-btn" data-filter="table" data-i18n="pub.filterTable">Tabular Data Mining</button>
-        <button class="pub-filter-btn" data-filter="recsys" data-i18n="pub.filterRec">AI for User Modeling</button>
-        <button class="pub-filter-btn" data-filter="ai4science" data-i18n="pub.filterKnowledge">Scientific Knowledge Cognition</button>
+      <div class="pub-filters" role="group" aria-label="Filter publications by research area" data-i18n-aria-label="a11y.publicationFilters">
+        <button class="pub-filter-btn active" type="button" aria-pressed="true" data-filter="all" data-i18n="pub.filterAll">All</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="llm-agent" data-i18n="pub.filterAgent">LLMs and Agentic AI</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="timeseries" data-i18n="pub.filterTime">Time Series Analysis</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub.filterTable">Tabular Data Mining</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="recsys" data-i18n="pub.filterRec">Recommender Systems</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="ai4science" data-i18n="pub.filterKnowledge">AI for Science</button>
       </div>
     </div>
 
-    <h3 class="pub-year-heading">📘 Preprint</h3>
-    <ol class="pub-list">
+    <h3 class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-preprints">📘 Preprint</button></h3>
+    <ol class="pub-list" id="publication-list-preprints">
 
       <!-- <li data-tags="agent llm"><strong>Mingyue Cheng</strong>, Jie Ouyang, Shuo Yu, Ruiran Yan, Yucong Luo, Zirui Liu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Agent-R1: Training Powerful LLM Agents with End-to-End Reinforcement Learning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2511.14460" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">Code</a>]</li> -->
 
@@ -1570,8 +1629,8 @@ html[lang="zh-CN"] .footer-title {
 
     </ol>
 
-    <h3 class="pub-year-heading">📘 Released Survey</h3>
-    <ol class="pub-list">
+    <h3 class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-surveys">📘 Released Survey</button></h3>
+    <ol class="pub-list" id="publication-list-surveys">
 
       <li data-tags="agent llm"><strong>Mingyue Cheng</strong>, Daoyu Wang, Shuo Yu, Qingchuan Li, Jie Ouyang, Yucong Luo, Yiju Zhang, Qi Liu*, Enhong Chen, <strong>A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective</strong>. (Preprint) [<a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener">Preprint</a>]</li>
 
@@ -1582,8 +1641,8 @@ html[lang="zh-CN"] .footer-title {
 
     </ol>
 
-    <h3 class="pub-year-heading">🐎 Year of the Fire Horse (Bing Wu Year, 2026)</h3>
-    <ol class="pub-list">
+    <h3 class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-2026">🐎 Year of the Fire Horse (Bing Wu Year, 2026)</button></h3>
+    <ol class="pub-list" id="publication-list-2026">
       <li data-tags="llm"><strong>Mingyue Cheng</strong>, Yucong Luo, Jie Ouyang, Qi Liu*, Huijie Liu, Li Li, Shuo Yu, Bohou Zhang, Jiawei Cao, Jie Ma, Daoyu Wang, Enhong Chen, <strong>A Survey on Knowledge-Oriented Retrieval-Augmented Generation</strong>. <em>ACM Transactions on Information Systems (ACM TOIS) Accepted</em>. [<a href="https://arxiv.org/pdf/2503.10677" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/USTCAGI/Awesome-Papers-Retrieval-Augmented-Generation" target="_blank" rel="noopener">Code</a>]</li>
 
       <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Xiaoyu Tao, Huajian Zhang, Qi Liu*, Enhong Chen, <strong>InstructTime++: Time Series Classification with Multimodal Language Modeling via Implicit Feature Enhancement</strong>. <em>ACM Transactions on Intelligent Systems and Technology (ACM TIST) Accepted</em>. [<a href="https://arxiv.org/pdf/2601.14968" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>]</li>
@@ -1613,8 +1672,8 @@ html[lang="zh-CN"] .footer-title {
       <!-- <li data-tags="llm">Ruisong Han, Jiahao Zhang, Guofeng Zhang, <strong>Mingyue Cheng</strong>, Changqing Zhang, Zongbo Han, <strong>Retrieval-augmented prompt for out-of-distribution detection</strong>. <em>Pattern Recognition</em>, 179: 113779, Nov 2026. [DOI]</li> -->
     </ol>
 
-    <h3 class="pub-year-heading">🐍 Year of the Wood Snake (Yi Si Year, 2025)</h3>
-    <ol class="pub-list">
+    <h3 class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-2025">🐍 Year of the Wood Snake (Yi Si Year, 2025)</button></h3>
+    <ol class="pub-list" id="publication-list-2025">
       <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Jiqian Yang, Tingyue Pan, Qi Liu*, Zhi Li, <strong>ConvTimeNet: A Deep Hierarchical Fully Convolutional Model for Multivariate Time Series Analysis</strong>, <em>ACM WWW2025</em>, Sydney, 2025. [<a href="https://arxiv.org/pdf/2403.01493" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/ConvTimeNet" target="_blank" rel="noopener">Code</a>] <span class="sktime-note">— Included in <a href="https://www.sktime.net/en/stable/" target="_blank" rel="noopener"><em>sktime</em></a></span></li>
       <li data-tags="timeseries llm">Xiaoyu Tao, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Yucong Luo, Qi Liu, Enhong Chen, <strong>Hierarchical Multimodal LLMs with Semantic Space Alignment for Enhanced Time Series Classification</strong>. (<em>ACM Transactions on Intelligent Systems and Technology (ACM TIST)</em>) [<a href="https://arxiv.org/pdf/2410.18686" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/HiTime" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="timeseries llm"><strong>Mingyue Cheng</strong>, Yiheng Chen, Qi Liu*, Zhiding Liu, Yucong Luo, Enhong Chen, <strong>InstrucTime: Advancing Time Series Classification with Multimodal Language Modeling</strong>, <em>ACM WSDM2025</em> (<font color="red"><b>Best of WSDM</b></font>): 792–800, Hannover, 2025. [PDF] [<a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">Code</a>] [<a href="./files/posters/instructtime_poster.pdf" target="_blank" rel="noopener">Poster</a>]</li>
@@ -1635,8 +1694,8 @@ html[lang="zh-CN"] .footer-title {
       <!-- <li data-tags="llm recsys">Yue Chen, Susen Yang, Tong Zhang, Chao Wang, <strong>Mingyue Cheng</strong>, Chenyi Lei, Han Li, <strong>Lasso: Large Language Model-based User Simulator for Cross-Domain Recommendation</strong>, <em>RecSys 2025</em>, Prague, 2025.</li> -->
     </ol>
 
-    <h3 class="pub-year-heading">🐉 Year of the Wood Dragon (Jia Chen Year, 2024)</h3>
-    <ol class="pub-list">
+    <h3 class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-2024">🐉 Year of the Wood Dragon (Jia Chen Year, 2024)</button></h3>
+    <ol class="pub-list" id="publication-list-2024">
       <li data-tags="llm agent ai4science">Jie Ouyang, Yucong Luo, <strong>Mingyue Cheng*</strong>, Shuo Yu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Revisiting the Solution of Meta KDD Cup 2024: CRAG</strong>. (KDD Cup Workshop, <font color="red"><b>2nd Place in Task 2 &amp; Task 3</b></font>) [<a href="./files/posters/KDD-slide-v4.pdf" target="_blank" rel="noopener">Slides</a>] [<a href="./files/posters/crag_kddcup.pdf" target="_blank" rel="noopener">Poster</a>]</li>
       <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Qi Liu*, Wenyu Zhang, Zhiding Liu, Hongke Zhao, Enhong Chen, <strong>A General Tail Item Representation Enhancement Framework for Sequential Recommender Systems</strong>, <em>Frontiers of Computer Science (FCS)</em>, 2024, 18(6): 1–12. [<a href="./files/papers/tailrec-fcs2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TailRec" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="recsys">Rujiao Zhang, Hao Zhang, Yucong Luo, Zhiding Liu, <strong>Mingyue Cheng</strong>, Qi Liu, Enhong Chen*, <strong>Learning the Dynamics in Sequential Recommendation by Exploiting Real-time Information</strong>, <em>ACM CIKM2024</em>: 4288–4292, Oct 2024. [PDF]</li>
@@ -1650,8 +1709,8 @@ html[lang="zh-CN"] .footer-title {
       <li data-tags="recsys">Junchen Fu, Fajie Yuan, Yu Song, Zheng Yuan, <strong>Mingyue Cheng</strong>, et al., <strong>Exploring Adapter-based Transfer Learning for Recommender Systems</strong>, <em>ACM WSDM'2024</em>: 208–217, Mar 2024. [<a href="https://arxiv.org/pdf/2305.15036" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/westlake-repl/Adapter4Rec/" target="_blank" rel="noopener">Code</a>]</li>
     </ol>
 
-    <h3 class="pub-year-heading">📘 2023 and Before</h3>
-    <ol class="pub-list">
+    <h3 class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-legacy">📘 2023 and Before</button></h3>
+    <ol class="pub-list" id="publication-list-legacy">
       <li data-tags="timeseries">Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Zhenya Huang, Qi Liu, Yanhu Xie, Enhong Chen, <strong>Adaptive Normalization for Non-stationary Time Series Forecasting: A Temporal Slice Perspective</strong>, <em>NeurIPS'2023</em>: 36, New Orleans, 2023. [<a href="./files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/icantnamemyself/SAN" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="recsys">耿杰, 刘春丽*, 魏雪梅, <strong>程明月</strong>, 袁昆, 李洋, 刘业政, <strong>基于用户重购行为的产品推荐方法</strong>, <em>计算机研究与发展</em> 2023, 60(8): 1795–1807.</li>
       <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Qi Liu*, Zhiding Liu, Zhi Li, Yucong Luo, Enhong Chen, <strong>FormerTime: Hierarchical Multi-scale Representation for Multivariate Time Series Classification</strong>, <em>ACM WWW'2023</em>: 1437–1445, Austin, 2023. [<a href="./files/papers/formertime-www2023.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/FormerTime" target="_blank" rel="noopener">Code</a>]</li>
@@ -1989,16 +2048,16 @@ html[lang="zh-CN"] .footer-title {
   <div class="container">
     <h2 id="education" class="section-heading" data-i18n="education.heading">Education</h2>
     <ul class="timeline-list">
-      <li data-i18n="education.phd">Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D Degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
+      <li data-i18n="education.phd">Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D. degree, <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener"><strong>University of Science and Technology of China (USTC)</strong></a>, China</li>
       <li data-i18n="education.bachelor">Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href="http://www.hfut.edu.cn/" target="_blank" rel="noopener"><strong>Hefei University of Technology (HFUT)</strong></a>, China</li>
     </ul>
   </div>
 </div>
 
-<!-- ===== Working Experience ===== -->
+<!-- ===== Professional Experience ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="experience" class="section-heading" data-i18n="experience.heading">Working Experiences</h2>
+    <h2 id="experience" class="section-heading" data-i18n="experience.heading">Professional Experience</h2>
     <ul class="timeline-list">
       <li data-i18n="experience.current">Jun. 2023 ~ Present, Associate Researcher, School of Computer Science and Technology, USTC, Hefei, China</li>
       <li data-i18n="experience.assistant">Jan. 2021 ~ Jun. 2023, Research Assistant, Research Center for Big Data in Intelligent Healthcare, USTC, Hefei, China</li>
@@ -2142,9 +2201,10 @@ html[lang="zh-CN"] .footer-title {
   </div>
 </div>
 
+</main>
 
 <!-- ===== Back to Top Button ===== -->
-<button id="back-to-top" aria-label="Back to top">
+<button id="back-to-top" aria-label="Back to top" data-i18n-aria-label="a11y.backToTop">
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
@@ -2168,7 +2228,7 @@ html[lang="zh-CN"] .footer-title {
           <span class="footer-highlight" data-i18n="footer.global">Global Reach</span>
         </div>
         <div class="footer-links">
-          <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&hl" target="_blank" rel="noopener">Google Scholar</a>
+          <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl" target="_blank" rel="noopener">Google Scholar</a>
           <a class="footer-link" href="mailto:mycheng@ustc.edu.cn" data-i18n="footer.contact">Contact</a>
         </div>
       </div>
@@ -2204,7 +2264,7 @@ html[lang="zh-CN"] .footer-title {
       </div>
     </div>
     -->
-    <div class="footer-bottom" data-i18n="footer.bottom">© 2026 Mingyue Cheng. Last updated in July 2026.</div>
+    <div class="footer-bottom" data-i18n="footer.bottom">© 2026 Mingyue Cheng. Last updated in August 2026.</div>
   </div>
 </footer>
 
@@ -2214,6 +2274,7 @@ html[lang="zh-CN"] .footer-title {
 const i18n = {
   en: {
     "nav.logo": "Homepage",
+    "nav.skip": "Skip to main content",
     "nav.research": "Research",
     "nav.news": "News",
     "nav.publications": "Publications",
@@ -2221,7 +2282,13 @@ const i18n = {
     "nav.award": "Awards",
     "nav.service": "Service",
     "nav.resources": "Resources",
-    "profile.title": "Ph.D &nbsp;·&nbsp; Associate Researcher",
+    "a11y.primaryNav": "Primary navigation",
+    "a11y.switchLanguage": "Switch language",
+    "a11y.toggleNav": "Toggle navigation",
+    "a11y.profileHome": "Refresh homepage",
+    "a11y.publicationFilters": "Filter publications by research area",
+    "a11y.backToTop": "Back to top",
+    "profile.title": "Ph.D. &nbsp;·&nbsp; Associate Researcher",
     "profile.emailLabel": "Email:",
     "profile.addressLabel": "Address:",
     "profile.address": "B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031",
@@ -2251,14 +2318,14 @@ const i18n = {
     "pub.filterAgent": "LLMs and Agentic AI",
     "pub.filterTime": "Time Series Analysis",
     "pub.filterTable": "Tabular Data Mining",
-    "pub.filterRec": "AI for User Modeling",
-    "pub.filterKnowledge": "Scientific Knowledge Cognition",
+    "pub.filterRec": "Recommender Systems",
+    "pub.filterKnowledge": "AI for Science",
     "opensource.heading": "Open Source",
     "datasets.heading": "Benchmarks &amp; Datasets",
     "education.heading": "Education",
-    "education.phd": "Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D Degree, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>University of Science and Technology of China (USTC)</strong></a>, China",
+    "education.phd": "Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D. degree, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>University of Science and Technology of China (USTC)</strong></a>, China",
     "education.bachelor": "Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href=\"http://www.hfut.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>Hefei University of Technology (HFUT)</strong></a>, China",
-    "experience.heading": "Working Experiences",
+    "experience.heading": "Professional Experience",
     "experience.current": "Jun. 2023 ~ Present, Associate Researcher, School of Computer Science and Technology, USTC, Hefei, China",
     "experience.assistant": "Jan. 2021 ~ Jun. 2023, Research Assistant, Research Center for Big Data in Intelligent Healthcare, USTC, Hefei, China",
     "experience.tencent": "Jun. 2019 ~ Oct. 2019, Research Intern, Data Service Center (DSC), Platform and Content Group (PCG), Tencent, Shenzhen, China",
@@ -2286,10 +2353,11 @@ const i18n = {
     "footer.mapFallbackTitle": "Live visitor map is temporarily unavailable",
     "footer.mapFallbackLink": "Open ClustrMaps",
     "footer.hint": "Powered by <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a>. Click the map for details.",
-    "footer.bottom": "© 2026 Mingyue Cheng. Last updated in July 2026."
+    "footer.bottom": "© 2026 Mingyue Cheng. Last updated in August 2026."
   },
   zh: {
     "nav.logo": "主页",
+    "nav.skip": "跳至主要内容",
     "nav.research": "研究方向",
     "nav.news": "新闻",
     "nav.publications": "论文",
@@ -2297,6 +2365,12 @@ const i18n = {
     "nav.award": "奖励",
     "nav.service": "学术服务",
     "nav.resources": "资源",
+    "a11y.primaryNav": "主导航",
+    "a11y.switchLanguage": "切换语言",
+    "a11y.toggleNav": "展开或收起导航",
+    "a11y.profileHome": "刷新主页",
+    "a11y.publicationFilters": "按研究方向筛选论文",
+    "a11y.backToTop": "返回顶部",
     "profile.title": "博士 &nbsp;·&nbsp; 副研究员",
     "profile.emailLabel": "邮箱：",
     "profile.addressLabel": "地址：",
@@ -2327,8 +2401,8 @@ const i18n = {
     "pub.filterAgent": "大模型与智能体",
     "pub.filterTime": "时序分析",
     "pub.filterTable": "表格挖掘",
-    "pub.filterRec": "推荐",
-    "pub.filterKnowledge": "科学知识认知",
+    "pub.filterRec": "推荐系统",
+    "pub.filterKnowledge": "科学智能",
     "opensource.heading": "开源项目",
     "datasets.heading": "基准与数据集",
     "education.heading": "教育经历",
@@ -2362,7 +2436,7 @@ const i18n = {
     "footer.mapFallbackTitle": "实时访问地图暂时不可用",
     "footer.mapFallbackLink": "打开 ClustrMaps",
     "footer.hint": "由 <a href=\"https://clustrmaps.com/\" target=\"_blank\" rel=\"noopener\">ClustrMaps</a> 提供支持。点击地图可查看详情。",
-    "footer.bottom": "© 2026 程明月。最后更新于 2026 年 7 月。"
+    "footer.bottom": "© 2026 程明月。最后更新于 2026 年 8 月。"
   }
 };
 
@@ -2375,6 +2449,11 @@ function translatePage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dictionary[key]) el.innerHTML = dictionary[key];
+  });
+
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+    const key = el.getAttribute('data-i18n-aria-label');
+    if (dictionary[key]) el.setAttribute('aria-label', dictionary[key]);
   });
 
   const toggle = document.getElementById('languageToggle');
@@ -2429,6 +2508,7 @@ if (document.readyState === 'loading') {
   const filterBtns = document.querySelectorAll('.pub-filter-btn');
   const pubItems = document.querySelectorAll('.pub-list li[data-tags]');
   const yearHeadings = document.querySelectorAll('.pub-year-heading');
+  const yearToggles = document.querySelectorAll('.pub-year-toggle');
 
   // collapsed state: Preprint, Released Survey, and 2026 start expanded
   const collapsedState = new Map();
@@ -2443,7 +2523,9 @@ if (document.readyState === 'loading') {
   function applyCollapseState() {
     collapsedState.forEach((collapsed, h) => {
       const ol = h.nextElementSibling;
+      const toggle = h.querySelector('.pub-year-toggle');
       if (!ol) return;
+      if (toggle) toggle.setAttribute('aria-expanded', String(!collapsed));
       if (collapsed) {
         h.classList.add('pub-year-collapsed');
         ol.style.display = 'none';
@@ -2456,11 +2538,11 @@ if (document.readyState === 'loading') {
 
   applyCollapseState();
 
-  // click heading to toggle (only in "all" filter mode)
-  yearHeadings.forEach(h => {
-    h.addEventListener('click', () => {
-      const activeBtn = document.querySelector('.pub-filter-btn.active');
-      if (activeBtn && activeBtn.getAttribute('data-filter') !== 'all') return;
+  // Native buttons keep every year group keyboard-accessible.
+  yearToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const h = toggle.closest('.pub-year-heading');
+      if (!h) return;
       collapsedState.set(h, !collapsedState.get(h));
       applyCollapseState();
     });
@@ -2469,8 +2551,10 @@ if (document.readyState === 'loading') {
   // filter buttons
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      filterBtns.forEach(button => {
+        button.classList.toggle('active', button === btn);
+        button.setAttribute('aria-pressed', String(button === btn));
+      });
       const filter = btn.getAttribute('data-filter');
 
       pubItems.forEach(item => {
@@ -2487,17 +2571,23 @@ if (document.readyState === 'loading') {
       });
 
       if (filter === 'all') {
+        yearToggles.forEach(toggle => { toggle.disabled = false; });
         yearHeadings.forEach(h => { h.style.display = ''; });
         applyCollapseState();
       } else {
         // expand all sections with matching items; hide those without
         yearHeadings.forEach(h => {
           const ol = h.nextElementSibling;
+          const toggle = h.querySelector('.pub-year-toggle');
           if (!ol) return;
           const hasVisible = Array.from(ol.querySelectorAll('li')).some(li => li.style.display !== 'none');
           h.classList.remove('pub-year-collapsed');
           h.style.display = hasVisible ? '' : 'none';
           ol.style.display = hasVisible ? '' : 'none';
+          if (toggle) {
+            toggle.disabled = true;
+            toggle.setAttribute('aria-expanded', 'true');
+          }
         });
       }
     });
@@ -2621,7 +2711,8 @@ document.addEventListener("DOMContentLoaded", initClustrMaps);
     }
   }, { passive: true });
   btn.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   });
 })();
 </script>

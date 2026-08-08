@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
+const newsHtml = readFileSync(join(root, 'news.html'), 'utf8');
 const publicationsHtml = readFileSync(join(root, 'publications.html'), 'utf8');
 const count = (source, pattern) => (source.match(pattern) || []).length;
 
@@ -277,4 +278,26 @@ test('CIKM 2026 Demo Track papers are synchronized after the leading CSUR entry'
     assert.equal(count(source, /Agent-R1: A Unified and Modular Framework/g), 1, `${name} Agent-R1 count`);
     assert.equal(count(source, /TabClaw: An Interactive and Self-Evolving Agent/g), 1, `${name} TabClaw count`);
   }
+});
+
+test('August 2026 acceptance news is synchronized across the homepage and News page', () => {
+  const expected = [
+    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> being accepted by <strong>ACM Computing Surveys (ACM CSUR)</strong>!',
+    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our demo papers <strong>Agent-R1</strong> and <strong>TabClaw</strong> being accepted to the <strong>ACM CIKM 2026 Demo Track</strong>!'
+  ];
+  const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
+  const newsPage2026 = sectionBetween(
+    newsHtml,
+    '<div class="news-year-heading">2026</div>',
+    '<div class="news-year-heading">2025</div>'
+  );
+  const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
+  const newsPageEntries = [...newsPage2026.matchAll(/<li class="news-item"><span class="news-dot"><\/span><span class="news-body">([\s\S]*?)<\/span><\/li>/g)].map((match) => match[1]);
+
+  assert.deepEqual(homepageEntries.slice(0, 2), expected, 'homepage acceptance news order and copy');
+  assert.deepEqual(newsPageEntries.slice(0, 2), expected, 'News page acceptance news order and copy');
+  assert.match(homepageEntries[2], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
+  assert.match(newsPageEntries[2], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
+  assert.equal(count(homepageNews, /ACM CIKM 2026 Demo Track/g), 1, 'homepage combined CIKM news count');
+  assert.equal(count(newsPage2026, /ACM CIKM 2026 Demo Track/g), 1, 'News page combined CIKM news count');
 });

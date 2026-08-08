@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
+const publicationsHtml = readFileSync(join(root, 'publications.html'), 'utf8');
 const count = (source, pattern) => (source.match(pattern) || []).length;
 
 function sectionBetween(source, startMarker, endMarker) {
@@ -165,4 +166,59 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
   assert.doesNotMatch(indexHtml, /citations\?user=74IhSx8AAAAJ&hl/);
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
+});
+
+test('CastFSR is the leading preprint with the supplied author order and title', () => {
+  const preprintSections = [
+    ['homepage', sectionBetween(
+      indexHtml,
+      '<ol class="pub-list" id="publication-list-preprints">',
+      '</ol>'
+    )],
+    ['publications page', sectionBetween(
+      publicationsHtml,
+      '<!-- ===== Preprint ===== -->',
+      '<!-- ===== Released Survey ===== -->'
+    )]
+  ];
+
+  for (const [name, source] of preprintSections) {
+    const preprints = source.replace(/<!--[\s\S]*?-->/g, '');
+    const firstEntry = preprints.match(/<li data-tags="[^"]+">[\s\S]*?<\/li>/)?.[0] || '';
+
+    assert.match(firstEntry, /^<li data-tags="timeseries agent llm">/, `${name} tags`);
+    assert.match(
+      firstEntry,
+      /Xiaoyu Tao, <strong>Mingyue Cheng<\/strong>, Bokai Pan, Chuang Jiang, Huanjian Zhang, Tian Gao, Yaguo Liu, Qi Liu, Enhong Chen/,
+      `${name} authors`
+    );
+    assert.match(
+      firstEntry,
+      /<strong>CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting<\/strong>\. \(Preprint\)/,
+      `${name} title`
+    );
+    assert.match(
+      firstEntry,
+      /\[<a href="https:\/\/arxiv\.org\/abs\/2608\.03031" target="_blank" rel="noopener">ArXiv<\/a>\]/,
+      `${name} arXiv link`
+    );
+    assert.equal(count(firstEntry, /https:\/\/arxiv\.org\/abs\/2608\.03031/g), 1, `${name} arXiv link count`);
+    assert.equal(count(preprints, /CastFSR:/g), 1, `${name} CastFSR count`);
+  }
+});
+
+test('table mining survey shows ACM CSUR acceptance on both publication lists', () => {
+  const title = 'A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects';
+
+  for (const [name, source] of [
+    ['homepage', indexHtml],
+    ['publications page', publicationsHtml]
+  ]) {
+    const entries = [...source.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
+    const entry = entries.find((candidate) => candidate.includes(title)) || '';
+
+    assert.match(entry, /<em>ACM Computing Surveys \(ACM CSUR\) Accepted<\/em>\./, `${name} status`);
+    assert.doesNotMatch(entry, /\(Preprint\)/, `${name} stale preprint status`);
+    assert.equal(entries.filter((candidate) => candidate.includes(title)).length, 1, `${name} entry count`);
+  }
 });

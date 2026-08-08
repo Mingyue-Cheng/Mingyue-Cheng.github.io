@@ -222,3 +222,59 @@ test('table mining survey shows ACM CSUR acceptance on both publication lists', 
     assert.equal(entries.filter((candidate) => candidate.includes(title)).length, 1, `${name} entry count`);
   }
 });
+
+test('ACM CSUR survey is filed as the leading 2026 publication on both pages', () => {
+  const title = 'A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects';
+  const locations = [
+    ['homepage',
+      sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-surveys">', '</ol>'),
+      sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')],
+    ['publications page',
+      sectionBetween(publicationsHtml, '<!-- ===== Released Survey ===== -->', '<!-- ===== 2026 ===== -->'),
+      sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')]
+  ];
+
+  for (const [name, releasedSurveys, publications2026] of locations) {
+    const first2026Entry = publications2026.match(/<li data-tags="[^"]+">[\s\S]*?<\/li>/)?.[0] || '';
+
+    assert.equal(releasedSurveys.includes(title), false, `${name} released-survey placement`);
+    assert.equal(publications2026.includes(title), true, `${name} 2026 placement`);
+    assert.equal(first2026Entry.includes(title), true, `${name} leading 2026 placement`);
+  }
+});
+
+test('CIKM 2026 Demo Track papers are synchronized after the leading CSUR entry', () => {
+  const agentR1Title = 'Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning';
+  const tabClawTitle = 'TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning';
+  const sections = [
+    ['homepage', sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')],
+    ['publications page', sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')]
+  ];
+
+  for (const [name, source] of sections) {
+    const entries = [...source.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
+    const agentR1Entry = entries.find((entry) => entry.includes(agentR1Title)) || '';
+    const tabClawEntry = entries.find((entry) => entry.includes(tabClawTitle)) || '';
+
+    assert.equal(entries[1], agentR1Entry, `${name} Agent-R1 ordering`);
+    assert.equal(entries[2], tabClawEntry, `${name} TabClaw ordering`);
+    assert.match(agentR1Entry, /^<li data-tags="llm agent">/, `${name} Agent-R1 tags`);
+    assert.match(
+      agentR1Entry,
+      /<strong>Mingyue Cheng<\/strong>, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Jie Ouyang, Yucong Luo, Yitong Zhou, Qi Liu, Enhong Chen, <strong>Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning<\/strong>\. <em>ACM CIKM2026 Demo Track Accepted<\/em>\./,
+      `${name} Agent-R1 metadata`
+    );
+    assert.doesNotMatch(agentR1Entry, /<a\b/, `${name} Agent-R1 links`);
+
+    assert.match(tabClawEntry, /^<li data-tags="table agent llm">/, `${name} TabClaw tags`);
+    assert.match(
+      tabClawEntry,
+      /<strong>Mingyue Cheng<\/strong>, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Qingyang Mao, Yitong Zhou, Qi Liu, <strong>TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning<\/strong>\. <em>ACM CIKM2026 Demo Track Accepted<\/em>\./,
+      `${name} TabClaw metadata`
+    );
+    assert.doesNotMatch(tabClawEntry, /<a\b/, `${name} TabClaw links`);
+
+    assert.equal(count(source, /Agent-R1: A Unified and Modular Framework/g), 1, `${name} Agent-R1 count`);
+    assert.equal(count(source, /TabClaw: An Interactive and Self-Evolving Agent/g), 1, `${name} TabClaw count`);
+  }
+});

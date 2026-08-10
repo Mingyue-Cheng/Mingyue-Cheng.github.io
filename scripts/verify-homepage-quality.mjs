@@ -169,7 +169,16 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });
 
-test('CastFSR is the leading preprint with the supplied author order and title', () => {
+test('Preprints follow the requested synchronized paper order', () => {
+  const expectedTitles = [
+    'Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting',
+    'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
+    'CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting',
+    'Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting',
+    'PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization',
+    'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
+    'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning'
+  ];
   const preprintSections = [
     ['homepage', sectionBetween(
       indexHtml,
@@ -185,25 +194,29 @@ test('CastFSR is the leading preprint with the supplied author order and title',
 
   for (const [name, source] of preprintSections) {
     const preprints = source.replace(/<!--[\s\S]*?-->/g, '');
-    const firstEntry = preprints.match(/<li data-tags="[^"]+">[\s\S]*?<\/li>/)?.[0] || '';
+    const entries = [...preprints.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)]
+      .map((match) => match[0]);
+    const titles = entries.map((entry) => entry.match(/<strong>([^<]+)<\/strong>\. \(Preprint\)/)?.[1] || '');
+    const castFsrEntry = entries[1] || '';
 
-    assert.match(firstEntry, /^<li data-tags="timeseries agent llm">/, `${name} tags`);
+    assert.deepEqual(titles, expectedTitles, `${name} preprint order`);
+    assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm">/, `${name} tags`);
     assert.match(
-      firstEntry,
+      castFsrEntry,
       /Xiaoyu Tao, <strong>Mingyue Cheng<\/strong>, Bokai Pan, Chuang Jiang, Huanjian Zhang, Tian Gao, Yaguo Liu, Qi Liu, Enhong Chen/,
       `${name} authors`
     );
     assert.match(
-      firstEntry,
+      castFsrEntry,
       /<strong>CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting<\/strong>\. \(Preprint\)/,
       `${name} title`
     );
     assert.match(
-      firstEntry,
+      castFsrEntry,
       /\[<a href="https:\/\/arxiv\.org\/abs\/2608\.03031" target="_blank" rel="noopener">ArXiv<\/a>\]/,
       `${name} arXiv link`
     );
-    assert.equal(count(firstEntry, /https:\/\/arxiv\.org\/abs\/2608\.03031/g), 1, `${name} arXiv link count`);
+    assert.equal(count(castFsrEntry, /https:\/\/arxiv\.org\/abs\/2608\.03031/g), 1, `${name} arXiv link count`);
     assert.equal(count(preprints, /CastFSR:/g), 1, `${name} CastFSR count`);
   }
 });

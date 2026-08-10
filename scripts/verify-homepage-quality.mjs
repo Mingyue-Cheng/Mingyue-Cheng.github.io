@@ -237,7 +237,7 @@ test('table mining survey shows ACM CSUR acceptance on both publication lists', 
   }
 });
 
-test('ACM CSUR survey is filed as the leading 2026 publication on both pages', () => {
+test('ACM CSUR survey is filed in the 2026 publication list on both pages', () => {
   const title = 'A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects';
   const locations = [
     ['homepage',
@@ -249,15 +249,28 @@ test('ACM CSUR survey is filed as the leading 2026 publication on both pages', (
   ];
 
   for (const [name, releasedSurveys, publications2026] of locations) {
-    const first2026Entry = publications2026.match(/<li data-tags="[^"]+">[\s\S]*?<\/li>/)?.[0] || '';
-
     assert.equal(releasedSurveys.includes(title), false, `${name} released-survey placement`);
     assert.equal(publications2026.includes(title), true, `${name} 2026 placement`);
-    assert.equal(first2026Entry.includes(title), true, `${name} leading 2026 placement`);
   }
 });
 
-test('CIKM 2026 Demo Track papers are synchronized after the leading CSUR entry', () => {
+test('knowledge-oriented RAG survey leads the 2026 publication list on both pages', () => {
+  const title = 'A Survey on Knowledge-Oriented Retrieval-Augmented Generation';
+  const sections = [
+    ['homepage', sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')],
+    ['publications page', sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')]
+  ];
+
+  for (const [name, publications2026] of sections) {
+    const entries = [...publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
+    const surveyEntry = entries.find((entry) => entry.includes(title)) || '';
+
+    assert.equal(entries[0], surveyEntry, `${name} leading 2026 placement`);
+    assert.equal(entries.filter((entry) => entry.includes(title)).length, 1, `${name} entry count`);
+  }
+});
+
+test('CIKM 2026 Demo Track papers are synchronized at the end of the 2026 list', () => {
   const agentR1Title = 'Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning';
   const tabClawTitle = 'TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning';
   const sections = [
@@ -270,8 +283,8 @@ test('CIKM 2026 Demo Track papers are synchronized after the leading CSUR entry'
     const agentR1Entry = entries.find((entry) => entry.includes(agentR1Title)) || '';
     const tabClawEntry = entries.find((entry) => entry.includes(tabClawTitle)) || '';
 
-    assert.equal(entries[1], agentR1Entry, `${name} Agent-R1 ordering`);
-    assert.equal(entries[2], tabClawEntry, `${name} TabClaw ordering`);
+    assert.equal(entries.at(-2), agentR1Entry, `${name} Agent-R1 ordering`);
+    assert.equal(entries.at(-1), tabClawEntry, `${name} TabClaw ordering`);
     assert.match(agentR1Entry, /^<li data-tags="llm agent">/, `${name} Agent-R1 tags`);
     assert.match(
       agentR1Entry,
@@ -297,7 +310,7 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
   const papers = [
     {
       title: 'Mind2Report: A Cognitive Deep Research Agent for Expert-Level Commercial Report Synthesis',
-      authors: '<strong>Mingyue Cheng</strong>, Daoyu Wang, Qi Liu, Shuo Yu, Xiaoyu Tao, Yuqian Wang, Chengzhong Chu, Yu Duan, Mingkang Long, Enhong Chen',
+      authors: '<strong>Mingyue Cheng</strong>, Daoyu Wang, Qi Liu*, Shuo Yu, Xiaoyu Tao, Yuqian Wang, Chengzhong Chu, Yu Duan, Mingkang Long, Enhong Chen',
       tags: 'llm agent',
       pdf: 'https://arxiv.org/pdf/2601.04879',
       code: 'https://github.com/Melmaphother/Mind2Report'

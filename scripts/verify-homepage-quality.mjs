@@ -280,8 +280,61 @@ test('CIKM 2026 Demo Track papers are synchronized after the leading CSUR entry'
   }
 });
 
+test('CIKM 2026 main-track papers are synchronized and removed from Preprint', () => {
+  const papers = [
+    {
+      title: 'Mind2Report: A Cognitive Deep Research Agent for Expert-Level Commercial Report Synthesis',
+      authors: '<strong>Mingyue Cheng</strong>, Daoyu Wang, Qi Liu, Shuo Yu, Xiaoyu Tao, Yuqian Wang, Chengzhong Chu, Yu Duan, Mingkang Long, Enhong Chen',
+      tags: 'llm agent',
+      pdf: 'https://arxiv.org/pdf/2601.04879',
+      code: 'https://github.com/Melmaphother/Mind2Report'
+    },
+    {
+      title: 'Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs',
+      authors: 'Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen',
+      tags: 'timeseries agent llm',
+      pdf: 'https://www.arxiv.org/pdf/2508.09191',
+      code: 'https://github.com/lqzxt/Time-R1'
+    },
+    {
+      title: 'AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting',
+      authors: 'Xiaohan Zhang, Tian Gao, <strong>Mingyue Cheng*</strong>, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, Qi Liu',
+      tags: 'timeseries agent',
+      pdf: 'https://arxiv.org/pdf/2511.08947',
+      code: 'https://github.com/SkyeGT/AlphaCast_Official'
+    }
+  ];
+  const locations = [
+    {
+      name: 'homepage',
+      preprints: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-preprints">', '</ol>'),
+      publications2026: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')
+    },
+    {
+      name: 'publications page',
+      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== Released Survey ===== -->'),
+      publications2026: sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+    }
+  ];
+
+  for (const location of locations) {
+    for (const paper of papers) {
+      assert.equal(location.preprints.includes(paper.title), false, `${location.name} stale preprint placement for ${paper.title}`);
+      const entries = [...location.publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
+      const entry = entries.find((candidate) => candidate.includes(paper.title)) || '';
+      assert.match(entry, new RegExp(`^<li data-tags="${paper.tags}">`), `${location.name} tags for ${paper.title}`);
+      assert.equal(entry.includes(paper.authors), true, `${location.name} authors for ${paper.title}`);
+      assert.match(entry, /<em>ACM CIKM 2026 Accepted<\/em>\./, `${location.name} status for ${paper.title}`);
+      assert.equal(entry.includes(`href="${paper.pdf}"`), true, `${location.name} PDF for ${paper.title}`);
+      assert.equal(entry.includes(`href="${paper.code}"`), true, `${location.name} code for ${paper.title}`);
+      assert.equal(entries.filter((candidate) => candidate.includes(paper.title)).length, 1, `${location.name} count for ${paper.title}`);
+    }
+  }
+});
+
 test('August 2026 acceptance news is synchronized across the homepage and News page', () => {
   const expected = [
+    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our papers <strong>Mind2Report</strong>, <strong>Time-R1</strong>, and <strong>AlphaCast</strong> being accepted to <strong>ACM CIKM 2026</strong>!',
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> being accepted by <strong>ACM Computing Surveys (ACM CSUR)</strong>!',
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our demo papers <strong>Agent-R1</strong> and <strong>TabClaw</strong> being accepted to the <strong>ACM CIKM 2026 Demo Track</strong>!'
   ];
@@ -294,10 +347,10 @@ test('August 2026 acceptance news is synchronized across the homepage and News p
   const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
   const newsPageEntries = [...newsPage2026.matchAll(/<li class="news-item"><span class="news-dot"><\/span><span class="news-body">([\s\S]*?)<\/span><\/li>/g)].map((match) => match[1]);
 
-  assert.deepEqual(homepageEntries.slice(0, 2), expected, 'homepage acceptance news order and copy');
-  assert.deepEqual(newsPageEntries.slice(0, 2), expected, 'News page acceptance news order and copy');
-  assert.match(homepageEntries[2], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
-  assert.match(newsPageEntries[2], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
+  assert.deepEqual(homepageEntries.slice(0, 3), expected, 'homepage acceptance news order and copy');
+  assert.deepEqual(newsPageEntries.slice(0, 3), expected, 'News page acceptance news order and copy');
+  assert.match(homepageEntries[3], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
+  assert.match(newsPageEntries[3], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
   assert.equal(count(homepageNews, /ACM CIKM 2026 Demo Track/g), 1, 'homepage combined CIKM news count');
   assert.equal(count(newsPage2026, /ACM CIKM 2026 Demo Track/g), 1, 'News page combined CIKM news count');
 });

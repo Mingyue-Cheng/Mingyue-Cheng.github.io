@@ -537,13 +537,13 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
   assert.equal(indexHtml.includes(newAgentFocus), true, 'New agent focus wording must be present');
 });
 
-test('Time-Series Analysis direction copy stays synchronized', () => {
-  const oldTitle = 'Time-Series Cognition';
+test('Time Series Intelligence direction copy stays synchronized', () => {
+  const oldTitle = 'Time-Series Analysis';
   const oldFocus = 'context-aware predictive intelligence for complex systems';
   const oldObservationFrame = 'dynamic system observations';
   const oldReasoning = 'slow-thinking temporal reasoning';
   const expectedEnglishTimeseries =
-    '<span class="research-label">📊<strong>Time-Series Analysis:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
+    '<span class="research-label">📊<strong>Time Series Intelligence:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
   const expectedResearchCard =
     'Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.';
   const homepageSection = sectionBetween(
@@ -574,7 +574,7 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
     /^<span class="research-label">📊<strong>/,
     'Chinese research.timeseries translation must not include a space between the icon and title'
   );
-  assert.match(researchDirectionsSection, /<div class="rd-card-title">Time-Series Analysis<\/div>/);
+  assert.match(researchDirectionsSection, /<div class="rd-card-title">Time Series Intelligence<\/div>/);
   assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
 
   for (const [label, source] of [
@@ -594,7 +594,7 @@ test('Time-Series Analysis direction copy stays synchronized', () => {
   }
 });
 
-test('homepage stacks Prediction Intelligence below Time-Series Analysis', () => {
+test('homepage stacks Prediction Intelligence below Time Series Intelligence', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -615,7 +615,7 @@ test('homepage stacks Prediction Intelligence below Time-Series Analysis', () =>
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
     3,
-    'Homepage must expose LLMs, Time-Series Analysis, and Prediction Intelligence as primary directions'
+    'Homepage must expose LLMs, Time Series Intelligence, and Prediction Intelligence as primary directions'
   );
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--agent" data-i18n="research\.agent">/);
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
@@ -635,10 +635,10 @@ test('homepage stacks Prediction Intelligence below Time-Series Analysis', () =>
   );
   assert.ok(
     homepageDirections.indexOf('LLMs and Agentic AI') <
-      homepageDirections.indexOf('Time-Series Analysis') &&
-      homepageDirections.indexOf('Time-Series Analysis') <
+      homepageDirections.indexOf('Time Series Intelligence') &&
+      homepageDirections.indexOf('Time Series Intelligence') <
         homepageDirections.indexOf('Prediction Intelligence'),
-    'Homepage primary directions must keep LLMs first, followed by Time-Series Analysis and Prediction Intelligence'
+    'Homepage primary directions must keep LLMs first, followed by Time Series Intelligence and Prediction Intelligence'
   );
 
   const homepagePrimaryGridRule = cssRule(indexHtml, '.primary-directions');
@@ -659,7 +659,7 @@ test('homepage stacks Prediction Intelligence below Time-Series Analysis', () =>
     startTagsWithClass(researchDirections, 'div', 'rd-card')
       .filter((tag) => !/\shidden(?:\s|>)/.test(tag)).length,
     3,
-    'Research page must expose LLMs, Time-Series Analysis, and Prediction Intelligence as primary directions'
+    'Research page must expose LLMs, Time Series Intelligence, and Prediction Intelligence as primary directions'
   );
   assert.match(researchDirections, /<div class="rd-card rd-card--agent">/);
   assert.match(researchDirections, /<div class="rd-card rd-card--timeseries">/);
@@ -678,10 +678,10 @@ test('homepage stacks Prediction Intelligence below Time-Series Analysis', () =>
   );
   assert.ok(
     researchDirections.indexOf('LLMs and Agentic AI') <
-      researchDirections.indexOf('Time-Series Analysis') &&
-      researchDirections.indexOf('Time-Series Analysis') <
+      researchDirections.indexOf('Time Series Intelligence') &&
+      researchDirections.indexOf('Time Series Intelligence') <
         researchDirections.indexOf('Prediction Intelligence'),
-    'Primary directions must keep LLMs first, followed by Time-Series Analysis and Prediction Intelligence'
+    'Primary directions must keep LLMs first, followed by Time Series Intelligence and Prediction Intelligence'
   );
 
   const primaryGridRule = cssRule(researchHtml, '.primary-cards');
@@ -715,7 +715,7 @@ test('homepage stacks Prediction Intelligence below Time-Series Analysis', () =>
   );
 
   const expectedEnglishCollectionHtml =
-    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Analysis</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">AI for Science</a>';
+    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">AI for Science</a>';
   const expectedChineseCollectionHtml = expectedEnglishCollectionHtml.replace(
     'Research collections: ',
     '研究主页：'
@@ -913,7 +913,7 @@ test('research hero includes an accessible responsive cognitive pipeline', () =>
   assert.equal(matchCount(hero, /<svg class="cognitive-pipeline"/g), 1);
   assert.ok(hero.includes('<svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">'));
   assert.ok(hero.includes('<title id="cognitive-pipeline-title">Research program pipeline</title>'));
-  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">LLMs and Agentic AI and Time-Series Analysis converge into context representation and reasoning, supporting AI for Science and Big Data Applications.</desc>'));
+  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">LLMs and Agentic AI and Time Series Intelligence converge into context representation and reasoning, supporting AI for Science and Big Data Applications.</desc>'));
   assert.equal(matchCount(hero, /<rect class="pipeline-node(?: |")/g), 5);
   assert.equal(matchCount(hero, /<path class="pipeline-path(?: |")/g), 4);
   assert.equal(matchCount(hero, /class="pipeline-stage"/g), 3);
@@ -928,7 +928,7 @@ test('research hero includes an accessible responsive cognitive pipeline', () =>
     'CORE',
     'APPLICATIONS',
     'LLMs &amp; Agentic AI',
-    'Time-Series Analysis',
+    'Time Series Intelligence',
     'Context Representation &amp; Reasoning',
     'AI for Science',
     'Big Data Applications'

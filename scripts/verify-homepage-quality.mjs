@@ -37,6 +37,10 @@ test('homepage metadata describes the current research portfolio', () => {
     head,
     /<meta name="twitter:description" content="[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
   );
+  assert.match(
+    head,
+    /<meta name="keywords" content="[^"]*Time Series Intelligence[^"]*">/
+  );
   assert.match(head, /<meta property="og:image:alt" content="Portrait of Mingyue Cheng">/);
   assert.doesNotMatch(
     head,
@@ -270,6 +274,38 @@ test('knowledge-oriented RAG survey leads the 2026 publication list on both page
   }
 });
 
+test('OneCast TKDD acceptance is synchronized in the 2026 publication list', () => {
+  const title = 'OneCast: Structured Decomposition and Modular Generation for Cross-Domain Time Series Forecasting';
+  const authors = 'Tingyue Pan, <strong>Mingyue Cheng*</strong>, Shilong Zhang, Zhiding Liu, Xiaoyu Tao, Yucong Luo, Jintao Zhang, Qi Liu';
+  const status = '<em>ACM Transactions on Knowledge Discovery from Data (ACM TKDD) Accepted</em>.';
+  const pdf = 'https://arxiv.org/pdf/2510.24028';
+  const locations = [
+    {
+      name: 'homepage',
+      preprints: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-preprints">', '</ol>'),
+      publications2026: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')
+    },
+    {
+      name: 'publications page',
+      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== Released Survey ===== -->'),
+      publications2026: sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+    }
+  ];
+
+  for (const location of locations) {
+    assert.equal(location.preprints.includes(title), false, `${location.name} stale preprint placement`);
+    const entries = [...location.publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
+    const entry = entries.find((candidate) => candidate.includes(title)) || '';
+
+    assert.match(entry, /^<li data-tags="timeseries">/, `${location.name} OneCast tags`);
+    assert.equal(entry.includes(authors), true, `${location.name} OneCast authors`);
+    assert.equal(entry.includes(status), true, `${location.name} OneCast status`);
+    assert.equal(entry.includes(`href="${pdf}"`), true, `${location.name} OneCast PDF`);
+    assert.equal(entries.filter((candidate) => candidate.includes(title)).length, 1, `${location.name} OneCast count`);
+    assert.equal(entries[2], entry, `${location.name} OneCast third-place ordering`);
+  }
+});
+
 test('CIKM 2026 Demo Track papers are synchronized at the end of the 2026 list', () => {
   const agentR1Title = 'Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning';
   const tabClawTitle = 'TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning';
@@ -317,7 +353,7 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
     },
     {
       title: 'Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs',
-      authors: 'Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen',
+      authors: 'Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Qi Liu, Jiahao Wang, Daoyu Wang, Enhong Chen',
       tags: 'timeseries agent llm',
       pdf: 'https://www.arxiv.org/pdf/2508.09191',
       code: 'https://github.com/lqzxt/Time-R1'
@@ -358,8 +394,9 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
   }
 });
 
-test('August 2026 acceptance news is synchronized across the homepage and News page', () => {
+test('August 2026 news is synchronized across the homepage and News page', () => {
   const expected = [
+    '<strong>[Aug. 2026]</strong> 🎉 I will serve as the <strong>Publication Chair</strong> for <strong>ICEBE 2026</strong>.',
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our papers <strong>Mind2Report</strong>, <strong>Time-R1</strong>, and <strong>AlphaCast</strong> being accepted to <strong>ACM CIKM 2026</strong>!',
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> being accepted by <strong>ACM Computing Surveys (ACM CSUR)</strong>!',
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our demo papers <strong>Agent-R1</strong> and <strong>TabClaw</strong> being accepted to the <strong>ACM CIKM 2026 Demo Track</strong>!'
@@ -373,10 +410,10 @@ test('August 2026 acceptance news is synchronized across the homepage and News p
   const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
   const newsPageEntries = [...newsPage2026.matchAll(/<li class="news-item"><span class="news-dot"><\/span><span class="news-body">([\s\S]*?)<\/span><\/li>/g)].map((match) => match[1]);
 
-  assert.deepEqual(homepageEntries.slice(0, 3), expected, 'homepage acceptance news order and copy');
-  assert.deepEqual(newsPageEntries.slice(0, 3), expected, 'News page acceptance news order and copy');
-  assert.match(homepageEntries[3], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
-  assert.match(newsPageEntries[3], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
+  assert.deepEqual(homepageEntries.slice(0, 4), expected, 'homepage August news order and copy');
+  assert.deepEqual(newsPageEntries.slice(0, 4), expected, 'News page August news order and copy');
+  assert.match(homepageEntries[4], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
+  assert.match(newsPageEntries[4], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
   assert.equal(count(homepageNews, /ACM CIKM 2026 Demo Track/g), 1, 'homepage combined CIKM news count');
   assert.equal(count(newsPage2026, /ACM CIKM 2026 Demo Track/g), 1, 'News page combined CIKM news count');
 });

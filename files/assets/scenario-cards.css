@@ -51,8 +51,8 @@
 }
 
 .scenario-card--science { --scenario-color: #059669; }
+.scenario-card--industrial { --scenario-color: #0f766e; }
 .scenario-card--user { --scenario-color: #d97706; }
-.scenario-card--prediction { --scenario-color: #7c3aed; }
 
 .scenario-card-accent {
   flex: 0 0 4px;
@@ -123,37 +123,18 @@
 
 .scenario-card-body {
   flex: 1;
-  margin: 0 0 10px;
-  padding: 0 20px 21px;
+  margin: 0;
+  padding: 2px 20px 22px;
   color: var(--text);
   font-size: 14px;
-  line-height: 1.8;
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-word;
-  hyphens: none;
-  -webkit-hyphens: none;
+  line-height: 1.7;
   overflow-wrap: break-word;
   word-break: normal;
-}
-
-.research-section .scenario-card-body {
   text-align: justify;
   text-align-last: left;
   text-justify: inter-word;
   hyphens: none;
   -webkit-hyphens: none;
-  word-break: normal;
-}
-
-html[lang="zh-CN"] .research-section .scenario-card-body {
-  text-align: left;
-  text-align-last: left;
-}
-
-.scenario-card-emphasis {
-  color: var(--accent);
-  font-weight: 700;
 }
 
 @media (hover: hover) and (pointer: fine) {

@@ -11,7 +11,7 @@ const researchHtml = read('research.html');
 const siteLanguageJs = read('files/assets/site-language.js');
 const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
-const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260728">';
+const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">';
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -114,7 +114,7 @@ function hasAttributeValue(tag, attribute, value) {
 function assertCanonicalOrder(
   source,
   pageLabel,
-  expectedModifiers = ['prediction', 'science', 'user']
+  expectedModifiers = ['science', 'industrial', 'user']
 ) {
   const cardTags = startTagsWithClass(source, 'article', 'scenario-card');
   const modifierTokens = cardTags.map((tag) =>
@@ -139,14 +139,9 @@ function assertScenarioStructure(
   section,
   pageLabel,
   cardTitleTagName,
-  expectedModifiers = ['prediction', 'science', 'user']
+  expectedModifiers = ['science', 'industrial', 'user']
 ) {
   const expectedCardCount = expectedModifiers.length;
-  const expectedEmphasisCounts = { science: 5, user: 6, prediction: 5 };
-  const expectedEmphasisTotal = expectedModifiers.reduce(
-    (total, modifier) => total + expectedEmphasisCounts[modifier],
-    0
-  );
 
   assert.equal(
     matchCount(section, /<article\b/g),
@@ -169,15 +164,11 @@ function assertScenarioStructure(
     `${pageLabel} scenario section must contain exactly ${expectedCardCount} scenario-card-title elements`
   );
   assert.equal(
-    matchCount(section, /<p\b/g),
-    expectedCardCount,
-    `${pageLabel} scenario section must contain exactly ${expectedCardCount} paragraph start tags`
-  );
-  assert.equal(
     startTagsWithClass(section, 'p', 'scenario-card-body').length,
     expectedCardCount,
-    `${pageLabel} scenario section must contain exactly ${expectedCardCount} scenario-card-body paragraphs`
+    `${pageLabel} scenario section must contain exactly ${expectedCardCount} prose descriptions`
   );
+  assert.equal(matchCount(section, /<(?:ul|li)\b/g), 0, `${pageLabel} scenario cards must not use domain lists`);
   assert.equal(
     startTagsWithClass(section, 'span', 'scenario-card-icon').length,
     expectedCardCount,
@@ -193,27 +184,18 @@ function assertScenarioStructure(
     expectedCardCount,
     `${pageLabel} scenario section must contain exactly ${expectedCardCount} SVG start tags`
   );
-  assert.equal(
-    startTagsWithClass(section, 'strong', 'scenario-card-emphasis').length,
-    expectedEmphasisTotal,
-    `${pageLabel} scenario section must contain exactly ${expectedEmphasisTotal} emphasized strong elements`
-  );
-  assert.equal(
-    classTokenCount(section, 'scenario-card-emphasis'),
-    expectedEmphasisTotal,
-    `${pageLabel} scenario section must contain exactly ${expectedEmphasisTotal} scenario-card-emphasis class tokens`
-  );
   assert.doesNotMatch(section, /role="list(item)?"/, `${pageLabel} cards must not use list roles`);
   assert.doesNotMatch(section, /scenario-card--energy/, `${pageLabel} must not contain an Energy card`);
+  assert.doesNotMatch(section, /scenario-card--prediction/, `${pageLabel} must not duplicate Prediction Intelligence`);
   assertCanonicalOrder(section, pageLabel, expectedModifiers);
 
   const articles = {};
   for (const modifier of expectedModifiers) {
     const article = articleFor(section, modifier);
     assert.equal(
-      classTokenCount(article, 'scenario-card-emphasis'),
-      expectedEmphasisCounts[modifier],
-      `${pageLabel} ${modifier} article must contain exactly ${expectedEmphasisCounts[modifier]} emphasis class tokens`
+      startTagsWithClass(article, 'p', 'scenario-card-body').length,
+      1,
+      `${pageLabel} ${modifier} article must contain one scenario-card-body`
     );
     articles[modifier] = article;
   }
@@ -303,8 +285,9 @@ test('shared stylesheet implements the approved visual and responsive contract',
   assert.match(scenarioCss, /@media \(prefers-reduced-motion:\s*reduce\)/);
   assert.doesNotMatch(scenarioCss, /cursor:\s*pointer/);
   assert.doesNotMatch(scenarioCss, /\.scenario-card--energy\b/);
+  assert.doesNotMatch(scenarioCss, /\.scenario-card--prediction\b/);
 
-  for (const modifier of ['science', 'user', 'prediction']) {
+  for (const modifier of ['science', 'industrial', 'user']) {
     assert.match(scenarioCss, new RegExp(`\\.scenario-card--${modifier}\\s*\\{`));
   }
 
@@ -341,59 +324,23 @@ test('shared stylesheet implements the approved visual and responsive contract',
   const oneColumnHeader = cssRule(oneColumnLayout, '.scenario-card-header');
   assert.ok(oneColumnHeader.includes('min-height: 0;'), 'One-column headers must release the desktop minimum height');
 
-  for (const selector of ['.scenario-card-body', '.research-section .scenario-card-body']) {
-    const body = cssRule(scenarioCss, selector);
-    for (const declaration of [
-      'text-align: justify;',
-      'text-align-last: left;',
-      'text-justify: inter-word;',
-      'hyphens: none;',
-      '-webkit-hyphens: none;',
-      'word-break: normal;'
-    ]) {
-      assert.ok(body.includes(declaration), `Missing ${selector} declaration: ${declaration}`);
-    }
-    assert.equal(
-      finalDeclarationValue(body, 'text-align'),
-      'justify',
-      `${selector} must justify scenario card text across both edges`
-    );
-    assert.equal(
-      finalDeclarationValue(body, 'text-justify'),
-      'inter-word',
-      `${selector} must distribute spacing between words`
-    );
-  }
-  assert.equal(
-    finalDeclarationValue(cssRule(scenarioCss, '.scenario-card-body'), 'overflow-wrap'),
-    'break-word',
-    'Scenario card text must wrap safely within narrow card widths'
-  );
+  const body = cssRule(scenarioCss, '.scenario-card-body');
   assertFinalDeclarations(
-    cssRule(scenarioCss, '.scenario-card-body'),
+    body,
     {
-      margin: '0 0 10px',
+      margin: '0',
       'font-size': '14px',
-      'line-height': '1.8'
+      'line-height': '1.7',
+      'overflow-wrap': 'break-word',
+      'text-align': 'justify',
+      'text-align-last': 'left',
+      'text-justify': 'inter-word',
+      hyphens: 'none',
+      '-webkit-hyphens': 'none'
     },
-    'Scenario card body typography'
+    'Scenario description'
   );
-
-  const chineseBody = cssRule(
-    scenarioCss,
-    'html[lang="zh-CN"] .research-section .scenario-card-body'
-  );
-  for (const declaration of [
-    'text-align: left;',
-    'text-align-last: left;'
-  ]) {
-    assert.ok(chineseBody.includes(declaration), `Missing Chinese-mode body declaration: ${declaration}`);
-  }
-  assert.equal(
-    finalDeclarationValue(chineseBody, 'text-justify'),
-    undefined,
-    'Chinese-mode scenario bodies must not force inter-word spacing'
-  );
+  assert.doesNotMatch(scenarioCss, /\.scenario-card-list\b/);
 });
 
 test('homepage uses semantic scenario cards in canonical order', () => {
@@ -410,9 +357,9 @@ test('homepage uses semantic scenario cards in canonical order', () => {
 
   assert.match(section, /<section class="scenario-section" aria-labelledby="homepage-scenario-heading">/);
   assert.match(section, /<h3 id="homepage-scenario-heading" class="scenario-heading" data-i18n="research\.scenarioTitle">/);
-  const articles = assertScenarioStructure(section, 'Homepage', 'h4', ['science', 'user']);
+  const articles = assertScenarioStructure(section, 'Homepage', 'h4');
 
-  for (const modifier of ['science', 'user']) {
+  for (const modifier of ['science', 'industrial', 'user']) {
     const article = articles[modifier];
     for (const [tagName, className, suffix] of [
       ['h4', 'scenario-card-title', 'Title'],
@@ -437,53 +384,65 @@ test('homepage uses semantic scenario cards in canonical order', () => {
   }
 });
 
-test('homepage scenario bodies use consistent selective emphasis', () => {
+test('homepage scenario cards use the requested research narratives', () => {
   const researchArea = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
     '<!-- ===== Latest News ===== -->'
   );
   const scienceArticle = articleFor(researchArea, 'science');
+  const industrialArticle = articleFor(researchArea, 'industrial');
   const userArticle = articleFor(researchArea, 'user');
 
   assert.match(
+    scienceArticle,
+    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery\.<\/p>/,
+    'AI for Science must use the requested scientific intelligence narrative'
+  );
+  assert.match(
+    industrialArticle,
+    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Industrial \/ Complex Systems<\/h4>/,
+    'The middle card must be titled Industrial / Complex Systems'
+  );
+  assert.match(
+    industrialArticle,
+    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations\.<\/p>/,
+    'Industrial / Complex Systems must use the requested real-world systems narrative'
+  );
+  assert.match(
+    userArticle,
+    /<p class="scenario-card-body" data-i18n="research\.userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning\.<\/p>/,
+    'Recommender Systems must use the requested adaptive user intelligence narrative'
+  );
+  assert.match(
     userArticle,
     /<h4 class="scenario-card-title" data-i18n="research\.userTitle">Recommender Systems<\/h4>/,
-    'The homepage user-modeling card must be titled Recommender Systems'
-  );
-  assert.match(
-    scienceArticle,
-    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Using <strong class="scenario-card-emphasis">LLMs and Agentic AI<\/strong> for <strong class="scenario-card-emphasis">scientific literature mining<\/strong>, <strong class="scenario-card-emphasis">time-series and tabular data modeling<\/strong>, and <strong class="scenario-card-emphasis">autonomous research agents<\/strong> for <strong class="scenario-card-emphasis">scientific task solving and discovery<\/strong>\.<\/p>/,
-    'The AI for Science body must distinguish methods, research contents, and goals'
-  );
-  assert.match(
-    userArticle,
-    /<p class="scenario-card-body" data-i18n="research\.userBody">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommender systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>, with a focus on <strong class="scenario-card-emphasis">user behavior understanding<\/strong>, <strong class="scenario-card-emphasis">preference learning<\/strong>, and <strong class="scenario-card-emphasis">context-aware recommendation<\/strong>\.<\/p>/,
-    'The Recommender Systems body must describe its application scope and research themes'
-  );
-  assert.doesNotMatch(
-    userArticle,
-    /<p class="scenario-card-body"[^>]*>\s*<strong class="scenario-card-emphasis">/,
-    'The Recommender Systems body must not render the full sentence as emphasized text'
+    'The homepage user-modeling card must remain titled Recommender Systems'
   );
 });
 
 test('homepage dictionaries provide complete split scenario translations', () => {
   const expected = {
+    'research.scenarioTitle': ['Application Domains and Evaluation Scenarios', '应用领域与评测场景'],
     'research.scienceTitle': ['AI for Science', 'AI for Science'],
     'research.scienceBody': [
-      'Using <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> for <strong class="scenario-card-emphasis">scientific literature mining</strong>, <strong class="scenario-card-emphasis">time-series and tabular data modeling</strong>, and <strong class="scenario-card-emphasis">autonomous research agents</strong> for <strong class="scenario-card-emphasis">scientific task solving and discovery</strong>.',
-      '利用 <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> 开展<strong class="scenario-card-emphasis">科技文献挖掘</strong>、<strong class="scenario-card-emphasis">时序与表格数据建模</strong>和<strong class="scenario-card-emphasis">自主科研智能体</strong>研究，服务于<strong class="scenario-card-emphasis">科学任务求解与科学发现</strong>。'
+      'Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.',
+      '面向科技文献挖掘、科学建模、科学推理与自主发现，研究科学数据与知识智能。'
+    ],
+    'research.industrialTitle': ['Industrial / Complex Systems', '工业与复杂系统'],
+    'research.industrialBody': [
+      'Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.',
+      '面向能源、交通、云服务、金融与工业运行等真实复杂系统，研究预测智能。'
     ],
     'research.userTitle': ['Recommender Systems', '推荐系统'],
     'research.userBody': [
-      'Studying <strong class="scenario-card-emphasis">online user modeling</strong> and <strong class="scenario-card-emphasis">personalized recommender systems</strong> for <strong class="scenario-card-emphasis">Internet applications</strong>, with a focus on <strong class="scenario-card-emphasis">user behavior understanding</strong>, <strong class="scenario-card-emphasis">preference learning</strong>, and <strong class="scenario-card-emphasis">context-aware recommendation</strong>.',
-      '面向<strong class="scenario-card-emphasis">互联网应用</strong>开展<strong class="scenario-card-emphasis">在线用户建模</strong>与<strong class="scenario-card-emphasis">个性化推荐系统</strong>研究，重点关注<strong class="scenario-card-emphasis">用户行为理解</strong>、<strong class="scenario-card-emphasis">偏好学习</strong>与<strong class="scenario-card-emphasis">情境感知推荐</strong>。'
+      'Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.',
+      '通过用户行为理解、偏好建模与情境推理，研究自适应用户智能与个性化推荐。'
     ],
     'research.predictionTitle': ['Prediction Intelligence', '预测智能'],
     'research.predictionBody': [
-      'Building <span class="research-keyword">context-aware predictive intelligence</span> for <span class="research-keyword">complex systems</span> through <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking temporal reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and autonomous agentic interaction.',
-      '面向<span class="research-keyword">复杂系统</span>构建<span class="research-keyword">情境感知预测智能</span>，研究<span class="research-keyword">多模态情境表征</span>、<span class="research-keyword">慢思考时序推理</span>与<span class="research-keyword">不确定性感知预测</span>，并结合自主智能体交互。'
+      'Building <span class="research-keyword">context-aware</span>, <span class="research-keyword">reasoning-driven</span>, and <span class="research-keyword">uncertainty-aware predictive intelligence</span> for <span class="research-keyword">complex and evolving systems</span>.',
+      '面向<span class="research-keyword">复杂演化系统</span>，构建<span class="research-keyword">情境感知</span>、<span class="research-keyword">推理驱动</span>与<span class="research-keyword">不确定性感知的预测智能</span>。'
     ]
   };
 
@@ -515,7 +474,7 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
   );
   const researchDirectionsSection = sectionBetween(
     researchHtml,
-    '<div class="rd-section-label">Primary Research Directions</div>',
+    '<!-- Core Technical Pillars -->',
     '<!-- Broader Scenarios -->'
   );
   const normalizedResearchDirectionsSection = researchDirectionsSection.replace(/\s+/g, ' ');
@@ -531,7 +490,10 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
     /^<span class="research-label">🤖<strong>/,
     'Chinese research.agent translation must not include a space between the icon and title'
   );
-  assert.match(researchDirectionsSection, /<div class="rd-card-title">LLMs and Agentic AI<\/div>/);
+  assert.match(
+    researchDirectionsSection,
+    /<h3 class="pillar-card-title" data-page-i18n="agentTitle">LLMs and Agentic AI<\/h3>/
+  );
   assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
   assert.equal(indexHtml.includes(oldAgentFocus), false, 'Old agent focus wording must be absent');
   assert.equal(indexHtml.includes(newAgentFocus), true, 'New agent focus wording must be present');
@@ -558,7 +520,7 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   const visibleTimeseries = visibleTimeseriesMatch[0];
   const researchDirectionsSection = sectionBetween(
     researchHtml,
-    '<div class="rd-section-label">Primary Research Directions</div>',
+    '<!-- Core Technical Pillars -->',
     '<!-- Broader Scenarios -->'
   );
   const normalizedResearchDirectionsSection = researchDirectionsSection.replace(/\s+/g, ' ');
@@ -574,7 +536,10 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
     /^<span class="research-label">📊<strong>/,
     'Chinese research.timeseries translation must not include a space between the icon and title'
   );
-  assert.match(researchDirectionsSection, /<div class="rd-card-title">Time Series Intelligence<\/div>/);
+  assert.match(
+    researchDirectionsSection,
+    /<h3 class="pillar-card-title" data-page-i18n="timeseriesTitle">Time Series Intelligence<\/h3>/
+  );
   assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
 
   for (const [label, source] of [
@@ -594,7 +559,7 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   }
 });
 
-test('homepage stacks Prediction Intelligence below Time Series Intelligence', () => {
+test('homepage keeps three directions while Research separates vision from technical pillars', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -605,12 +570,22 @@ test('homepage stacks Prediction Intelligence below Time Series Intelligence', (
     '<ul class="research-list primary-directions">',
     '</ul>'
   );
-  const researchDirections = sectionBetween(
+  const researchFramework = sectionBetween(
     researchHtml,
-    '<div class="primary-cards">',
-    '</div><!-- /primary-cards -->'
+    '<!-- Research Framework -->',
+    '<!-- Broader Scenarios -->'
   );
-  const normalizedResearchDirections = researchDirections.replace(/\s+/g, ' ');
+  const researchVision = sectionBetween(
+    researchFramework,
+    '<!-- Research Vision -->',
+    '<!-- Core Technical Pillars -->'
+  );
+  const technicalPillars = sectionBetween(
+    researchFramework,
+    '<!-- Core Technical Pillars -->',
+    '<!-- /Research Framework -->'
+  );
+  const normalizedResearchVision = researchVision.replace(/\s+/g, ' ');
 
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
@@ -621,7 +596,7 @@ test('homepage stacks Prediction Intelligence below Time Series Intelligence', (
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
   assert.match(
     homepageDirections,
-    /<li class="primary-direction primary-direction--prediction">[\s\S]*?<a class="research-direction-link" href="prediction-intelligence\.html">[\s\S]*?<strong data-i18n="research\.predictionTitle">Prediction Intelligence<\/strong>[\s\S]*?<\/a>[\s\S]*?<span data-i18n="research\.predictionBody">Building <span class="research-keyword">context-aware predictive intelligence<\/span> for <span class="research-keyword">complex systems<\/span> through <span class="research-keyword">multimodal context representation<\/span>, <span class="research-keyword">slow-thinking temporal reasoning<\/span>, <span class="research-keyword">uncertainty-aware forecasting<\/span>, and autonomous agentic interaction\.<\/span>[\s\S]*?<\/li>/
+    /<li class="primary-direction primary-direction--prediction">[\s\S]*?<a class="research-direction-link" href="prediction-intelligence\.html">[\s\S]*?<strong data-i18n="research\.predictionTitle">Prediction Intelligence<\/strong>[\s\S]*?<\/a>[\s\S]*?<span data-i18n="research\.predictionBody">Building <span class="research-keyword">context-aware<\/span>, <span class="research-keyword">reasoning-driven<\/span>, and <span class="research-keyword">uncertainty-aware predictive intelligence<\/span> for <span class="research-keyword">complex and evolving systems<\/span>\.<\/span>[\s\S]*?<\/li>/
   );
   assert.match(
     homepageDirections,
@@ -656,49 +631,65 @@ test('homepage stacks Prediction Intelligence below Time Series Intelligence', (
     'Homepage author styles must preserve the hidden Scientific Knowledge Cognition direction'
   );
   assert.equal(
-    startTagsWithClass(researchDirections, 'div', 'rd-card')
-      .filter((tag) => !/\shidden(?:\s|>)/.test(tag)).length,
-    3,
-    'Research page must expose LLMs, Time Series Intelligence, and Prediction Intelligence as primary directions'
-  );
-  assert.match(researchDirections, /<div class="rd-card rd-card--agent">/);
-  assert.match(researchDirections, /<div class="rd-card rd-card--timeseries">/);
-  assert.match(
-    normalizedResearchDirections,
-    /<div class="rd-card rd-card--prediction">[\s\S]*?<a class="rd-card-title rd-card-title-link" href="prediction-intelligence\.html">Prediction Intelligence<\/a>[\s\S]*?<p class="rd-card-desc">\s*Building <strong>context-aware predictive intelligence<\/strong> for <strong>complex systems<\/strong> through <strong>multimodal context representation<\/strong>, <strong>slow-thinking temporal reasoning<\/strong>, <strong>uncertainty-aware forecasting<\/strong>, and autonomous agentic interaction\.\s*<\/p>/
+    startTagsWithClass(researchVision, 'article', 'research-vision-card').length,
+    1,
+    'Research page must present one full-width research vision'
   );
   assert.match(
-    researchDirections,
-    /<div class="rd-card" hidden>[\s\S]*?<div class="rd-card-title">Scientific Knowledge Cognition<\/div>/,
-    'Scientific Knowledge Cognition must remain hidden on the Research page while it is hidden on the homepage'
+    normalizedResearchVision,
+    /<article class="research-vision-card">[\s\S]*?<a class="research-vision-title" href="prediction-intelligence\.html" data-page-i18n="visionTitle">Prediction Intelligence<\/a>[\s\S]*?<p class="research-vision-desc" data-page-i18n="visionBody"> Building <strong>context-aware<\/strong>, <strong>reasoning-driven<\/strong>, and <strong>uncertainty-aware predictive intelligence<\/strong> for <strong>complex and evolving systems<\/strong>\. <\/p>/
   );
   assert.ok(
-    cssRule(researchHtml, '.rd-card[hidden]').includes('display: none;'),
-    'Author styles must preserve the hidden Scientific Knowledge Cognition card'
+    siteLanguageJs.includes(
+      "visionBody: 'Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>.'"
+    ),
+    'Research-page English vision translation must match the homepage direction'
   );
+  assert.equal(
+    startTagsWithClass(technicalPillars, 'article', 'pillar-card').length,
+    2,
+    'Research page must present exactly two core technical pillars'
+  );
+  assert.match(technicalPillars, /<article class="pillar-card pillar-card--agent">/);
+  assert.match(technicalPillars, /<article class="pillar-card pillar-card--timeseries">/);
   assert.ok(
-    researchDirections.indexOf('LLMs and Agentic AI') <
-      researchDirections.indexOf('Time Series Intelligence') &&
-      researchDirections.indexOf('Time Series Intelligence') <
-        researchDirections.indexOf('Prediction Intelligence'),
-    'Primary directions must keep LLMs first, followed by Time Series Intelligence and Prediction Intelligence'
+    technicalPillars.indexOf('LLMs and Agentic AI') <
+      technicalPillars.indexOf('Time Series Intelligence'),
+    'Technical pillars must keep LLMs and Agentic AI before Time Series Intelligence'
+  );
+  assert.doesNotMatch(
+    researchFramework,
+    /Scientific Knowledge Cognition|\brd-card\b|\bprimary-cards\b/,
+    'Research page must remove the obsolete flat primary-direction card system'
   );
 
-  const primaryGridRule = cssRule(researchHtml, '.primary-cards');
-  assert.ok(primaryGridRule.includes('display: grid;'));
-  assert.ok(primaryGridRule.includes('grid-template-columns: repeat(2, minmax(0, 1fr));'));
-  assert.ok(cssRule(researchHtml, '.rd-card--agent').includes('grid-column: 1 / -1;'));
+  const visionRule = cssRule(researchHtml, '.research-vision-card');
+  assert.ok(visionRule.includes('display: flex;'));
+  assert.ok(visionRule.includes('width: 100%;'));
+  const visionCopyRule = cssRule(researchHtml, '.research-vision-copy');
+  assert.equal(
+    finalDeclarationValue(visionCopyRule, 'flex'),
+    '1',
+    'Research vision copy must expand into the remaining card width'
+  );
+  assert.equal(
+    finalDeclarationValue(visionCopyRule, 'max-width'),
+    'none',
+    'Research vision copy must not preserve the old 790px width cap'
+  );
+  const pillarGridRule = cssRule(researchHtml, '.pillar-grid');
+  assert.ok(pillarGridRule.includes('display: grid;'));
+  assert.ok(pillarGridRule.includes('grid-template-columns: repeat(2, minmax(0, 1fr));'));
   const responsivePrimary = sectionBetween(
     researchHtml,
     '@media (max-width: 960px)',
     '@media (max-width: 680px)'
   );
   assert.ok(
-    cssRule(responsivePrimary, '.primary-cards').includes(
+    cssRule(responsivePrimary, '.pillar-grid').includes(
       'grid-template-columns: minmax(0, 1fr);'
     )
   );
-  assert.ok(cssRule(responsivePrimary, '.rd-card--agent').includes('grid-column: auto;'));
 
   const homepageCollection = homepageSection.match(
     /<div class="research-note" data-i18n="research\.collections">[\s\S]*?<\/div>/
@@ -749,7 +740,7 @@ test('homepage stacks Prediction Intelligence below Time Series Intelligence', (
   assert.doesNotMatch(siteLanguageJs, /join: 'Welcome motivated undergraduate and graduate students/);
   assert.match(
     siteLanguageJs,
-    /subtitle: '我的研究主要面向复杂数据挖掘中的认知智能方法，以 大语言模型与智能体 AI 为核心，并围绕 时序认知 与 科学知识认知 展开。'/
+    /subtitle: '我的研究面向复杂数据挖掘中的认知智能方法，以大语言模型与智能体 AI 为核心，并由时序观测和科学知识双重基础驱动。方法上聚焦情境表征与推理，通过多模态语义理解、慢思考时序推理与自主智能体交互，构建面向复杂系统的预测智能。'/
   );
 });
 
@@ -808,14 +799,12 @@ test('research page matches the homepage scenario contract', () => {
   const homepageArticles = assertScenarioStructure(
     homepageSection,
     'Homepage',
-    'h4',
-    ['science', 'user']
+    'h4'
   );
   const researchArticles = assertScenarioStructure(
     researchSection,
     'Research page',
-    'h3',
-    ['science', 'user']
+    'h3'
   );
   assert.doesNotMatch(
     researchSection,
@@ -829,9 +818,9 @@ test('research page matches the homepage scenario contract', () => {
   );
   assert.ok(
     cssRule(indexHtml, '.research-section .scenario-grid').includes(
-      'grid-template-columns: repeat(2, minmax(0, 1fr));'
+      'grid-template-columns: repeat(3, minmax(0, 1fr));'
     ),
-    'The two remaining Homepage scenarios must use a balanced two-column layout'
+    'The three Homepage scenarios must use a balanced three-column layout'
   );
   const homepageResponsive = sectionBetween(
     indexHtml,
@@ -846,23 +835,23 @@ test('research page matches the homepage scenario contract', () => {
   );
   assert.ok(
     cssRule(researchHtml, '.research-main .scenario-grid').includes(
-      'grid-template-columns: repeat(2, minmax(0, 1fr));'
+      'grid-template-columns: repeat(3, minmax(0, 1fr));'
     ),
-    'The two remaining Research-page scenarios must use a balanced two-column layout'
+    'The three Research-page scenarios must use a balanced three-column layout'
   );
 
   assert.match(
-    researchArticles.user,
-    /<h3 class="scenario-card-title">Recommender Systems<\/h3>/,
-    'The research-page user-modeling card must be titled Recommender Systems'
+    researchArticles.industrial,
+    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial \/ Complex Systems<\/h3>/,
+    'The Research page must include the Industrial / Complex Systems scenario'
   );
   assert.match(
     researchArticles.user,
-    /<p class="scenario-card-body">Studying <strong class="scenario-card-emphasis">online user modeling<\/strong> and <strong class="scenario-card-emphasis">personalized recommender systems<\/strong> for <strong class="scenario-card-emphasis">Internet applications<\/strong>, with a focus on <strong class="scenario-card-emphasis">user behavior understanding<\/strong>, <strong class="scenario-card-emphasis">preference learning<\/strong>, and <strong class="scenario-card-emphasis">context-aware recommendation<\/strong>\.<\/p>/,
-    'The research-page Recommender Systems body must use the shared selective-emphasis pattern'
+    /<p class="scenario-card-body" data-page-i18n="userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning\.<\/p>/,
+    'The Research-page Recommender Systems card must use the shared narrative'
   );
 
-  for (const modifier of ['science', 'user']) {
+  for (const modifier of ['science', 'industrial', 'user']) {
     assert.equal(
       visibleText(researchArticles[modifier]),
       visibleText(homepageArticles[modifier]),
@@ -871,25 +860,70 @@ test('research page matches the homepage scenario contract', () => {
   }
 });
 
-test('research page keeps shared primary icons and partial label translation', () => {
+test('research page keeps shared pillar icons and complete framework translation', () => {
   assert.ok(!researchHtml.includes('.sc-card'), 'Obsolete .sc-card styles must be removed');
   assert.ok(!researchHtml.includes('.scenario-cards'), 'Obsolete .scenario-cards styles must be removed');
   assert.ok(!researchHtml.includes('.icon-recommend'), 'Obsolete recommendation icon CSS must be removed');
   assert.ok(!researchHtml.includes('.icon-energy'), 'Obsolete energy icon CSS must be removed');
 
-  for (const selector of ['.visual-icon i', '.icon-network', '.icon-series', '.icon-literature']) {
-    assert.ok(researchHtml.includes(selector), `Shared primary icon rule must remain: ${selector}`);
+  for (const selector of ['.visual-icon i', '.icon-network', '.icon-series']) {
+    assert.ok(researchHtml.includes(selector), `Shared pillar icon rule must remain: ${selector}`);
   }
+  assert.doesNotMatch(researchHtml, /\.icon-literature\b/);
 
   assert.ok(
     siteLanguageJs.includes("document.querySelectorAll('.rd-section-label, .scenario-section-label')"),
     'Research heading must remain compatible with site-language.js'
   );
   assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20260719"></script>'),
+    siteLanguageJs.includes("document.querySelectorAll('[data-page-i18n]')"),
+    'Research scenario content must remain compatible with site-language.js'
+  );
+  assert.ok(
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20260815"></script>'),
     'Research page must request the current site-language.js content version'
   );
-  assert.ok(siteLanguageJs.includes("labels: ['主要研究方向', '应用与评测场景']"));
+  assert.ok(
+    siteLanguageJs.includes(
+      "labels: ['研究愿景', '核心技术支柱', '应用领域与评测场景']"
+    )
+  );
+  for (const key of [
+    'visionTitle',
+    'visionBody',
+    'agentTitle',
+    'agentBody',
+    'timeseriesTitle',
+    'timeseriesBody',
+    'scienceTitle',
+    'scienceBody',
+    'industrialTitle',
+    'industrialBody',
+    'userTitle',
+    'userBody'
+  ]) {
+    assert.ok(
+      researchHtml.includes(`data-page-i18n="${key}"`),
+      `Research scenario markup must expose the ${key} translation hook`
+    );
+  }
+  for (const chineseLabel of [
+    '科学数据与知识智能',
+    '科技文献挖掘',
+    '科学建模',
+    '科学推理',
+    '自主发现',
+    '工业与复杂系统',
+    '云服务',
+    '工业运行',
+    '用户行为理解',
+    '偏好建模',
+    '情境推理',
+    '自适应用户智能',
+    '个性化推荐'
+  ]) {
+    assert.ok(siteLanguageJs.includes(chineseLabel), `Missing Research-page translation: ${chineseLabel}`);
+  }
 });
 
 test('research hero introduction keeps clean two-edge alignment', () => {
@@ -905,60 +939,30 @@ test('research hero introduction keeps clean two-edge alignment', () => {
   }
 });
 
-test('research hero includes an accessible responsive cognitive pipeline', () => {
+test('research framework prose keeps clean two-edge alignment', () => {
+  for (const selector of ['.research-vision-desc', '.pillar-card-desc']) {
+    const rule = cssRule(researchHtml, selector);
+    for (const declaration of [
+      'text-align: justify;',
+      'text-align-last: left;',
+      'text-justify: inter-word;',
+      'hyphens: none;',
+      '-webkit-hyphens: none;'
+    ]) {
+      assert.ok(rule.includes(declaration), `Missing ${selector} alignment rule: ${declaration}`);
+    }
+  }
+});
+
+test('research hero gives the three-tier framework full-width emphasis', () => {
   const hero = sectionBetween(researchHtml, '<!-- ===== Hero ===== -->', '<!-- ===== Main ===== -->');
 
   assert.equal(matchCount(hero, /class="page-hero-copy"/g), 1);
-  assert.equal(matchCount(hero, /class="page-hero-visual"/g), 1);
-  assert.equal(matchCount(hero, /<svg class="cognitive-pipeline"/g), 1);
-  assert.ok(hero.includes('<svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">'));
-  assert.ok(hero.includes('<title id="cognitive-pipeline-title">Research program pipeline</title>'));
-  assert.ok(hero.includes('<desc id="cognitive-pipeline-desc">LLMs and Agentic AI and Time Series Intelligence converge into context representation and reasoning, supporting AI for Science and Big Data Applications.</desc>'));
-  assert.equal(matchCount(hero, /<rect class="pipeline-node(?: |")/g), 5);
-  assert.equal(matchCount(hero, /<path class="pipeline-path(?: |")/g), 4);
-  assert.equal(matchCount(hero, /class="pipeline-stage"/g), 3);
-  assert.equal(matchCount(hero, /pipeline-node--core/g), 1);
-  assert.equal(matchCount(hero, /pipeline-node--application/g), 2);
-  assert.equal(matchCount(hero, /pipeline-node--bigdata/g), 1);
-  assert.equal(matchCount(hero, /pipeline-signal--orange/g), 1);
-
-  const heroText = visibleText(hero);
-  for (const label of [
-    'DIRECTIONS',
-    'CORE',
-    'APPLICATIONS',
-    'LLMs &amp; Agentic AI',
-    'Time Series Intelligence',
-    'Context Representation &amp; Reasoning',
-    'AI for Science',
-    'Big Data Applications'
-  ]) {
-    assert.ok(heroText.includes(label), `Missing research pipeline label: ${label}`);
-  }
-  assert.match(
-    hero,
-    /<text class="pipeline-label pipeline-label--core" x="165" y="108">\s*<tspan x="165" dy="0">Context<\/tspan>\s*<tspan x="165" dy="13">Representation<\/tspan>\s*<tspan x="165" dy="13">&amp; Reasoning<\/tspan>\s*<\/text>/
-  );
+  assert.equal(matchCount(hero, /class="page-hero-visual"/g), 0);
+  assert.equal(matchCount(hero, /cognitive-pipeline/g), 0);
+  assert.doesNotMatch(researchHtml, /\.cognitive-pipeline\b|\.pipeline-(?:panel|grid|path|node|stage|label|signal)\b/);
 
   const contentRule = cssRule(researchHtml, '.page-hero-content');
-  for (const declaration of [
-    'display: grid;',
-    'grid-template-columns: minmax(0, 1fr) minmax(290px, 320px);',
-    'gap: clamp(32px, 4vw, 56px);',
-    'align-items: center;'
-  ]) {
-    assert.ok(contentRule.includes(declaration), `Missing research hero layout rule: ${declaration}`);
-  }
-
-  const stageRule = cssRule(researchHtml, '.pipeline-stage');
-  assert.ok(stageRule.includes('fill: #4f6074;'));
-  assert.ok(stageRule.includes('font-size: 10px;'));
-  assert.ok(cssRule(researchHtml, '.pipeline-label').includes('font-size: 11px;'));
-  assert.ok(cssRule(researchHtml, '.pipeline-label--core').includes('font-size: 10px;'));
-  assert.ok(cssRule(researchHtml, '.pipeline-node--bigdata').includes('fill: #fff8ed;'));
-  assert.ok(cssRule(researchHtml, '.pipeline-signal--orange').includes('fill: #d97706;'));
-
-  const responsive = sectionBetween(researchHtml, '@media (max-width: 960px)', '@media (max-width: 680px)');
-  assert.ok(cssRule(responsive, '.page-hero-content').includes('grid-template-columns: 1fr;'));
-  assert.ok(cssRule(responsive, '.page-hero-visual').includes('display: none;'));
+  assert.ok(contentRule.includes('display: block;'));
+  assert.ok(cssRule(researchHtml, '.page-hero-sub').includes('max-width: none;'));
 });

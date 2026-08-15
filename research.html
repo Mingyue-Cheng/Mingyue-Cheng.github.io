@@ -6,11 +6,11 @@
   <title>Research — Mingyue Cheng</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#003087">
-  <meta name="description" content="Research directions of Mingyue Cheng: LLMs and Agentic AI, Time Series Cognition, Scientific Knowledge Cognition, and broader applications in AI for Science, recommender systems, and power and energy.">
+  <meta name="description" content="Research directions of Mingyue Cheng: Prediction Intelligence, LLMs and Agentic AI, Time Series Intelligence, and applications in AI for Science, industrial and complex systems, and recommender systems.">
   <meta name="author" content="Mingyue Cheng">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Research — Mingyue Cheng">
-  <meta property="og:description" content="Agentic intelligence for complex, structured, and temporal data, spanning LLM agents, time series cognition, scientific knowledge cognition, and broader application scenarios.">
+  <meta property="og:description" content="Prediction intelligence for complex systems, supported by LLMs and Agentic AI, Time Series Intelligence, and real-world application and evaluation scenarios.">
   <meta property="og:url" content="https://mingyue-cheng.github.io/research.html">
   <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
   <meta name="twitter:card" content="summary">
@@ -150,99 +150,10 @@ body {
   background: #fff;
 }
 .page-hero-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(290px, 320px);
-  gap: clamp(32px, 4vw, 56px);
-  align-items: center;
+  display: block;
 }
 .page-hero-copy {
   min-width: 0;
-}
-.page-hero-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-}
-.cognitive-pipeline {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.pipeline-panel {
-  fill: #f8fbff;
-  stroke: #dbe5f1;
-  stroke-width: 1.5;
-}
-.pipeline-grid {
-  fill: url(#pipeline-dots);
-  opacity: 0.58;
-}
-.pipeline-path {
-  fill: none;
-  stroke: #b7c8dc;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-}
-.pipeline-path--accent {
-  stroke: #6eb6b2;
-}
-.pipeline-path--orange {
-  stroke: #d7a14f;
-}
-.pipeline-node {
-  fill: #fff;
-  stroke: #cbd8e8;
-  stroke-width: 1.4;
-}
-.pipeline-node--core {
-  fill: var(--accent-light);
-  stroke: var(--accent);
-  stroke-width: 1.8;
-}
-.pipeline-node--application {
-  fill: #f2faf8;
-  stroke: #9ccfc5;
-}
-.pipeline-node--bigdata {
-  fill: #fff8ed;
-  stroke: #e5b86a;
-}
-.pipeline-stage {
-  font-family: var(--font);
-  fill: #4f6074;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-anchor: middle;
-}
-.pipeline-label {
-  font-family: var(--font);
-  fill: var(--accent);
-  font-size: 11px;
-  font-weight: 700;
-  text-anchor: middle;
-}
-.pipeline-label--core {
-  font-size: 10px;
-  font-weight: 800;
-}
-.pipeline-signal {
-  fill: var(--accent);
-}
-.pipeline-signal--teal {
-  fill: var(--teal);
-}
-.pipeline-signal--orange {
-  fill: #d97706;
-}
-.research-eyebrow {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--teal);
-  margin-bottom: 6px;
 }
 .page-hero-title {
   font-size: 28px;
@@ -258,7 +169,7 @@ body {
   font-size: 15px;
   color: var(--text);
   line-height: 1.72;
-  max-width: 74ch;
+  max-width: none;
   text-align: justify;
   text-align-last: left;
   text-justify: inter-word;
@@ -269,152 +180,207 @@ body {
 .page-hero-sub a:hover { text-decoration: underline; }
 /* ===== Main ===== */
 .research-main {
-  padding: 30px 0 56px;
+  padding: 26px 0 56px;
 }
 
 /* ===== Section label ===== */
 .rd-section-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.rd-section-label::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--border);
+  display: block;
+  margin-bottom: 10px;
+  color: #102040;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.35;
+  text-transform: none;
 }
 
-/* ===== Primary Direction Card ===== */
-.primary-cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  margin-bottom: 40px;
+/* ===== Three-tier Research Framework ===== */
+.research-tier {
+  margin-bottom: 26px;
 }
-
-.rd-card {
+.research-tier--pillars {
+  margin-bottom: 34px;
+}
+.research-vision-card {
   position: relative;
+  isolation: isolate;
   display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 8px 28px rgba(0,48,135,0.06);
-  transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s;
-}
-.rd-card[hidden] {
-  display: none;
-}
-.rd-card:hover {
-  border-color: rgba(0,48,135,0.25);
-  box-shadow: 0 16px 40px rgba(0,48,135,0.10);
-  transform: translateY(-2px);
-}
-.rd-card--agent {
-  grid-column: 1 / -1;
-}
-
-/* Top accent bar */
-.rd-card-bar {
-  height: 4px;
   width: 100%;
+  min-height: 112px;
+  align-items: center;
+  gap: 24px;
+  overflow: hidden;
+  padding: 20px 28px;
+  border: 1px solid #78a3ff;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 8% 50%, rgba(37,99,235,0.10), transparent 22%),
+    linear-gradient(110deg, #ffffff 0%, #fbfdff 64%, #f4f8ff 100%);
+  box-shadow: 0 10px 30px rgba(0,48,135,0.07);
 }
-.rd-card-bar.agent  { background: linear-gradient(90deg, #003087 0%, #2563eb 100%); }
-.rd-card-bar.ts     { background: linear-gradient(90deg, #003087 0%, #0891b2 100%); }
-.rd-card-bar.prediction { background: linear-gradient(90deg, #003087 0%, #7c3aed 100%); }
-.rd-card-bar.sci    { background: linear-gradient(90deg, #003087 0%, #12805c 100%); }
-
-.rd-card-inner {
-  display: flex;
-  flex: 1;
-  gap: 0;
+.research-vision-card::after {
+  content: "";
+  position: absolute;
+  right: -42px;
+  bottom: -96px;
+  z-index: -1;
+  width: 340px;
+  height: 180px;
+  opacity: 0.32;
+  transform: rotate(-7deg);
+  background: repeating-radial-gradient(
+    ellipse at center,
+    transparent 0 10px,
+    rgba(37,99,235,0.18) 11px 12px
+  );
+  -webkit-mask-image: linear-gradient(to left, #000 12%, transparent 92%);
+  mask-image: linear-gradient(to left, #000 12%, transparent 92%);
 }
-
-/* Left icon panel */
-.rd-card-icon-panel {
-  width: 88px;
-  min-height: 100%;
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 28px;
-  background: var(--accent-light);
-  border-right: 1px solid var(--border);
-}
-.rd-card-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid #c9d8f5;
+.research-vision-icon {
+  flex: 0 0 68px;
   display: inline-flex;
+  width: 68px;
+  height: 68px;
   align-items: center;
   justify-content: center;
-  line-height: 1;
-  user-select: none;
-  position: relative;
-  overflow: hidden;
+  border: 1px solid #c8dcff;
+  border-radius: 50%;
+  background: #edf4ff;
+  color: #1456c7;
 }
-
-/* Card body */
-.rd-card-body {
+.research-vision-icon svg {
+  width: 36px;
+  height: 36px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.research-vision-copy {
   flex: 1;
   min-width: 0;
-  padding: 24px 28px 26px;
+  max-width: none;
 }
-.rd-card-title {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: 0;
-  margin-bottom: 10px;
-}
-.rd-card-title-link {
+.research-vision-title {
   display: inline-block;
+  margin-bottom: 5px;
+  color: var(--accent);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
   text-decoration: none;
 }
-.rd-card-title-link:hover {
+.research-vision-title:hover {
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
 }
-.rd-card-title-link:focus-visible {
+.research-vision-title:focus-visible {
   border-radius: 3px;
-  outline: 3px solid rgba(109, 74, 255, 0.30);
+  outline: 3px solid rgba(109,74,255,0.28);
   outline-offset: 3px;
 }
-.rd-card-desc {
-  font-size: 14px;
+.research-vision-desc {
   color: var(--text);
-  line-height: 1.8;
-  margin-bottom: 14px;
+  font-size: 14px;
+  line-height: 1.7;
   text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
-.rd-card-desc strong { color: var(--accent); }
-.rd-card-icon--prediction {
-  color: var(--purple);
+.research-vision-desc strong,
+.pillar-card-desc strong {
+  color: var(--accent);
 }
-.rd-card-icon--prediction svg {
-  width: 26px;
-  height: 26px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+.pillar-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 154px;
+  align-items: center;
+  gap: 20px;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff 0%, #fbfdff 100%);
+  box-shadow: 0 8px 26px rgba(0,48,135,0.06);
+  transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s;
+}
+.pillar-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), #2563eb);
+}
+.pillar-card--timeseries::before {
+  background: linear-gradient(90deg, var(--accent), #0891b2);
+}
+.pillar-card:hover {
+  border-color: rgba(0,48,135,0.25);
+  box-shadow: 0 14px 34px rgba(0,48,135,0.10);
+  transform: translateY(-2px);
+}
+.pillar-card-icon {
+  flex: 0 0 68px;
+  display: flex;
+  width: 68px;
+  height: 68px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #edf3ff;
+}
+.pillar-card--timeseries .pillar-card-icon {
+  background: #eef9fb;
+}
+.visual-icon {
+  position: relative;
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #cbd9f1;
+  border-radius: 10px;
+  user-select: none;
+}
+.pillar-card-copy {
+  min-width: 0;
+}
+.pillar-card-title {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+.pillar-card-desc {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.68;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 .research-main .scenario-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 /* ===== CSS-drawn visual markers ===== */
@@ -473,48 +439,6 @@ body {
 .icon-series i:nth-child(2) { left: 19px; height: 15px; opacity: 0.65; }
 .icon-series i:nth-child(3) { left: 27px; height: 11px; opacity: 0.8; }
 .icon-series i:nth-child(4) { left: 35px; height: 23px; }
-
-.icon-table::before {
-  inset: 8px;
-  border: 1.5px solid var(--purple);
-  border-radius: 4px;
-  background:
-    linear-gradient(var(--purple), var(--purple)) 0 50% / 100% 1px no-repeat,
-    linear-gradient(90deg, var(--purple), var(--purple)) 33% 0 / 1px 100% no-repeat,
-    linear-gradient(90deg, var(--purple), var(--purple)) 66% 0 / 1px 100% no-repeat,
-    rgba(109,74,255,0.08);
-}
-
-.icon-literature::before {
-  left: 9px;
-  top: 7px;
-  width: 15px;
-  height: 20px;
-  border: 1.5px solid var(--green);
-  border-radius: 3px;
-  background:
-    linear-gradient(var(--green), var(--green)) 4px 7px / 7px 1px no-repeat,
-    linear-gradient(var(--green), var(--green)) 4px 11px / 8px 1px no-repeat,
-    linear-gradient(var(--green), var(--green)) 4px 15px / 6px 1px no-repeat,
-    #fff;
-}
-.icon-literature::after {
-  right: 7px;
-  bottom: 8px;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--green);
-  border-radius: 50%;
-}
-.icon-literature i {
-  right: 5px;
-  bottom: 6px;
-  width: 8px;
-  height: 2px;
-  background: var(--green);
-  transform: rotate(45deg);
-  transform-origin: right center;
-}
 
 /* ===== Research Note ===== */
 .research-note-box {
@@ -599,39 +523,28 @@ body {
 
 /* ===== Responsive ===== */
 @media (max-width: 960px) {
-  .page-hero-content {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-  .page-hero-visual {
-    display: none;
-  }
-  .primary-cards {
+  .pillar-grid {
     grid-template-columns: minmax(0, 1fr);
   }
   .research-main .scenario-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .rd-card--agent {
-    grid-column: auto;
-  }
 }
 @media (max-width: 680px) {
-  .rd-card-inner { flex-direction: column; }
-  .rd-card-icon-panel {
-    width: 100%;
-    min-height: unset;
-    padding: 16px;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: row;
-    gap: 12px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
+  .research-vision-card,
+  .pillar-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
   }
-  .rd-card-body { padding: 22px 20px 24px; }
-  .rd-card-desc { text-align: left; }
-  .rd-card { min-width: 0; }
+  .research-vision-card::after { display: none; }
+  .research-vision-icon,
+  .pillar-card-icon {
+    width: 58px;
+    height: 58px;
+    flex-basis: 58px;
+  }
   .nav-links { gap: 14px; }
   .page-hero-title { font-size: 22px; }
   .page-hero-sub {
@@ -677,7 +590,7 @@ body {
   .footer-shell { padding-left: 20px; padding-right: 20px; }
 }
   </style>
-  <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260728">
+  <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
 </head>
 <body>
 
@@ -708,7 +621,6 @@ body {
   <div class="container">
     <div class="page-hero-content">
       <div class="page-hero-copy">
-        <div class="research-eyebrow">Research Program</div>
         <h1 class="page-hero-title">Research Interests</h1>
         <p class="page-hero-sub">
           My research develops <strong>cognitive intelligence methods</strong> for complex data mining, centered on
@@ -719,64 +631,6 @@ body {
           <strong>autonomous agentic interaction</strong>.
         </p>
       </div>
-      <div class="page-hero-visual">
-        <svg class="cognitive-pipeline" viewBox="0 0 320 240" role="img" aria-labelledby="cognitive-pipeline-title cognitive-pipeline-desc" focusable="false">
-          <title id="cognitive-pipeline-title">Research program pipeline</title>
-          <desc id="cognitive-pipeline-desc">LLMs and Agentic AI and Time Series Intelligence converge into context representation and reasoning, supporting AI for Science and Big Data Applications.</desc>
-          <defs>
-            <pattern id="pipeline-dots" width="16" height="16" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="#d5e2f0"></circle>
-            </pattern>
-          </defs>
-          <rect class="pipeline-panel" x="1" y="1" width="318" height="238" rx="18"></rect>
-          <rect class="pipeline-grid" x="2" y="2" width="316" height="236" rx="17"></rect>
-
-          <text class="pipeline-stage" x="64" y="25">DIRECTIONS</text>
-          <text class="pipeline-stage" x="165" y="25">CORE</text>
-          <text class="pipeline-stage" x="262" y="25">APPLICATIONS</text>
-
-          <path class="pipeline-path" d="M112 75 C118 75 116 104 120 108"></path>
-          <path class="pipeline-path" d="M112 165 C118 165 116 136 120 132"></path>
-          <path class="pipeline-path pipeline-path--accent" d="M210 108 C214 104 214 75 220 75"></path>
-          <path class="pipeline-path pipeline-path--orange" d="M210 132 C214 136 214 165 220 165"></path>
-
-          <rect class="pipeline-node" x="16" y="42" width="96" height="66" rx="12"></rect>
-          <circle class="pipeline-signal" cx="30" cy="56" r="3"></circle>
-          <text class="pipeline-label" x="64" y="70">
-            <tspan x="64" dy="0">LLMs &amp;</tspan>
-            <tspan x="64" dy="14">Agentic AI</tspan>
-          </text>
-
-          <rect class="pipeline-node" x="16" y="132" width="96" height="66" rx="12"></rect>
-          <circle class="pipeline-signal pipeline-signal--teal" cx="30" cy="146" r="3"></circle>
-          <text class="pipeline-label" x="64" y="160">
-            <tspan x="64" dy="0">Time Series</tspan>
-            <tspan x="64" dy="14">Intelligence</tspan>
-          </text>
-
-          <rect class="pipeline-node pipeline-node--core" x="120" y="82" width="90" height="76" rx="16"></rect>
-          <circle class="pipeline-signal" cx="134" cy="96" r="3"></circle>
-          <text class="pipeline-label pipeline-label--core" x="165" y="108">
-            <tspan x="165" dy="0">Context</tspan>
-            <tspan x="165" dy="13">Representation</tspan>
-            <tspan x="165" dy="13">&amp; Reasoning</tspan>
-          </text>
-
-          <rect class="pipeline-node pipeline-node--application" x="220" y="42" width="84" height="66" rx="12"></rect>
-          <circle class="pipeline-signal pipeline-signal--teal" cx="234" cy="56" r="3"></circle>
-          <text class="pipeline-label" x="262" y="70">
-            <tspan x="262" dy="0">AI for</tspan>
-            <tspan x="262" dy="14">Science</tspan>
-          </text>
-
-          <rect class="pipeline-node pipeline-node--application pipeline-node--bigdata" x="220" y="132" width="84" height="66" rx="12"></rect>
-          <circle class="pipeline-signal pipeline-signal--orange" cx="234" cy="146" r="3"></circle>
-          <text class="pipeline-label" x="262" y="160">
-            <tspan x="262" dy="0">Big Data</tspan>
-            <tspan x="262" dy="14">Applications</tspan>
-          </text>
-        </svg>
-      </div>
     </div>
   </div>
 </div>
@@ -785,96 +639,69 @@ body {
 <div class="research-main">
   <div class="container">
 
-    <div class="rd-section-label">Primary Research Directions</div>
+    <!-- Research Framework -->
+    <!-- Research Vision -->
+    <section class="research-tier research-tier--vision" aria-labelledby="research-vision-heading">
+      <h2 id="research-vision-heading" class="rd-section-label">Research Vision</h2>
+      <article class="research-vision-card">
+        <span class="research-vision-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <path d="M5 26V15M11 26V19M17 26V11M23 26V7M3 26h25M6 11l6-6 5 4 9-7M22 2h4v4"></path>
+          </svg>
+        </span>
+        <div class="research-vision-copy">
+          <a class="research-vision-title" href="prediction-intelligence.html" data-page-i18n="visionTitle">Prediction Intelligence</a>
+          <p class="research-vision-desc" data-page-i18n="visionBody">
+            Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and
+            <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>.
+          </p>
+        </div>
+      </article>
+    </section>
 
-    <div class="primary-cards">
-
-      <!-- ===== Card 1: LLMs and Agentic AI ===== -->
-      <div class="rd-card rd-card--agent">
-        <div class="rd-card-bar agent"></div>
-        <div class="rd-card-inner">
-          <div class="rd-card-icon-panel">
-            <span class="rd-card-icon visual-icon icon-network" aria-hidden="true">
+    <!-- Core Technical Pillars -->
+    <section class="research-tier research-tier--pillars" aria-labelledby="technical-pillars-heading">
+      <h2 id="technical-pillars-heading" class="rd-section-label">Core Technical Pillars</h2>
+      <div class="pillar-grid">
+        <article class="pillar-card pillar-card--agent">
+          <span class="pillar-card-icon" aria-hidden="true">
+            <span class="visual-icon icon-network">
               <i></i><i></i><i></i><i></i>
             </span>
-          </div>
-          <div class="rd-card-body">
-            <div class="rd-card-title">LLMs and Agentic AI</div>
-            <p class="rd-card-desc">
+          </span>
+          <div class="pillar-card-copy">
+            <h3 class="pillar-card-title" data-page-i18n="agentTitle">LLMs and Agentic AI</h3>
+            <p class="pillar-card-desc" data-page-i18n="agentBody">
               Developing <strong>autonomous interactive learning</strong> for large language models, including
               <strong>environment-interactive Agentic RL</strong>, <strong>tool-augmented reasoning</strong>,
               <strong>multi-agent orchestration</strong>, and continual capability evolution through context, knowledge, and memory.
             </p>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <!-- ===== Card 2: Time Series Intelligence ===== -->
-      <div class="rd-card rd-card--timeseries">
-        <div class="rd-card-bar ts"></div>
-        <div class="rd-card-inner">
-          <div class="rd-card-icon-panel">
-            <span class="rd-card-icon visual-icon icon-series" aria-hidden="true">
+        <article class="pillar-card pillar-card--timeseries">
+          <span class="pillar-card-icon" aria-hidden="true">
+            <span class="visual-icon icon-series">
               <i></i><i></i><i></i><i></i>
             </span>
-          </div>
-          <div class="rd-card-body">
-            <div class="rd-card-title">Time Series Intelligence</div>
-            <p class="rd-card-desc">
+          </span>
+          <div class="pillar-card-copy">
+            <h3 class="pillar-card-title" data-page-i18n="timeseriesTitle">Time Series Intelligence</h3>
+            <p class="pillar-card-desc" data-page-i18n="timeseriesBody">
               Developing <strong>context-aware predictive intelligence</strong>, with a focus on
               <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>,
               <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.
             </p>
           </div>
-        </div>
+        </article>
       </div>
-
-      <!-- ===== Card 3: Prediction Intelligence ===== -->
-      <div class="rd-card rd-card--prediction">
-        <div class="rd-card-bar prediction"></div>
-        <div class="rd-card-inner">
-          <div class="rd-card-icon-panel">
-            <span class="rd-card-icon rd-card-icon--prediction" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M4 18V6M4 18h16M7 14l4-4 3 2 5-6M16 6h3v3"></path>
-              </svg>
-            </span>
-          </div>
-          <div class="rd-card-body">
-            <a class="rd-card-title rd-card-title-link" href="prediction-intelligence.html">Prediction Intelligence</a>
-            <p class="rd-card-desc">
-              Building <strong>context-aware predictive intelligence</strong> for <strong>complex systems</strong> through
-              <strong>multimodal context representation</strong>, <strong>slow-thinking temporal reasoning</strong>,
-              <strong>uncertainty-aware forecasting</strong>, and autonomous agentic interaction.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== Card 4: Scientific Knowledge Cognition ===== -->
-      <div class="rd-card" hidden>
-        <div class="rd-card-bar sci"></div>
-        <div class="rd-card-inner">
-          <div class="rd-card-icon-panel">
-            <span class="rd-card-icon visual-icon icon-literature" aria-hidden="true"><i></i></span>
-          </div>
-          <div class="rd-card-body">
-            <div class="rd-card-title">Scientific Knowledge Cognition</div>
-            <p class="rd-card-desc">
-              This direction develops <strong>agent-ready scientific knowledge intelligence</strong> through
-              LLM-driven literature mining, multimodal scientific document understanding, evidence-grounded reasoning,
-              and scientific knowledge integration for predictive modeling and decision support.
-            </p>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /primary-cards -->
+    </section>
+    <!-- /Research Framework -->
 
     <!-- Broader Scenarios -->
     <section class="scenario-section" aria-labelledby="research-scenario-heading">
       <div class="scenario-heading-row">
-        <h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">Broader Application and Evaluation Scenarios</h2>
+        <h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">Application Domains and Evaluation Scenarios</h2>
       </div>
       <div class="scenario-grid">
         <article class="scenario-card scenario-card--science">
@@ -885,9 +712,21 @@ body {
                 <path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path>
               </svg>
             </span>
-            <h3 class="scenario-card-title">AI for Science</h3>
+            <h3 class="scenario-card-title" data-page-i18n="scienceTitle">AI for Science</h3>
           </div>
-          <p class="scenario-card-body">Using <strong class="scenario-card-emphasis">LLMs and Agentic AI</strong> for <strong class="scenario-card-emphasis">scientific literature mining</strong>, <strong class="scenario-card-emphasis">time-series and tabular data modeling</strong>, and <strong class="scenario-card-emphasis">autonomous research agents</strong> for <strong class="scenario-card-emphasis">scientific task solving and discovery</strong>.</p>
+          <p class="scenario-card-body" data-page-i18n="scienceBody">Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.</p>
+        </article>
+        <article class="scenario-card scenario-card--industrial">
+          <div class="scenario-card-accent" aria-hidden="true"></div>
+          <div class="scenario-card-header">
+            <span class="scenario-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3 20h18M5 20V9l5 3V9l5 3V5h4v15M8 16h2m3 0h2m3 0h1"></path>
+              </svg>
+            </span>
+            <h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial / Complex Systems</h3>
+          </div>
+          <p class="scenario-card-body" data-page-i18n="industrialBody">Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.</p>
         </article>
         <article class="scenario-card scenario-card--user">
           <div class="scenario-card-accent" aria-hidden="true"></div>
@@ -898,9 +737,9 @@ body {
                 <path d="M6 20c.7-4 2.7-6 6-6s5.3 2 6 6M4 8h2m12 0h2"></path>
               </svg>
             </span>
-            <h3 class="scenario-card-title">Recommender Systems</h3>
+            <h3 class="scenario-card-title" data-page-i18n="userTitle">Recommender Systems</h3>
           </div>
-          <p class="scenario-card-body">Studying <strong class="scenario-card-emphasis">online user modeling</strong> and <strong class="scenario-card-emphasis">personalized recommender systems</strong> for <strong class="scenario-card-emphasis">Internet applications</strong>, with a focus on <strong class="scenario-card-emphasis">user behavior understanding</strong>, <strong class="scenario-card-emphasis">preference learning</strong>, and <strong class="scenario-card-emphasis">context-aware recommendation</strong>.</p>
+          <p class="scenario-card-body" data-page-i18n="userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.</p>
         </article>
       </div>
     </section>
@@ -949,6 +788,6 @@ body {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20260719"></script>
+<script src="files/assets/site-language.js?v=20260815"></script>
 </body>
 </html>

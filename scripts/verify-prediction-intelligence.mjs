@@ -152,7 +152,7 @@ test('page-specific language switching covers the full research narrative', () =
   }
 });
 
-test('homepage and Research primary directions link to the new subpage', () => {
+test('homepage direction and Research vision link to the new subpage', () => {
   assert.match(
     indexHtml,
     /<li class="primary-direction primary-direction--prediction">[\s\S]*?<a class="research-direction-link" href="prediction-intelligence\.html">[\s\S]*?Prediction Intelligence[\s\S]*?<\/a>/,
@@ -160,8 +160,8 @@ test('homepage and Research primary directions link to the new subpage', () => {
   );
   assert.match(
     researchHtml,
-    /<div class="rd-card rd-card--prediction">[\s\S]*?<a class="rd-card-title rd-card-title-link" href="prediction-intelligence\.html">Prediction Intelligence<\/a>/,
-    'Research-page Prediction Intelligence primary direction must link to the subpage'
+    /<article class="research-vision-card">[\s\S]*?<a class="research-vision-title" href="prediction-intelligence\.html" data-page-i18n="visionTitle">Prediction Intelligence<\/a>/,
+    'Research-page Prediction Intelligence vision must link to the subpage'
   );
   assert.doesNotMatch(
     indexHtml,

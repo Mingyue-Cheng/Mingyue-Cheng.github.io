@@ -20,7 +20,21 @@
         'research.html': {
           title: 'Research Interests',
           subtitle: 'My research develops cognitive intelligence methods for complex data mining, centered on LLMs and Agentic AI, and driven by the dual foundations of time-series observations and scientific knowledge. My methodological focus lies in context representation and reasoning, aiming to build predictive intelligence for complex systems through multimodal semantic understanding, slow-thinking temporal reasoning, and autonomous agentic interaction.',
-          labels: ['Primary Research Directions', 'Broader Application and Evaluation Scenarios'],
+          labels: ['Research Vision', 'Core Technical Pillars', 'Application Domains and Evaluation Scenarios'],
+          scenarios: {
+            visionTitle: 'Prediction Intelligence',
+            visionBody: 'Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>.',
+            agentTitle: 'LLMs and Agentic AI',
+            agentBody: 'Developing <strong>autonomous interactive learning</strong> for large language models, including <strong>environment-interactive Agentic RL</strong>, <strong>tool-augmented reasoning</strong>, <strong>multi-agent orchestration</strong>, and continual capability evolution through context, knowledge, and memory.',
+            timeseriesTitle: 'Time Series Intelligence',
+            timeseriesBody: 'Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.',
+            scienceTitle: 'AI for Science',
+            scienceBody: 'Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.',
+            industrialTitle: 'Industrial / Complex Systems',
+            industrialBody: 'Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.',
+            userTitle: 'Recommender Systems',
+            userBody: 'Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.'
+          },
           collections: 'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">AI for Science</a>',
           join: '欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>。'
         },
@@ -71,8 +85,22 @@
       pages: {
         'research.html': {
           title: '研究兴趣',
-          subtitle: '我的研究主要面向复杂数据挖掘中的认知智能方法，以 大语言模型与智能体 AI 为核心，并围绕 时序认知 与 科学知识认知 展开。',
-          labels: ['主要研究方向', '应用与评测场景'],
+          subtitle: '我的研究面向复杂数据挖掘中的认知智能方法，以大语言模型与智能体 AI 为核心，并由时序观测和科学知识双重基础驱动。方法上聚焦情境表征与推理，通过多模态语义理解、慢思考时序推理与自主智能体交互，构建面向复杂系统的预测智能。',
+          labels: ['研究愿景', '核心技术支柱', '应用领域与评测场景'],
+          scenarios: {
+            visionTitle: '预测智能',
+            visionBody: '面向<strong>复杂演化系统</strong>，构建<strong>情境感知</strong>、<strong>推理驱动</strong>与<strong>不确定性感知的预测智能</strong>。',
+            agentTitle: '大语言模型与智能体 AI',
+            agentBody: '面向大语言模型研究<strong>自主交互学习</strong>，重点关注<strong>环境交互式 Agentic RL</strong>、<strong>工具增强推理</strong>、<strong>多智能体协同</strong>，以及基于情境、知识与记忆的持续能力演化。',
+            timeseriesTitle: '时间序列智能',
+            timeseriesBody: '发展<strong>情境感知预测智能</strong>，重点研究<strong>多模态情境表征</strong>、<strong>慢思考推理</strong>、<strong>不确定性感知预测</strong>与<strong>自主智能体交互</strong>。',
+            scienceTitle: 'AI for Science',
+            scienceBody: '面向科技文献挖掘、科学建模、科学推理与自主发现，研究科学数据与知识智能。',
+            industrialTitle: '工业与复杂系统',
+            industrialBody: '面向能源、交通、云服务、金融与工业运行等真实复杂系统，研究预测智能。',
+            userTitle: '推荐系统',
+            userBody: '通过用户行为理解、偏好建模与情境推理，研究自适应用户智能与个性化推荐。'
+          },
           collections: '研究主页：🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">AI for Science</a>',
           join: '欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>。'
         },
@@ -152,6 +180,13 @@
       if (page.labels) {
         document.querySelectorAll('.rd-section-label, .scenario-section-label').forEach((node, index) => {
           if (page.labels[index]) node.textContent = page.labels[index];
+        });
+      }
+
+      if (page.scenarios) {
+        document.querySelectorAll('[data-page-i18n]').forEach((node) => {
+          const key = node.getAttribute('data-page-i18n');
+          if (page.scenarios[key]) node.innerHTML = page.scenarios[key];
         });
       }
 

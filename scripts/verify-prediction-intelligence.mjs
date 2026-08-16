@@ -152,11 +152,11 @@ test('page-specific language switching covers the full research narrative', () =
   }
 });
 
-test('homepage direction and Research vision link to the new subpage', () => {
-  assert.match(
+test('Prediction Intelligence stays off the homepage while the Research vision links to its subpage', () => {
+  assert.doesNotMatch(
     indexHtml,
-    /<li class="primary-direction primary-direction--prediction">[\s\S]*?<a class="research-direction-link" href="prediction-intelligence\.html">[\s\S]*?Prediction Intelligence[\s\S]*?<\/a>/,
-    'Homepage Prediction Intelligence primary direction must link to the subpage'
+    /<li class="primary-direction primary-direction--prediction">/,
+    'Homepage must not include a Prediction Intelligence primary direction'
   );
   assert.match(
     researchHtml,

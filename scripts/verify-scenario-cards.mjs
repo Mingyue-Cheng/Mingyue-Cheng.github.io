@@ -401,13 +401,13 @@ test('homepage scenario cards use the requested research narratives', () => {
   );
   assert.match(
     industrialArticle,
-    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Industrial \/ Complex Systems<\/h4>/,
-    'The middle card must be titled Industrial / Complex Systems'
+    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Industrial Systems<\/h4>/,
+    'The middle card must be titled Industrial Systems'
   );
   assert.match(
     industrialArticle,
     /<p class="scenario-card-body" data-i18n="research\.industrialBody">Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations\.<\/p>/,
-    'Industrial / Complex Systems must use the requested real-world systems narrative'
+    'Industrial Systems must use the requested real-world systems narrative'
   );
   assert.match(
     userArticle,
@@ -429,7 +429,7 @@ test('homepage dictionaries provide complete split scenario translations', () =>
       'Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.',
       '面向科技文献挖掘、科学建模、科学推理与自主发现，研究科学数据与知识智能。'
     ],
-    'research.industrialTitle': ['Industrial / Complex Systems', '工业与复杂系统'],
+    'research.industrialTitle': ['Industrial Systems', '工业系统'],
     'research.industrialBody': [
       'Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.',
       '面向能源、交通、云服务、金融与工业运行等真实复杂系统，研究预测智能。'
@@ -438,11 +438,6 @@ test('homepage dictionaries provide complete split scenario translations', () =>
     'research.userBody': [
       'Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.',
       '通过用户行为理解、偏好建模与情境推理，研究自适应用户智能与个性化推荐。'
-    ],
-    'research.predictionTitle': ['Prediction Intelligence', '预测智能'],
-    'research.predictionBody': [
-      'Building <span class="research-keyword">context-aware</span>, <span class="research-keyword">reasoning-driven</span>, and <span class="research-keyword">uncertainty-aware predictive intelligence</span> for <span class="research-keyword">complex and evolving systems</span>.',
-      '面向<span class="research-keyword">复杂演化系统</span>，构建<span class="research-keyword">情境感知</span>、<span class="research-keyword">推理驱动</span>与<span class="research-keyword">不确定性感知的预测智能</span>。'
     ]
   };
 
@@ -450,7 +445,12 @@ test('homepage dictionaries provide complete split scenario translations', () =>
     assert.deepEqual(decodedTranslationEntries(key), values, `Unexpected values for ${key}`);
   }
 
-  for (const removedKey of ['research.energyTitle', 'research.energyBody']) {
+  for (const removedKey of [
+    'research.energyTitle',
+    'research.energyBody',
+    'research.predictionTitle',
+    'research.predictionBody'
+  ]) {
     const removedKeyPattern = new RegExp(`["']${escapeRegex(removedKey)}["']\\s*:`);
     assert.equal(removedKeyPattern.test(indexHtml), false, `${removedKey} must be absent`);
   }
@@ -559,7 +559,7 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   }
 });
 
-test('homepage keeps three directions while Research separates vision from technical pillars', () => {
+test('homepage keeps two technical directions while Research retains Prediction Intelligence as its vision', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -589,19 +589,15 @@ test('homepage keeps three directions while Research separates vision from techn
 
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
-    3,
-    'Homepage must expose LLMs, Time Series Intelligence, and Prediction Intelligence as primary directions'
+    2,
+    'Homepage must expose only LLMs and Time Series Intelligence as primary directions'
   );
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--agent" data-i18n="research\.agent">/);
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
-  assert.match(
+  assert.doesNotMatch(
     homepageDirections,
-    /<li class="primary-direction primary-direction--prediction">[\s\S]*?<a class="research-direction-link" href="prediction-intelligence\.html">[\s\S]*?<strong data-i18n="research\.predictionTitle">Prediction Intelligence<\/strong>[\s\S]*?<\/a>[\s\S]*?<span data-i18n="research\.predictionBody">Building <span class="research-keyword">context-aware<\/span>, <span class="research-keyword">reasoning-driven<\/span>, and <span class="research-keyword">uncertainty-aware predictive intelligence<\/span> for <span class="research-keyword">complex and evolving systems<\/span>\.<\/span>[\s\S]*?<\/li>/
-  );
-  assert.match(
-    homepageDirections,
-    /<span class="research-label">📈<a class="research-direction-link" href="prediction-intelligence\.html">/,
-    'Prediction Intelligence must not include a space between its icon and title'
+    /primary-direction--prediction|prediction-intelligence\.html|research\.prediction(?:Title|Body)/,
+    'Homepage must not expose the Prediction Intelligence direction'
   );
   assert.match(
     homepageDirections,
@@ -610,10 +606,8 @@ test('homepage keeps three directions while Research separates vision from techn
   );
   assert.ok(
     homepageDirections.indexOf('LLMs and Agentic AI') <
-      homepageDirections.indexOf('Time Series Intelligence') &&
-      homepageDirections.indexOf('Time Series Intelligence') <
-        homepageDirections.indexOf('Prediction Intelligence'),
-    'Homepage primary directions must keep LLMs first, followed by Time Series Intelligence and Prediction Intelligence'
+      homepageDirections.indexOf('Time Series Intelligence'),
+    'Homepage primary directions must keep LLMs before Time Series Intelligence'
   );
 
   const homepagePrimaryGridRule = cssRule(indexHtml, '.primary-directions');
@@ -637,13 +631,13 @@ test('homepage keeps three directions while Research separates vision from techn
   );
   assert.match(
     normalizedResearchVision,
-    /<article class="research-vision-card">[\s\S]*?<a class="research-vision-title" href="prediction-intelligence\.html" data-page-i18n="visionTitle">Prediction Intelligence<\/a>[\s\S]*?<p class="research-vision-desc" data-page-i18n="visionBody"> Building <strong>context-aware<\/strong>, <strong>reasoning-driven<\/strong>, and <strong>uncertainty-aware predictive intelligence<\/strong> for <strong>complex and evolving systems<\/strong>\. <\/p>/
+    /<article class="research-vision-card">[\s\S]*?<a class="research-vision-title" href="prediction-intelligence\.html" data-page-i18n="visionTitle">Prediction Intelligence<\/a>[\s\S]*?<p class="research-vision-desc" data-page-i18n="visionBody"> Building <strong>context-aware<\/strong>, <strong>reasoning-driven<\/strong>, and <strong>uncertainty-aware predictive intelligence<\/strong> for <strong>complex and evolving systems<\/strong>, enabling <strong>explainable forecasting<\/strong> and <strong>trustworthy decision support<\/strong>\. <\/p>/
   );
   assert.ok(
     siteLanguageJs.includes(
-      "visionBody: 'Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>.'"
+      "visionBody: 'Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>, enabling <strong>explainable forecasting</strong> and <strong>trustworthy decision support</strong>.'"
     ),
-    'Research-page English vision translation must match the homepage direction'
+    'Research-page English vision translation must retain the approved copy'
   );
   assert.equal(
     startTagsWithClass(technicalPillars, 'article', 'pillar-card').length,
@@ -842,8 +836,8 @@ test('research page matches the homepage scenario contract', () => {
 
   assert.match(
     researchArticles.industrial,
-    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial \/ Complex Systems<\/h3>/,
-    'The Research page must include the Industrial / Complex Systems scenario'
+    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial Systems<\/h3>/,
+    'The Research page must include the Industrial Systems scenario'
   );
   assert.match(
     researchArticles.user,
@@ -913,7 +907,9 @@ test('research page keeps shared pillar icons and complete framework translation
     '科学建模',
     '科学推理',
     '自主发现',
-    '工业与复杂系统',
+    '可解释预测',
+    '可信决策辅助',
+    '工业系统',
     '云服务',
     '工业运行',
     '用户行为理解',

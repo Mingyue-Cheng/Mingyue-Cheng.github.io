@@ -23,14 +23,14 @@
           labels: ['Research Vision', 'Core Technical Pillars', 'Application Domains and Evaluation Scenarios'],
           scenarios: {
             visionTitle: 'Prediction Intelligence',
-            visionBody: 'Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>.',
+            visionBody: 'Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>, enabling <strong>explainable forecasting</strong> and <strong>trustworthy decision support</strong>.',
             agentTitle: 'LLMs and Agentic AI',
             agentBody: 'Developing <strong>autonomous interactive learning</strong> for large language models, including <strong>environment-interactive Agentic RL</strong>, <strong>tool-augmented reasoning</strong>, <strong>multi-agent orchestration</strong>, and continual capability evolution through context, knowledge, and memory.',
             timeseriesTitle: 'Time Series Intelligence',
             timeseriesBody: 'Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.',
             scienceTitle: 'AI for Science',
             scienceBody: 'Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.',
-            industrialTitle: 'Industrial / Complex Systems',
+            industrialTitle: 'Industrial Systems',
             industrialBody: 'Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.',
             userTitle: 'Recommender Systems',
             userBody: 'Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.'
@@ -89,14 +89,14 @@
           labels: ['研究愿景', '核心技术支柱', '应用领域与评测场景'],
           scenarios: {
             visionTitle: '预测智能',
-            visionBody: '面向<strong>复杂演化系统</strong>，构建<strong>情境感知</strong>、<strong>推理驱动</strong>与<strong>不确定性感知的预测智能</strong>。',
+            visionBody: '面向<strong>复杂演化系统</strong>，构建<strong>情境感知</strong>、<strong>推理驱动</strong>与<strong>不确定性感知的预测智能</strong>，实现<strong>可解释预测</strong>与<strong>可信决策辅助</strong>。',
             agentTitle: '大语言模型与智能体 AI',
             agentBody: '面向大语言模型研究<strong>自主交互学习</strong>，重点关注<strong>环境交互式 Agentic RL</strong>、<strong>工具增强推理</strong>、<strong>多智能体协同</strong>，以及基于情境、知识与记忆的持续能力演化。',
             timeseriesTitle: '时间序列智能',
             timeseriesBody: '发展<strong>情境感知预测智能</strong>，重点研究<strong>多模态情境表征</strong>、<strong>慢思考推理</strong>、<strong>不确定性感知预测</strong>与<strong>自主智能体交互</strong>。',
             scienceTitle: 'AI for Science',
             scienceBody: '面向科技文献挖掘、科学建模、科学推理与自主发现，研究科学数据与知识智能。',
-            industrialTitle: '工业与复杂系统',
+            industrialTitle: '工业系统',
             industrialBody: '面向能源、交通、云服务、金融与工业运行等真实复杂系统，研究预测智能。',
             userTitle: '推荐系统',
             userBody: '通过用户行为理解、偏好建模与情境推理，研究自适应用户智能与个性化推荐。'

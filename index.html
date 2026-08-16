@@ -404,20 +404,6 @@ body {
 .primary-directions li[hidden] {
   display: none;
 }
-.research-direction-link {
-  color: inherit;
-  text-decoration: none;
-  border-radius: 3px;
-}
-.research-direction-link:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 3px;
-}
-.research-direction-link:focus-visible {
-  outline: 3px solid rgba(0, 48, 135, 0.25);
-  outline-offset: 2px;
-}
 .research-section .scenario-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -1506,10 +1492,6 @@ html[lang="zh-CN"] .footer-title {
     <ul class="research-list primary-directions">
       <li class="primary-direction primary-direction--agent" data-i18n="research.agent"><span class="research-label">🤖<strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.</li>
       <li class="primary-direction primary-direction--timeseries" data-i18n="research.timeseries"><span class="research-label">📊<strong>Time Series Intelligence:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.</li>
-      <li class="primary-direction primary-direction--prediction">
-        <span class="research-label">📈<a class="research-direction-link" href="prediction-intelligence.html"><strong data-i18n="research.predictionTitle">Prediction Intelligence</strong></a>:</span>
-        <span data-i18n="research.predictionBody">Building <span class="research-keyword">context-aware</span>, <span class="research-keyword">reasoning-driven</span>, and <span class="research-keyword">uncertainty-aware predictive intelligence</span> for <span class="research-keyword">complex and evolving systems</span>.</span>
-      </li>
       <li class="primary-direction primary-direction--knowledge" data-i18n="research.knowledge" hidden><span class="research-label">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class="research-keyword">agent-ready scientific knowledge intelligence</span> through <span class="research-keyword">LLM-driven literature mining</span>, <span class="research-keyword">multimodal scientific document understanding</span>, <span class="research-keyword">evidence-grounded reasoning</span>, and <span class="research-keyword">scientific knowledge integration</span> for <span class="research-keyword">predictive modeling and decision support</span>.</li>
     </ul>
     <section class="scenario-section" aria-labelledby="homepage-scenario-heading">
@@ -1537,7 +1519,7 @@ html[lang="zh-CN"] .footer-title {
                 <path d="M3 20h18M5 20V9l5 3V9l5 3V5h4v15M8 16h2m3 0h2m3 0h1"></path>
               </svg>
             </span>
-            <h4 class="scenario-card-title" data-i18n="research.industrialTitle">Industrial / Complex Systems</h4>
+            <h4 class="scenario-card-title" data-i18n="research.industrialTitle">Industrial Systems</h4>
           </div>
           <p class="scenario-card-body" data-i18n="research.industrialBody">Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.</p>
         </article>
@@ -2328,12 +2310,10 @@ const i18n = {
     "research.scenarioTitle": "Application Domains and Evaluation Scenarios",
     "research.scienceTitle": "AI for Science",
     "research.scienceBody": "Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.",
-    "research.industrialTitle": "Industrial / Complex Systems",
+    "research.industrialTitle": "Industrial Systems",
     "research.industrialBody": "Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.",
     "research.userTitle": "Recommender Systems",
     "research.userBody": "Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.",
-    "research.predictionTitle": "Prediction Intelligence",
-    "research.predictionBody": "Building <span class=\"research-keyword\">context-aware</span>, <span class=\"research-keyword\">reasoning-driven</span>, and <span class=\"research-keyword\">uncertainty-aware predictive intelligence</span> for <span class=\"research-keyword\">complex and evolving systems</span>.",
     "research.collections": "Research collections: 🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Intelligence</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">AI for Science</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "Latest News",
@@ -2413,12 +2393,10 @@ const i18n = {
     "research.scenarioTitle": "应用领域与评测场景",
     "research.scienceTitle": "AI for Science",
     "research.scienceBody": "面向科技文献挖掘、科学建模、科学推理与自主发现，研究科学数据与知识智能。",
-    "research.industrialTitle": "工业与复杂系统",
+    "research.industrialTitle": "工业系统",
     "research.industrialBody": "面向能源、交通、云服务、金融与工业运行等真实复杂系统，研究预测智能。",
     "research.userTitle": "推荐系统",
     "research.userBody": "通过用户行为理解、偏好建模与情境推理，研究自适应用户智能与个性化推荐。",
-    "research.predictionTitle": "预测智能",
-    "research.predictionBody": "面向<span class=\"research-keyword\">复杂演化系统</span>，构建<span class=\"research-keyword\">情境感知</span>、<span class=\"research-keyword\">推理驱动</span>与<span class=\"research-keyword\">不确定性感知的预测智能</span>。",
     "research.collections": "研究主页：🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Intelligence</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">AI for Science</a>",
     "research.join": "欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>。",
     "news.heading": "最新动态",

@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
+const awardsHtml = readFileSync(join(root, 'awards.html'), 'utf8');
 const newsHtml = readFileSync(join(root, 'news.html'), 'utf8');
 const publicationsHtml = readFileSync(join(root, 'publications.html'), 'utf8');
 const count = (source, pattern) => (source.match(pattern) || []).length;
@@ -110,7 +111,7 @@ test('language switching keeps accessible names synchronized', () => {
   );
 });
 
-test('publication filters and year groups expose native control state', () => {
+test('publication filters and year groups start expanded and remain collapsible', () => {
   const publications = sectionBetween(
     indexHtml,
     '<!-- ===== Selected Publications ===== -->',
@@ -137,6 +138,12 @@ test('publication filters and year groups expose native control state', () => {
   }
 
   assert.match(indexHtml, /document\.querySelectorAll\('\.pub-year-toggle'\)/);
+  assert.match(
+    indexHtml,
+    /const collapsedState = new Map\(\);[\s\S]*?yearHeadings\.forEach\(h => \{\s*collapsedState\.set\(h, false\);\s*\}\);/
+  );
+  assert.doesNotMatch(indexHtml, /const startsExpanded =/);
+  assert.match(indexHtml, /collapsedState\.set\(h, !collapsedState\.get\(h\)\);/);
   assert.match(
     indexHtml,
     /toggle\.setAttribute\('aria-expanded', String\(!collapsed\)\);/
@@ -173,13 +180,61 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });
 
+test('CAS Strategic Priority Research Program grant is synchronized across grant surfaces', () => {
+  const grantTitle = 'The Strategic Priority Research Program (B) of the Chinese Academy of Sciences';
+  const homepageGrant = `2026.08–2029.07, the Strategic Priority Research Program (B) of the Chinese Academy of Sciences`;
+  const chineseGrant = '2026.08–2029.07，中国科学院战略性先导科技专项（B类）';
+  const homepageGrants = sectionBetween(indexHtml, '<!-- ===== Research Grants ===== -->', '<!-- ===== Related Links ===== -->');
+  const awardsGrants = sectionBetween(awardsHtml, '<!-- Research Grants -->', '</div>\n\n  </div>\n</div>');
+
+  assert.match(
+    homepageGrants,
+    /<li data-i18n="grants\.casPriority">2026\.08–2029\.07, the Strategic Priority Research Program \(B\) of the Chinese Academy of Sciences<\/li>/
+  );
+  assert.ok(homepageGrants.indexOf(homepageGrant) < homepageGrants.indexOf('2026.01–2028.12'));
+  assert.match(indexHtml, /"grants\.casPriority": "2026\.08–2029\.07, the Strategic Priority Research Program \(B\) of the Chinese Academy of Sciences"/);
+  assert.ok(indexHtml.includes(`"grants.casPriority": "${chineseGrant}"`));
+
+  assert.match(
+    awardsGrants,
+    /<span class="grant-period">2026\.08–2029\.07<\/span>\s*<div class="grant-title">The Strategic Priority Research Program \(B\) of the Chinese Academy of Sciences<\/div>/
+  );
+  assert.ok(awardsGrants.indexOf(grantTitle) < awardsGrants.indexOf('National Natural Science Foundation of China'));
+  assert.match(awardsHtml, /\.grant-card\s*\{[\s\S]*?grid-template-columns: 120px 1fr;/);
+  assert.match(
+    awardsHtml,
+    /@media \(max-width: 680px\)[\s\S]*?\.grant-card\s*\{\s*grid-template-columns: 108px 1fr;\s*\}/
+  );
+});
+
+test('New Generation AI Major Project grant is synchronized across grant surfaces', () => {
+  const grantTitle = 'New Generation Artificial Intelligence–National Science and Technology Major Project';
+  const homepageGrant = `2026.08–2028.07, ${grantTitle}`;
+  const chineseGrant = '2026.08–2028.07，新一代人工智能国家科技重大专项';
+  const homepageGrants = sectionBetween(indexHtml, '<!-- ===== Research Grants ===== -->', '<!-- ===== Related Links ===== -->');
+  const awardsGrants = sectionBetween(awardsHtml, '<!-- Research Grants -->', '</div>\n\n  </div>\n</div>');
+
+  assert.match(
+    homepageGrants,
+    /<li data-i18n="grants\.newGenerationAI">2026\.08–2028\.07, New Generation Artificial Intelligence–National Science and Technology Major Project<\/li>/
+  );
+  assert.ok(homepageGrants.indexOf(homepageGrant) < homepageGrants.indexOf('grants.casPriority'));
+  assert.ok(indexHtml.includes(`"grants.newGenerationAI": "${homepageGrant}"`));
+  assert.ok(indexHtml.includes(`"grants.newGenerationAI": "${chineseGrant}"`));
+
+  assert.match(
+    awardsGrants,
+    /<span class="grant-period">2026\.08–2028\.07<\/span>\s*<div class="grant-title">New Generation Artificial Intelligence–National Science and Technology Major Project<\/div>/
+  );
+  assert.ok(awardsGrants.indexOf(grantTitle) < awardsGrants.indexOf('The Strategic Priority Research Program'));
+});
+
 test('Preprints follow the requested synchronized paper order', () => {
   const expectedTitles = [
     'Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting',
     'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
     'CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting',
     'Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting',
-    'PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization',
     'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
     'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning'
   ];
@@ -222,6 +277,36 @@ test('Preprints follow the requested synchronized paper order', () => {
     );
     assert.equal(count(castFsrEntry, /https:\/\/arxiv\.org\/abs\/2608\.03031/g), 1, `${name} arXiv link count`);
     assert.equal(count(preprints, /CastFSR:/g), 1, `${name} CastFSR count`);
+  }
+});
+
+test('PaperScout Findings of EMNLP 2026 acceptance is synchronized on both publication lists', () => {
+  const title = 'PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization';
+  const authors = 'Tingyue Pan, Jie Ouyang, <strong>Mingyue Cheng</strong>, Qingchuan Li, Zirui Liu, Daoyu Wang, Mingfan Pan, Shuo Yu, Qi Liu';
+  const pdf = 'https://arxiv.org/pdf/2601.10029.pdf';
+  const locations = [
+    {
+      name: 'homepage',
+      preprints: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-preprints">', '</ol>'),
+      publications2026: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')
+    },
+    {
+      name: 'publications page',
+      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== Released Survey ===== -->'),
+      publications2026: sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+    }
+  ];
+
+  for (const location of locations) {
+    assert.equal(location.preprints.includes(title), false, `${location.name} stale preprint placement`);
+    const entries = [...location.publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
+    const entry = entries.find((candidate) => candidate.includes(title)) || '';
+    assert.match(entry, /^<li data-tags="agent llm ai4science">/, `${location.name} tags`);
+    assert.equal(entry.includes(authors), true, `${location.name} authors`);
+    assert.match(entry, /<em>Findings of EMNLP 2026 Accepted<\/em>\./, `${location.name} status`);
+    assert.equal(entry.includes(`href="${pdf}"`), true, `${location.name} PDF`);
+    assert.equal(entries.filter((candidate) => candidate.includes(title)).length, 1, `${location.name} entry count`);
+    assert.ok(location.publications2026.indexOf(title) < location.publications2026.indexOf('Agent-R1:'), `${location.name} placement before demo papers`);
   }
 });
 
@@ -396,6 +481,8 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
 
 test('August 2026 news is synchronized across the homepage and News page', () => {
   const expected = [
+    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our paper <strong>PaperScout</strong> being accepted to <strong>Findings of EMNLP 2026</strong>!',
+    '<strong>[Aug. 2026]</strong> 🎉 We are excited to present our tutorial, “<strong>Context-Aware Time Series Forecasting: From Pattern Extrapolation to Cognitive Reasoning</strong>,” at <strong>IEEE ICDM 2026</strong>. See you in <strong>Shenyang</strong>!',
     '<strong>[Aug. 2026]</strong> 🎉 I will serve as the <strong>Publication Chair</strong> for <strong>ICEBE 2026</strong>.',
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our papers <strong>Mind2Report</strong>, <strong>Time-R1</strong>, and <strong>AlphaCast</strong> being accepted to <strong>ACM CIKM 2026</strong>!',
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> being accepted by <strong>ACM Computing Surveys (ACM CSUR)</strong>!',
@@ -410,10 +497,10 @@ test('August 2026 news is synchronized across the homepage and News page', () =>
   const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
   const newsPageEntries = [...newsPage2026.matchAll(/<li class="news-item"><span class="news-dot"><\/span><span class="news-body">([\s\S]*?)<\/span><\/li>/g)].map((match) => match[1]);
 
-  assert.deepEqual(homepageEntries.slice(0, 4), expected, 'homepage August news order and copy');
-  assert.deepEqual(newsPageEntries.slice(0, 4), expected, 'News page August news order and copy');
-  assert.match(homepageEntries[4], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
-  assert.match(newsPageEntries[4], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
+  assert.deepEqual(homepageEntries.slice(0, 6), expected, 'homepage August news order and copy');
+  assert.deepEqual(newsPageEntries.slice(0, 6), expected, 'News page August news order and copy');
+  assert.match(homepageEntries[6], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
+  assert.match(newsPageEntries[6], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
   assert.equal(count(homepageNews, /ACM CIKM 2026 Demo Track/g), 1, 'homepage combined CIKM news count');
   assert.equal(count(newsPage2026, /ACM CIKM 2026 Demo Track/g), 1, 'News page combined CIKM news count');
 });

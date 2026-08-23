@@ -501,6 +501,7 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
 
 test('Time Series Intelligence direction copy stays synchronized', () => {
   const oldTitle = 'Time-Series Analysis';
+  const supersededTitle = 'Temporal Data Mining';
   const oldFocus = 'context-aware predictive intelligence for complex systems';
   const oldObservationFrame = 'dynamic system observations';
   const oldReasoning = 'slow-thinking temporal reasoning';
@@ -533,12 +534,22 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   );
   assert.match(
     decodedTranslationEntries('research.timeseries')[1],
-    /^<span class="research-label">📊<strong>/,
-    'Chinese research.timeseries translation must not include a space between the icon and title'
+    /^<span class="research-label">📊<strong>时间序列智能：<\/strong>/,
+    'Chinese research.timeseries translation must use 时间序列智能 without a space after the icon'
   );
   assert.match(
     researchDirectionsSection,
     /<h3 class="pillar-card-title" data-page-i18n="timeseriesTitle">Time Series Intelligence<\/h3>/
+  );
+  assert.ok(siteLanguageJs.includes("timeseriesTitle: 'Time Series Intelligence'"));
+  assert.ok(siteLanguageJs.includes("timeseriesTitle: '时间序列智能'"));
+  assert.match(
+    researchHtml,
+    /<meta name="description" content="[^"]*Time Series Intelligence[^"]*">/
+  );
+  assert.match(
+    researchHtml,
+    /<meta property="og:description" content="[^"]*Time Series Intelligence[^"]*">/
   );
   assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
 
@@ -548,6 +559,7 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
     ['research direction cards', researchDirectionsSection]
   ]) {
     assert.equal(source.includes(oldTitle), false, `${label} must not use the old title`);
+    assert.equal(source.includes(supersededTitle), false, `${label} must not use the superseded title`);
     assert.equal(source.includes(oldFocus), false, `${label} must not use the old predictive-intelligence wording`);
     assert.equal(source.includes(oldObservationFrame), false, `${label} must not keep the old observation framing`);
   }

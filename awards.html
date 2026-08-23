@@ -169,7 +169,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 }
 .grant-card {
   display: grid;
-  grid-template-columns: 92px 1fr;
+  grid-template-columns: 120px 1fr;
   gap: 14px;
   align-items: flex-start;
   padding: 10px 0;
@@ -203,7 +203,13 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 .footer-link:hover { text-decoration: underline; }
 .footer-bottom { margin-top: 10px; font-size: 12px; color: var(--text-muted); text-align: center; padding: 8px 0 0; }
 
-@media (max-width: 680px) { .nav-links { gap: 14px; } .page-hero-title { font-size: 22px; } .award-card, .grant-card { grid-template-columns: 64px 1fr; } .award-year, .grant-period { font-size: 12px; } }
+@media (max-width: 680px) {
+  .nav-links { gap: 14px; }
+  .page-hero-title { font-size: 22px; }
+  .award-card { grid-template-columns: 64px 1fr; }
+  .grant-card { grid-template-columns: 108px 1fr; }
+  .award-year, .grant-period { font-size: 12px; }
+}
 @media (max-width: 760px) {
   .nav-inner {
     flex-wrap: wrap;
@@ -368,6 +374,16 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
     <div class="section-block">
       <h2 class="section-heading">Research Grants</h2>
       <div class="grant-list">
+
+        <div class="grant-card">
+          <span class="grant-period">2026.08–2028.07</span>
+          <div class="grant-title">New Generation Artificial Intelligence–National Science and Technology Major Project</div>
+        </div>
+
+        <div class="grant-card">
+          <span class="grant-period">2026.08–2029.07</span>
+          <div class="grant-title">The Strategic Priority Research Program (B) of the Chinese Academy of Sciences</div>
+        </div>
 
         <div class="grant-card">
           <span class="grant-period">2026–2028</span>

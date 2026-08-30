@@ -154,6 +154,65 @@ test('publication filters and year groups start expanded and remain collapsible'
   );
 });
 
+test('accepted open-source cards display their venue badges', () => {
+  const agentR1Meta = sectionBetween(
+    indexHtml,
+    '<div class="os-card-name">Agent-R1</div>',
+    '<div class="os-card-desc"><span class="os-inline-highlight">Agent-R1</span>'
+  );
+  const tabClawMeta = sectionBetween(
+    indexHtml,
+    '<div class="os-card-name">TabClaw</div>',
+    '<div class="os-card-desc"><span class="os-inline-highlight">TabClaw</span>'
+  );
+  const paperScoutMeta = sectionBetween(
+    indexHtml,
+    '<div class="os-card-name">PaperScout</div>',
+    '<div class="os-card-desc"><span class="os-inline-highlight">PaperScout</span>'
+  );
+
+  assert.match(
+    agentR1Meta,
+    /<span class="os-year">2025\.04<\/span>\s*<span class="os-venue">CIKM 2026<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/AgentR1\/Agent-R1"/
+  );
+  assert.equal(count(agentR1Meta, /CIKM 2026/g), 1);
+  assert.match(
+    tabClawMeta,
+    /<span class="os-year">2026\.03<\/span>\s*<span class="os-venue">CIKM 2026<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/fishsure\/TabClaw"/
+  );
+  assert.equal(count(tabClawMeta, /CIKM 2026/g), 1);
+  assert.match(
+    paperScoutMeta,
+    /<span class="os-year">2026\.01<\/span>\s*<span class="os-venue">EMNLP 2026<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/pty12345\/PaperScout"/
+  );
+  assert.equal(count(paperScoutMeta, /EMNLP 2026/g), 1);
+});
+
+test('accepted dataset cards display their venue badges', () => {
+  const chemTableMeta = sectionBetween(
+    indexHtml,
+    '<span class="dataset-name">ChemTable</span>',
+    '<strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong>'
+  );
+  const hohMeta = sectionBetween(
+    indexHtml,
+    '<span class="dataset-name">HoH</span>',
+    '<strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG</strong>'
+  );
+
+  assert.match(
+    chemTableMeta,
+    /<span class="os-year">2025\.06<\/span>\s*<span class="dataset-venue">KDD 2026<\/span>\s*<a class="dataset-repo-link" href="https:\/\/github\.com\/lqzxt\/ChemTable"/
+  );
+  assert.equal(count(chemTableMeta, /KDD 2026/g), 1);
+  assert.match(
+    hohMeta,
+    /<span class="os-year">2025\.06<\/span>\s*<span class="dataset-venue">ACL 2025<\/span>\s*<a class="dataset-repo-link" href="https:\/\/github\.com\/0russwest0\/HoH"/
+  );
+  assert.equal(count(hohMeta, /ACL 2025/g), 1);
+  assert.match(indexHtml, /\.os-venue,\s*\.dataset-venue\s*\{/);
+});
+
 test('homepage supports visible focus and reduced-motion preferences', () => {
   assert.match(indexHtml, /\.skip-link\s*\{[\s\S]*?transform: translateY\(-150%\);[\s\S]*?\}/);
   assert.match(indexHtml, /\.skip-link:focus\s*\{[\s\S]*?transform: translateY\(0\);[\s\S]*?\}/);

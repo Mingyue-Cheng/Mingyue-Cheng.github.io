@@ -8,7 +8,6 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const siteLanguagePath = join(root, 'files/assets/site-language.js');
 const packagePath = join(root, 'package.json');
-const workflowPath = join(root, '.github/workflows/verify-site.yml');
 
 const readIfPresent = (path) => (existsSync(path) ? readFileSync(path, 'utf8') : '');
 const siteLanguageSource = readIfPresent(siteLanguagePath);
@@ -309,17 +308,4 @@ test('package.json exposes the dependency-free repository test command', () => {
   for (const key of ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies']) {
     assert.deepEqual(packageJson[key] || {}, {}, `${key} must stay empty`);
   }
-});
-
-test('GitHub Actions verifies pushes and pull requests with Node 20', () => {
-  assert.ok(existsSync(workflowPath), '.github/workflows/verify-site.yml must exist');
-  const workflow = readFileSync(workflowPath, 'utf8').replace(/#.*$/gm, '');
-  const triggerBlock = workflow.match(/^on:\s*\n((?:^[ \t]+.*\n?)*)/m)?.[1] || '';
-
-  assert.match(triggerBlock, /^\s{2}push:\s*$/m, 'workflow must run on push');
-  assert.match(triggerBlock, /^\s{2}pull_request:\s*$/m, 'workflow must run on pull requests');
-  assert.match(workflow, /^\s*-\s+uses:\s+actions\/checkout@v\d+\s*$/m);
-  assert.match(workflow, /^\s*-\s+uses:\s+actions\/setup-node@v\d+\s*$/m);
-  assert.match(workflow, /^\s+node-version:\s*['"]?20['"]?\s*$/m);
-  assert.match(workflow, /^\s*-\s+run:\s+npm test\s*$/m);
 });

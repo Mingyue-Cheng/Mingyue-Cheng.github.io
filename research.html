@@ -8,9 +8,10 @@
   <meta name="theme-color" content="#003087">
   <meta name="description" content="Research directions of Mingyue Cheng: Prediction Intelligence, LLMs and Agentic AI, Time Series Intelligence, and applications in AI for Science, industrial and complex systems, and recommender systems.">
   <meta name="author" content="Mingyue Cheng">
+  <link rel="canonical" href="https://mingyue-cheng.github.io/research.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Research — Mingyue Cheng">
-  <meta property="og:description" content="Prediction intelligence for complex systems, supported by LLMs and Agentic AI, Time Series Intelligence, and real-world application and evaluation scenarios.">
+  <meta property="og:description" content="Research directions of Mingyue Cheng: Prediction Intelligence, LLMs and Agentic AI, Time Series Intelligence, and applications in AI for Science, industrial and complex systems, and recommender systems.">
   <meta property="og:url" content="https://mingyue-cheng.github.io/research.html">
   <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
   <meta name="twitter:card" content="summary">
@@ -91,6 +92,22 @@ body {
   white-space: nowrap;
 }
 .nav-links a:hover { color: var(--accent); }
+.nav-links a.active { color: var(--accent); font-weight: 600; }
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus { transform: translateY(0); }
 .language-toggle {
   flex-shrink: 0;
   display: inline-flex;
@@ -593,6 +610,7 @@ body {
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <!-- ===== Nav ===== -->
 <header class="site-header">
@@ -600,7 +618,7 @@ body {
     <div class="nav-inner">
       <a href="index.html#home" class="nav-logo">Homepage</a>
       <nav class="nav-links" id="primary-nav">
-        <a href="research.html">Research</a>
+        <a href="research.html" class="active" aria-current="page">Research</a>
         <a href="news.html">News</a>
         <a href="publications.html">Publications</a>
         <a href="projects.html">Open Source</a>
@@ -616,6 +634,7 @@ body {
   </div>
 </header>
 
+<main id="main-content" tabindex="-1">
 <!-- ===== Hero ===== -->
 <div class="page-hero">
   <div class="container">
@@ -759,6 +778,7 @@ body {
 
   </div>
 </div>
+</main>
 
 <!-- ===== Back to Top ===== -->
 <button id="back-to-top" aria-label="Back to top">
@@ -776,7 +796,7 @@ body {
       <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
       <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in July 2026.</div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in August 2026.</div>
   </div>
 </footer>
 
@@ -789,6 +809,6 @@ body {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20260815"></script>
+<script src="files/assets/site-language.js?v=20260831"></script>
 </body>
 </html>

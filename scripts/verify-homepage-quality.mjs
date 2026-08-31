@@ -109,9 +109,16 @@ test('language switching keeps accessible names synchronized', () => {
     indexHtml,
     /id="back-to-top" aria-label="Back to top" data-i18n-aria-label="a11y\.backToTop"/
   );
+  assert.match(
+    indexHtml,
+    /<a class="pub-all-link" href="publications\.html" data-i18n="pub\.viewAll">View all publications →<\/a>/
+  );
+  assert.equal(count(indexHtml, /"pub\.viewAll":/g), 2);
+  assert.match(indexHtml, /"pub\.viewAll": "View all publications →"/);
+  assert.match(indexHtml, /"pub\.viewAll": "查看全部论文 →"/);
 });
 
-test('publication filters and year groups start expanded and remain collapsible', () => {
+test('homepage selected-publication filters and highlight group remain accessible', () => {
   const publications = sectionBetween(
     indexHtml,
     '<!-- ===== Selected Publications ===== -->',
@@ -120,22 +127,31 @@ test('publication filters and year groups start expanded and remain collapsible'
   const filterButtons = [...publications.matchAll(/<button class="pub-filter-btn[^"]*"[^>]*>/g)]
     .map((match) => match[0]);
 
-  assert.equal(filterButtons.length, 6);
+  assert.equal(filterButtons.length, 5);
   for (const button of filterButtons) {
     assert.match(button, /type="button"/);
     assert.match(button, /aria-pressed="(?:true|false)"/);
   }
-  assert.match(publications, /data-filter="recsys"[^>]*>Recommender Systems<\/button>/);
   assert.match(publications, /data-filter="ai4science"[^>]*>AI for Science<\/button>/);
+  assert.doesNotMatch(publications, /data-filter="recsys"/);
 
   const yearToggles = [...publications.matchAll(
-    /<button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="([^"]+)">/g
+    /<button\b(?=[^>]*class="pub-year-toggle")(?=[^>]*aria-expanded="true")(?=[^>]*aria-controls="([^"]+)")[^>]*>/g
   )].map((match) => match[1]);
-  assert.equal(yearToggles.length, 6);
+  assert.deepEqual(yearToggles, ['publication-list-selected']);
   assert.equal(new Set(yearToggles).size, yearToggles.length);
   for (const controlledId of yearToggles) {
     assert.match(publications, new RegExp(`<ol class="pub-list" id="${controlledId}">`));
   }
+  const visibleEntries = [...publications.replace(/<!--[\s\S]*?-->/g, '').matchAll(
+    /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
+  )];
+  assert.equal(visibleEntries.length, 8);
+  assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>View all publications →<\/a>/);
+  assert.match(
+    publications,
+    /class="pub-year-toggle"[^>]*data-i18n="pub\.representative"[^>]*>✨ Representative Work<\/button>/
+  );
 
   assert.match(indexHtml, /document\.querySelectorAll\('\.pub-year-toggle'\)/);
   assert.match(
@@ -231,10 +247,12 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /Computer Science and Technology, Ph\.D\. degree,/);
   assert.match(indexHtml, /Last updated in August 2026\./);
   assert.match(indexHtml, /最后更新于 2026 年 8 月。/);
-  assert.match(indexHtml, /"pub\.filterRec": "Recommender Systems"/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "AI for Science"/);
-  assert.match(indexHtml, /"pub\.filterRec": "推荐系统"/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
+  assert.equal(count(indexHtml, /"pub\.representative":/g), 2);
+  assert.match(indexHtml, /"pub\.representative": "✨ Representative Work"/);
+  assert.match(indexHtml, /"pub\.representative": "✨ 代表性工作"/);
+  assert.doesNotMatch(indexHtml, /"pub\.filterRec":/);
   assert.doesNotMatch(indexHtml, /citations\?user=74IhSx8AAAAJ&hl/);
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });
@@ -288,7 +306,7 @@ test('New Generation AI Major Project grant is synchronized across grant surface
   assert.ok(awardsGrants.indexOf(grantTitle) < awardsGrants.indexOf('The Strategic Priority Research Program'));
 });
 
-test('Preprints follow the requested synchronized paper order', () => {
+test('complete Publications page keeps the requested preprint order', () => {
   const expectedTitles = [
     'Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting',
     'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
@@ -297,18 +315,14 @@ test('Preprints follow the requested synchronized paper order', () => {
     'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
     'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning'
   ];
-  const preprintSections = [
-    ['homepage', sectionBetween(
-      indexHtml,
-      '<ol class="pub-list" id="publication-list-preprints">',
-      '</ol>'
-    )],
-    ['publications page', sectionBetween(
+  const preprintSections = [[
+    'publications page',
+    sectionBetween(
       publicationsHtml,
       '<!-- ===== Preprint ===== -->',
       '<!-- ===== Released Survey ===== -->'
-    )]
-  ];
+    )
+  ]];
 
   for (const [name, source] of preprintSections) {
     const preprints = source.replace(/<!--[\s\S]*?-->/g, '');
@@ -343,30 +357,37 @@ test('PaperScout Findings of EMNLP 2026 acceptance is synchronized on both publi
   const title = 'PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization';
   const authors = 'Tingyue Pan, Jie Ouyang, <strong>Mingyue Cheng</strong>, Qingchuan Li, Zirui Liu, Daoyu Wang, Mingfan Pan, Shuo Yu, Qi Liu';
   const pdf = 'https://arxiv.org/pdf/2601.10029.pdf';
+  const homepageSelected = sectionBetween(
+    indexHtml,
+    '<!-- ===== Selected Publications ===== -->',
+    '<!-- ===== Open Source Projects ===== -->'
+  );
+  const publicationsPreprints = sectionBetween(
+    publicationsHtml,
+    '<!-- ===== Preprint ===== -->',
+    '<!-- ===== Released Survey ===== -->'
+  );
   const locations = [
     {
       name: 'homepage',
-      preprints: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-preprints">', '</ol>'),
-      publications2026: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')
+      entries: [...homepageSelected.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0])
     },
     {
       name: 'publications page',
-      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== Released Survey ===== -->'),
-      publications2026: sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+      entries: [...sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+        .matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0])
     }
   ];
 
   for (const location of locations) {
-    assert.equal(location.preprints.includes(title), false, `${location.name} stale preprint placement`);
-    const entries = [...location.publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
-    const entry = entries.find((candidate) => candidate.includes(title)) || '';
+    const entry = location.entries.find((candidate) => candidate.includes(title)) || '';
     assert.match(entry, /^<li data-tags="agent llm ai4science">/, `${location.name} tags`);
     assert.equal(entry.includes(authors), true, `${location.name} authors`);
     assert.match(entry, /<em>Findings of EMNLP 2026 Accepted<\/em>\./, `${location.name} status`);
     assert.equal(entry.includes(`href="${pdf}"`), true, `${location.name} PDF`);
-    assert.equal(entries.filter((candidate) => candidate.includes(title)).length, 1, `${location.name} entry count`);
-    assert.ok(location.publications2026.indexOf(title) < location.publications2026.indexOf('Agent-R1:'), `${location.name} placement before demo papers`);
+    assert.equal(location.entries.filter((candidate) => candidate.includes(title)).length, 1, `${location.name} entry count`);
   }
+  assert.equal(publicationsPreprints.includes(title), false, 'publications page stale preprint placement');
 });
 
 test('table mining survey shows ACM CSUR acceptance on both publication lists', () => {
@@ -385,29 +406,35 @@ test('table mining survey shows ACM CSUR acceptance on both publication lists', 
   }
 });
 
-test('ACM CSUR survey is filed in the 2026 publication list on both pages', () => {
+test('ACM CSUR survey is selected on the homepage and filed in the complete 2026 list', () => {
   const title = 'A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects';
-  const locations = [
-    ['homepage',
-      sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-surveys">', '</ol>'),
-      sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')],
-    ['publications page',
-      sectionBetween(publicationsHtml, '<!-- ===== Released Survey ===== -->', '<!-- ===== 2026 ===== -->'),
-      sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')]
-  ];
+  const homepageSelected = sectionBetween(
+    indexHtml,
+    '<!-- ===== Selected Publications ===== -->',
+    '<!-- ===== Open Source Projects ===== -->'
+  );
+  const releasedSurveys = sectionBetween(
+    publicationsHtml,
+    '<!-- ===== Released Survey ===== -->',
+    '<!-- ===== 2026 ===== -->'
+  );
+  const publications2026 = sectionBetween(
+    publicationsHtml,
+    '<!-- ===== 2026 ===== -->',
+    '<!-- ===== 2025 ===== -->'
+  );
 
-  for (const [name, releasedSurveys, publications2026] of locations) {
-    assert.equal(releasedSurveys.includes(title), false, `${name} released-survey placement`);
-    assert.equal(publications2026.includes(title), true, `${name} 2026 placement`);
-  }
+  assert.equal(homepageSelected.includes(title), true, 'homepage representative selection');
+  assert.equal(releasedSurveys.includes(title), false, 'publications page released-survey placement');
+  assert.equal(publications2026.includes(title), true, 'publications page 2026 placement');
 });
 
-test('knowledge-oriented RAG survey leads the 2026 publication list on both pages', () => {
+test('knowledge-oriented RAG survey leads the complete 2026 publication list', () => {
   const title = 'A Survey on Knowledge-Oriented Retrieval-Augmented Generation';
-  const sections = [
-    ['homepage', sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')],
-    ['publications page', sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')]
-  ];
+  const sections = [[
+    'publications page',
+    sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+  ]];
 
   for (const [name, publications2026] of sections) {
     const entries = [...publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
@@ -423,40 +450,46 @@ test('OneCast TKDD acceptance is synchronized in the 2026 publication list', () 
   const authors = 'Tingyue Pan, <strong>Mingyue Cheng*</strong>, Shilong Zhang, Zhiding Liu, Xiaoyu Tao, Yucong Luo, Jintao Zhang, Qi Liu';
   const status = '<em>ACM Transactions on Knowledge Discovery from Data (ACM TKDD) Accepted</em>.';
   const pdf = 'https://arxiv.org/pdf/2510.24028';
+  const homepageSelected = sectionBetween(
+    indexHtml,
+    '<!-- ===== Selected Publications ===== -->',
+    '<!-- ===== Open Source Projects ===== -->'
+  );
   const locations = [
     {
       name: 'homepage',
-      preprints: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-preprints">', '</ol>'),
-      publications2026: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')
+      entries: [...homepageSelected.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]),
+      isCompleteList: false
     },
     {
       name: 'publications page',
-      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== Released Survey ===== -->'),
-      publications2026: sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+      entries: [...sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+        .matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]),
+      isCompleteList: true
     }
   ];
 
   for (const location of locations) {
-    assert.equal(location.preprints.includes(title), false, `${location.name} stale preprint placement`);
-    const entries = [...location.publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
-    const entry = entries.find((candidate) => candidate.includes(title)) || '';
+    const entry = location.entries.find((candidate) => candidate.includes(title)) || '';
 
     assert.match(entry, /^<li data-tags="timeseries">/, `${location.name} OneCast tags`);
     assert.equal(entry.includes(authors), true, `${location.name} OneCast authors`);
     assert.equal(entry.includes(status), true, `${location.name} OneCast status`);
     assert.equal(entry.includes(`href="${pdf}"`), true, `${location.name} OneCast PDF`);
-    assert.equal(entries.filter((candidate) => candidate.includes(title)).length, 1, `${location.name} OneCast count`);
-    assert.equal(entries[2], entry, `${location.name} OneCast third-place ordering`);
+    assert.equal(location.entries.filter((candidate) => candidate.includes(title)).length, 1, `${location.name} OneCast count`);
+    if (location.isCompleteList) {
+      assert.equal(location.entries[2], entry, `${location.name} OneCast third-place ordering`);
+    }
   }
 });
 
-test('CIKM 2026 Demo Track papers are synchronized at the end of the 2026 list', () => {
+test('CIKM 2026 Demo Track papers remain at the end of the complete 2026 list', () => {
   const agentR1Title = 'Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning';
   const tabClawTitle = 'TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning';
-  const sections = [
-    ['homepage', sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')],
-    ['publications page', sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')]
-  ];
+  const sections = [[
+    'publications page',
+    sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
+  ]];
 
   for (const [name, source] of sections) {
     const entries = [...source.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
@@ -497,9 +530,9 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
     },
     {
       title: 'Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs',
-      authors: 'Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Qi Liu, Jiahao Wang, Daoyu Wang, Enhong Chen',
+      authors: 'Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen',
       tags: 'timeseries agent llm',
-      pdf: 'https://www.arxiv.org/pdf/2508.09191',
+      pdf: 'https://arxiv.org/pdf/2506.10630',
       code: 'https://github.com/lqzxt/Time-R1'
     },
     {
@@ -510,11 +543,16 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
       code: 'https://github.com/SkyeGT/AlphaCast_Official'
     }
   ];
+  const homepageSelected = sectionBetween(
+    indexHtml,
+    '<!-- ===== Selected Publications ===== -->',
+    '<!-- ===== Open Source Projects ===== -->'
+  );
   const locations = [
     {
       name: 'homepage',
-      preprints: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-preprints">', '</ol>'),
-      publications2026: sectionBetween(indexHtml, '<ol class="pub-list" id="publication-list-2026">', '</ol>')
+      preprints: '',
+      publications2026: homepageSelected
     },
     {
       name: 'publications page',

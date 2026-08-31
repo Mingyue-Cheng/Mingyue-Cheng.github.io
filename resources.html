@@ -8,6 +8,12 @@
   <meta name="theme-color" content="#003087">
   <meta name="description" content="Resources shared by Mingyue Cheng, including academic guidelines and useful documents.">
   <meta name="author" content="Mingyue Cheng">
+  <link rel="canonical" href="https://mingyue-cheng.github.io/resources.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Resources — Mingyue Cheng">
+  <meta property="og:description" content="Resources shared by Mingyue Cheng, including academic guidelines and useful documents.">
+  <meta property="og:url" content="https://mingyue-cheng.github.io/resources.html">
+  <meta name="twitter:card" content="summary">
   <style>
 :root {
   --accent:      #003087;
@@ -60,6 +66,21 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 }
 .nav-links a:hover { color: var(--accent); }
 .nav-links a.active { color: var(--accent); font-weight: 600; }
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus { transform: translateY(0); }
 .language-toggle {
   flex-shrink: 0;
   display: inline-flex;
@@ -220,6 +241,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <header class="site-header">
   <div class="container nav-inner">
     <a class="nav-logo" href="index.html">Homepage</a>
@@ -230,7 +252,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
       <a href="projects.html">Open Source</a>
       <a href="awards.html">Awards</a>
       <a href="service.html">Service</a>
-      <a href="resources.html" class="active">Resources</a>
+      <a href="resources.html" class="active" aria-current="page">Resources</a>
     </nav>
     <button class="language-toggle" type="button" id="languageToggle" aria-label="Switch language">中文</button>
     <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
@@ -239,6 +261,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   </div>
 </header>
 
+<main id="main-content" tabindex="-1">
 <div class="page-hero">
   <div class="container">
     <div class="page-hero-title">Resources</div>
@@ -246,7 +269,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   </div>
 </div>
 
-<main class="resources-main">
+<div class="resources-main">
   <div class="container">
     <h1 class="section-heading">Shared Resources</h1>
     <div class="resource-list">
@@ -266,6 +289,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
       </article>
     </div>
   </div>
+</div>
 </main>
 
 <button id="back-to-top" aria-label="Back to top">
@@ -282,7 +306,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
       <a class="footer-link" href="research.html">Research</a>
       <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in July 2026.</div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in August 2026.</div>
   </div>
 </footer>
 
@@ -293,6 +317,6 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20260604"></script>
+<script src="files/assets/site-language.js?v=20260831"></script>
 </body>
 </html>

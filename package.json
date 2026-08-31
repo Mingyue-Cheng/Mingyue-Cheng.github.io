@@ -1,0 +1,7 @@
+{
+  "name": "mingyue-cheng-homepage",
+  "private": true,
+  "scripts": {
+    "test": "node --test scripts/*.mjs"
+  }
+}

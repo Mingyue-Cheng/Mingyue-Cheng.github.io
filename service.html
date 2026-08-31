@@ -8,6 +8,12 @@
   <meta name="theme-color" content="#003087">
   <meta name="description" content="Professional service of Mingyue Cheng: program committee, journal reviewer, and editorial roles.">
   <meta name="author" content="Mingyue Cheng">
+  <link rel="canonical" href="https://mingyue-cheng.github.io/service.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Professional Service — Mingyue Cheng">
+  <meta property="og:description" content="Professional service of Mingyue Cheng: program committee, journal reviewer, and editorial roles.">
+  <meta property="og:url" content="https://mingyue-cheng.github.io/service.html">
+  <meta name="twitter:card" content="summary">
   <style>
 :root {
   --accent:      #003087;
@@ -59,6 +65,21 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   white-space: nowrap;
 }
 .nav-links a:hover { color: var(--accent); }
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus { transform: translateY(0); }
 .language-toggle {
   flex-shrink: 0;
   display: inline-flex;
@@ -255,6 +276,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <header class="site-header">
   <div class="container">
@@ -266,7 +288,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
         <a href="publications.html">Publications</a>
         <a href="projects.html">Open Source</a>
         <a href="awards.html">Awards</a>
-        <a href="service.html">Service</a>
+        <a href="service.html" class="active" aria-current="page">Service</a>
         <a href="resources.html">Resources</a>
       </nav>
       <button class="language-toggle" type="button" id="languageToggle" aria-label="Switch language">中文</button>
@@ -277,9 +299,10 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   </div>
 </header>
 
+<main id="main-content" tabindex="-1">
 <div class="page-hero">
   <div class="container">
-    <div class="page-hero-title">Professional Service</div>
+    <h1 class="page-hero-title">Professional Service</h1>
     <p class="page-hero-sub">Program committee memberships, journal reviewing, and editorial activities.</p>
   </div>
 </div>
@@ -475,6 +498,8 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   </div>
 </div>
 
+</main>
+
 <button id="back-to-top" aria-label="Back to top">
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -489,7 +514,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
       <a class="footer-link" href="publications.html">Publications</a>
       <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in July 2026.</div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in August 2026.</div>
   </div>
 </footer>
 
@@ -500,6 +525,6 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20260604"></script>
+<script src="files/assets/site-language.js?v=20260831"></script>
 </body>
 </html>

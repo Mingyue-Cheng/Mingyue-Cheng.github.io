@@ -44,7 +44,8 @@
         },
         'publications.html': {
           title: 'Publications',
-          subtitle: 'Selected preprints, conference papers, journal articles, and research outputs.'
+          subtitle: 'Full publication list of Mingyue Cheng. (* Corresponding Author, + Equal Contribution)',
+          subtitleHtml: 'Full publication list of <a href="index.html">Mingyue Cheng</a>. (* Corresponding Author, <sup>+</sup> Equal Contribution)'
         },
         'projects.html': {
           title: 'Open Source',
@@ -110,7 +111,8 @@
         },
         'publications.html': {
           title: '论文发表',
-          subtitle: '代表性预印本、会议论文、期刊论文与研究成果。'
+          subtitle: '程明月的完整论文列表。（* 通讯作者，+ 共同一作）',
+          subtitleHtml: '<a href="index.html">程明月</a>的完整论文列表。（* 通讯作者，<sup>+</sup> 共同一作）'
         },
         'projects.html': {
           title: '开源项目',
@@ -154,6 +156,11 @@
     if (node && value) node.textContent = value;
   }
 
+  function setHtml(selector, value) {
+    const node = document.querySelector(selector);
+    if (node && value) node.innerHTML = value;
+  }
+
   function applyLanguage(lang) {
     const pack = translations[lang] || translations.en;
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -175,7 +182,11 @@
       setText('.page-hero-title', page.title);
       setText('.pub-hero-title', page.title);
       setText('.page-hero-sub', page.subtitle);
-      setText('.pub-hero-sub', page.subtitle);
+      if (pageName() === 'publications.html' && page.subtitleHtml) {
+        setHtml('.pub-hero-sub', page.subtitleHtml);
+      } else {
+        setText('.pub-hero-sub', page.subtitle);
+      }
 
       if (page.labels) {
         document.querySelectorAll('.rd-section-label, .scenario-section-label').forEach((node, index) => {
@@ -239,12 +250,48 @@
     const nav = document.getElementById('primary-nav');
     if (!header || !toggle || !nav) return;
 
+    function setNavOpen(isOpen, restoreFocus) {
+      header.classList.toggle('nav-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      if (!isOpen && restoreFocus) toggle.focus();
+    }
+
+    function firstVisibleNavLink() {
+      return Array.from(nav.querySelectorAll('a[href]')).find((link) => {
+        const style = window.getComputedStyle(link);
+        return !link.hidden
+          && link.getAttribute('aria-hidden') !== 'true'
+          && style.display !== 'none'
+          && style.visibility !== 'hidden'
+          && link.getClientRects().length > 0;
+      });
+    }
+
     header.classList.add('js-mobile-nav');
+    setNavOpen(false);
     toggle.setAttribute('aria-controls', 'primary-nav');
     toggle.addEventListener('click', function () {
-      const isOpen = header.classList.toggle('nav-open');
-      toggle.setAttribute('aria-expanded', String(isOpen));
+      const isOpen = !header.classList.contains('nav-open');
+      setNavOpen(isOpen);
+      if (isOpen) firstVisibleNavLink()?.focus();
     });
+
+    nav.addEventListener('click', function (event) {
+      const target = event.target;
+      if (target && typeof target.closest === 'function' && target.closest('a[href]')) {
+        setNavOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && header.classList.contains('nav-open')) {
+        setNavOpen(false, true);
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (toggle.getClientRects().length === 0) setNavOpen(false);
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {

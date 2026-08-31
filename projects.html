@@ -8,6 +8,12 @@
   <meta name="theme-color" content="#003087">
   <meta name="description" content="Open source frameworks and benchmark datasets from Mingyue Cheng's research group at USTC.">
   <meta name="author" content="Mingyue Cheng">
+  <link rel="canonical" href="https://mingyue-cheng.github.io/projects.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Open Source &amp; Benchmarks — Mingyue Cheng">
+  <meta property="og:description" content="Open source frameworks and benchmark datasets from Mingyue Cheng's research group at USTC.">
+  <meta property="og:url" content="https://mingyue-cheng.github.io/projects.html">
+  <meta name="twitter:card" content="summary">
   <style>
 :root {
   --accent:      #003087;
@@ -72,6 +78,22 @@ body {
   white-space: nowrap;
 }
 .nav-links a:hover { color: var(--accent); }
+.nav-links a.active { color: var(--accent); font-weight: 600; }
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 12px;
+  z-index: 1000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus { transform: translateY(0); }
 .language-toggle {
   flex-shrink: 0;
   display: inline-flex;
@@ -345,6 +367,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <!-- ===== Nav ===== -->
 <header class="site-header">
@@ -355,7 +378,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
         <a href="research.html">Research</a>
         <a href="news.html">News</a>
         <a href="publications.html">Publications</a>
-        <a href="projects.html">Open Source</a>
+        <a href="projects.html" class="active" aria-current="page">Open Source</a>
         <a href="awards.html">Awards</a>
         <a href="service.html">Service</a>
         <a href="resources.html">Resources</a>
@@ -368,10 +391,11 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
   </div>
 </header>
 
+<main id="main-content" tabindex="-1">
 <!-- ===== Hero ===== -->
 <div class="page-hero">
   <div class="container">
-    <div class="page-hero-title">Open Source &amp; Benchmarks</div>
+    <h1 class="page-hero-title">Open Source &amp; Benchmarks</h1>
     <p class="page-hero-sub">
       Open-source frameworks, tools, and benchmark datasets released by
       <a href="index.html">Mingyue Cheng</a>'s research group at USTC.
@@ -651,6 +675,8 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
   </div>
 </div>
 
+</main>
+
 <button id="back-to-top" aria-label="Back to top">
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -665,7 +691,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
       <a class="footer-link" href="research.html">Research</a>
       <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in July 2026.</div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in August 2026.</div>
   </div>
 </footer>
 
@@ -696,6 +722,6 @@ if (document.readyState === 'loading') {
   renderGitHubStarCounts();
 }
 </script>
-<script src="files/assets/site-language.js?v=20260604"></script>
+<script src="files/assets/site-language.js?v=20260831"></script>
 </body>
 </html>

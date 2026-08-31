@@ -54,11 +54,11 @@ test('page metadata and shell match the academic homepage', () => {
     'service.html',
     'resources.html'
   ]) {
-    assert.match(pageHtml, new RegExp(`<a href="${href}">`), `Missing nav link: ${href}`);
+    assert.match(pageHtml, new RegExp(`<a\\b[^>]*href="${href}"[^>]*>`), `Missing nav link: ${href}`);
   }
-  assert.match(pageHtml, /<main id="main-content">/);
+  assert.match(pageHtml, /<main id="main-content" tabindex="-1">/);
   assert.match(pageHtml, /<footer class="site-footer">/);
-  assert.match(pageHtml, /<script src="files\/assets\/site-language\.js\?v=20260719"><\/script>/);
+  assert.match(pageHtml, /<script src="files\/assets\/site-language\.js\?v=20260831"><\/script>/);
   assert.match(
     pageHtml,
     /<script src="files\/assets\/prediction-intelligence\.js\?v=20260728"><\/script>/

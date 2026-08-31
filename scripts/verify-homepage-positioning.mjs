@@ -8,8 +8,34 @@ import vm from 'node:vm';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
 const mobileScript = indexHtml.match(/\/\/ Mobile navigation([\s\S]*?)\/\/ Scroll highlight for nav links/)?.[1] || '';
+const i18nLiteral = indexHtml.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang/)?.[1] || '';
+const translatePageScript = indexHtml.match(/function translatePage\(lang\) \{[\s\S]*?\n\}\n\nfunction initLanguageToggle/)?.[0]
+  ?.replace(/\n\nfunction initLanguageToggle$/, '') || '';
 
 const count = (source, pattern) => (source.match(pattern) || []).length;
+const retiredActionClassNames = new Set(['profile-actions', 'profile-action', 'profile-action--primary']);
+const retiredActionSelectorPattern = /\.(?:profile-action--primary|profile-actions|profile-action)(?![\w-])/;
+
+function findRetiredActionClassTokens(source) {
+  return [...source.matchAll(/<[A-Za-z][^>]*>/g)].flatMap(([tag]) => {
+    const classValue = tag.match(/\bclass\s*=\s*(["'])(.*?)\1/is)?.[2] || '';
+    return classValue.split(/\s+/).filter((token) => retiredActionClassNames.has(token));
+  });
+}
+
+function extractStyleText(source) {
+  return [...source.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)]
+    .map(([, styleText]) => styleText)
+    .join('\n');
+}
+
+function findRetiredActionSelectors(styleText) {
+  const uncommented = styleText.replace(/\/\*[\s\S]*?\*\//g, '');
+  return [...uncommented.matchAll(/([^{}]+)\{/g)]
+    .flatMap(([, selectorList]) => selectorList.split(','))
+    .map((selector) => selector.trim())
+    .filter((selector) => retiredActionSelectorPattern.test(selector));
+}
 
 test('homepage hero states the research thesis in both languages', () => {
   assert.match(
@@ -22,18 +48,89 @@ test('homepage hero states the research thesis in both languages', () => {
   );
 });
 
+test('homepage translatePage applies surviving content and accessible-name translations', () => {
+  assert.ok(i18nLiteral, 'inline i18n dictionary should be extractable');
+  assert.ok(translatePageScript, 'translatePage implementation should be extractable');
+
+  const dictionaryContext = {};
+  vm.runInNewContext(`globalThis.dictionary = (${i18nLiteral});`, dictionaryContext);
+  const thesis = {
+    innerHTML: '',
+    getAttribute(name) {
+      return name === 'data-i18n' ? 'profile.thesis' : null;
+    }
+  };
+  const profileHome = {
+    attributes: new Map(),
+    getAttribute(name) {
+      return name === 'data-i18n-aria-label' ? 'a11y.profileHome' : this.attributes.get(name);
+    },
+    setAttribute(name, value) {
+      this.attributes.set(name, value);
+    }
+  };
+  const document = {
+    documentElement: { lang: 'en' },
+    querySelectorAll(selector) {
+      if (selector === '[data-i18n]') return [thesis];
+      if (selector === '[data-i18n-aria-label]') return [profileHome];
+      return [];
+    },
+    getElementById() {
+      return null;
+    }
+  };
+
+  vm.runInNewContext(
+    `const i18n = globalThis.dictionary; ${translatePageScript}\ntranslatePage('zh');`,
+    { dictionary: dictionaryContext.dictionary, document }
+  );
+
+  assert.equal(document.documentElement.lang, 'zh-CN');
+  assert.equal(thesis.innerHTML, '面向复杂系统，我致力于融合时间序列观测、科学知识与智能体推理，构建预测智能。');
+  assert.equal(profileHome.attributes.get('aria-label'), '刷新主页');
+});
+
 test('homepage hero omits the retired action-button markup', () => {
-  const actionMarkupCount = count(indexHtml, /class="profile-actions\b/g)
-    + count(indexHtml, /class="profile-action(?:\s|")/g);
-  assert.equal(actionMarkupCount, 0, 'the profile action group and its three links should be removed');
+  assert.deepEqual(
+    findRetiredActionClassTokens(indexHtml),
+    [],
+    'the profile action group and its three links should be removed'
+  );
   assert.match(indexHtml, /<div class="profile-badges">/);
 });
 
+test('retired action markup detection handles class tokens, quote styles, and attribute order', () => {
+  const markupFixture = `
+    <div data-region="hero" class="utility profile-actions"></div>
+    <a href="#papers" class='profile-action utility'>Papers</a>
+    <a class='utility profile-action--primary' data-kind="cta" href="#join">Join</a>
+  `;
+  assert.deepEqual(
+    findRetiredActionClassTokens(markupFixture),
+    ['profile-actions', 'profile-action', 'profile-action--primary']
+  );
+});
+
 test('homepage stylesheet omits CSS dedicated to retired action buttons', () => {
-  assert.equal(
-    count(indexHtml, /^\s*(?:\.profile-actions|\.profile-action|\.profile-action:hover|\.profile-action--primary|\.profile-action--primary:hover)\s*\{/gm),
-    0,
+  assert.deepEqual(
+    findRetiredActionSelectors(extractStyleText(indexHtml)),
+    [],
     'desktop and mobile profile action rules should be removed'
+  );
+});
+
+test('retired action CSS detection handles qualified, combined, and pseudo-class selectors', () => {
+  const cssFixture = `
+    <style>
+      a.profile-action { color: navy; }
+      .card, .utility.profile-actions { display: flex; }
+      .profile-action--primary:hover { color: white; }
+    </style>
+  `;
+  assert.deepEqual(
+    findRetiredActionSelectors(extractStyleText(cssFixture)),
+    ['a.profile-action', '.utility.profile-actions', '.profile-action--primary:hover']
   );
 });
 

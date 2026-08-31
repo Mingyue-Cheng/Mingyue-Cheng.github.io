@@ -252,41 +252,6 @@ body {
   line-height: 1.65;
   text-align: left;
 }
-.profile-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 13px;
-}
-.profile-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 7px 13px;
-  border: 1px solid rgba(0, 48, 135, 0.22);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--accent);
-  font-size: 13px;
-  font-weight: 650;
-  line-height: 1.2;
-  text-decoration: none;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-}
-.profile-action:hover {
-  border-color: var(--accent);
-  background: var(--accent-light);
-}
-.profile-action--primary {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
-}
-.profile-action--primary:hover {
-  background: var(--accent-dark);
-  color: #fff;
-}
 .profile-badges {
   display: flex;
   gap: 8px;
@@ -1421,9 +1386,6 @@ html[lang="zh-CN"] .footer-title {
     padding: 8px 0;
     border-top: 1px solid var(--border);
   }
-  .profile-action {
-    min-height: 44px;
-  }
 }
 @media (max-width: 480px) {
   .footer-shell {
@@ -1526,11 +1488,6 @@ html[lang="zh-CN"] .footer-title {
           <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener">University of Science and Technology of China</a>
         </div>
         <p class="profile-thesis" data-i18n="profile.thesis">I build prediction intelligence for complex systems by combining time-series observations, scientific knowledge, and agentic reasoning.</p>
-        <div class="profile-actions" role="group" aria-label="Explore this homepage" data-i18n-aria-label="a11y.profileActions">
-          <a class="profile-action profile-action--primary" href="research.html" data-i18n="profile.actionResearch">Research Vision</a>
-          <a class="profile-action" href="#selected-publications" data-i18n="profile.actionPublications">Selected Publications</a>
-          <a class="profile-action" href="#join-collaborate" data-i18n="profile.actionJoin">Join &amp; Collaborate</a>
-        </div>
         <div class="profile-badges">
           <a href="https://ustcagi.github.io/" target="_blank" rel="noopener" class="badge">USTC-AGI Group</a>
           <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl" target="_blank" rel="noopener" class="badge">Google Scholar</a>
@@ -2266,12 +2223,8 @@ const i18n = {
     "a11y.profileHome": "Refresh homepage",
     "a11y.publicationFilters": "Filter publications by research area",
     "a11y.backToTop": "Back to top",
-    "a11y.profileActions": "Explore this homepage",
     "profile.title": "Ph.D. &nbsp;·&nbsp; Associate Researcher",
     "profile.thesis": "I build prediction intelligence for complex systems by combining time-series observations, scientific knowledge, and agentic reasoning.",
-    "profile.actionResearch": "Research Vision",
-    "profile.actionPublications": "Selected Publications",
-    "profile.actionJoin": "Join &amp; Collaborate",
     "profile.emailLabel": "Email:",
     "profile.addressLabel": "Address:",
     "profile.address": "B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031",
@@ -2357,12 +2310,8 @@ const i18n = {
     "a11y.profileHome": "刷新主页",
     "a11y.publicationFilters": "按研究方向筛选论文",
     "a11y.backToTop": "返回顶部",
-    "a11y.profileActions": "浏览主页重点内容",
     "profile.title": "博士 &nbsp;·&nbsp; 副研究员",
     "profile.thesis": "面向复杂系统，我致力于融合时间序列观测、科学知识与智能体推理，构建预测智能。",
-    "profile.actionResearch": "研究愿景",
-    "profile.actionPublications": "代表性论文",
-    "profile.actionJoin": "加入与合作",
     "profile.emailLabel": "邮箱：",
     "profile.addressLabel": "地址：",
     "profile.address": "安徽省合肥市中国科学技术大学高新校区信智楼 B709，230031",

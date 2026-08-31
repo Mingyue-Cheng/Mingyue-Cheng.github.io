@@ -8,9 +8,6 @@ import vm from 'node:vm';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
 const mobileScript = indexHtml.match(/\/\/ Mobile navigation([\s\S]*?)\/\/ Scroll highlight for nav links/)?.[1] || '';
-const i18nLiteral = indexHtml.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang/)?.[1] || '';
-const translatePageScript = indexHtml.match(/function translatePage\(lang\) \{[\s\S]*?\n\}\n\nfunction initLanguageToggle/)?.[0]
-  ?.replace(/\n\nfunction initLanguageToggle$/, '') || '';
 
 const count = (source, pattern) => (source.match(pattern) || []).length;
 
@@ -25,76 +22,32 @@ test('homepage hero states the research thesis in both languages', () => {
   );
 });
 
-test('homepage hero exposes three concise action paths with bilingual labels', () => {
-  assert.match(indexHtml, /<div class="profile-actions" role="group" aria-label="Explore this homepage" data-i18n-aria-label="a11y\.profileActions">/);
-  assert.equal(count(indexHtml, /"a11y\.profileActions":/g), 2, 'profile action group needs bilingual accessible names');
-  assert.equal(count(indexHtml, /class="profile-action(?: profile-action--primary)?"/g), 3);
-  assert.match(indexHtml, /class="profile-action profile-action--primary" href="research\.html"[^>]*data-i18n="profile\.actionResearch">Research Vision<\/a>/);
-  assert.match(indexHtml, /class="profile-action" href="#selected-publications"[^>]*data-i18n="profile\.actionPublications">Selected Publications<\/a>/);
-  assert.match(indexHtml, /class="profile-action" href="#join-collaborate"[^>]*data-i18n="profile\.actionJoin">Join &amp; Collaborate<\/a>/);
-  for (const key of ['profile.actionResearch', 'profile.actionPublications', 'profile.actionJoin']) {
-    assert.equal(count(indexHtml, new RegExp(`"${key.replace('.', '\\.')}":`, 'g')), 2, `${key} needs English and Chinese values`);
-  }
-  assert.match(indexHtml, /id="join-collaborate"[^>]*data-i18n="research\.join"/);
+test('homepage hero omits the retired action-button markup', () => {
+  const actionMarkupCount = count(indexHtml, /class="profile-actions\b/g)
+    + count(indexHtml, /class="profile-action(?:\s|")/g);
+  assert.equal(actionMarkupCount, 0, 'the profile action group and its three links should be removed');
+  assert.match(indexHtml, /<div class="profile-badges">/);
 });
 
-test('homepage action translations provide and apply the expected Chinese labels', () => {
-  assert.ok(i18nLiteral, 'inline i18n dictionary should be extractable');
-  assert.ok(translatePageScript, 'translatePage implementation should be extractable');
-
-  const dictionaryContext = {};
-  vm.runInNewContext(`globalThis.dictionary = (${i18nLiteral});`, dictionaryContext);
-  const expectedZh = {
-    'a11y.profileActions': '浏览主页重点内容',
-    'profile.actionResearch': '研究愿景',
-    'profile.actionPublications': '代表性论文',
-    'profile.actionJoin': '加入与合作'
-  };
-  for (const [key, expected] of Object.entries(expectedZh)) {
-    assert.equal(dictionaryContext.dictionary.zh[key], expected, `${key} needs its intended Chinese value`);
-  }
-
-  const actionElements = new Map(
-    Object.keys(expectedZh)
-      .filter((key) => key.startsWith('profile.'))
-      .map((key) => [key, { key, innerHTML: '' }])
+test('homepage stylesheet omits CSS dedicated to retired action buttons', () => {
+  assert.equal(
+    count(indexHtml, /^\s*(?:\.profile-actions|\.profile-action|\.profile-action:hover|\.profile-action--primary|\.profile-action--primary:hover)\s*\{/gm),
+    0,
+    'desktop and mobile profile action rules should be removed'
   );
-  const actionGroup = {
-    key: 'a11y.profileActions',
-    attributes: new Map(),
-    getAttribute(name) {
-      return name === 'data-i18n-aria-label' ? this.key : this.attributes.get(name);
-    },
-    setAttribute(name, value) {
-      this.attributes.set(name, value);
-    }
-  };
-  const document = {
-    documentElement: { lang: 'en' },
-    querySelectorAll(selector) {
-      if (selector === '[data-i18n]') {
-        return [...actionElements.values()].map((element) => ({
-          ...element,
-          getAttribute: () => element.key,
-          set innerHTML(value) { element.innerHTML = value; },
-          get innerHTML() { return element.innerHTML; }
-        }));
-      }
-      return selector === '[data-i18n-aria-label]' ? [actionGroup] : [];
-    },
-    getElementById() {
-      return null;
-    }
-  };
-  vm.runInNewContext(
-    `const i18n = globalThis.dictionary; ${translatePageScript}\ntranslatePage('zh');`,
-    { dictionary: dictionaryContext.dictionary, document }
+});
+
+test('homepage dictionaries omit retired action translation keys', () => {
+  assert.equal(
+    count(indexHtml, /"(?:a11y\.profileActions|profile\.actionResearch|profile\.actionPublications|profile\.actionJoin)":/g),
+    0,
+    'retired action keys should be absent from both language dictionaries'
   );
-  assert.equal(document.documentElement.lang, 'zh-CN');
-  assert.equal(actionGroup.attributes.get('aria-label'), expectedZh['a11y.profileActions']);
-  for (const [key, element] of actionElements) {
-    assert.equal(element.innerHTML, expectedZh[key], `${key} should be applied by translatePage`);
-  }
+});
+
+test('homepage retains the sections previously targeted by action links', () => {
+  assert.match(indexHtml, /id="join-collaborate"[^>]*data-i18n="research\.join"/);
+  assert.match(indexHtml, /id="selected-publications"[^>]*data-i18n="pub\.heading"/);
 });
 
 class FakeEventTarget {

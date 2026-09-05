@@ -9,6 +9,7 @@ const indexHtml = readFileSync(join(root, 'index.html'), 'utf8');
 const awardsHtml = readFileSync(join(root, 'awards.html'), 'utf8');
 const newsHtml = readFileSync(join(root, 'news.html'), 'utf8');
 const publicationsHtml = readFileSync(join(root, 'publications.html'), 'utf8');
+const projectsHtml = readFileSync(join(root, 'projects.html'), 'utf8');
 const count = (source, pattern) => (source.match(pattern) || []).length;
 
 function sectionBetween(source, startMarker, endMarker) {
@@ -168,6 +169,122 @@ test('homepage selected-publication filters and highlight group remain accessibl
     indexHtml,
     /button\.setAttribute\('aria-pressed', String\(button === btn\)\);/
   );
+});
+
+test('homepage presents WebMind as the latest open-source project', () => {
+  const openSource = sectionBetween(
+    indexHtml,
+    '<!-- ===== Open Source Projects ===== -->',
+    '<!-- ===== Datasets ===== -->'
+  );
+  const webMindCard = sectionBetween(
+    openSource,
+    '<div class="os-card-name">WebMind</div>',
+    '<div class="os-card-name">CastClaw（观星阁）</div>'
+  );
+
+  assert.match(
+    openSource,
+    /<div class="os-grid">\s*<div class="os-card">[\s\S]*?<div class="os-card-name">WebMind<\/div>/
+  );
+  assert.match(
+    webMindCard,
+    /<span class="os-year">2026\.09<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/AgentR1\/WebMind" target="_blank" rel="noopener">GitHub<\/a>/
+  );
+  assert.match(webMindCard, /data-repo="AgentR1\/WebMind"/);
+  assert.match(webMindCard, /<span class="os-inline-highlight">WebMind<\/span> is a <strong>web-task skill<\/strong> for <strong>AI agents<\/strong>/);
+  assert.match(webMindCard, /<strong>isolated, persistent browser environment<\/strong>/);
+  assert.match(webMindCard, /<strong>no Google sign-in<\/strong>/);
+  assert.match(webMindCard, /does not use personal data from the user's everyday Chrome profile by default/);
+  assert.match(webMindCard, /<strong>topic research<\/strong>, <strong>information collection<\/strong>, and <strong>repeatable web workflows<\/strong>/);
+  assert.equal(count(openSource, /<div class="os-card-name">WebMind<\/div>/g), 1);
+  assert.equal(count(openSource, /href="https:\/\/github\.com\/AgentR1\/WebMind"/g), 1);
+});
+
+test('homepage keeps NeoResearch source-preserved but hidden', () => {
+  const openSource = sectionBetween(
+    indexHtml,
+    '<!-- ===== Open Source Projects ===== -->',
+    '<!-- ===== Datasets ===== -->'
+  );
+  const renderedOpenSource = openSource.replace(/<!--[\s\S]*?-->/g, '');
+
+  assert.doesNotMatch(renderedOpenSource, /NeoResearch（智多星）/);
+  assert.match(
+    openSource,
+    /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?<div class="os-card-name">NeoResearch（智多星）<\/div>[\s\S]*?<a class="os-github" href="https:\/\/ustc-time-series\.github\.io\/star-cast\/" target="_blank" rel="noopener">Website<\/a>[\s\S]*?<span class="os-inline-highlight">NeoResearch（智多星）<\/span>[\s\S]*?-->/
+  );
+});
+
+test('open-source subpage mirrors homepage projects and venue badges', () => {
+  const homepageOpenSource = sectionBetween(
+    indexHtml,
+    '<!-- ===== Open Source Projects ===== -->',
+    '<!-- ===== Datasets ===== -->'
+  );
+  const subpageOpenSource = sectionBetween(
+    projectsHtml,
+    '<!-- ===== Open Source ===== -->',
+    '<!-- ===== Benchmarks & Datasets ===== -->'
+  );
+  const visible = (source) => source.replace(/<!--[\s\S]*?-->/g, '');
+  const cardNames = (source) => [...visible(source).matchAll(
+    /<div class="os-card-name">([^<]+)<\/div>/g
+  )].map((match) => match[1]);
+  const normalizedMatches = (source, pattern) => [...visible(source).matchAll(pattern)]
+    .map((match) => match[1].replace(/\s+/g, ' ').trim());
+  const venueBadges = (source, className) => [...visible(source).matchAll(
+    new RegExp(`<span class="${className}">([^<]+)<\\/span>`, 'g')
+  )].map((match) => match[1]);
+
+  assert.deepEqual(cardNames(subpageOpenSource), cardNames(homepageOpenSource));
+  for (const pattern of [
+    /<span class="os-year">([^<]+)<\/span>/g,
+    /<a\b[^>]*href="([^"]+)"[^>]*>/g,
+    /data-repo="([^"]+)"/g,
+    /<div class="os-card-desc">([\s\S]*?)<\/div>/g
+  ]) {
+    assert.deepEqual(
+      normalizedMatches(subpageOpenSource, pattern),
+      normalizedMatches(homepageOpenSource, pattern)
+    );
+  }
+  assert.deepEqual(
+    venueBadges(subpageOpenSource, 'os-venue'),
+    venueBadges(homepageOpenSource, 'os-venue')
+  );
+  assert.doesNotMatch(visible(subpageOpenSource), /NeoResearch（智多星）/);
+  assert.match(
+    subpageOpenSource,
+    /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?<div class="os-card-name">NeoResearch（智多星）<\/div>[\s\S]*?-->/
+  );
+
+  const homepageDatasets = sectionBetween(
+    indexHtml,
+    '<!-- ===== Datasets ===== -->',
+    '<!-- ===== Education ===== -->'
+  );
+  const subpageDatasets = sectionBetween(
+    projectsHtml,
+    '<!-- ===== Benchmarks & Datasets ===== -->',
+    '</main>'
+  );
+  assert.deepEqual(
+    venueBadges(subpageDatasets, 'dataset-venue'),
+    venueBadges(homepageDatasets, 'dataset-venue')
+  );
+  for (const pattern of [
+    /<span class="dataset-name">([^<]+)<\/span>/g,
+    /<span class="os-year">([^<]+)<\/span>/g,
+    /<a\b[^>]*href="([^"]+)"[^>]*>/g,
+    /data-repo="([^"]+)"/g,
+    /<div class="dataset-card-desc">([\s\S]*?)<\/div>/g
+  ]) {
+    assert.deepEqual(
+      normalizedMatches(subpageDatasets, pattern),
+      normalizedMatches(homepageDatasets, pattern)
+    );
+  }
 });
 
 test('accepted open-source cards display their venue badges', () => {

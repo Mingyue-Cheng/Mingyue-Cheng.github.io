@@ -70,15 +70,5 @@
     "LawyerPAN: A Proficiency Assessment Network for Trial Lawyers",
     "Alpha-Beta Sampling for Pairwise Ranking in One-Class Collaborative Filtering",
     "多重对级贝叶斯个性化排序算法"
-  ],
-  "homepageSelected": [
-    "Mind2Report: A Cognitive Deep Research Agent for Expert-Level Commercial Report Synthesis",
-    "Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs",
-    "AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting",
-    "PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization",
-    "A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects",
-    "OneCast: Structured Decomposition and Modular Generation for Cross-Domain Time Series Forecasting",
-    "MemCast: Memory-Driven Time Series Forecasting with Experience-Conditioned Reasoning",
-    "Can Slow-Thinking LLMs Reason Over Time? Empirical Studies in Time Series Forecasting"
   ]
 }

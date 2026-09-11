@@ -119,7 +119,7 @@ test('language switching keeps accessible names synchronized', () => {
   assert.match(indexHtml, /"pub\.viewAll": "查看全部论文 →"/);
 });
 
-test('homepage selected-publication filters and highlight group remain accessible', () => {
+test('homepage selected-publication filters and year groups remain accessible', () => {
   const publications = sectionBetween(
     indexHtml,
     '<!-- ===== Selected Publications ===== -->',
@@ -139,7 +139,14 @@ test('homepage selected-publication filters and highlight group remain accessibl
   const yearToggles = [...publications.matchAll(
     /<button\b(?=[^>]*class="pub-year-toggle")(?=[^>]*aria-expanded="true")(?=[^>]*aria-controls="([^"]+)")[^>]*>/g
   )].map((match) => match[1]);
-  assert.deepEqual(yearToggles, ['publication-list-selected']);
+  assert.deepEqual(yearToggles, [
+    'publication-list-preprints',
+    'publication-list-surveys',
+    'publication-list-2026',
+    'publication-list-2025',
+    'publication-list-2024',
+    'publication-list-legacy'
+  ]);
   assert.equal(new Set(yearToggles).size, yearToggles.length);
   for (const controlledId of yearToggles) {
     assert.match(publications, new RegExp(`<ol class="pub-list" id="${controlledId}">`));
@@ -147,12 +154,22 @@ test('homepage selected-publication filters and highlight group remain accessibl
   const visibleEntries = [...publications.replace(/<!--[\s\S]*?-->/g, '').matchAll(
     /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
   )];
-  assert.equal(visibleEntries.length, 8);
+  assert.equal(visibleEntries.length, 70);
   assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>View all publications →<\/a>/);
-  assert.match(
-    publications,
-    /class="pub-year-toggle"[^>]*data-i18n="pub\.representative"[^>]*>✨ Representative Work<\/button>/
-  );
+  for (const [key, label] of [
+    ['pub.preprint', '📘 Preprint'],
+    ['pub.survey', '📘 Released Survey'],
+    ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)'],
+    ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)'],
+    ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)'],
+    ['pub.legacy', '📘 2023 and Before']
+  ]) {
+    assert.match(
+      publications,
+      new RegExp(`class="pub-year-toggle"[^>]*data-i18n="${key.replace('.', '\\.')}"[^>]*>${label.replace(/[()]/g, '\\$&')}<\\/button>`)
+    );
+  }
+  assert.doesNotMatch(publications, /Representative Work|pub\.representative/);
 
   assert.match(indexHtml, /document\.querySelectorAll\('\.pub-year-toggle'\)/);
   assert.match(
@@ -366,9 +383,19 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /最后更新于 2026 年 8 月。/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "AI for Science"/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
-  assert.equal(count(indexHtml, /"pub\.representative":/g), 2);
-  assert.match(indexHtml, /"pub\.representative": "✨ Representative Work"/);
-  assert.match(indexHtml, /"pub\.representative": "✨ 代表性工作"/);
+  for (const [key, english, chinese] of [
+    ['pub.preprint', '📘 Preprint', '📘 预印本'],
+    ['pub.survey', '📘 Released Survey', '📘 已发布综述'],
+    ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)', '🐎 丙午马年（2026）'],
+    ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)', '🐍 乙巳蛇年（2025）'],
+    ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)', '🐉 甲辰龙年（2024）'],
+    ['pub.legacy', '📘 2023 and Before', '📘 2023 年及以前']
+  ]) {
+    assert.equal(count(indexHtml, new RegExp(`"${key.replace('.', '\\.')}":`, 'g')), 2);
+    assert.ok(indexHtml.includes(`"${key}": "${english}"`));
+    assert.ok(indexHtml.includes(`"${key}": "${chinese}"`));
+  }
+  assert.doesNotMatch(indexHtml, /"pub\.representative":/);
   assert.doesNotMatch(indexHtml, /"pub\.filterRec":/);
   assert.doesNotMatch(indexHtml, /citations\?user=74IhSx8AAAAJ&hl/);
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);

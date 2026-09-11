@@ -475,9 +475,8 @@ test('in-memory conflict fixtures expose one arXiv ID mapped to different titles
   );
 });
 
-test('publication title baselines lock the complete 70-paper order and exact 8-paper homepage selection', () => {
+test('publication title baseline locks the complete 70-paper order on both publication surfaces', () => {
   assert.equal(titleBaseline.publications.length, 70, 'fixture must intentionally list 70 publications');
-  assert.equal(titleBaseline.homepageSelected.length, 8, 'fixture must intentionally list 8 selected papers');
   assert.deepEqual(
     publicationRecords(publicationsHtml, 'publications.html').map((record) => record.title),
     titleBaseline.publications
@@ -490,7 +489,7 @@ test('publication title baselines lock the complete 70-paper order and exact 8-p
   );
   assert.deepEqual(
     publicationRecords(selected, 'index.html').map((record) => record.title),
-    titleBaseline.homepageSelected
+    titleBaseline.publications
   );
 });
 
@@ -659,19 +658,19 @@ test('StepPO title and authors stay pinned to the matching arXiv v1', () => {
   );
 });
 
-test('homepage presents a linked representative selection while Publications stays complete', () => {
+test('homepage presents the complete year-grouped publication catalog with a link to Publications', () => {
   const selected = sectionBetween(
     indexHtml,
     '<!-- ===== Selected Publications ===== -->',
     '<!-- ===== Open Source Projects ===== -->'
   );
   const selectedEntries = publicationEntries(selected);
-  const requiredTitles = titleBaseline.homepageSelected;
+  const requiredTitles = titleBaseline.publications;
 
   assert.equal(
     selectedEntries.length,
-    8,
-    `Selected Publications must contain the approved 8 visible records; found ${selectedEntries.length}`
+    70,
+    `Selected Publications must contain the complete 70-paper catalog; found ${selectedEntries.length}`
   );
   assert.match(selected, /<a\b[^>]*href="publications\.html"[^>]*>/, 'link to full publication list');
   for (const title of requiredTitles) {
@@ -681,15 +680,9 @@ test('homepage presents a linked representative selection while Publications sta
       `Selected Publications must contain “${title}” exactly once`
     );
   }
-  assert.doesNotMatch(
-    withoutComments(selected),
-    /\[(?:PDF|DOI)\]/,
-    'retained homepage records must not show unlinked PDF/DOI placeholders'
-  );
-
   const completeEntries = publicationEntries(publicationsHtml);
-  assert.ok(completeEntries.length >= 60, `Publications page must retain the complete list; found ${completeEntries.length}`);
-  assert.ok(completeEntries.length > selectedEntries.length * 4, 'complete list must remain materially larger than the homepage selection');
+  assert.equal(completeEntries.length, 70, `Publications page must retain the complete list; found ${completeEntries.length}`);
+  assert.deepEqual(selectedEntries.map(normalizeText), completeEntries.map(normalizeText));
 });
 
 test('Publications page has an accessible semantic shell and social metadata', () => {

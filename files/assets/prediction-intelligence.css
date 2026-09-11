@@ -1,16 +1,16 @@
 :root {
-  --accent: #003087;
-  --accent-dark: #00226b;
-  --accent-light: #e8edf7;
+  --accent: #003153;
+  --accent-dark: #00243d;
+  --accent-light: #e8f0f4;
   --teal: #087f8c;
   --green: #12805c;
   --amber: #a16207;
   --purple: #6d4aff;
   --text: #1a1a1a;
   --text-muted: #666;
-  --border: #e2e5ea;
+  --border: #dce5eb;
   --bg: #fff;
-  --bg-alt: #f6f7fb;
+  --bg-alt: #f4f7f9;
   --radius: 8px;
   --max-w: 1100px;
   --font: system-ui, -apple-system, "Segoe UI", Arial, "PingFang SC",
@@ -70,7 +70,7 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(109, 74, 255, 0.45);
+  outline: 3px solid rgba(var(--accent-rgb), 0.45);
   outline-offset: 3px;
 }
 
@@ -139,7 +139,7 @@ a {
 }
 
 .language-toggle:hover {
-  border-color: rgba(0, 48, 135, 0.35);
+  border-color: rgba(var(--accent-rgb), 0.35);
   background: var(--accent-light);
 }
 
@@ -255,10 +255,10 @@ a {
 
 .pdec-panel {
   padding: 22px;
-  border: 1px solid #dce3ee;
+  border: 1px solid #dce5eb;
   border-radius: 14px;
-  background: #f8fbff;
-  box-shadow: 0 12px 32px rgba(0, 48, 135, 0.07);
+  background: #f7fafb;
+  box-shadow: 0 12px 32px rgba(var(--accent-rgb), 0.07);
 }
 
 .pdec-panel-label {
@@ -309,7 +309,7 @@ a {
   z-index: 1;
   width: 2px;
   height: 12px;
-  background: #cbd6e5;
+  background: #cad8e1;
   content: "";
 }
 
@@ -360,7 +360,7 @@ a {
 
 .pi-section--framework,
 .pi-section--routing {
-  background: #fbfcfe;
+  background: #fbfcfd;
 }
 
 .section-heading-row {
@@ -401,7 +401,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 12px;
   background: #fff;
-  box-shadow: 0 8px 24px rgba(0, 48, 135, 0.05);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.05);
 }
 
 .research-thesis-mark {
@@ -441,7 +441,7 @@ a {
   border-top: 4px solid var(--stage-color);
   border-radius: 12px;
   background: #fff;
-  box-shadow: 0 7px 22px rgba(0, 48, 135, 0.05);
+  box-shadow: 0 7px 22px rgba(var(--accent-rgb), 0.05);
 }
 
 .framework-stage.stage-d {
@@ -611,7 +611,7 @@ a {
   bottom: -8px;
   left: 0;
   height: 2px;
-  background: #dbe2ec;
+  background: #d9e3e9;
   content: "";
 }
 
@@ -679,7 +679,7 @@ a {
 /* Outcome */
 .pi-outcome {
   padding: 18px 0 54px;
-  background: #fbfcfe;
+  background: #fbfcfd;
 }
 
 .outcome-panel {
@@ -757,7 +757,7 @@ a {
 .site-footer {
   padding: 18px 0 36px;
   border-top: 1px solid var(--border);
-  background: #f8fbff;
+  background: #f7fafb;
 }
 
 .footer-shell {

@@ -270,6 +270,10 @@ class FakeElement extends FakeEventTarget {
     return this.attributes.get(name) ?? null;
   }
 
+  scrollIntoView() {
+    this.scrolledIntoView = true;
+  }
+
   querySelector(selector) {
     if (selector === '.pub-year-toggle') {
       return this.children.find((child) => child.classList.contains('pub-year-toggle')) || null;
@@ -351,8 +355,10 @@ function publicationBehaviorSource(source, startMarker, endMarker) {
   return sectionBetween(source, startMarker, endMarker).slice(startMarker.length);
 }
 
-function createPublicationBehaviorHarness({ collapsible }) {
+function createPublicationBehaviorHarness({ collapsible, collapsedByDefault = false, hash = '' }) {
   const document = new FakeDocument('/index.html');
+  const window = new FakeEventTarget();
+  window.location = { hash };
   const allButton = new FakeElement({
     tagName: 'button',
     classes: ['pub-filter-btn', 'active'],
@@ -370,12 +376,12 @@ function createPublicationBehaviorHarness({ collapsible }) {
   });
   const timeItem = new FakeElement({ tagName: 'li', attributes: { 'data-tags': 'timeseries' } });
   const agentItem = new FakeElement({ tagName: 'li', attributes: { 'data-tags': 'agent llm' } });
-  const timeList = new FakeElement({ tagName: 'ol' });
-  const agentList = new FakeElement({ tagName: 'ol' });
+  const timeList = new FakeElement({ tagName: 'ol', attributes: { id: 'publication-list-2025' } });
+  const agentList = new FakeElement({ tagName: 'ol', attributes: { id: 'publication-list-2026' } });
   timeList.append(timeItem);
   agentList.append(agentItem);
-  const timeHeading = new FakeElement({ tagName: 'h3', classes: ['pub-year-heading'] });
-  const agentHeading = new FakeElement({ tagName: 'h3', classes: ['pub-year-heading'] });
+  const timeHeading = new FakeElement({ tagName: 'h3', classes: ['pub-year-heading'], attributes: { id: 'year-2025', 'data-default-collapsed': String(collapsedByDefault) } });
+  const agentHeading = new FakeElement({ tagName: 'h3', classes: ['pub-year-heading'], attributes: { id: 'year-2026' } });
   timeHeading.nextElementSibling = timeList;
   agentHeading.nextElementSibling = agentList;
 
@@ -410,6 +416,7 @@ function createPublicationBehaviorHarness({ collapsible }) {
     agentToggle,
     allButton,
     document,
+    window,
     timeButton,
     timeHeading,
     timeItem,
@@ -570,7 +577,7 @@ test('the actual homepage collapse and filter script keeps visual and ARIA state
     '// ===== Publication Year Collapse + Filter =====',
     '\nfunction renderStarCount'
   );
-  vm.runInNewContext(source, { document: harness.document }, { filename: 'homepage-publication-filter.js' });
+  vm.runInNewContext(source, { document: harness.document, window: harness.window }, { filename: 'homepage-publication-filter.js' });
 
   harness.timeToggle.click();
   assert.equal(harness.timeHeading.classList.contains('pub-year-collapsed'), true);
@@ -593,6 +600,40 @@ test('the actual homepage collapse and filter script keeps visual and ARIA state
   assert.equal(harness.timeHeading.classList.contains('pub-year-collapsed'), true);
   assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'false');
   assert.equal(harness.timeList.style.display, 'none');
+});
+
+test('older homepage years start collapsed and filters preserve subsequent user choices', () => {
+  const harness = createPublicationBehaviorHarness({ collapsible: true, collapsedByDefault: true });
+  const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction renderStarCount');
+  vm.runInNewContext(source, { document: harness.document, window: harness.window });
+  assert.equal(harness.timeList.style.display, 'none');
+  assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'false');
+  assert.equal(harness.agentList.style.display, '');
+  assert.equal(harness.timeHeading.style.display, '', 'Year heading remains visible');
+  harness.timeButton.click();
+  assert.equal(harness.timeList.style.display, '');
+  harness.allButton.click();
+  assert.equal(harness.timeList.style.display, 'none');
+  harness.timeToggle.click();
+  harness.agentButton.click();
+  harness.allButton.click();
+  assert.equal(harness.timeList.style.display, '', 'Returning to All preserves a manually expanded year');
+});
+
+test('year and list fragments reveal collapsed publications on load and hash changes', () => {
+  for (const hash of ['#year-2025', '#publication-list-2025']) {
+    const harness = createPublicationBehaviorHarness({ collapsible: true, collapsedByDefault: true, hash });
+    const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction renderStarCount');
+    vm.runInNewContext(source, { document: harness.document, window: harness.window });
+    assert.equal(harness.timeList.style.display, '');
+    assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'true');
+    assert.equal(harness.timeHeading.scrolledIntoView, true);
+    harness.agentButton.click();
+    harness.window.dispatchEvent({ type: 'hashchange' });
+    assert.equal(harness.allButton.getAttribute('aria-pressed'), 'true');
+    assert.equal(harness.timeHeading.style.display, '');
+    assert.equal(harness.timeList.style.display, '');
+  }
 });
 
 test('Time-R1 uses the approved CIKM 2026 citation on both publication surfaces', () => {

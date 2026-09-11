@@ -363,7 +363,8 @@ test('homepage uses semantic scenario cards in canonical order', () => {
     const article = articles[modifier];
     for (const [tagName, className, suffix] of [
       ['h4', 'scenario-card-title', 'Title'],
-      ['p', 'scenario-card-body', 'Body']
+      ['p', 'scenario-card-body', 'Body'],
+      ['div', 'scenario-card-topics', 'Topics']
     ]) {
       const key = `research.${modifier}${suffix}`;
       const matchingTags = startTagsWithClass(section, tagName, className)
@@ -384,7 +385,7 @@ test('homepage uses semantic scenario cards in canonical order', () => {
   }
 });
 
-test('homepage scenario cards use the requested research narratives', () => {
+test('homepage scenario cards use concise domain summaries', () => {
   const researchArea = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -396,8 +397,8 @@ test('homepage scenario cards use the requested research narratives', () => {
 
   assert.match(
     scienceArticle,
-    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery\.<\/p>/,
-    'AI for Science must use the requested scientific intelligence narrative'
+    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Connecting scientific data and knowledge to support reasoning and autonomous discovery\.<\/p>/,
+    'AI for Science must retain the scientific data, knowledge, and discovery focus'
   );
   assert.match(
     industrialArticle,
@@ -406,13 +407,13 @@ test('homepage scenario cards use the requested research narratives', () => {
   );
   assert.match(
     industrialArticle,
-    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations\.<\/p>/,
-    'Industrial Systems must use the requested real-world systems narrative'
+    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Forecasting and decision support for complex, evolving real-world systems\.<\/p>/,
+    'Industrial Systems must retain the real-world forecasting and decision support focus'
   );
   assert.match(
     userArticle,
-    /<p class="scenario-card-body" data-i18n="research\.userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning\.<\/p>/,
-    'Recommender Systems must use the requested adaptive user intelligence narrative'
+    /<p class="scenario-card-body" data-i18n="research\.userBody">Understanding behaviors and preferences to deliver adaptive, personalized recommendations\.<\/p>/,
+    'Recommender Systems must retain the behavior, preferences, and personalization focus'
   );
   assert.match(
     userArticle,
@@ -421,28 +422,49 @@ test('homepage scenario cards use the requested research narratives', () => {
   );
 });
 
-test('homepage dictionaries provide complete split scenario translations', () => {
+test('homepage scenario summaries and topics stay synchronized with both dictionaries', () => {
   const expected = {
-    'research.scenarioTitle': ['Application Domains and Evaluation Scenarios', '应用领域与评测场景'],
+    'research.scenarioTitle': ['Application Domains', '应用领域'],
+    'research.scenarioIntro': [
+      'Real-world settings for developing and evaluating intelligent systems.',
+      '在真实任务中发展智能方法，并检验其有效性。'
+    ],
     'research.scienceTitle': ['AI for Science', 'AI for Science'],
     'research.scienceBody': [
-      'Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.',
-      '面向科技文献挖掘、科学建模、科学推理与自主发现，研究科学数据与知识智能。'
+      'Connecting scientific data and knowledge to support reasoning and autonomous discovery.',
+      '融合科学数据与知识，支持科学推理与自主发现。'
+    ],
+    'research.scienceTopics': [
+      '<span>Literature mining</span><span>Scientific modeling</span>',
+      '<span>科技文献挖掘</span><span>科学建模</span>'
     ],
     'research.industrialTitle': ['Industrial Systems', '工业系统'],
     'research.industrialBody': [
-      'Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.',
-      '面向能源、交通、云服务、金融与工业运行等真实复杂系统，研究预测智能。'
+      'Forecasting and decision support for complex, evolving real-world systems.',
+      '面向持续演变的复杂系统，开展预测与决策支持。'
+    ],
+    'research.industrialTopics': [
+      '<span>Energy &amp; traffic</span><span>Cloud &amp; finance</span>',
+      '<span>能源与交通</span><span>云服务与金融</span>'
     ],
     'research.userTitle': ['Recommender Systems', '推荐系统'],
     'research.userBody': [
-      'Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.',
-      '通过用户行为理解、偏好建模与情境推理，研究自适应用户智能与个性化推荐。'
+      'Understanding behaviors and preferences to deliver adaptive, personalized recommendations.',
+      '理解用户行为与偏好，实现自适应的个性化推荐。'
+    ],
+    'research.userTopics': [
+      '<span>Behavior modeling</span><span>Contextual reasoning</span>',
+      '<span>行为与偏好建模</span><span>情境推理</span>'
     ]
   };
 
   for (const [key, values] of Object.entries(expected)) {
     assert.deepEqual(decodedTranslationEntries(key), values, `Unexpected values for ${key}`);
+    const markup = indexHtml.match(new RegExp(
+      `<([a-z][\\w-]*)\\b[^>]*\\bdata-i18n="${escapeRegex(key)}"[^>]*>([\\s\\S]*?)<\\/\\1>`
+    ));
+    assert.ok(markup, `Missing homepage translation hook for ${key}`);
+    assert.equal(markup[2].trim(), values[0], `${key} initial markup must match its English translation`);
   }
 
   for (const removedKey of [
@@ -782,7 +804,7 @@ test('research collections omit Tabular Data Mining without changing publication
   );
 });
 
-test('research page matches the homepage scenario contract', () => {
+test('research page preserves domain identities shared with the homepage', () => {
   const homepageResearchArea = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -854,14 +876,17 @@ test('research page matches the homepage scenario contract', () => {
   assert.match(
     researchArticles.user,
     /<p class="scenario-card-body" data-page-i18n="userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning\.<\/p>/,
-    'The Research-page Recommender Systems card must use the shared narrative'
+    'The Research-page Recommender Systems card must retain its full research narrative'
   );
 
   for (const modifier of ['science', 'industrial', 'user']) {
+    const researchTitle = researchArticles[modifier].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/);
+    const homepageTitle = homepageArticles[modifier].match(/<h4\b[^>]*>([\s\S]*?)<\/h4>/);
+    assert.ok(researchTitle && homepageTitle, `${modifier} must have a domain heading on both pages`);
     assert.equal(
-      visibleText(researchArticles[modifier]),
-      visibleText(homepageArticles[modifier]),
-      `${modifier} copy must match across pages`
+      visibleText(researchTitle[1]),
+      visibleText(homepageTitle[1]),
+      `${modifier} domain identity must match across pages`
     );
   }
 });

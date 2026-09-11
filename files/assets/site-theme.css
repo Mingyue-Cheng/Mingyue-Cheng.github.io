@@ -1,0 +1,283 @@
+/* Final shared palette and navigation layer for every public page. */
+:root {
+  --accent: #003153;
+  --accent-rgb: 0, 49, 83;
+  --accent-dark: #00243d;
+  --accent-light: #e8f0f4;
+  --text: #1a1a1a;
+  --text-muted: #666;
+  --border: #dce5eb;
+  --bg: #fff;
+  --bg-alt: #f4f7f9;
+}
+
+html :focus-visible {
+  outline: 3px solid rgba(var(--accent-rgb), 0.36);
+  outline-offset: 3px;
+}
+
+/* The header scope also overrides older Chinese-language spacing rules. */
+html .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 12px 0;
+  border-bottom: 1px solid #e3ebef;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.025);
+}
+
+html .site-header .container {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 28px;
+}
+
+html .site-header .nav-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 18px;
+  min-width: 0;
+}
+
+html .site-header .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 9px;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+html .site-header .nav-logo::before {
+  content: "";
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+html .site-header .nav-links {
+  display: flex;
+  position: static;
+  inset: auto;
+  flex: 1 1 auto;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  gap: clamp(12px, 1.6vw, 22px);
+  order: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+html .site-header .nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: auto;
+  min-height: 34px;
+  padding: 0;
+  border: 0;
+  color: #516773;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.65;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+html .site-header .nav-links a:hover,
+html .site-header .nav-links a:focus-visible,
+html .site-header .nav-links a.active,
+html .site-header .nav-links a[aria-current="page"] {
+  color: var(--accent);
+}
+
+html .site-header .nav-links a.active,
+html .site-header .nav-links a[aria-current="page"] {
+  font-weight: 600;
+}
+
+html .site-header .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+html .site-header .nav-links a:hover::after,
+html .site-header .nav-links a:focus-visible::after,
+html .site-header .nav-links a.active::after,
+html .site-header .nav-links a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+html .site-header .language-toggle {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  height: 34px;
+  order: 0;
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--accent);
+  font: 600 13px/1 var(--font);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+html .site-header .language-toggle:hover,
+html .site-header .nav-toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+html .site-header .nav-toggle {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  order: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+html .site-header .nav-toggle-lines,
+html .site-header .nav-toggle-lines::before,
+html .site-header .nav-toggle-lines::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+html .site-header .nav-toggle-lines {
+  position: relative;
+}
+
+html .site-header .nav-toggle-lines::before,
+html .site-header .nav-toggle-lines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+html .site-header .nav-toggle-lines::before { top: -6px; }
+html .site-header .nav-toggle-lines::after { top: 6px; }
+
+@media (max-width: 900px) {
+  html .site-header .nav-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  html .site-header .language-toggle {
+    order: 2;
+    margin-left: auto;
+  }
+
+  html .site-header .nav-toggle {
+    order: 3;
+  }
+
+  html .site-header.js-mobile-nav .nav-toggle {
+    display: inline-flex;
+  }
+
+  /* Links remain available when scripts are disabled or unavailable. */
+  html .site-header .nav-links {
+    display: flex;
+    position: static;
+    flex-basis: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px 16px;
+    order: 4;
+  }
+
+  html .site-header .nav-links a {
+    min-height: 44px;
+  }
+
+  html .site-header.js-mobile-nav .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-top: 6px;
+  }
+
+  html .site-header.nav-open .nav-links {
+    display: flex;
+  }
+
+  html .site-header.js-mobile-nav .nav-links a {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  html .site-header.js-mobile-nav .nav-links a::after {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  html .site-header .container {
+    padding-inline: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

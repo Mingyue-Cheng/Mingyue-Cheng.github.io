@@ -6,7 +6,7 @@
   <title>Mingyue Cheng | Homepage</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="canonical" href="https://mingyue-cheng.github.io/">
-  <meta name="theme-color" content="#003087">
+  <meta name="theme-color" content="#003153">
   <meta name="google-site-verification" content="kyHylTDUEgzODHrPnUw-S_22ahgQoswvjR1ui-JvdNk" />
   <meta name="description" content="Mingyue Cheng's academic homepage at USTC, featuring research on LLMs and Agentic AI, time-series analysis, prediction intelligence, AI for Science, and recommender systems.">
   <meta name="keywords" content="Mingyue Cheng, LLMs and Agentic AI, Time Series Intelligence, Prediction Intelligence, AI for Science, Recommender Systems, USTC">
@@ -28,14 +28,15 @@
   <style>
 /* ===== Variables ===== */
 :root {
-  --accent:      #003087;
-  --accent-dark: #00226b;
-  --accent-light:#e8edf7;
+  --accent:      #003153;
+  --accent-rgb:  0, 49, 83;
+  --accent-dark: #00243d;
+  --accent-light:#e8f0f4;
   --text:        #1a1a1a;
   --text-muted:  #666;
-  --border:      #e2e5ea;
+  --border:      #dce5eb;
   --bg:          #fff;
-  --bg-alt:      #f6f7fb;
+  --bg-alt:      #f4f7f9;
   --radius:      5px;
   --max-w:       1100px;
   --font: system-ui, -apple-system, 'Segoe UI', Arial,
@@ -73,7 +74,7 @@ body {
   transform: translateY(0);
 }
 :focus-visible {
-  outline: 3px solid rgba(0, 48, 135, 0.36);
+  outline: 3px solid rgba(var(--accent-rgb), 0.36);
   outline-offset: 3px;
 }
 [id] {
@@ -91,48 +92,83 @@ body {
 .site-header {
   position: sticky;
   top: 0;
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid #e3ebef;
+  box-shadow: 0 2px 12px rgba(var(--accent-rgb), 0.025);
   z-index: 100;
-  padding: 13px 0;
+  padding: 12px 0;
 }
 .nav-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 18px;
   position: relative;
 }
 .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--accent);
   text-decoration: none;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
+}
+.nav-logo::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--accent);
 }
 .nav-links {
   display: flex;
   flex: 1;
-  gap: 24px;
+  gap: clamp(12px, 1.6vw, 22px);
   justify-content: flex-end;
   min-width: 0;
 }
 .nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
   text-decoration: none;
-  color: var(--text-muted);
+  color: #516773;
   font-size: 14px;
+  font-weight: 500;
   transition: color 0.2s;
   white-space: nowrap;
 }
 .nav-links a:hover { color: var(--accent); }
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after {
+  transform: scaleX(1);
+}
 .language-toggle {
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 72px;
-  height: 30px;
+  min-width: 64px;
+  height: 34px;
   padding: 0 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -153,8 +189,8 @@ body {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #fff;
@@ -184,34 +220,43 @@ body {
 
 /* ===== Profile Hero ===== */
 .profile-section {
-  padding: 40px 0 32px;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%);
+  padding: 52px 0 42px;
+  border-bottom: 1px solid #e3ebef;
+  background:
+    radial-gradient(ellipse at 0 10%, #eaf2f6 0%, transparent 65%),
+    linear-gradient(110deg, #f7fafb 0%, #fff 75%);
+  text-align: left;
 }
 .profile-wrap {
   display: flex;
-  gap: 36px;
+  gap: 44px;
   align-items: flex-start;
 }
 .profile-photo {
-  width: 190px;
-  height: 234px;
-  border-radius: var(--radius);
+  width: 208px;
+  height: 256px;
+  border-radius: 16px;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,48,135,0.08);
-  margin-top: 10px;
+  border: 6px solid #fff;
+  outline: 1px solid #d6e2e9;
+  box-shadow: 0 14px 32px rgba(var(--accent-rgb), 0.1);
+  margin-top: 4px;
 }
 .profile-info { flex: 1; min-width: 0; }
 .profile-name {
-  font-size: 26px;
-  font-weight: 800;
+  font-size: clamp(30px, 3.5vw, 40px);
+  font-weight: 750;
   color: var(--accent);
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
+  letter-spacing: -0.04em;
+  line-height: 1.25;
+  margin-bottom: 10px;
 }
 .profile-home-link {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 6px;
   color: inherit;
   text-decoration: none;
   cursor: pointer;
@@ -220,61 +265,101 @@ body {
   color: var(--accent-dark);
 }
 .profile-home-link:focus-visible {
-  outline: 2px solid rgba(0,48,135,0.28);
+  outline: 2px solid rgba(var(--accent-rgb), 0.28);
   outline-offset: 4px;
   border-radius: var(--radius);
 }
 .profile-name-cn {
-  font-size: 20px;
-  color: var(--text-muted);
-  font-weight: 800;
+  font-size: 22px;
+  color: #5a6e79;
+  font-weight: 500;
+  letter-spacing: 0.08em;
 }
 .profile-title {
-  font-size: 15px;
-  color: var(--text);
-  margin: 8px 0 4px;
-  font-weight: 500;
+  font-size: 14px;
+  color: #315b70;
+  margin: 0 0 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 .profile-affil {
   font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: 10px;
+  color: #5a6e79;
+  line-height: 1.85;
+  margin-bottom: 20px;
 }
-.profile-affil a { color: var(--accent); text-decoration: none; }
+.profile-affil a { color: inherit; text-decoration: none; }
+.profile-affil a:last-child { color: var(--accent); font-weight: 600; }
 .profile-affil a:hover { text-decoration: underline; }
 .profile-thesis {
-  max-width: 720px;
-  margin: 0 0 12px;
-  color: #303846;
-  font-size: 15px;
-  font-weight: 550;
-  line-height: 1.65;
+  max-width: 660px;
+  margin: 0 0 20px;
+  padding-left: 16px;
+  border-left: 3px solid #aec6d4;
+  color: #344c5a;
+  font-size: 16px;
+  font-weight: 450;
+  line-height: 1.75;
   text-align: left;
 }
 .profile-badges {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 .badge {
-  display: inline-block;
-  padding: 4px 13px;
-  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 13px;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 500;
   text-decoration: none;
-  border: 1px solid var(--border);
+  border: 1px solid #d6e2e9;
   color: var(--accent);
-  transition: all 0.2s;
-  background: #fff;
+  transition: background-color 0.2s, border-color 0.2s;
+  background: rgba(255, 255, 255, 0.85);
 }
 .badge:hover { background: var(--accent-light); border-color: var(--accent); }
+.profile-badges .badge:first-child {
+  background: #eaf2f6;
+  border-color: #cbdde7;
+}
 .profile-contact {
-  font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.8;
+  display: grid;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid #dce6ec;
+  font-size: 13px;
+  color: #5a6e79;
+  line-height: 1.7;
+}
+.profile-contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+.profile-contact-row svg {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  fill: none;
+  stroke: #6e8795;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.profile-contact-row > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.profile-contact strong {
+  color: #516a79;
+  font-weight: 500;
 }
 .profile-contact a { color: var(--accent); text-decoration: none; }
 .profile-contact a:hover { text-decoration: underline; }
@@ -324,13 +409,13 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   background:
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
   text-decoration: none;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 .related-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 10px 24px rgba(0, 48, 135, 0.08);
+  box-shadow: 0 10px 24px rgba(var(--accent-rgb), 0.08);
   transform: translateY(-1px);
 }
 .related-card-main {
@@ -354,7 +439,7 @@ body {
   justify-content: center;
   padding: 5px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(0, 48, 135, 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.1);
   background: var(--accent-light);
   color: var(--accent);
   font-size: 12px;
@@ -387,14 +472,14 @@ body {
   padding: 12px 15px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 6px 18px rgba(0,48,135,0.04);
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+  box-shadow: 0 6px 18px rgba(var(--accent-rgb), 0.04);
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   text-align: justify;
 }
 .research-list li:hover {
-  border-color: rgba(0, 48, 135, 0.2);
-  box-shadow: 0 10px 24px rgba(0,48,135,0.07);
+  border-color: rgba(var(--accent-rgb), 0.2);
+  box-shadow: 0 10px 24px rgba(var(--accent-rgb), 0.07);
   transform: translateY(-1px);
 }
 .research-list strong {
@@ -415,6 +500,124 @@ body {
 }
 .research-section .scenario-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.research-section .scenario-section {
+  margin: 28px 0 20px;
+}
+.research-section .scenario-heading-row {
+  margin-bottom: 6px;
+}
+.research-section .scenario-heading-row::after {
+  display: none;
+}
+.research-section .scenario-heading {
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 90px;
+}
+.research-section .scenario-intro {
+  margin: 0 0 18px;
+  color: #637783;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+}
+.research-section .scenario-card {
+  padding: 22px;
+  border-color: #dce6eb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(var(--accent-rgb), 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.research-section .scenario-card--science {
+  --scenario-color: #087a63;
+  --scenario-tint: #edf8f4;
+}
+.research-section .scenario-card--industrial {
+  --scenario-color: var(--accent);
+  --scenario-tint: #eaf2f6;
+}
+.research-section .scenario-card--user {
+  --scenario-color: #9b641d;
+  --scenario-tint: #fbf5eb;
+}
+.research-section .scenario-card-header {
+  min-height: 42px;
+  gap: 12px;
+  padding: 0;
+}
+.research-section .scenario-card-icon {
+  flex-basis: 40px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--scenario-tint);
+}
+.research-section .scenario-card-title {
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.research-section .scenario-card-body {
+  margin: 16px 0 20px;
+  padding: 0;
+  color: #516773;
+  font-size: 14px;
+  line-height: 1.75;
+  text-align: left;
+  text-justify: auto;
+  text-wrap: pretty;
+}
+.research-section .scenario-card-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #eaf0f3;
+  text-align: left;
+}
+.research-section .scenario-card-topics span {
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: var(--scenario-tint);
+  color: var(--scenario-color);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+@media (hover: hover) and (pointer: fine) {
+  .research-section .scenario-card:hover {
+    border-color: #b8cdd9;
+    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.065);
+    transform: none;
+  }
+}
+@media (max-width: 480px) {
+  .research-section .scenario-card {
+    padding: 18px;
+  }
+}
+@media (min-width: 901px) and (max-width: 1050px) {
+  .research-section .scenario-card-header {
+    min-height: 48px;
+  }
+  .research-section .scenario-card-topics {
+    min-height: 71px;
+    align-content: flex-start;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .research-section .scenario-card {
+    transition: none;
+  }
 }
 .research-note {
   font-size: 14px;
@@ -469,6 +672,31 @@ html[lang="zh-CN"] .footer-title {
 .news-list li a { color: var(--accent); text-decoration: none; }
 .news-list li a:hover { text-decoration: underline; }
 .news-list li.pinned { font-weight: 500; }
+.news-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 16px;
+}
+.news-actions a {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.news-actions a:hover { text-decoration: underline; }
+.reading-toggle {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid #c7d9e3;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  font: 500 13px var(--font);
+  cursor: pointer;
+}
+.reading-toggle:hover { background: var(--accent-light); }
 .toggle-button {
   background: none;
   border: 1px solid var(--border);
@@ -498,8 +726,8 @@ html[lang="zh-CN"] .footer-title {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px 18px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 8px 24px rgba(0,48,135,0.05);
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.05);
   overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
@@ -529,7 +757,7 @@ html[lang="zh-CN"] .footer-title {
   border-radius: 10px;
   object-fit: cover;
   display: block;
-  border: 1px solid #edf1f7;
+  border: 1px solid #eaf0f3;
 }
 .os-body {
   flex: 1;
@@ -540,7 +768,7 @@ html[lang="zh-CN"] .footer-title {
 }
 .os-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 12px 30px rgba(0,48,135,0.1);
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.1);
   transform: translateY(-1px);
 }
 .os-card-header {
@@ -579,7 +807,7 @@ html[lang="zh-CN"] .footer-title {
   display: inline-flex;
   align-items: center;
   padding: 3px 10px;
-  border: 1px solid #c9d8f5;
+  border: 1px solid #c7d9e3;
   border-radius: 999px;
   background: var(--accent-light);
   color: var(--accent);
@@ -603,7 +831,7 @@ html[lang="zh-CN"] .footer-title {
 }
 .os-card-title a.os-github:hover {
   background: var(--accent-light);
-  border-color: #c9d8f5;
+  border-color: #c7d9e3;
 }
 .os-stars {
   font-size: 13px;
@@ -639,7 +867,7 @@ html[lang="zh-CN"] .footer-title {
   border-radius: 999px;
   background: var(--accent-light);
   color: var(--accent);
-  border: 1px solid #c9d8f5;
+  border: 1px solid #c7d9e3;
   font-size: 12px;
   font-weight: 600;
   line-height: 1.5;
@@ -681,8 +909,8 @@ html[lang="zh-CN"] .footer-title {
   padding: 16px 18px 14px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 8px 28px rgba(0, 48, 135, 0.05);
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+  box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.05);
   overflow: hidden;
   transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
 }
@@ -701,7 +929,7 @@ html[lang="zh-CN"] .footer-title {
   width: 180px;
   height: 180px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(0, 76, 204, 0.12) 0%, rgba(0, 76, 204, 0) 72%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.12) 0%, rgba(var(--accent-rgb), 0) 72%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.22s ease, transform 0.22s ease;
@@ -709,7 +937,7 @@ html[lang="zh-CN"] .footer-title {
 }
 .dataset-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 14px 34px rgba(0, 48, 135, 0.11);
+  box-shadow: 0 14px 34px rgba(var(--accent-rgb), 0.11);
   transform: translateY(-3px);
 }
 .dataset-card:hover::before {
@@ -786,7 +1014,7 @@ html[lang="zh-CN"] .footer-title {
 }
 .dataset-repo-link:hover {
   background: var(--accent-light);
-  border-color: #c9d8f5;
+  border-color: #c7d9e3;
 }
 .dataset-stars {
   font-size: 13px;
@@ -813,9 +1041,9 @@ html[lang="zh-CN"] .footer-title {
   align-items: center;
   padding: 2px 8px;
   border-radius: 999px;
-  background: #eef4ff;
+  background: #eaf2f6;
   color: var(--accent);
-  border: 1px solid #c9d8f5;
+  border: 1px solid #c7d9e3;
   font-size: 12px;
   font-weight: 600;
   line-height: 1.4;
@@ -840,24 +1068,24 @@ html[lang="zh-CN"] .footer-title {
   transition: color 0.2s ease;
 }
 .dataset-card:hover .dataset-kicker {
-  color: #0a57d6;
+  color: var(--accent-dark);
   transform: translateX(2px);
 }
 .dataset-card:hover .dataset-name,
 .dataset-card:hover .dataset-card-desc,
 .dataset-card:hover .dataset-card-desc strong {
-  color: #0d2348;
+  color: var(--accent-dark);
 }
 .dataset-card:hover .dataset-topic,
 .dataset-card:hover .dataset-card-title .os-year,
 .dataset-card:hover .dataset-repo-link {
-  border-color: #c9d8f5;
-  background: #f5f9ff;
-  box-shadow: 0 6px 18px rgba(0, 48, 135, 0.08);
+  border-color: #c7d9e3;
+  background: #f2f7f9;
+  box-shadow: 0 6px 18px rgba(var(--accent-rgb), 0.08);
   transform: translateY(-1px);
 }
 .dataset-card:hover .dataset-inline-link {
-  color: #0a57d6;
+  color: var(--accent-dark);
 }
 .dataset-links {
   display: flex;
@@ -963,18 +1191,21 @@ html[lang="zh-CN"] .footer-title {
   font-size: 16px;
   font-weight: 700;
   color: var(--accent);
-  margin: 16px 0 6px;
-  padding-left: 10px;
-  border-left: 3px solid var(--accent);
+  margin: 20px 0 10px;
+  padding: 0;
   line-height: 1.3;
 }
 .pub-year-toggle {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
+  min-height: 44px;
   align-items: center;
-  gap: 5px;
-  padding: 2px 4px 2px 0;
-  border: 0;
-  background: transparent;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-alt);
   color: inherit;
   font: inherit;
   font-weight: inherit;
@@ -982,6 +1213,7 @@ html[lang="zh-CN"] .footer-title {
   cursor: pointer;
   user-select: none;
 }
+.pub-year-toggle:hover:not(:disabled) { background: var(--accent-light); }
 .pub-year-toggle::after {
   content: '▲';
   font-size: 11px;
@@ -995,6 +1227,7 @@ html[lang="zh-CN"] .footer-title {
   opacity: 1;
   cursor: default;
 }
+.pub-year-toggle:disabled::after { visibility: hidden; }
 .pub-list {
   font-size: 15px;
   line-height: 1.75;
@@ -1059,8 +1292,8 @@ html[lang="zh-CN"] .footer-title {
   padding: 14px 0 28px;
   border-top: 1px solid var(--border);
   background:
-    radial-gradient(circle at top left, rgba(0, 48, 135, 0.08), transparent 35%),
-    linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.08), transparent 35%),
+    linear-gradient(180deg, #f7fafb 0%, #ffffff 100%);
 }
 .footer-shell {
   max-width: var(--max-w);
@@ -1076,7 +1309,7 @@ html[lang="zh-CN"] .footer-title {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--border);
   border-radius: 18px;
-  box-shadow: 0 14px 40px rgba(0, 48, 135, 0.08);
+  box-shadow: 0 14px 40px rgba(var(--accent-rgb), 0.08);
 }
 .footer-copy {
   display: flex;
@@ -1124,8 +1357,8 @@ html[lang="zh-CN"] .footer-title {
   gap: 8px;
   padding: 5px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(0, 48, 135, 0.12);
-  background: rgba(232, 237, 247, 0.55);
+  border: 1px solid rgba(var(--accent-rgb), 0.12);
+  background: rgba(232, 240, 244, 0.55);
   color: var(--accent);
   font-size: 13px;
   font-weight: 600;
@@ -1166,11 +1399,11 @@ html[lang="zh-CN"] .footer-title {
   min-height: 196px;
   padding: 10px;
   border-radius: 16px;
-  border: 1px solid rgba(0, 48, 135, 0.12);
+  border: 1px solid rgba(var(--accent-rgb), 0.12);
   background:
     radial-gradient(circle at top right, rgba(58, 204, 58, 0.16), transparent 24%),
-    radial-gradient(circle at bottom left, rgba(0, 48, 135, 0.12), transparent 30%),
-    linear-gradient(160deg, #eef4ff 0%, #f9fbff 100%);
+    radial-gradient(circle at bottom left, rgba(var(--accent-rgb), 0.12), transparent 30%),
+    linear-gradient(160deg, #eaf2f6 0%, #f7fafb 100%);
   overflow: hidden;
 }
 .footer-map-panel::before {
@@ -1178,7 +1411,7 @@ html[lang="zh-CN"] .footer-title {
   position: absolute;
   inset: 8px;
   border-radius: 12px;
-  border: 1px dashed rgba(0, 48, 135, 0.12);
+  border: 1px dashed rgba(var(--accent-rgb), 0.12);
   pointer-events: none;
 }
 .footer-map-note {
@@ -1246,10 +1479,10 @@ html[lang="zh-CN"] .footer-title {
   justify-content: center;
   gap: 8px;
   padding: 16px;
-  border: 1px dashed rgba(0, 48, 135, 0.24);
+  border: 1px dashed rgba(var(--accent-rgb), 0.24);
   border-radius: 12px;
   background:
-    linear-gradient(135deg, rgba(0, 48, 135, 0.08), rgba(58, 204, 58, 0.08)),
+    linear-gradient(135deg, rgba(var(--accent-rgb), 0.08), rgba(58, 204, 58, 0.08)),
     #fff;
   color: var(--text-muted);
   text-align: center;
@@ -1317,8 +1550,15 @@ html[lang="zh-CN"] .footer-title {
   }
 }
 @media (max-width: 680px) {
-  .profile-wrap { flex-direction: column; }
-  .profile-photo { width: 132px; height: 163px; }
+  .profile-section { padding: 30px 0 32px; }
+  .profile-wrap { flex-direction: column; gap: 24px; }
+  .profile-photo { width: 140px; height: 173px; border-width: 5px; margin-top: 0; }
+  .profile-info { width: 100%; }
+  .profile-name-cn { font-size: 20px; }
+  .profile-affil { margin-bottom: 18px; }
+  .profile-thesis { font-size: 15px; }
+  .profile-badges { gap: 6px; }
+  .profile-badges .badge { padding: 6px 10px; font-size: 12px; }
   .os-grid { grid-template-columns: 1fr; }
   .os-card {
     flex-direction: column;
@@ -1342,7 +1582,7 @@ html[lang="zh-CN"] .footer-title {
   }
   .related-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 14px; }
-  .profile-name { font-size: 22px; }
+  .profile-name { font-size: 30px; }
   .footer-card {
     grid-template-columns: 1fr;
     padding: 14px;
@@ -1354,7 +1594,7 @@ html[lang="zh-CN"] .footer-title {
     font-size: 20px;
   }
 }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .nav-inner {
     flex-wrap: wrap;
     gap: 10px;
@@ -1383,9 +1623,18 @@ html[lang="zh-CN"] .footer-title {
     display: flex;
   }
   .site-header.js-mobile-nav .nav-links a {
-    padding: 8px 0;
+    min-height: 44px;
+    padding: 10px 0;
     border-top: 1px solid var(--border);
   }
+  .site-header.js-mobile-nav .nav-links a::after {
+    display: none;
+  }
+}
+@media (min-width: 681px) and (max-width: 900px) {
+  .profile-wrap { gap: 28px; }
+  .profile-photo { width: 172px; height: 212px; }
+  .profile-name { font-size: 32px; }
 }
 @media (max-width: 480px) {
   .footer-shell {
@@ -1412,7 +1661,7 @@ html[lang="zh-CN"] .footer-title {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: #003087;
+  background-color: var(--accent);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -1429,7 +1678,7 @@ html[lang="zh-CN"] .footer-title {
   pointer-events: auto;
 }
 #back-to-top:hover {
-  background-color: #00226b;
+  background-color: var(--accent-dark);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1445,6 +1694,8 @@ html[lang="zh-CN"] .footer-title {
 }
   </style>
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
+  <link rel="stylesheet" href="files/assets/site-theme.css?v=20260911">
+  <link rel="stylesheet" href="files/assets/site-content.css?v=20260911">
 </head>
 <body>
 <a class="skip-link" href="#main-content" data-i18n="nav.skip">Skip to main content</a>
@@ -1494,8 +1745,14 @@ html[lang="zh-CN"] .footer-title {
           <a href="https://github.com/Mingyue-Cheng/" target="_blank" rel="noopener" class="badge">GitHub</a>
         </div>
         <div class="profile-contact">
-          <strong data-i18n="profile.emailLabel">Email:</strong> <a href="mailto:mycheng@ustc.edu.cn">mycheng@ustc.edu.cn</a><br>
-          <strong data-i18n="profile.addressLabel">Address:</strong> <span data-i18n="profile.address">B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031</span>
+          <div class="profile-contact-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m4 7 8 6 8-6"></path></svg>
+            <div><strong data-i18n="profile.emailLabel">Email:</strong> <a href="mailto:mycheng@ustc.edu.cn">mycheng@ustc.edu.cn</a></div>
+          </div>
+          <div class="profile-contact-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+            <div><strong data-i18n="profile.addressLabel">Address:</strong> <span data-i18n="profile.address">B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1528,11 +1785,11 @@ html[lang="zh-CN"] .footer-title {
     </ul>
     <section class="scenario-section" aria-labelledby="homepage-scenario-heading">
       <div class="scenario-heading-row">
-        <h3 id="homepage-scenario-heading" class="scenario-heading" data-i18n="research.scenarioTitle">Application Domains and Evaluation Scenarios</h3>
+        <h3 id="homepage-scenario-heading" class="scenario-heading" data-i18n="research.scenarioTitle">Application Domains</h3>
       </div>
+      <p class="scenario-intro" data-i18n="research.scenarioIntro">Real-world settings for developing and evaluating intelligent systems.</p>
       <div class="scenario-grid">
         <article class="scenario-card scenario-card--science">
-          <div class="scenario-card-accent" aria-hidden="true"></div>
           <div class="scenario-card-header">
             <span class="scenario-card-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -1541,10 +1798,10 @@ html[lang="zh-CN"] .footer-title {
             </span>
             <h4 class="scenario-card-title" data-i18n="research.scienceTitle">AI for Science</h4>
           </div>
-          <p class="scenario-card-body" data-i18n="research.scienceBody">Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.</p>
+          <p class="scenario-card-body" data-i18n="research.scienceBody">Connecting scientific data and knowledge to support reasoning and autonomous discovery.</p>
+          <div class="scenario-card-topics" data-i18n="research.scienceTopics"><span>Literature mining</span><span>Scientific modeling</span></div>
         </article>
         <article class="scenario-card scenario-card--industrial">
-          <div class="scenario-card-accent" aria-hidden="true"></div>
           <div class="scenario-card-header">
             <span class="scenario-card-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -1553,10 +1810,10 @@ html[lang="zh-CN"] .footer-title {
             </span>
             <h4 class="scenario-card-title" data-i18n="research.industrialTitle">Industrial Systems</h4>
           </div>
-          <p class="scenario-card-body" data-i18n="research.industrialBody">Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.</p>
+          <p class="scenario-card-body" data-i18n="research.industrialBody">Forecasting and decision support for complex, evolving real-world systems.</p>
+          <div class="scenario-card-topics" data-i18n="research.industrialTopics"><span>Energy &amp; traffic</span><span>Cloud &amp; finance</span></div>
         </article>
         <article class="scenario-card scenario-card--user">
-          <div class="scenario-card-accent" aria-hidden="true"></div>
           <div class="scenario-card-header">
             <span class="scenario-card-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -1566,7 +1823,8 @@ html[lang="zh-CN"] .footer-title {
             </span>
             <h4 class="scenario-card-title" data-i18n="research.userTitle">Recommender Systems</h4>
           </div>
-          <p class="scenario-card-body" data-i18n="research.userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.</p>
+          <p class="scenario-card-body" data-i18n="research.userBody">Understanding behaviors and preferences to deliver adaptive, personalized recommendations.</p>
+          <div class="scenario-card-topics" data-i18n="research.userTopics"><span>Behavior modeling</span><span>Contextual reasoning</span></div>
         </article>
       </div>
     </section>
@@ -1612,8 +1870,9 @@ html[lang="zh-CN"] .footer-title {
       <li><strong>[Apr. 2026]</strong> 📄 We released the preprint version of our survey on <strong>LLM-based agents</strong> from the <strong>contextual cognition perspective</strong> on <a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener"><strong>Preprints.org</strong></a>: <strong>"A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective"</strong>.</li>
     </ul>
 
-    <div style="margin-top:8px;">
-      <a href="news.html" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:500;" data-i18n="news.viewAll">View All News →</a>
+    <div class="news-actions">
+      <button type="button" id="newsToggle" class="reading-toggle" aria-controls="newsList" aria-expanded="true" data-i18n="news.expand" hidden>Show all updates</button>
+      <a href="news.html" data-i18n="news.viewAll">View All News →</a>
     </div>
   </div>
 </div>
@@ -1719,7 +1978,7 @@ html[lang="zh-CN"] .footer-title {
 
 
     <!-- ===== 2025 ===== -->
-    <h3 id="year-2025" class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-2025" data-i18n="pub.year2025">🐍 Year of the Wood Snake (Yi Si Year, 2025)</button></h3>
+    <h3 id="year-2025" class="pub-year-heading" data-default-collapsed="true"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-2025" data-i18n="pub.year2025">🐍 Year of the Wood Snake (Yi Si Year, 2025)</button></h3>
     <ol class="pub-list" id="publication-list-2025">
       <li data-tags="timeseries"><strong>Mingyue Cheng</strong>, Jiqian Yang, Tingyue Pan, Qi Liu*, Zhi Li, <strong>ConvTimeNet: A Deep Hierarchical Fully Convolutional Model for Multivariate Time Series Analysis</strong>, <em>ACM WWW2025</em>, Sydney, 2025. [<a href="https://arxiv.org/pdf/2403.01493" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/ConvTimeNet" target="_blank" rel="noopener">Code</a>] <span class="sktime-note">— Included in <a href="https://www.sktime.net/en/stable/" target="_blank" rel="noopener"><em>sktime</em></a></span></li>
       <li data-tags="timeseries llm">Xiaoyu Tao, Tingyue Pan, <strong>Mingyue Cheng*</strong>, Yucong Luo, Qi Liu, Enhong Chen, <strong>Hierarchical Multimodal LLMs with Semantic Space Alignment for Enhanced Time Series Classification</strong>. (<em>ACM Transactions on Intelligent Systems and Technology (ACM TIST)</em>) [<a href="https://arxiv.org/pdf/2410.18686" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Xiaoyu-Tao/HiTime" target="_blank" rel="noopener">Code</a>]</li>
@@ -1743,7 +2002,7 @@ html[lang="zh-CN"] .footer-title {
 
 
     <!-- ===== 2024 ===== -->
-    <h3 id="year-2024" class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-2024" data-i18n="pub.year2024">🐉 Year of the Wood Dragon (Jia Chen Year, 2024)</button></h3>
+    <h3 id="year-2024" class="pub-year-heading" data-default-collapsed="true"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-2024" data-i18n="pub.year2024">🐉 Year of the Wood Dragon (Jia Chen Year, 2024)</button></h3>
     <ol class="pub-list" id="publication-list-2024">
       <li data-tags="llm agent ai4science">Jie Ouyang, Yucong Luo, <strong>Mingyue Cheng*</strong>, Shuo Yu, Daoyu Wang, Qi Liu, Enhong Chen, <strong>Revisiting the Solution of Meta KDD Cup 2024: CRAG</strong>. (KDD Cup Workshop, <font color="red"><b>2nd Place in Task 2 &amp; Task 3</b></font>) [<a href="./files/posters/KDD-slide-v4.pdf" target="_blank" rel="noopener">Slides</a>] [<a href="./files/posters/crag_kddcup.pdf" target="_blank" rel="noopener">Poster</a>]</li>
       <li data-tags="recsys"><strong>Mingyue Cheng</strong>, Qi Liu*, Wenyu Zhang, Zhiding Liu, Hongke Zhao, Enhong Chen, <strong>A General Tail Item Representation Enhancement Framework for Sequential Recommender Systems</strong>, <em>Frontiers of Computer Science (FCS)</em>, 2024, 18(6): 1–12. [<a href="./files/papers/tailrec-fcs2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/Mingyue-Cheng/TailRec" target="_blank" rel="noopener">Code</a>]</li>
@@ -1760,7 +2019,7 @@ html[lang="zh-CN"] .footer-title {
 
 
     <!-- ===== 2023 and Before ===== -->
-    <h3 id="year-2023" class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-legacy" data-i18n="pub.legacy">📘 2023 and Before</button></h3>
+    <h3 id="year-2023" class="pub-year-heading" data-default-collapsed="true"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-legacy" data-i18n="pub.legacy">📘 2023 and Before</button></h3>
     <ol class="pub-list" id="publication-list-legacy">
       <li data-tags="timeseries">Zhiding Liu, <strong>Mingyue Cheng</strong>, Zhi Li, Zhenya Huang, Qi Liu, Yanhu Xie, Enhong Chen, <strong>Adaptive Normalization for Non-stationary Time Series Forecasting: A Temporal Slice Perspective</strong>, <em>NeurIPS'2023</em>: 36, New Orleans, 2023. [<a href="./files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/icantnamemyself/SAN" target="_blank" rel="noopener">Code</a>]</li>
       <li data-tags="recsys">耿杰, 刘春丽*, 魏雪梅, <strong>程明月</strong>, 袁昆, 李洋, 刘业政, <strong>基于用户重购行为的产品推荐方法</strong>, <em>计算机研究与发展</em> 2023, 60(8): 1795–1807.</li>
@@ -2318,7 +2577,7 @@ html[lang="zh-CN"] .footer-title {
                 <img
                   id="clustrmaps-map"
                   class="clustrmaps-map"
-                  src="https://www.clustrmaps.com/map_v2.png?cl=ffffff&amp;w=360&amp;t=n&amp;d=yzpRvK6tscYP95eJAtp2KO6oJy1DQIIoLhPD5S-3EG8&amp;co=2d78ad&amp;ct=ffffff&amp;cmo=3acc3a&amp;cmn=ff5353"
+                  src="https://www.clustrmaps.com/map_v2.png?cl=ffffff&amp;w=360&amp;t=n&amp;d=yzpRvK6tscYP95eJAtp2KO6oJy1DQIIoLhPD5S-3EG8&amp;co=003153&amp;ct=ffffff&amp;cmo=3acc3a&amp;cmn=ff5353"
                   alt="Live ClustrMaps visitor world map"
                   loading="lazy"
                   decoding="async"
@@ -2374,16 +2633,22 @@ const i18n = {
     "research.agent": "<span class=\"research-label\">🤖<strong>LLMs and Agentic AI:</strong></span> Developing <span class=\"research-keyword\">autonomous interactive learning</span> for large language models, including <span class=\"research-keyword\">environment-interactive Agentic RL</span>, <span class=\"research-keyword\">tool-augmented reasoning</span>, <span class=\"research-keyword\">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.",
     "research.timeseries": "<span class=\"research-label\">📊<strong>Time Series Intelligence:</strong></span> Developing <span class=\"research-keyword\">context-aware predictive intelligence</span>, with a focus on <span class=\"research-keyword\">multimodal context representation</span>, <span class=\"research-keyword\">slow-thinking reasoning</span>, <span class=\"research-keyword\">uncertainty-aware forecasting</span>, and <span class=\"research-keyword\">autonomous agentic interaction</span>.",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>Scientific Knowledge Cognition:</strong></span> Developing <span class=\"research-keyword\">agent-ready scientific knowledge intelligence</span> through <span class=\"research-keyword\">LLM-driven literature mining</span>, <span class=\"research-keyword\">multimodal scientific document understanding</span>, <span class=\"research-keyword\">evidence-grounded reasoning</span>, and <span class=\"research-keyword\">scientific knowledge integration</span> for <span class=\"research-keyword\">predictive modeling and decision support</span>.",
-    "research.scenarioTitle": "Application Domains and Evaluation Scenarios",
+    "research.scenarioTitle": "Application Domains",
+    "research.scenarioIntro": "Real-world settings for developing and evaluating intelligent systems.",
     "research.scienceTitle": "AI for Science",
-    "research.scienceBody": "Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.",
+    "research.scienceBody": "Connecting scientific data and knowledge to support reasoning and autonomous discovery.",
+    "research.scienceTopics": "<span>Literature mining</span><span>Scientific modeling</span>",
     "research.industrialTitle": "Industrial Systems",
-    "research.industrialBody": "Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.",
+    "research.industrialBody": "Forecasting and decision support for complex, evolving real-world systems.",
+    "research.industrialTopics": "<span>Energy &amp; traffic</span><span>Cloud &amp; finance</span>",
     "research.userTitle": "Recommender Systems",
-    "research.userBody": "Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.",
+    "research.userBody": "Understanding behaviors and preferences to deliver adaptive, personalized recommendations.",
+    "research.userTopics": "<span>Behavior modeling</span><span>Contextual reasoning</span>",
     "research.collections": "Research collections: 🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Intelligence</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">AI for Science</a>",
     "research.join": "Prospective students and research collaborators are welcome to explore the <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a> and <a href=\"mailto:mycheng@ustc.edu.cn\">contact me by email</a>.",
     "news.heading": "Latest News",
+    "news.expand": "Show all updates",
+    "news.collapse": "Show fewer updates",
     "news.showMore": "Show More ▼",
     "news.showLess": "Show Less ▲",
     "news.viewAll": "View All News →",
@@ -2466,16 +2731,22 @@ const i18n = {
     "research.agent": "<span class=\"research-label\">🤖<strong>大模型与智能体 AI：</strong></span> 关注大语言模型的<span class=\"research-keyword\">自主学习与持续学习</span>、以 chain-of-thought 为代表的<span class=\"research-keyword\">慢思考推理</span>，以及包含 agentic RL、记忆、技能和自主进化等机制的<span class=\"research-keyword\">LLM-driven agents</span>。",
     "research.timeseries": "<span class=\"research-label\">📊<strong>时间序列智能：</strong></span> 面向<span class=\"research-keyword\">上下文感知的时序智能</span>，结合<span class=\"research-keyword\">大模型驱动的多模态语义理解</span>、<span class=\"research-keyword\">慢思考时序推理</span>和<span class=\"research-keyword\">自主智能体交互</span>。",
     "research.knowledge": "<span class=\"research-label\">📚 <strong>科学知识认知：</strong></span> 面向 agent-ready 的科学知识智能，研究<span class=\"research-keyword\">大模型驱动的文献挖掘</span>、<span class=\"research-keyword\">多模态科学文档理解</span>和<span class=\"research-keyword\">证据驱动推理</span>。",
-    "research.scenarioTitle": "应用领域与评测场景",
+    "research.scenarioTitle": "应用领域",
+    "research.scenarioIntro": "在真实任务中发展智能方法，并检验其有效性。",
     "research.scienceTitle": "AI for Science",
-    "research.scienceBody": "面向科技文献挖掘、科学建模、科学推理与自主发现，研究科学数据与知识智能。",
+    "research.scienceBody": "融合科学数据与知识，支持科学推理与自主发现。",
+    "research.scienceTopics": "<span>科技文献挖掘</span><span>科学建模</span>",
     "research.industrialTitle": "工业系统",
-    "research.industrialBody": "面向能源、交通、云服务、金融与工业运行等真实复杂系统，研究预测智能。",
+    "research.industrialBody": "面向持续演变的复杂系统，开展预测与决策支持。",
+    "research.industrialTopics": "<span>能源与交通</span><span>云服务与金融</span>",
     "research.userTitle": "推荐系统",
-    "research.userBody": "通过用户行为理解、偏好建模与情境推理，研究自适应用户智能与个性化推荐。",
+    "research.userBody": "理解用户行为与偏好，实现自适应的个性化推荐。",
+    "research.userTopics": "<span>行为与偏好建模</span><span>情境推理</span>",
     "research.collections": "研究主页：🤖 <a href=\"https://agentr1.github.io/\" target=\"_blank\" rel=\"noopener\">LLMs and Agentic AI</a> · 📊 <a href=\"https://ustc-time-series.github.io/\" target=\"_blank\" rel=\"noopener\">Time Series Intelligence</a> · 📚 <a href=\"https://ustcagi-sci.github.io/\" target=\"_blank\" rel=\"noopener\">AI for Science</a>",
     "research.join": "欢迎脚踏实地、积极主动的本科生和研究生加入认知智能全国重点实验室 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>；也欢迎围绕智能体、时间序列与 AI for Science 开展学术或产业合作，可<a href=\"mailto:mycheng@ustc.edu.cn\">通过邮箱联系我</a>。",
     "news.heading": "最新动态",
+    "news.expand": "展开全部动态",
+    "news.collapse": "收起较早动态",
     "news.showMore": "展开更多 ▼",
     "news.showLess": "收起 ▲",
     "news.viewAll": "查看全部动态 →",
@@ -2595,6 +2866,32 @@ if (document.readyState === 'loading') {
   initProfileHomeRefresh();
 }
 
+// ===== Latest News Disclosure =====
+(function () {
+  const list = document.getElementById('newsList');
+  const toggle = document.getElementById('newsToggle');
+  if (!list || !toggle) return;
+  const items = Array.from(list.children).filter(item => item.tagName === 'LI');
+  const previewCount = 6;
+  if (items.length <= previewCount) return;
+  let expanded = false;
+
+  function render() {
+    items.forEach((item, index) => { item.hidden = !expanded && index >= previewCount; });
+    toggle.hidden = false;
+    toggle.setAttribute('aria-expanded', String(expanded));
+    const key = expanded ? 'news.collapse' : 'news.expand';
+    toggle.setAttribute('data-i18n', key);
+    toggle.textContent = (i18n[currentLang] || i18n.en)[key];
+  }
+
+  toggle.addEventListener('click', () => {
+    expanded = !expanded;
+    render();
+  });
+  render();
+})();
+
 // ===== Publication Year Collapse + Filter =====
 (function() {
   const filterBtns = document.querySelectorAll('.pub-filter-btn');
@@ -2602,10 +2899,10 @@ if (document.readyState === 'loading') {
   const yearHeadings = document.querySelectorAll('.pub-year-heading');
   const yearToggles = document.querySelectorAll('.pub-year-toggle');
 
-  // Every publication group starts expanded; headings remain interactive.
+  // Recent work stays open; older year headings remain visible and expandable.
   const collapsedState = new Map();
   yearHeadings.forEach(h => {
-    collapsedState.set(h, false);
+    collapsedState.set(h, h.getAttribute('data-default-collapsed') === 'true');
   });
 
   function applyCollapseState() {
@@ -2680,6 +2977,22 @@ if (document.readyState === 'loading') {
       }
     });
   });
+  function openFragmentYear() {
+    const fragment = window.location.hash.slice(1);
+    if (!fragment) return;
+    const heading = Array.from(yearHeadings).find(h =>
+      h.getAttribute('id') === fragment || h.nextElementSibling?.getAttribute('id') === fragment
+    );
+    if (!heading) return;
+    collapsedState.set(heading, false);
+    const allButton = Array.from(filterBtns).find(button => button.getAttribute('data-filter') === 'all');
+    if (allButton) allButton.click();
+    else applyCollapseState();
+    heading.scrollIntoView({ block: 'start' });
+  }
+
+  window.addEventListener('hashchange', openFragmentYear);
+  openFragmentYear();
 })();
 
 function renderStarCount(el) {
@@ -2790,7 +3103,7 @@ document.addEventListener("DOMContentLoaded", initClustrMaps);
   function setActive(id) {
     navLinks.forEach(a => {
       if (a.getAttribute('href') === '#' + id) {
-        a.style.color = 'var(--accent, #003087)';
+        a.style.color = 'var(--accent, #003153)';
       } else {
         a.style.color = '';
       }

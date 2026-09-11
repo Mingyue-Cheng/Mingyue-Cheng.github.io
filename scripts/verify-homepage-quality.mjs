@@ -174,8 +174,11 @@ test('homepage selected-publication filters and year groups remain accessible', 
   assert.match(indexHtml, /document\.querySelectorAll\('\.pub-year-toggle'\)/);
   assert.match(
     indexHtml,
-    /const collapsedState = new Map\(\);[\s\S]*?yearHeadings\.forEach\(h => \{\s*collapsedState\.set\(h, false\);\s*\}\);/
+    /collapsedState\.set\(h, h\.getAttribute\('data-default-collapsed'\) === 'true'\);/
   );
+  const collapsedYears = [...publications.matchAll(/<h3\b(?=[^>]*id="(year-[^"]+)")(?=[^>]*data-default-collapsed="true")[^>]*>/g)]
+    .map((match) => match[1]);
+  assert.deepEqual(collapsedYears, ['year-2025', 'year-2024', 'year-2023']);
   assert.doesNotMatch(indexHtml, /const startsExpanded =/);
   assert.match(indexHtml, /collapsedState\.set\(h, !collapsedState\.get\(h\)\);/);
   assert.match(

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Publications — Mingyue Cheng</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#003087">
+  <meta name="theme-color" content="#003153">
   <meta name="description" content="Full publication list of Mingyue Cheng. Research in Time Series Analysis, LLM Agents, Table Mining, and Recommender Systems.">
   <meta name="author" content="Mingyue Cheng">
   <link rel="canonical" href="https://mingyue-cheng.github.io/publications.html">
@@ -19,14 +19,14 @@
   <style>
 /* ===== Variables ===== */
 :root {
-  --accent:      #003087;
-  --accent-dark: #00226b;
-  --accent-light:#e8edf7;
+  --accent:      #003153;
+  --accent-dark: #00243d;
+  --accent-light:#e8f0f4;
   --text:        #1a1a1a;
   --text-muted:  #666;
-  --border:      #e2e5ea;
+  --border:      #dce5eb;
   --bg:          #fff;
-  --bg-alt:      #f6f7fb;
+  --bg-alt:      #f4f7f9;
   --radius:      5px;
   --max-w:       1100px;
   --font: system-ui, -apple-system, 'Segoe UI', Arial,
@@ -126,7 +126,7 @@ body {
   transition: border-color 0.2s, background-color 0.2s;
 }
 .language-toggle:hover {
-  border-color: rgba(0,48,135,0.35);
+  border-color: rgba(var(--accent-rgb), 0.35);
   background: var(--accent-light);
 }
 .nav-toggle {
@@ -163,7 +163,7 @@ body {
 .pub-hero {
   padding: 36px 0 28px;
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%);
+  background: linear-gradient(160deg, #edf3f6 0%, #fff 65%);
 }
 .pub-hero-title {
   font-size: 28px;
@@ -199,7 +199,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0,48,135,0.05);
+  box-shadow: 0 2px 10px rgba(var(--accent-rgb), 0.05);
   min-width: 110px;
 }
 .pub-stat-num {
@@ -369,7 +369,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: #003087;
+  background-color: #003153;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -382,7 +382,7 @@ body {
   z-index: 999;
 }
 #back-to-top.visible { opacity: 1; pointer-events: auto; }
-#back-to-top:hover { background-color: #00226b; }
+#back-to-top:hover { background-color: #00243d; }
 
 /* ===== Footer ===== */
 .site-footer {
@@ -390,8 +390,8 @@ body {
   padding: 18px 0 36px;
   border-top: 1px solid var(--border);
   background:
-    radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%),
-    linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.08), transparent 35%),
+    linear-gradient(180deg, #f7fafb 0%, #ffffff 100%);
 }
 .footer-shell {
   max-width: var(--max-w);
@@ -473,6 +473,8 @@ body {
   }
 }
   </style>
+  <link rel="stylesheet" href="files/assets/site-theme.css?v=20260911">
+  <link rel="stylesheet" href="files/assets/site-content.css?v=20260911">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>

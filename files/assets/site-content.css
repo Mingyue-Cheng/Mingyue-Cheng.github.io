@@ -1,0 +1,308 @@
+/* Shared reading surfaces. Load after the page styles and site-theme.css. */
+.os-card,
+.dataset-card,
+.research-main .scenario-card {
+  border-color: #dce6eb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(var(--accent-rgb), 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.os-card::before,
+.dataset-card::before,
+.dataset-card::after,
+.research-main .scenario-card-accent {
+  display: none;
+}
+
+.os-card:hover,
+.dataset-card:hover,
+.research-main .scenario-card:hover {
+  border-color: #b8cdd9;
+  box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.065);
+  transform: none;
+}
+
+/* Let the full title and every metadata item use the available line. */
+.os-card-title-row,
+.dataset-card-title-row,
+.dataset-title-main,
+.os-card-meta,
+.dataset-card-meta {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.os-card-meta,
+.dataset-card-meta {
+  align-items: center;
+  gap: 7px;
+}
+
+.os-card-name,
+.dataset-name,
+.dataset-card:hover .dataset-name {
+  color: var(--accent);
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.os-card-meta .os-year,
+.dataset-card-meta .os-year,
+.os-venue,
+.dataset-venue {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  margin-left: 0;
+  padding: 4px 8px;
+  border: 1px solid #dce6eb;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.os-card-meta .os-year,
+.dataset-card-meta .os-year {
+  background: #f5f8fa;
+  color: #617581;
+}
+
+.os-venue,
+.dataset-venue {
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+a.os-github,
+.os-card-title a.os-github,
+.dataset-repo-link {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 4px 9px;
+  border: 1px solid #dce6eb;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+a.os-github:hover,
+.os-card-title a.os-github:hover,
+.dataset-repo-link:hover {
+  border-color: #b8cdd9;
+  background: var(--accent-light);
+}
+
+.os-stars,
+.dataset-stars {
+  min-height: 28px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.github-stars {
+  font-weight: 600;
+}
+
+.dataset-kicker,
+.dataset-card:hover .dataset-kicker {
+  color: #617581;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.035em;
+  transform: none;
+}
+
+.dataset-topic,
+.os-inline-highlight {
+  border-color: #dce6eb;
+  background: #f0f5f8;
+  font-weight: 500;
+}
+
+.dataset-topic {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.os-card-desc,
+.dataset-card-desc,
+.dataset-card:hover .dataset-card-desc {
+  color: #516773;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.os-card-desc strong,
+.dataset-card-desc strong,
+.dataset-card:hover .dataset-card-desc strong {
+  color: #354e5b;
+  font-weight: 600;
+}
+
+.dataset-card:hover .dataset-topic,
+.dataset-card:hover .dataset-card-title .os-year,
+.dataset-card:hover .dataset-repo-link {
+  box-shadow: none;
+  transform: none;
+}
+
+/* Research detail cards keep their full academic prose and semantic icons. */
+.research-main .scenario-card--science {
+  --scenario-color: #087a63;
+  --scenario-tint: #edf8f4;
+}
+
+.research-main .scenario-card--industrial {
+  --scenario-color: var(--accent);
+  --scenario-tint: #eaf2f6;
+}
+
+.research-main .scenario-card--user {
+  --scenario-color: #9b641d;
+  --scenario-tint: #fbf5eb;
+}
+
+.research-main .scenario-card-icon {
+  border-color: transparent;
+  border-radius: 10px;
+  background: var(--scenario-tint);
+  color: var(--scenario-color);
+}
+
+.research-main .scenario-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+.research-main .scenario-card-body {
+  color: #516773;
+  line-height: 1.75;
+}
+
+.research-main .scenario-card-body strong,
+.research-vision-desc strong,
+.pillar-card-desc strong {
+  color: #354e5b;
+  font-weight: 600;
+}
+
+.pub-filters {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pub-filter-btn {
+  min-height: 40px;
+  max-width: 100%;
+  padding: 8px 14px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.pub-filter-btn:hover,
+.pub-filter-btn.active,
+.pub-filter-btn[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+a:focus-visible,
+.scenario-card-title-link:focus-visible,
+.research-vision-title:focus-visible,
+.pub-filter-btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 680px) {
+  .section p,
+  .research-section p,
+  .research-section li,
+  .research-section .research-note,
+  .research-main .scenario-card-body,
+  .research-vision-desc,
+  .pillar-card-desc,
+  .research-note-box,
+  .pub-list,
+  .pub-list li,
+  .pub-note,
+  .os-card-desc,
+  .dataset-card-desc,
+  .page-hero-sub,
+  .pub-hero-sub,
+  .pi-hero-lead,
+  .research-thesis p,
+  .framework-stage > p,
+  .timeline-list,
+  .timeline-list li,
+  .services-list,
+  .services-list li,
+  .news-list,
+  .news-list li,
+  .news-body,
+  .sys-list li,
+  .venue-name,
+  .journal-name,
+  .grant-title,
+  .resource-meta,
+  .footer-desc {
+    text-align: left;
+    text-align-last: left;
+    text-justify: auto;
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .os-card-title-row,
+  .dataset-card-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .os-card-meta,
+  .dataset-card-meta {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .os-card,
+  .dataset-card,
+  .research-main .scenario-card,
+  .dataset-kicker,
+  .dataset-name,
+  .dataset-card-desc,
+  .dataset-card-desc strong,
+  .dataset-topic,
+  .os-card-title a.os-github,
+  .dataset-repo-link,
+  .pub-filter-btn {
+    transition: none;
+  }
+}

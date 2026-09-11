@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Open Source &amp; Benchmarks — Mingyue Cheng</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#003087">
+  <meta name="theme-color" content="#003153">
   <meta name="description" content="Open source frameworks and benchmark datasets from Mingyue Cheng's research group at USTC.">
   <meta name="author" content="Mingyue Cheng">
   <link rel="canonical" href="https://mingyue-cheng.github.io/projects.html">
@@ -16,14 +16,14 @@
   <meta name="twitter:card" content="summary">
   <style>
 :root {
-  --accent:      #003087;
-  --accent-dark: #00226b;
-  --accent-light:#e8edf7;
+  --accent:      #003153;
+  --accent-dark: #00243d;
+  --accent-light:#e8f0f4;
   --text:        #1a1a1a;
   --text-muted:  #666;
-  --border:      #e2e5ea;
+  --border:      #dce5eb;
   --bg:          #fff;
-  --bg-alt:      #f6f7fb;
+  --bg-alt:      #f4f7f9;
   --radius:      5px;
   --max-w:       1100px;
   --font: system-ui, -apple-system, 'Segoe UI', Arial,
@@ -113,7 +113,7 @@ body {
   transition: border-color 0.2s, background-color 0.2s;
 }
 .language-toggle:hover {
-  border-color: rgba(0,48,135,0.35);
+  border-color: rgba(var(--accent-rgb), 0.35);
   background: var(--accent-light);
 }
 .nav-toggle {
@@ -150,7 +150,7 @@ body {
 .page-hero {
   padding: 36px 0 28px;
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(160deg, #f0f4fb 0%, #fff 65%);
+  background: linear-gradient(160deg, #edf3f6 0%, #fff 65%);
 }
 .page-hero-title { font-size: 28px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; margin-bottom: 8px; }
 .page-hero-sub { font-size: 14px; color: var(--text-muted); line-height: 1.8; max-width: 76ch; }
@@ -186,8 +186,8 @@ body {
 .os-card {
   position: relative; display: flex; align-items: flex-start; gap: 18px;
   border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 8px 24px rgba(0,48,135,0.05); overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+  box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.05); overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 .os-card::before {
@@ -196,7 +196,7 @@ body {
 }
 .os-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 12px 30px rgba(0,48,135,0.1);
+  box-shadow: 0 12px 30px rgba(var(--accent-rgb), 0.1);
   transform: translateY(-1px);
 }
 .os-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -218,7 +218,7 @@ body {
   display: inline-flex;
   align-items: center;
   padding: 3px 10px;
-  border: 1px solid #c9d8f5;
+  border: 1px solid #ccdbe4;
   border-radius: 999px;
   background: var(--accent-light);
   color: var(--accent);
@@ -232,7 +232,7 @@ a.os-github {
   padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
   transition: all 0.15s;
 }
-a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
+a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
 .os-stars {
   font-size: 13px; color: var(--text-muted); font-weight: 400;
   display: inline-flex; align-items: center; gap: 4px;
@@ -246,7 +246,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 .os-card-desc strong { color: var(--accent); }
 .os-inline-highlight {
   display: inline-block; padding: 1px 7px; border-radius: 999px;
-  background: var(--accent-light); color: var(--accent); border: 1px solid #c9d8f5;
+  background: var(--accent-light); color: var(--accent); border: 1px solid #ccdbe4;
   font-size: 12px; font-weight: 600; line-height: 1.5; vertical-align: baseline;
 }
 
@@ -255,8 +255,8 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 .dataset-card {
   position: relative; padding: 16px 18px 14px;
   border: 1px solid var(--border); border-radius: 12px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 8px 28px rgba(0,48,135,0.05); overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+  box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.05); overflow: hidden;
   transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
 }
 .dataset-card::before {
@@ -265,7 +265,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 }
 .dataset-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 14px 34px rgba(0,48,135,0.11);
+  box-shadow: 0 14px 34px rgba(var(--accent-rgb), 0.11);
   transform: translateY(-3px);
 }
 .dataset-kicker {
@@ -282,8 +282,8 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 .dataset-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; letter-spacing: -0.01em; }
 .dataset-topic {
   display: inline-flex; align-items: center; padding: 2px 8px;
-  border-radius: 999px; background: #eef4ff; color: var(--accent);
-  border: 1px solid #c9d8f5; font-size: 12px; font-weight: 600; line-height: 1.4;
+  border-radius: 999px; background: #edf3f6; color: var(--accent);
+  border: 1px solid #ccdbe4; font-size: 12px; font-weight: 600; line-height: 1.4;
 }
 .dataset-inline-link {
   font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none;
@@ -298,7 +298,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
   padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff;
   transition: all 0.15s;
 }
-.dataset-repo-link:hover { background: var(--accent-light); border-color: #c9d8f5; }
+.dataset-repo-link:hover { background: var(--accent-light); border-color: #ccdbe4; }
 .dataset-stars {
   font-size: 13px; color: var(--text-muted); font-weight: 400;
   display: inline-flex; align-items: center; gap: 4px;
@@ -311,20 +311,20 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
 #back-to-top {
   position: fixed; right: 28px; bottom: 32px;
   width: 44px; height: 44px; border-radius: 50%;
-  background-color: #003087; color: #fff; border: none; cursor: pointer;
+  background-color: #003153; color: #fff; border: none; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none;
   transition: opacity 0.3s ease, background-color 0.2s ease; z-index: 999;
 }
 #back-to-top.visible { opacity: 1; pointer-events: auto; }
-#back-to-top:hover { background-color: #00226b; }
+#back-to-top:hover { background-color: #00243d; }
 
 /* ===== Footer ===== */
 .site-footer {
   margin-top: 0; padding: 18px 0 36px;
   border-top: 1px solid var(--border);
-  background: radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%),
-              linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  background: radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.08), transparent 35%),
+              linear-gradient(180deg, #f7fafb 0%, #ffffff 100%);
 }
 .footer-shell { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; padding: 14px 0 0; }
@@ -379,6 +379,8 @@ a.os-github:hover { background: var(--accent-light); border-color: #c9d8f5; }
   }
 }
   </style>
+  <link rel="stylesheet" href="files/assets/site-theme.css?v=20260911">
+  <link rel="stylesheet" href="files/assets/site-content.css?v=20260911">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Research — Mingyue Cheng</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="theme-color" content="#003087">
+  <meta name="theme-color" content="#003153">
   <meta name="description" content="Research directions of Mingyue Cheng: Prediction Intelligence, LLMs and Agentic AI, Time Series Intelligence, and applications in AI for Science, industrial and complex systems, and recommender systems.">
   <meta name="author" content="Mingyue Cheng">
   <link rel="canonical" href="https://mingyue-cheng.github.io/research.html">
@@ -18,18 +18,18 @@
   <style>
 /* ===== Variables ===== */
 :root {
-  --accent:      #003087;
-  --accent-dark: #00226b;
-  --accent-light:#e8edf7;
+  --accent:      #003153;
+  --accent-dark: #00243d;
+  --accent-light:#e8f0f4;
   --teal:        #087f8c;
   --green:       #12805c;
   --amber:       #a16207;
   --purple:      #6d4aff;
   --text:        #1a1a1a;
   --text-muted:  #666;
-  --border:      #e2e5ea;
+  --border:      #dce5eb;
   --bg:          #fff;
-  --bg-alt:      #f6f7fb;
+  --bg-alt:      #f4f7f9;
   --radius:      5px;
   --max-w:       1100px;
   --font: system-ui, -apple-system, 'Segoe UI', Arial,
@@ -127,7 +127,7 @@ body {
   transition: border-color 0.2s, background-color 0.2s;
 }
 .language-toggle:hover {
-  border-color: rgba(0,48,135,0.35);
+  border-color: rgba(var(--accent-rgb), 0.35);
   background: var(--accent-light);
 }
 .nav-toggle {
@@ -204,7 +204,7 @@ body {
 .rd-section-label {
   display: block;
   margin-bottom: 10px;
-  color: #102040;
+  color: #203e50;
   font-size: 16px;
   font-weight: 800;
   letter-spacing: 0;
@@ -229,12 +229,12 @@ body {
   gap: 24px;
   overflow: hidden;
   padding: 20px 28px;
-  border: 1px solid #78a3ff;
+  border: 1px solid #91aebf;
   border-radius: 12px;
   background:
-    radial-gradient(circle at 8% 50%, rgba(37,99,235,0.10), transparent 22%),
-    linear-gradient(110deg, #ffffff 0%, #fbfdff 64%, #f4f8ff 100%);
-  box-shadow: 0 10px 30px rgba(0,48,135,0.07);
+    radial-gradient(circle at 8% 50%, rgba(var(--accent-rgb), 0.10), transparent 22%),
+    linear-gradient(110deg, #ffffff 0%, #fbfcfd 64%, #f4f7f9 100%);
+  box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.07);
 }
 .research-vision-card::after {
   content: "";
@@ -249,7 +249,7 @@ body {
   background: repeating-radial-gradient(
     ellipse at center,
     transparent 0 10px,
-    rgba(37,99,235,0.18) 11px 12px
+    rgba(var(--accent-rgb), 0.18) 11px 12px
   );
   -webkit-mask-image: linear-gradient(to left, #000 12%, transparent 92%);
   mask-image: linear-gradient(to left, #000 12%, transparent 92%);
@@ -261,10 +261,10 @@ body {
   height: 68px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #c8dcff;
+  border: 1px solid #ccdde7;
   border-radius: 50%;
-  background: #edf4ff;
-  color: #1456c7;
+  background: #eaf2f6;
+  color: #003153;
 }
 .research-vision-icon svg {
   width: 36px;
@@ -296,7 +296,7 @@ body {
 }
 .research-vision-title:focus-visible {
   border-radius: 3px;
-  outline: 3px solid rgba(109,74,255,0.28);
+  outline: 3px solid rgba(var(--accent-rgb), 0.28);
   outline-offset: 3px;
 }
 .research-vision-desc {
@@ -330,8 +330,8 @@ body {
   padding: 24px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: linear-gradient(145deg, #ffffff 0%, #fbfdff 100%);
-  box-shadow: 0 8px 26px rgba(0,48,135,0.06);
+  background: linear-gradient(145deg, #ffffff 0%, #fbfcfd 100%);
+  box-shadow: 0 8px 26px rgba(var(--accent-rgb), 0.06);
   transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s;
 }
 .pillar-card::before {
@@ -339,14 +339,14 @@ body {
   position: absolute;
   inset: 0 0 auto;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent), #2563eb);
+  background: linear-gradient(90deg, var(--accent), #35627d);
 }
 .pillar-card--timeseries::before {
   background: linear-gradient(90deg, var(--accent), #0891b2);
 }
 .pillar-card:hover {
-  border-color: rgba(0,48,135,0.25);
-  box-shadow: 0 14px 34px rgba(0,48,135,0.10);
+  border-color: rgba(var(--accent-rgb), 0.25);
+  box-shadow: 0 14px 34px rgba(var(--accent-rgb), 0.10);
   transform: translateY(-2px);
 }
 .pillar-card-icon {
@@ -357,7 +357,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #edf3ff;
+  background: #eaf2f6;
 }
 .pillar-card--timeseries .pillar-card-icon {
   background: #eef9fb;
@@ -370,7 +370,7 @@ body {
   flex: 0 0 46px;
   overflow: hidden;
   background: #fff;
-  border: 1px solid #cbd9f1;
+  border: 1px solid #ccdbe4;
   border-radius: 10px;
   user-select: none;
 }
@@ -420,7 +420,7 @@ body {
 .icon-network i {
   width: 20px;
   height: 1.5px;
-  background: #b9c8e6;
+  background: #bdcfd9;
   left: 13px;
   top: 22px;
   transform-origin: center;
@@ -435,7 +435,7 @@ body {
   right: 8px;
   bottom: 10px;
   height: 1.5px;
-  background: #c9d8f5;
+  background: #ccdbe4;
 }
 .icon-series::after {
   left: 11px;
@@ -480,7 +480,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background-color: #003087;
+  background-color: #003153;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -493,7 +493,7 @@ body {
   z-index: 999;
 }
 #back-to-top.visible { opacity: 1; pointer-events: auto; }
-#back-to-top:hover { background-color: #00226b; }
+#back-to-top:hover { background-color: #00243d; }
 
 /* ===== Footer ===== */
 .site-footer {
@@ -501,8 +501,8 @@ body {
   padding: 18px 0 36px;
   border-top: 1px solid var(--border);
   background:
-    radial-gradient(circle at top left, rgba(0,48,135,0.08), transparent 35%),
-    linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.08), transparent 35%),
+    linear-gradient(180deg, #f7fafb 0%, #ffffff 100%);
 }
 .footer-shell {
   max-width: var(--max-w);
@@ -608,6 +608,8 @@ body {
 }
   </style>
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
+  <link rel="stylesheet" href="files/assets/site-theme.css?v=20260911">
+  <link rel="stylesheet" href="files/assets/site-content.css?v=20260911">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>

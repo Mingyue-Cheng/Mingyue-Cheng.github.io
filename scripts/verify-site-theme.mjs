@@ -772,6 +772,37 @@ test('enhanced mobile menu uses the inset scroll-safe panel', () => {
   }, MOBILE_900_CONTEXT);
 });
 
+test('enhanced mobile menu remains one non-wrapping vertical column', () => {
+  assertCssDeclarations(
+    theme,
+    'html .site-header.js-mobile-nav .nav-links',
+    { 'flex-wrap': 'nowrap' },
+    MOBILE_900_CONTEXT
+  );
+});
+
+test('enhanced mobile navigation alone hides decorative underlines', () => {
+  assertCssDeclarations(
+    theme,
+    'html .site-header.js-mobile-nav .nav-links a::after',
+    { display: 'none' },
+    MOBILE_900_CONTEXT
+  );
+});
+
+test('no-JavaScript mobile fallback retains its current-page underline', () => {
+  const fallbackUnderline = resolveCssDeclarations(
+    theme,
+    'html .site-header .nav-links a::after',
+    MOBILE_900_CONTEXT
+  );
+  assert.notEqual(
+    fallbackUnderline.declarations.get('display')?.value,
+    normalizeCssValue('none'),
+    'the broad mobile navigation underline selector must not set display: none'
+  );
+});
+
 test('the exact active/current mobile group uses the inset accent state', () => {
   assertCssSelectorGroupDeclarations(
     theme,

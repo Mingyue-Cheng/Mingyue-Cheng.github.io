@@ -271,6 +271,7 @@ html .site-header .nav-toggle-lines::after { top: 6px; }
   html .site-header.js-mobile-nav .nav-links {
     display: none;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: stretch;
     gap: 0;
     max-height: calc(100dvh - 76px);
@@ -304,7 +305,7 @@ html .site-header .nav-toggle-lines::after { top: 6px; }
     box-shadow: inset 3px 0 0 var(--accent);
   }
 
-  html .site-header .nav-links a::after {
+  html .site-header.js-mobile-nav .nav-links a::after {
     display: none;
   }
 }

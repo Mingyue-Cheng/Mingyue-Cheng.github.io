@@ -16,6 +16,19 @@ html :focus-visible {
   outline-offset: 3px;
 }
 
+html a.os-stars,
+html a.dataset-stars {
+  text-decoration: none;
+}
+
+html a.os-stars:hover .github-stars,
+html a.os-stars:focus-visible .github-stars,
+html a.dataset-stars:hover .github-stars,
+html a.dataset-stars:focus-visible .github-stars {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* The header scope also overrides older Chinese-language spacing rules. */
 html .site-header {
   position: sticky;

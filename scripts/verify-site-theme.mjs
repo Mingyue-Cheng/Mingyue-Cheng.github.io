@@ -568,7 +568,7 @@ for (const page of pages) {
     const styles = [...head.matchAll(/<style\b[\s\S]*?<\/style>|<link\b[^>]*rel="stylesheet"[^>]*>/g)]
       .map((match) => match[0].startsWith('<style') ? '<style>' : match[0]);
     assert.deepEqual(styles.slice(-2), [
-      '<link rel="stylesheet" href="files/assets/site-theme.css?v=20260913">',
+      '<link rel="stylesheet" href="files/assets/site-theme.css?v=20260913-stars">',
       '<link rel="stylesheet" href="files/assets/site-content.css?v=20260911">'
     ]);
     for (const name of ['site-theme', 'site-content']) {

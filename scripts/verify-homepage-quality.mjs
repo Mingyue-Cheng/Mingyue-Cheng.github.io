@@ -331,12 +331,12 @@ test('accepted open-source cards display their venue badges', () => {
   assert.equal(count(agentR1Meta, /CIKM 2026/g), 1);
   assert.match(
     tabClawMeta,
-    /<span class="os-year">2026\.03<\/span>\s*<span class="os-venue">CIKM 2026<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/fishsure\/TabClaw"/
+    /<span class="os-year">2026\.03<\/span>\s*<span class="os-venue">CIKM 2026<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/ustc-table-mining\/TabClaw"/
   );
   assert.equal(count(tabClawMeta, /CIKM 2026/g), 1);
   assert.match(
     paperScoutMeta,
-    /<span class="os-year">2026\.01<\/span>\s*<span class="os-venue">EMNLP 2026<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/pty12345\/PaperScout"/
+    /<span class="os-year">2026\.01<\/span>\s*<span class="os-venue">EMNLP 2026<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/AgentR1\/PaperScout"/
   );
   assert.equal(count(paperScoutMeta, /EMNLP 2026/g), 1);
 });
@@ -355,7 +355,7 @@ test('accepted dataset cards display their venue badges', () => {
 
   assert.match(
     chemTableMeta,
-    /<span class="os-year">2025\.06<\/span>\s*<span class="dataset-venue">KDD 2026<\/span>\s*<a class="dataset-repo-link" href="https:\/\/github\.com\/lqzxt\/ChemTable"/
+    /<span class="os-year">2025\.06<\/span>\s*<span class="dataset-venue">KDD 2026<\/span>\s*<a class="dataset-repo-link" href="https:\/\/github\.com\/ustc-ai4science\/ChemTable"/
   );
   assert.equal(count(chemTableMeta, /KDD 2026/g), 1);
   assert.match(

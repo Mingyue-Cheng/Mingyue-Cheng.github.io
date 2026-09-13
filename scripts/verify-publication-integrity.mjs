@@ -575,7 +575,7 @@ test('the actual homepage collapse and filter script keeps visual and ARIA state
   const source = publicationBehaviorSource(
     indexHtml,
     '// ===== Publication Year Collapse + Filter =====',
-    '\nfunction renderStarCount'
+    '\nfunction initClustrMaps'
   );
   vm.runInNewContext(source, { document: harness.document, window: harness.window }, { filename: 'homepage-publication-filter.js' });
 
@@ -604,7 +604,7 @@ test('the actual homepage collapse and filter script keeps visual and ARIA state
 
 test('older homepage years start collapsed and filters preserve subsequent user choices', () => {
   const harness = createPublicationBehaviorHarness({ collapsible: true, collapsedByDefault: true });
-  const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction renderStarCount');
+  const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction initClustrMaps');
   vm.runInNewContext(source, { document: harness.document, window: harness.window });
   assert.equal(harness.timeList.style.display, 'none');
   assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'false');
@@ -623,7 +623,7 @@ test('older homepage years start collapsed and filters preserve subsequent user 
 test('year and list fragments reveal collapsed publications on load and hash changes', () => {
   for (const hash of ['#year-2025', '#publication-list-2025']) {
     const harness = createPublicationBehaviorHarness({ collapsible: true, collapsedByDefault: true, hash });
-    const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction renderStarCount');
+    const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction initClustrMaps');
     vm.runInNewContext(source, { document: harness.document, window: harness.window });
     assert.equal(harness.timeList.style.display, '');
     assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'true');

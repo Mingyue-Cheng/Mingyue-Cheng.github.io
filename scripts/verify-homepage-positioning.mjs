@@ -29,6 +29,309 @@ function extractStyleText(source) {
     .join('\n');
 }
 
+// This scoped scanner resolves only the default .profile-section padding cascade.
+function maskPositioningCssComments(source) {
+  const characters = [...source];
+  let quote = '';
+
+  for (let index = 0; index < characters.length; index += 1) {
+    const character = characters[index];
+    if (quote) {
+      if (character === '\\' && index + 1 < characters.length) index += 1;
+      else if (character === quote) quote = '';
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      continue;
+    }
+    if (character === '\\' && index + 1 < characters.length) {
+      index += 1;
+      continue;
+    }
+    if (character !== '/' || characters[index + 1] !== '*') continue;
+
+    characters[index] = ' ';
+    characters[index + 1] = ' ';
+    index += 2;
+    while (index < characters.length && !(characters[index] === '*' && characters[index + 1] === '/')) {
+      if (characters[index] !== '\n' && characters[index] !== '\r') characters[index] = ' ';
+      index += 1;
+    }
+    if (index < characters.length) {
+      characters[index] = ' ';
+      if (index + 1 < characters.length) characters[index + 1] = ' ';
+      index += 1;
+    }
+  }
+
+  return characters.join('');
+}
+
+function splitPositioningCssTopLevel(source, delimiter) {
+  const parts = [];
+  let start = 0;
+  let quote = '';
+  let parentheses = 0;
+  let brackets = 0;
+  let braces = 0;
+
+  for (let index = 0; index < source.length; index += 1) {
+    const character = source[index];
+    if (quote) {
+      if (character === '\\' && index + 1 < source.length) index += 1;
+      else if (character === quote) quote = '';
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      continue;
+    }
+    if (character === '\\' && index + 1 < source.length) {
+      index += 1;
+      continue;
+    }
+    if (character === '(') parentheses += 1;
+    else if (character === ')') parentheses = Math.max(0, parentheses - 1);
+    else if (character === '[') brackets += 1;
+    else if (character === ']') brackets = Math.max(0, brackets - 1);
+    else if (character === '{') braces += 1;
+    else if (character === '}') braces = Math.max(0, braces - 1);
+    else if (character === delimiter && parentheses === 0 && brackets === 0 && braces === 0) {
+      parts.push(source.slice(start, index));
+      start = index + 1;
+    }
+  }
+  parts.push(source.slice(start));
+  return parts;
+}
+
+function findPositioningDeclarationColon(source) {
+  let quote = '';
+  let parentheses = 0;
+  let brackets = 0;
+  let braces = 0;
+
+  for (let index = 0; index < source.length; index += 1) {
+    const character = source[index];
+    if (quote) {
+      if (character === '\\' && index + 1 < source.length) index += 1;
+      else if (character === quote) quote = '';
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      continue;
+    }
+    if (character === '\\' && index + 1 < source.length) {
+      index += 1;
+      continue;
+    }
+    if (character === '(') parentheses += 1;
+    else if (character === ')') parentheses = Math.max(0, parentheses - 1);
+    else if (character === '[') brackets += 1;
+    else if (character === ']') brackets = Math.max(0, brackets - 1);
+    else if (character === '{') braces += 1;
+    else if (character === '}') braces = Math.max(0, braces - 1);
+    else if (character === ':' && parentheses === 0 && brackets === 0 && braces === 0) return index;
+  }
+  return -1;
+}
+
+function parsePositioningDeclarations(body) {
+  return splitPositioningCssTopLevel(body, ';').flatMap((entry) => {
+    const separator = findPositioningDeclarationColon(entry);
+    if (separator === -1) return [];
+    const property = entry.slice(0, separator).trim().toLowerCase();
+    if (!property) return [];
+    let value = entry.slice(separator + 1).trim();
+    const importantMatch = value.match(/!\s*important\s*$/i);
+    const important = Boolean(importantMatch);
+    if (importantMatch) value = value.slice(0, importantMatch.index).trim();
+    return [{ important, property, value: value.replace(/\s+/g, ' ') }];
+  });
+}
+
+function findPositioningRuleBoundary(source, start) {
+  let quote = '';
+  let parentheses = 0;
+  let brackets = 0;
+
+  for (let index = start; index < source.length; index += 1) {
+    const character = source[index];
+    if (quote) {
+      if (character === '\\' && index + 1 < source.length) index += 1;
+      else if (character === quote) quote = '';
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      continue;
+    }
+    if (character === '\\' && index + 1 < source.length) {
+      index += 1;
+      continue;
+    }
+    if (character === '(') parentheses += 1;
+    else if (character === ')') parentheses = Math.max(0, parentheses - 1);
+    else if (character === '[') brackets += 1;
+    else if (character === ']') brackets = Math.max(0, brackets - 1);
+    else if ((character === '{' || character === ';') && parentheses === 0 && brackets === 0) {
+      return { character, index };
+    }
+  }
+  return null;
+}
+
+function findPositioningClosingBrace(source, openingBrace) {
+  let quote = '';
+  let depth = 1;
+
+  for (let index = openingBrace + 1; index < source.length; index += 1) {
+    const character = source[index];
+    if (quote) {
+      if (character === '\\' && index + 1 < source.length) index += 1;
+      else if (character === quote) quote = '';
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      continue;
+    }
+    if (character === '\\' && index + 1 < source.length) {
+      index += 1;
+      continue;
+    }
+    if (character === '{') depth += 1;
+    else if (character === '}') {
+      depth -= 1;
+      if (depth === 0) return index;
+    }
+  }
+  return -1;
+}
+
+function parseDefaultPositioningRules(source) {
+  const css = maskPositioningCssComments(extractStyleText(source));
+  const rules = [];
+  let cursor = 0;
+
+  while (cursor < css.length) {
+    while (cursor < css.length && /[\s;]/.test(css[cursor])) cursor += 1;
+    if (cursor >= css.length) break;
+    const boundary = findPositioningRuleBoundary(css, cursor);
+    if (!boundary) break;
+    if (boundary.character === ';') {
+      cursor = boundary.index + 1;
+      continue;
+    }
+
+    const closingBrace = findPositioningClosingBrace(css, boundary.index);
+    assert.notEqual(closingBrace, -1, 'inline CSS block must have a closing brace');
+    const header = css.slice(cursor, boundary.index).trim();
+    if (header && !header.startsWith('@')) {
+      rules.push({
+        declarations: parsePositioningDeclarations(css.slice(boundary.index + 1, closingBrace)),
+        selectors: splitPositioningCssTopLevel(header, ',')
+          .map((selector) => selector.trim().replace(/\s+/g, ' '))
+          .filter(Boolean)
+      });
+    }
+    cursor = closingBrace + 1;
+  }
+
+  return rules;
+}
+
+function applyPaddingSide(current, value, important) {
+  return !current || important || !current.important ? { important, value } : current;
+}
+
+function splitPositioningCssWhitespace(source) {
+  const tokens = [];
+  let start = -1;
+  let quote = '';
+  let parentheses = 0;
+  let brackets = 0;
+
+  for (let index = 0; index < source.length; index += 1) {
+    const character = source[index];
+    if (quote) {
+      if (character === '\\' && index + 1 < source.length) index += 1;
+      else if (character === quote) quote = '';
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      if (start === -1) start = index;
+      quote = character;
+      continue;
+    }
+    if (character === '\\' && index + 1 < source.length) {
+      if (start === -1) start = index;
+      index += 1;
+      continue;
+    }
+    if (character === '(') parentheses += 1;
+    else if (character === ')') parentheses = Math.max(0, parentheses - 1);
+    else if (character === '[') brackets += 1;
+    else if (character === ']') brackets = Math.max(0, brackets - 1);
+
+    if (/\s/.test(character) && parentheses === 0 && brackets === 0) {
+      if (start !== -1) {
+        tokens.push(source.slice(start, index));
+        start = -1;
+      }
+    } else if (start === -1) {
+      start = index;
+    }
+  }
+  if (start !== -1) tokens.push(source.slice(start));
+  return tokens;
+}
+
+function expandPaddingShorthand(value) {
+  const tokens = splitPositioningCssWhitespace(value);
+  if (tokens.length < 1 || tokens.length > 4) return null;
+  if (tokens.length === 1) return [tokens[0], tokens[0], tokens[0], tokens[0]];
+  if (tokens.length === 2) return [tokens[0], tokens[1], tokens[0], tokens[1]];
+  if (tokens.length === 3) return [tokens[0], tokens[1], tokens[2], tokens[1]];
+  return tokens;
+}
+
+function resolveDefaultProfilePadding(source) {
+  const sides = { bottom: null, left: null, right: null, top: null };
+  let matchedRule = false;
+
+  for (const rule of parseDefaultPositioningRules(source)) {
+    if (!rule.selectors.includes('.profile-section')) continue;
+    matchedRule = true;
+    for (const declaration of rule.declarations) {
+      if (declaration.property === 'padding') {
+        const expanded = expandPaddingShorthand(declaration.value);
+        if (!expanded) continue;
+        for (const [index, side] of ['top', 'right', 'bottom', 'left'].entries()) {
+          sides[side] = applyPaddingSide(sides[side], expanded[index], declaration.important);
+        }
+      } else if (/^padding-(?:top|right|bottom|left)$/.test(declaration.property)) {
+        const side = declaration.property.slice('padding-'.length);
+        sides[side] = applyPaddingSide(sides[side], declaration.value, declaration.important);
+      }
+    }
+  }
+
+  return { matchedRule, sides };
+}
+
+function assertDefaultProfilePadding(source) {
+  const { matchedRule, sides } = resolveDefaultProfilePadding(source);
+  assert.ok(matchedRule, 'the default .profile-section rule must exist');
+  for (const [side, expected] of Object.entries({
+    top: '38px', right: '0', bottom: '42px', left: '0'
+  })) {
+    assert.equal(sides[side]?.value, expected, `.profile-section padding-${side} must resolve to ${expected}`);
+  }
+}
+
 function findRetiredActionSelectors(styleText) {
   const uncommented = styleText.replace(/\/\*[\s\S]*?\*\//g, '');
   return [...uncommented.matchAll(/([^{}]+)\{/g)]
@@ -46,6 +349,57 @@ test('homepage hero states the research thesis in both languages', () => {
     indexHtml,
     /"profile\.thesis": "面向复杂系统，我致力于融合时间序列观测、科学知识与智能体推理，构建预测智能。"/
   );
+});
+
+test('homepage hero starts closer to the refined shared navigation', () => {
+  assertDefaultProfilePadding(indexHtml);
+});
+
+test('homepage padding reader ignores comments and conditional impostors', () => {
+  const invalid = `<style>
+    /* .profile-section { padding: 38px 0 42px; } */
+    /* @media (max-width: 900px) { .profile-section { padding: 38px 0 42px; } } */
+    @media (max-width: 900px) { .profile-section { padding: 38px 0 42px; } }
+    .profile-section { padding: 52px 0 42px; }
+  </style>`;
+  assert.throws(() => assertDefaultProfilePadding(invalid));
+});
+
+test('homepage padding reader applies later default-rule overrides', () => {
+  const invalid = `<style>
+    .profile-section { padding: 38px 0 42px; }
+    .profile-section { padding: 52px 0 42px; }
+  </style>`;
+  assert.throws(() => assertDefaultProfilePadding(invalid));
+});
+
+test('homepage padding reader accounts for important longhand overrides', () => {
+  const invalid = `<style>
+    .profile-section {
+      padding: 38px 0 42px;
+      padding-top: 52px !important;
+    }
+  </style>`;
+  assert.throws(() => assertDefaultProfilePadding(invalid));
+});
+
+test('homepage padding reader keeps functional shorthand values intact', () => {
+  const invalid = `<style>
+    .profile-section { padding: 38px 0 42px; }
+    .profile-section { padding: calc(52px + 0px) 0 42px; }
+  </style>`;
+  assert.throws(() => assertDefaultProfilePadding(invalid));
+});
+
+test('homepage padding reader tolerates declaration order and CSS strings', () => {
+  const valid = `<style>
+    .decoy::before { content: "}; /* literal */ ; {"; }
+    .profile-section {
+      color: var(--text);
+      padding: 38px 0 42px;
+    }
+  </style>`;
+  assertDefaultProfilePadding(valid);
 });
 
 test('homepage translatePage applies surviving content and accessible-name translations', () => {

@@ -625,7 +625,7 @@ test('OneCast TKDD acceptance is synchronized in the 2026 publication list', () 
     assert.equal(entry.includes(`href="${pdf}"`), true, `${location.name} OneCast PDF`);
     assert.equal(location.entries.filter((candidate) => candidate.includes(title)).length, 1, `${location.name} OneCast count`);
     if (location.isCompleteList) {
-      assert.equal(location.entries[2], entry, `${location.name} OneCast third-place ordering`);
+      assert.equal(location.entries[3], entry, `${location.name} OneCast follows the three accepted surveys`);
     }
   }
 });
@@ -723,6 +723,19 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
   }
 });
 
+test('September 2026 TKDE survey acceptance leads both news surfaces', () => {
+  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
+  const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
+  const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
+  const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
+  const newsPageEntries = [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map((match) => match[1]);
+  for (const entries of [homepageEntries, newsPageEntries]) {
+    assert.equal(entries[0], expected);
+    assert.equal(entries.filter((entry) => entry === expected).length, 1);
+  }
+  assert.ok(newsHtml.includes('<strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong>'), 'Keep the historical preprint announcement');
+});
+
 test('August 2026 news is synchronized across the homepage and News page', () => {
   const expected = [
     '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our paper <strong>PaperScout</strong> being accepted to <strong>Findings of EMNLP 2026</strong>!',
@@ -741,10 +754,12 @@ test('August 2026 news is synchronized across the homepage and News page', () =>
   const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
   const newsPageEntries = [...newsPage2026.matchAll(/<li class="news-item"><span class="news-dot"><\/span><span class="news-body">([\s\S]*?)<\/span><\/li>/g)].map((match) => match[1]);
 
-  assert.deepEqual(homepageEntries.slice(0, 6), expected, 'homepage August news order and copy');
-  assert.deepEqual(newsPageEntries.slice(0, 6), expected, 'News page August news order and copy');
-  assert.match(homepageEntries[6], /<strong>\[Jul\. 2026\]<\/strong>/, 'homepage resumes with July news');
-  assert.match(newsPageEntries[6], /<strong>\[Jul\. 2026\]<\/strong>/, 'News page resumes with July news');
+  for (const entries of [homepageEntries, newsPageEntries]) {
+    const augustStart = entries.findIndex((entry) => entry.startsWith('<strong>[Aug. 2026]</strong>'));
+    assert.ok(augustStart >= 0, 'August news remains present');
+    assert.deepEqual(entries.slice(augustStart, augustStart + 6), expected, 'August news order and copy');
+    assert.match(entries[augustStart + 6], /<strong>\[Jul\. 2026\]<\/strong>/, 'July news follows August');
+  }
   assert.equal(count(homepageNews, /ACM CIKM 2026 Demo Track/g), 1, 'homepage combined CIKM news count');
   assert.equal(count(newsPage2026, /ACM CIKM 2026 Demo Track/g), 1, 'News page combined CIKM news count');
 });

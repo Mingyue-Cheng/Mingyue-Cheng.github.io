@@ -9,7 +9,7 @@ const dictionary = html.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang
 const translate = html.match(/function translatePage\(lang\) \{[\s\S]*?\n\}\n\nfunction initLanguageToggle/)[0]
   .replace(/\n\nfunction initLanguageToggle$/, '');
 
-function newsHarness(count = 19, present = true) {
+function newsHarness(count = 20, present = true) {
   const items = Array.from({ length: count }, () => ({ tagName: 'LI', hidden: false }));
   const attrs = new Map([['data-i18n', 'news.expand']]);
   const handlers = new Map();
@@ -37,7 +37,7 @@ test('homepage news keeps six recent items and can reveal every original item', 
   assert.equal(button.hidden, false);
   assert.equal(button.getAttribute('aria-expanded'), 'false');
   button.click();
-  assert.equal(items.filter((item) => !item.hidden).length, 19);
+  assert.equal(items.filter((item) => !item.hidden).length, 20);
   assert.equal(button.getAttribute('aria-expanded'), 'true');
   assert.equal(button.getAttribute('data-i18n'), 'news.collapse');
   button.click();
@@ -50,7 +50,7 @@ test('news disclosure label follows the existing language switch without resetti
   button.click();
   vm.runInContext("currentLang = 'zh'; translatePage('zh');", context);
   assert.equal(button.innerHTML, '收起较早动态');
-  assert.equal(items.filter((item) => !item.hidden).length, 19);
+  assert.equal(items.filter((item) => !item.hidden).length, 20);
   button.click();
   assert.equal(button.textContent, '展开全部动态');
 });
@@ -66,7 +66,7 @@ test('news needs no disclosure when six or fewer items exist and tolerates missi
 
 test('news progressively enhances accessible markup without hiding source entries', () => {
   const list = html.match(/<ul class="news-list" id="newsList">([\s\S]*?)<\/ul>/)[1];
-  assert.equal((list.match(/<li>/g) || []).length, 19);
+  assert.equal((list.match(/<li>/g) || []).length, 20);
   assert.doesNotMatch(list, /<li[^>]*\bhidden\b/);
   const button = html.match(/<button\b[^>]*id="newsToggle"[^>]*>/)?.[0];
   assert.ok(button, 'News uses a native disclosure button');

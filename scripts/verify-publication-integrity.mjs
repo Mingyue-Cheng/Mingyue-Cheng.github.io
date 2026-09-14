@@ -636,6 +636,28 @@ test('year and list fragments reveal collapsed publications on load and hash cha
   }
 });
 
+for (const [page, source] of pages) {
+  test(`${page} keeps the requested author order for the time-series forecasting survey`, () => {
+    const title = 'A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions';
+    const records = publicationRecords(source, page).filter((record) => record.title === title);
+    assert.equal(records.length, 1, `${page} must contain exactly one matching survey`);
+    const authors = textFromHtml(records[0].html).split(title)[0].replace(/,\s*$/, '');
+    assert.equal(authors, 'Mingyue Cheng, Xiaoyu Tao, Zhiding Liu, Qi Liu*, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen');
+  });
+
+  test(`${page} files the TKDE accepted forecasting survey in 2026 with its original links`, () => {
+    const title = 'A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions';
+    const entry = findRecord(page, title).html;
+    assert.match(entry, /<em>IEEE Transactions on Knowledge and Data Engineering \(IEEE TKDE\) Accepted<\/em>\./);
+    assert.doesNotMatch(entry, /\(Preprint\)/);
+    assert.match(entry, /^<li data-tags="timeseries">/);
+    assert.ok(entry.includes('href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf"'));
+    assert.ok(entry.includes('href="https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting"'));
+    assert.ok(sectionBetween(source, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->').includes(entry));
+    assert.ok(!sectionBetween(source, '<!-- ===== Released Survey ===== -->', '<!-- ===== 2026 ===== -->').includes(title));
+  });
+}
+
 test('Time-R1 uses the approved CIKM 2026 citation on both publication surfaces', () => {
   const title = 'Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs';
   const authors = 'Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen';

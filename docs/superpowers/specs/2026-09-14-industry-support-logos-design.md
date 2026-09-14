@@ -2,7 +2,7 @@
 
 ## Approved visual direction
 
-Replace the final industrial-grant text bullet in the homepage Research Grants section with a short explanatory sentence and four original-color company logos, ordered Huawei, Tencent, Kuaishou, iFLYTEK. The user selected the sentence-plus-logos option.
+Replace the final industrial-grant text bullet in the homepage Research Grants section with a short explanatory sentence and four original-color company logos, ordered iFLYTEK, Huawei, Tencent, Kuaishou. The user selected the sentence-plus-logos option.
 
 ## Scope and content
 

@@ -637,6 +637,22 @@ test('year and list fragments reveal collapsed publications on load and hash cha
 });
 
 for (const [page, source] of pages) {
+  test(`${page} merges the contextual-cognition survey into Preprint without a separate survey group`, () => {
+    const title = 'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective';
+    const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->');
+    const preprintList = preprintSection.match(/<ol\b[^>]*>[\s\S]*?<\/ol>/)?.[0] || '';
+    const entries = publicationEntries(preprintList);
+    assert.equal(entries.length, 7, `${page} must contain seven preprints in one list`);
+    assert.equal(publicationTitle(entries.at(-1)), title, `${page} must append the survey after the existing preprints`);
+    const entry = entries.at(-1);
+    assert.equal(publicationRecords(source, page).filter(record => record.title === title).length, 1);
+    assert.equal(textFromHtml(entry).split(title)[0].replace(/,\s*$/, ''),
+      'Mingyue Cheng, Daoyu Wang, Shuo Yu, Qingchuan Li, Jie Ouyang, Yucong Luo, Yiju Zhang, Qi Liu*, Enhong Chen');
+    assert.match(entry, /^<li data-tags="agent llm">/);
+    assert.match(entry, /\. \(Preprint\) \[<a href="https:\/\/www\.preprints\.org\/manuscript\/202604\.0935" target="_blank" rel="noopener">Preprint<\/a>\]/);
+    assert.doesNotMatch(source, /year-survey|publication-list-surveys|pub\.survey|Released Survey|已发布综述/);
+  });
+
   test(`${page} keeps the requested author order for the time-series forecasting survey`, () => {
     const title = 'A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions';
     const records = publicationRecords(source, page).filter((record) => record.title === title);
@@ -654,7 +670,7 @@ for (const [page, source] of pages) {
     assert.ok(entry.includes('href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf"'));
     assert.ok(entry.includes('href="https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting"'));
     assert.ok(sectionBetween(source, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->').includes(entry));
-    assert.ok(!sectionBetween(source, '<!-- ===== Released Survey ===== -->', '<!-- ===== 2026 ===== -->').includes(title));
+    assert.ok(!sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->').includes(title));
   });
 }
 

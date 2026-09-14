@@ -500,6 +500,7 @@ body {
 }
 .research-section .scenario-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 .research-section .scenario-section {
   margin: 28px 0 20px;
@@ -518,60 +519,53 @@ body {
   scroll-margin-top: 90px;
 }
 .research-section .scenario-intro {
-  margin: 0 0 18px;
+  margin: 0 0 14px;
   color: #637783;
   font-size: 14px;
   line-height: 1.6;
   text-align: left;
 }
 .research-section .scenario-card {
-  padding: 22px;
-  border-color: #dce6eb;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 3px 14px rgba(var(--accent-rgb), 0.04);
+  --scenario-color: var(--accent);
+  --scenario-tint: var(--accent-light);
+  padding: 12px 15px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+  box-shadow: 0 6px 18px rgba(var(--accent-rgb), 0.04);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.research-section .scenario-card--science {
-  --scenario-color: #087a63;
-  --scenario-tint: #edf8f4;
-}
-.research-section .scenario-card--industrial {
-  --scenario-color: var(--accent);
-  --scenario-tint: #eaf2f6;
-}
-.research-section .scenario-card--user {
-  --scenario-color: #9b641d;
-  --scenario-tint: #fbf5eb;
-}
 .research-section .scenario-card-header {
-  min-height: 42px;
-  gap: 12px;
+  min-height: 36px;
+  gap: 10px;
   padding: 0;
 }
 .research-section .scenario-card-icon {
-  flex-basis: 40px;
-  width: 40px;
-  height: 40px;
+  flex-basis: 32px;
+  width: 32px;
+  height: 32px;
   border: 0;
-  border-radius: 11px;
+  border-radius: 8px;
   background: var(--scenario-tint);
+  color: var(--scenario-color);
 }
 .research-section .scenario-card-title {
   color: var(--accent);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.015em;
   text-wrap: balance;
 }
 .research-section .scenario-card-body {
-  margin: 16px 0 20px;
+  margin: 10px 0 12px;
   padding: 0;
-  color: #516773;
+  color: var(--text);
   font-size: 14px;
-  line-height: 1.75;
-  text-align: left;
+  line-height: 1.8;
+  text-align: justify;
+  text-align-last: left;
   text-justify: auto;
   text-wrap: pretty;
 }
@@ -580,8 +574,8 @@ body {
   flex-wrap: wrap;
   gap: 7px;
   margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid #eaf0f3;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
   text-align: left;
 }
 .research-section .scenario-card-topics span {
@@ -595,22 +589,15 @@ body {
 }
 @media (hover: hover) and (pointer: fine) {
   .research-section .scenario-card:hover {
-    border-color: #b8cdd9;
-    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.065);
+    border-color: rgba(var(--accent-rgb), 0.2);
+    border-left-color: var(--accent);
+    box-shadow: 0 10px 24px rgba(var(--accent-rgb), 0.07);
     transform: none;
   }
 }
-@media (max-width: 480px) {
-  .research-section .scenario-card {
-    padding: 18px;
-  }
-}
 @media (min-width: 901px) and (max-width: 1050px) {
-  .research-section .scenario-card-header {
-    min-height: 48px;
-  }
   .research-section .scenario-card-topics {
-    min-height: 71px;
+    min-height: 67px;
     align-content: flex-start;
   }
 }
@@ -1695,7 +1682,7 @@ html[lang="zh-CN"] .footer-title {
   </style>
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
   <link rel="stylesheet" href="files/assets/site-theme.css?v=20260913-stars">
-  <link rel="stylesheet" href="files/assets/site-content.css?v=20260911">
+  <link rel="stylesheet" href="files/assets/site-content.css?v=20260914-justify">
 </head>
 <body>
 <a class="skip-link" href="#main-content" data-i18n="nav.skip">Skip to main content</a>
@@ -1914,13 +1901,6 @@ html[lang="zh-CN"] .footer-title {
       <li data-tags="agent llm ai4science">Daoyu Wang, <strong>Mingyue Cheng*</strong>, Shuo Yu, Zirui Liu, Ze Guo, Xin Li, Qi Liu, <strong>PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2510.10909" target="_blank" rel="noopener">PDF</a>] [<a href="https://github.com/ustc-ai4science/PaperArena" target="_blank" rel="noopener">Code</a>]</li>
 
       <li data-tags="agent llm">Daoyu Wang, Qingchuan Li, <strong>Mingyue Cheng</strong>, Jie Ouyang, Shuo Yu, Qi Liu, Enhong Chen, <strong>StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning</strong>. (Preprint) [<a href="https://arxiv.org/pdf/2604.18401v1" target="_blank" rel="noopener">PDF</a>]</li>
-
-    </ol>
-
-
-    <!-- ===== Released Survey ===== -->
-    <h3 id="year-survey" class="pub-year-heading"><button type="button" class="pub-year-toggle" aria-expanded="true" aria-controls="publication-list-surveys" data-i18n="pub.survey">📘 Released Survey</button></h3>
-    <ol class="pub-list" id="publication-list-surveys">
 
       <li data-tags="agent llm"><strong>Mingyue Cheng</strong>, Daoyu Wang, Shuo Yu, Qingchuan Li, Jie Ouyang, Yucong Luo, Yiju Zhang, Qi Liu*, Enhong Chen, <strong>A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective</strong>. (Preprint) [<a href="https://www.preprints.org/manuscript/202604.0935" target="_blank" rel="noopener">Preprint</a>]</li>
 
@@ -2492,8 +2472,24 @@ html[lang="zh-CN"] .footer-title {
       <li data-i18n="grants.nsfc">2026.01–2028.12, the Natural Science Foundation of China</li>
       <li data-i18n="grants.ustc">2025.01–2027.12, USTC New Medicine Joint Fund Cultivation Project (Double First-Class Initiative Special Project)</li>
       <li data-i18n="grants.anhui">2024.09–2026.08, Anhui Provincial Natural Science Foundation</li>
-      <li data-i18n="grants.industry">In addition, my research has been partially supported by industrial grants from leading companies such as Huawei, Kuaishou, and Tencent.</li>
     </ul>
+    <div class="industry-support">
+      <p id="industry-support-label" class="industry-support-copy" data-i18n="grants.industry">My research is also partially supported by industry grants from:</p>
+      <ul class="industry-support-logos" aria-labelledby="industry-support-label">
+        <li class="industry-support-logo industry-support-logo--iflytek">
+          <img src="files/assets/industry/iflytek.png" alt="科大讯飞 iFLYTEK" width="122" height="37" loading="lazy" decoding="async">
+        </li>
+        <li class="industry-support-logo industry-support-logo--huawei">
+          <img src="files/assets/industry/huawei.png" alt="华为 Huawei" width="266" height="60" loading="lazy" decoding="async">
+        </li>
+        <li class="industry-support-logo industry-support-logo--tencent">
+          <img src="files/assets/industry/tencent.png" alt="腾讯 Tencent" width="401" height="54" loading="lazy" decoding="async">
+        </li>
+        <li class="industry-support-logo industry-support-logo--kuaishou">
+          <img src="files/assets/industry/kuaishou.png" alt="快手 Kuaishou" width="1571" height="590" loading="lazy" decoding="async">
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -2657,7 +2653,6 @@ const i18n = {
     "pub.note": "(* Corresponding Author, <sup>+</sup> Equal Contribution)",
     "pub.viewAll": "View all publications →",
     "pub.preprint": "📘 Preprint",
-    "pub.survey": "📘 Released Survey",
     "pub.year2026": "🐎 Year of the Fire Horse (Bing Wu Year, 2026)",
     "pub.year2025": "🐍 Year of the Wood Snake (Yi Si Year, 2025)",
     "pub.year2024": "🐉 Year of the Wood Dragon (Jia Chen Year, 2024)",
@@ -2688,7 +2683,7 @@ const i18n = {
     "grants.nsfc": "2026.01–2028.12, the Natural Science Foundation of China",
     "grants.ustc": "2025.01–2027.12, USTC New Medicine Joint Fund Cultivation Project (Double First-Class Initiative Special Project)",
     "grants.anhui": "2024.09–2026.08, Anhui Provincial Natural Science Foundation",
-    "grants.industry": "In addition, my research has been partially supported by industrial grants from leading companies such as Huawei, Kuaishou, and Tencent.",
+    "grants.industry": "My research is also partially supported by industry grants from:",
     "related.heading": "Related Links",
     "footer.kicker": "Live Visitor Map",
     "footer.title": "A real world map of readers, collaborators, and visitors",
@@ -2755,7 +2750,6 @@ const i18n = {
     "pub.note": "（* 通讯作者，<sup>+</sup> 共同一作）",
     "pub.viewAll": "查看全部论文 →",
     "pub.preprint": "📘 预印本",
-    "pub.survey": "📘 已发布综述",
     "pub.year2026": "🐎 丙午马年（2026）",
     "pub.year2025": "🐍 乙巳蛇年（2025）",
     "pub.year2024": "🐉 甲辰龙年（2024）",
@@ -2786,7 +2780,7 @@ const i18n = {
     "grants.nsfc": "2026.01–2028.12，国家自然科学基金",
     "grants.ustc": "2025.01–2027.12，中国科学技术大学新医学联合基金培育项目（双一流专项）",
     "grants.anhui": "2024.09–2026.08，安徽省自然科学基金",
-    "grants.industry": "此外，我的研究也得到了科大讯飞、华为、快手等企业科研项目的支持。",
+    "grants.industry": "部分研究亦获得以下企业科研项目支持：",
     "related.heading": "相关链接",
     "footer.kicker": "实时访问地图",
     "footer.title": "读者、合作者与访问者的全球分布",

@@ -84,6 +84,62 @@ function sectionBetween(source, startMarker, endMarker) {
   return source.slice(start, end);
 }
 
+test('Homepage application cards share the neighboring research-card surface', () => {
+  const researchCard = cssRule(indexHtml, '.research-list li');
+  const scenarioCard = cssRule(indexHtml, '.research-section .scenario-card');
+  for (const property of ['padding', 'border', 'border-radius', 'background', 'box-shadow']) {
+    assert.equal(
+      finalDeclarationValue(scenarioCard, property),
+      finalDeclarationValue(researchCard, property),
+      `Homepage application cards must share the research-card ${property}`
+    );
+  }
+  assert.equal(
+    finalDeclarationValue(scenarioCard, 'border-left'),
+    finalDeclarationValue(cssRule(indexHtml, '.primary-directions li'), 'border-left')
+  );
+  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card-body'), {
+    color: 'var(--text)',
+    'line-height': '1.8',
+    'text-align': 'justify',
+    'text-align-last': 'left',
+  }, 'Homepage application prose');
+});
+
+test('Homepage application icons and topics use one Prussian-blue palette', () => {
+  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card'), {
+    '--scenario-color': 'var(--accent)',
+    '--scenario-tint': 'var(--accent-light)',
+  }, 'Homepage application palette');
+  for (const variant of ['science', 'industrial', 'user']) {
+    assert.equal(
+      cssRuleBlocks(indexHtml, `.research-section .scenario-card--${variant}`).length,
+      0,
+      `${variant} must not override the unified homepage palette`
+    );
+  }
+  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card-icon'), {
+    color: 'var(--scenario-color)',
+    background: 'var(--scenario-tint)',
+  }, 'Homepage application icon');
+  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card-topics span'), {
+    color: 'var(--scenario-color)',
+    background: 'var(--scenario-tint)',
+  }, 'Homepage application topic');
+});
+
+test('Homepage application topic dividers stay aligned when desktop labels wrap', () => {
+  const compactDesktop = sectionBetween(
+    indexHtml,
+    '@media (min-width: 901px) and (max-width: 1050px)',
+    '@media (prefers-reduced-motion: reduce)'
+  );
+  assertFinalDeclarations(cssRule(compactDesktop, '.research-section .scenario-card-topics'), {
+    'min-height': '67px',
+    'align-content': 'flex-start',
+  }, 'Compact desktop topic row');
+});
+
 function matchCount(source, pattern) {
   return (source.match(pattern) || []).length;
 }

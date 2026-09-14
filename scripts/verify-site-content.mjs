@@ -6,6 +6,55 @@ import test from 'node:test';
 const cssPath = fileURLToPath(new URL('../files/assets/site-content.css', import.meta.url));
 const css = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 const clean = (source) => source.replace(/\/\*[\s\S]*?\*\//g, '');
+const proseSelectors = [
+  ".section p",
+  ".profile-thesis",
+  ".profile-affil",
+  ".research-section p",
+  ".research-section li",
+  ".research-section .research-note",
+  ".research-section .scenario-intro",
+  ".research-section .scenario-card-body",
+  ".research-main .scenario-card-body",
+  ".research-vision-desc",
+  ".pillar-card-desc",
+  ".research-note-box",
+  ".pub-list",
+  ".pub-list li",
+  ".pub-note",
+  ".os-card-desc",
+  ".dataset-card-desc",
+  ".page-hero-sub",
+  ".pub-hero-sub",
+  ".pi-hero-lead",
+  ".research-thesis p",
+  ".framework-stage > p",
+  ".timeline-list",
+  ".timeline-list li",
+  ".services-list",
+  ".services-list li",
+  ".news-list",
+  ".news-list li",
+  ".news-body",
+  ".plain-list li",
+  ".sys-list li",
+  ".venue-name",
+  ".journal-name",
+  ".grant-title",
+  ".award-title",
+  ".award-note",
+  ".resource-meta",
+  ".related-card-role",
+  ".footer-desc",
+  ".section .industry-support-copy",
+  ".section-summary",
+  ".pdec-copy span",
+  ".stage-signals li",
+  ".weakness-card p",
+  ".route-card p",
+  ".route-gate",
+  ".outcome-panel p"
+];
 
 function mediaBlock(query) {
   const source = clean(css);
@@ -96,29 +145,31 @@ test('research scenarios share the surface treatment without overriding homepage
   assert.equal(declarations('.research-main .scenario-card-icon').color, 'var(--scenario-color)');
   assert.equal(declarations('.research-main .scenario-card--science')['--scenario-color'], '#087a63');
   assert.equal(declarations('.research-main .scenario-card--user')['--scenario-color'], '#9b641d');
-  assert.equal(declarations('.research-main .scenario-card-body')['text-align'], undefined,
-    'desktop research prose must keep its existing justification');
+  assert.equal(declarations('html[lang] .research-main .scenario-card-body')['text-align'], 'justify',
+    'research prose must share the site-wide justification contract');
   assert.doesNotMatch(css, /\.research-section\s+\.scenario-card\s*\{/,
     'homepage scenario layout is owned by its existing page rules');
 });
 
-test('mobile prose is left aligned with sufficient specificity and no automatic hyphenation', () => {
-  const mobile = mediaBlock('(max-width: 680px)');
-  for (const selector of [
-    '.section p', '.research-section p', '.research-section li', '.research-section .research-note',
-    '.research-main .scenario-card-body', '.research-vision-desc', '.pillar-card-desc',
-    '.pub-list', '.pub-list li', '.os-card-desc', '.dataset-card-desc',
-    '.page-hero-sub', '.pub-hero-sub', '.pi-hero-lead', '.research-thesis p', '.framework-stage > p',
-    '.timeline-list li', '.services-list li', '.news-list li', '.news-body',
-  ]) {
-    const rule = declarations(selector, mobile);
-    assert.equal(rule['text-align'], 'left', selector);
+test('prose is justified at every width with language-aware specificity and natural last lines', () => {
+  for (const selector of proseSelectors) {
+    const rule = declarations(`html[lang] ${selector}`);
+    assert.equal(rule['text-align'], 'justify', selector);
+    assert.equal(rule['text-align-last'], 'left', selector);
     assert.equal(rule['text-justify'], 'auto', selector);
     assert.equal(rule.hyphens, 'none', selector);
     assert.equal(rule['-webkit-hyphens'], 'none', selector);
+    assert.equal(rule['overflow-wrap'], 'break-word', selector);
+    assert.equal(rule['word-break'], 'normal', selector);
   }
-  assert.doesNotMatch(mobile, /(?:^|[{}])\s*(?:\*|body|p|li)\s*\{/,
-    'mobile alignment should target reading content, not every element');
+  const mobile = mediaBlock('(max-width: 680px)');
+  assert.doesNotMatch(mobile, /text-align\s*:\s*(?:left|start)/,
+    'mobile content must not override justified prose');
+  assert.doesNotMatch(clean(css), /(?:^|[{}])\s*(?:html\[lang\]\s+)?(?:\*|body|p|li)\s*\{/,
+    'alignment should target reading content, not every element');
+  for (const selector of ['.os-card-title-row', '.dataset-card-title-row', '.os-card-meta', '.dataset-card-meta']) {
+    assert.equal(declarations(selector)['text-align'], 'left', 'Keep titles and metadata controls unchanged');
+  }
 });
 
 test('mobile card metadata stays beside its own card and filters remain usable touch targets', () => {

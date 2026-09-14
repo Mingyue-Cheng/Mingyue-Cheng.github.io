@@ -141,7 +141,6 @@ test('homepage selected-publication filters and year groups remain accessible', 
   )].map((match) => match[1]);
   assert.deepEqual(yearToggles, [
     'publication-list-preprints',
-    'publication-list-surveys',
     'publication-list-2026',
     'publication-list-2025',
     'publication-list-2024',
@@ -158,7 +157,6 @@ test('homepage selected-publication filters and year groups remain accessible', 
   assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>View all publications →<\/a>/);
   for (const [key, label] of [
     ['pub.preprint', '📘 Preprint'],
-    ['pub.survey', '📘 Released Survey'],
     ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)'],
     ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)'],
     ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)'],
@@ -388,7 +386,6 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
   for (const [key, english, chinese] of [
     ['pub.preprint', '📘 Preprint', '📘 预印本'],
-    ['pub.survey', '📘 Released Survey', '📘 已发布综述'],
     ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)', '🐎 丙午马年（2026）'],
     ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)', '🐍 乙巳蛇年（2025）'],
     ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)', '🐉 甲辰龙年（2024）'],
@@ -460,14 +457,15 @@ test('complete Publications page keeps the requested preprint order', () => {
     'CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting',
     'Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting',
     'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
-    'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning'
+    'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning',
+    'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective'
   ];
   const preprintSections = [[
     'publications page',
     sectionBetween(
       publicationsHtml,
       '<!-- ===== Preprint ===== -->',
-      '<!-- ===== Released Survey ===== -->'
+      '<!-- ===== 2026 ===== -->'
     )
   ]];
 
@@ -512,7 +510,7 @@ test('PaperScout Findings of EMNLP 2026 acceptance is synchronized on both publi
   const publicationsPreprints = sectionBetween(
     publicationsHtml,
     '<!-- ===== Preprint ===== -->',
-    '<!-- ===== Released Survey ===== -->'
+    '<!-- ===== 2026 ===== -->'
   );
   const locations = [
     {
@@ -560,9 +558,9 @@ test('ACM CSUR survey is selected on the homepage and filed in the complete 2026
     '<!-- ===== Selected Publications ===== -->',
     '<!-- ===== Open Source Projects ===== -->'
   );
-  const releasedSurveys = sectionBetween(
+  const preprints = sectionBetween(
     publicationsHtml,
-    '<!-- ===== Released Survey ===== -->',
+    '<!-- ===== Preprint ===== -->',
     '<!-- ===== 2026 ===== -->'
   );
   const publications2026 = sectionBetween(
@@ -572,7 +570,7 @@ test('ACM CSUR survey is selected on the homepage and filed in the complete 2026
   );
 
   assert.equal(homepageSelected.includes(title), true, 'homepage representative selection');
-  assert.equal(releasedSurveys.includes(title), false, 'publications page released-survey placement');
+  assert.equal(preprints.includes(title), false, 'publications page stale preprint placement');
   assert.equal(publications2026.includes(title), true, 'publications page 2026 placement');
 });
 
@@ -703,7 +701,7 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
     },
     {
       name: 'publications page',
-      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== Released Survey ===== -->'),
+      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->'),
       publications2026: sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
     }
   ];

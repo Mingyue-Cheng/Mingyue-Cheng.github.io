@@ -237,46 +237,131 @@ a:focus-visible,
   outline-offset: 3px;
 }
 
-@media (max-width: 680px) {
-  .section p,
-  .research-section p,
-  .research-section li,
-  .research-section .research-note,
-  .research-main .scenario-card-body,
-  .research-vision-desc,
-  .pillar-card-desc,
-  .research-note-box,
-  .pub-list,
-  .pub-list li,
-  .pub-note,
-  .os-card-desc,
-  .dataset-card-desc,
-  .page-hero-sub,
-  .pub-hero-sub,
-  .pi-hero-lead,
-  .research-thesis p,
-  .framework-stage > p,
-  .timeline-list,
-  .timeline-list li,
-  .services-list,
-  .services-list li,
-  .news-list,
-  .news-list li,
-  .news-body,
-  .sys-list li,
-  .venue-name,
-  .journal-name,
-  .grant-title,
-  .resource-meta,
-  .footer-desc {
-    text-align: left;
-    text-align-last: left;
-    text-justify: auto;
-    hyphens: none;
-    -webkit-hyphens: none;
-    overflow-wrap: break-word;
-    word-break: normal;
+/* Homepage industry support: official artwork, original colors and proportions. */
+.industry-support {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e2eaee;
+}
+
+.section .industry-support-copy {
+  margin: 0 0 16px;
+  color: #516773;
+  line-height: 1.7;
+}
+
+.industry-support-logos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.industry-support-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 92px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #e2eaee;
+  border-radius: 12px;
+}
+
+.industry-support-logo img {
+  display: block;
+  width: var(--logo-width, 160px);
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.industry-support-logo--tencent {
+  --logo-width: 180px;
+}
+
+.industry-support-logo--kuaishou {
+  --logo-width: 138px;
+}
+
+.industry-support-logo--iflytek {
+  --logo-width: 122px;
+}
+
+@media (max-width: 600px) {
+  .industry-support-logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
+
+  .industry-support-logo {
+    min-height: 84px;
+    padding: 16px;
+  }
+}
+
+/* Reading text uses the same alignment in both languages and at every width.
+   Keep the final line natural and leave headings, controls and logos untouched. */
+html[lang] .section p,
+html[lang] .profile-thesis,
+html[lang] .profile-affil,
+html[lang] .research-section p,
+html[lang] .research-section li,
+html[lang] .research-section .research-note,
+html[lang] .research-section .scenario-intro,
+html[lang] .research-section .scenario-card-body,
+html[lang] .research-main .scenario-card-body,
+html[lang] .research-vision-desc,
+html[lang] .pillar-card-desc,
+html[lang] .research-note-box,
+html[lang] .pub-list,
+html[lang] .pub-list li,
+html[lang] .pub-note,
+html[lang] .os-card-desc,
+html[lang] .dataset-card-desc,
+html[lang] .page-hero-sub,
+html[lang] .pub-hero-sub,
+html[lang] .pi-hero-lead,
+html[lang] .research-thesis p,
+html[lang] .framework-stage > p,
+html[lang] .timeline-list,
+html[lang] .timeline-list li,
+html[lang] .services-list,
+html[lang] .services-list li,
+html[lang] .news-list,
+html[lang] .news-list li,
+html[lang] .news-body,
+html[lang] .plain-list li,
+html[lang] .sys-list li,
+html[lang] .venue-name,
+html[lang] .journal-name,
+html[lang] .grant-title,
+html[lang] .award-title,
+html[lang] .award-note,
+html[lang] .resource-meta,
+html[lang] .related-card-role,
+html[lang] .footer-desc,
+html[lang] .section .industry-support-copy,
+html[lang] .section-summary,
+html[lang] .pdec-copy span,
+html[lang] .stage-signals li,
+html[lang] .weakness-card p,
+html[lang] .route-card p,
+html[lang] .route-gate,
+html[lang] .outcome-panel p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+@media (max-width: 680px) {
 
   .os-card-title-row,
   .dataset-card-title-row {

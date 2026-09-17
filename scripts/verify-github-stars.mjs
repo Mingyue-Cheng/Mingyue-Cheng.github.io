@@ -15,19 +15,19 @@ const publicHtmlSource = readdirSync(root)
   .join('\n');
 
 const expectedRepos = [
+  'AgentR1/Agent-R1',
+  'AgentR1/Claw-R1',
   'AgentR1/WebMind',
+  'ustc-table-mining/TabClaw',
   'ustc-time-series/CastClaw',
   'ustc-time-series/CastMind',
   'ustc-time-series/CastFactory',
-  'ustc-ai4science/academic-search',
   'AgentR1/PaperScout',
-  'ustc-table-mining/TabClaw',
-  'AgentR1/Claw-R1',
-  'AgentR1/Agent-R1',
-  'ustc-time-series/Future-Cast',
-  'benchen4395/KuaiSearch',
+  'ustc-ai4science/academic-search',
   'ustc-ai4science/PaperArena',
   'ustc-ai4science/ChemTable',
+  'ustc-time-series/Future-Cast',
+  'benchen4395/KuaiSearch',
   '0russwest0/HoH'
 ];
 

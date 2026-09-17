@@ -6,12 +6,12 @@
   <title>Research — Mingyue Cheng</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#003153">
-  <meta name="description" content="Research directions of Mingyue Cheng: Prediction Intelligence, LLMs and Agentic AI, Time Series Intelligence, and applications in AI for Science, industrial and complex systems, and recommender systems.">
+  <meta name="description" content="Research by Mingyue Cheng on LLM-driven reasoning and AI agents: context-aware reasoning, autonomous interactive learning, and continual learning and adaptation, motivated by time-series intelligence and science intelligence.">
   <meta name="author" content="Mingyue Cheng">
   <link rel="canonical" href="https://mingyue-cheng.github.io/research.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Research — Mingyue Cheng">
-  <meta property="og:description" content="Research directions of Mingyue Cheng: Prediction Intelligence, LLMs and Agentic AI, Time Series Intelligence, and applications in AI for Science, industrial and complex systems, and recommender systems.">
+  <meta property="og:description" content="Research by Mingyue Cheng on LLM-driven reasoning and AI agents: context-aware reasoning, autonomous interactive learning, and continual learning and adaptation, motivated by time-series intelligence and science intelligence.">
   <meta property="og:url" content="https://mingyue-cheng.github.io/research.html">
   <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
   <meta name="twitter:card" content="summary">
@@ -308,6 +308,11 @@ body {
   text-justify: inter-word;
   hyphens: none;
   -webkit-hyphens: none;
+}
+.research-question {
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.75;
 }
 .research-vision-desc strong,
 .pillar-card-desc strong {
@@ -608,8 +613,8 @@ body {
 }
   </style>
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
-  <link rel="stylesheet" href="files/assets/site-theme.css?v=20260913-stars">
-  <link rel="stylesheet" href="files/assets/site-content.css?v=20260914-justify">
+  <link rel="stylesheet" href="files/assets/site-theme.css?v=20260917-consistency">
+  <link rel="stylesheet" href="files/assets/site-content.css?v=20260917-consistency">
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -644,12 +649,9 @@ body {
       <div class="page-hero-copy">
         <h1 class="page-hero-title">Research Interests</h1>
         <p class="page-hero-sub">
-          My research develops <strong>cognitive intelligence methods</strong> for complex data mining, centered on
-          <strong>LLMs and Agentic AI</strong>, and driven by the dual foundations of <strong>time-series observations</strong>
-          and <strong>scientific knowledge</strong>. My methodological focus lies in
-          <strong>context representation and reasoning</strong>, aiming to build <strong>predictive intelligence for complex systems</strong>
-          through <strong>multimodal semantic understanding</strong>, <strong>slow-thinking temporal reasoning</strong>, and
-          <strong>autonomous agentic interaction</strong>.
+          My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning,
+          autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in
+          time-series intelligence and science intelligence (scientific knowledge and tool mining).
         </p>
       </div>
     </div>
@@ -664,6 +666,11 @@ body {
     <!-- Research Vision -->
     <section class="research-tier research-tier--vision" aria-labelledby="research-vision-heading">
       <h2 id="research-vision-heading" class="rd-section-label">Research Vision</h2>
+      <p class="research-vision-desc research-question" data-page-i18n="researchQuestion">
+        How can agents <strong>reliably solve problems through reasoning and interaction</strong> when
+        <strong>information is incomplete</strong>, <strong>environments change</strong>, and
+        <strong>feedback is costly</strong>?
+      </p>
       <article class="research-vision-card">
         <span class="research-vision-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
@@ -723,11 +730,11 @@ body {
     <!-- Broader Scenarios -->
     <section class="scenario-section" aria-labelledby="research-scenario-heading">
       <div class="scenario-heading-row">
-        <h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">Application Domains and Evaluation Scenarios</h2>
+        <h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">Application Domains</h2>
       </div>
+      <p class="scenario-intro" data-page-i18n="scenarioIntro">Real-world settings for developing and evaluating intelligent systems.</p>
       <div class="scenario-grid">
         <article class="scenario-card scenario-card--science">
-          <div class="scenario-card-accent" aria-hidden="true"></div>
           <div class="scenario-card-header">
             <span class="scenario-card-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -736,10 +743,10 @@ body {
             </span>
             <h3 class="scenario-card-title" data-page-i18n="scienceTitle">AI for Science</h3>
           </div>
-          <p class="scenario-card-body" data-page-i18n="scienceBody">Scientific data and knowledge intelligence for literature mining, scientific modeling, reasoning, and autonomous discovery.</p>
+          <p class="scenario-card-body" data-page-i18n="scienceBody">Connecting scientific data and knowledge to support reasoning and autonomous discovery.</p>
+          <div class="scenario-card-topics" data-page-i18n="scienceTopics"><span>Literature mining</span><span>Scientific modeling</span></div>
         </article>
         <article class="scenario-card scenario-card--industrial">
-          <div class="scenario-card-accent" aria-hidden="true"></div>
           <div class="scenario-card-header">
             <span class="scenario-card-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -748,10 +755,10 @@ body {
             </span>
             <h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial Systems</h3>
           </div>
-          <p class="scenario-card-body" data-page-i18n="industrialBody">Predictive intelligence for real-world complex systems, including energy, traffic, cloud services, finance, and industrial operations.</p>
+          <p class="scenario-card-body" data-page-i18n="industrialBody">Forecasting and decision support for complex, evolving real-world systems.</p>
+          <div class="scenario-card-topics" data-page-i18n="industrialTopics"><span>Energy &amp; traffic</span><span>Cloud &amp; finance</span></div>
         </article>
         <article class="scenario-card scenario-card--user">
-          <div class="scenario-card-accent" aria-hidden="true"></div>
           <div class="scenario-card-header">
             <span class="scenario-card-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -761,7 +768,8 @@ body {
             </span>
             <h3 class="scenario-card-title" data-page-i18n="userTitle">Recommender Systems</h3>
           </div>
-          <p class="scenario-card-body" data-page-i18n="userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning.</p>
+          <p class="scenario-card-body" data-page-i18n="userBody">Understanding behaviors and preferences to deliver adaptive, personalized recommendations.</p>
+          <div class="scenario-card-topics" data-page-i18n="userTopics"><span>Behavior modeling</span><span>Contextual reasoning</span></div>
         </article>
       </div>
     </section>
@@ -773,10 +781,7 @@ body {
       📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> ·
       📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence</a>
     </div>
-    <div class="research-note-box">
-      欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室
-      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>。
-    </div>
+    <div class="research-note-box">Prospective students and research collaborators are welcome to explore the <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a> and <a href="mailto:mycheng@ustc.edu.cn">contact me by email</a>.</div>
 
   </div>
 </div>
@@ -798,7 +803,7 @@ body {
       <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
       <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in August 2026.</div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in September 2026.</div>
   </div>
 </footer>
 
@@ -811,6 +816,6 @@ body {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20260831"></script>
+<script src="files/assets/site-language.js?v=20260917-consistency"></script>
 </body>
 </html>

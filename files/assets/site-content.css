@@ -1,7 +1,6 @@
 /* Shared reading surfaces. Load after the page styles and site-theme.css. */
 .os-card,
-.dataset-card,
-.research-main .scenario-card {
+.dataset-card {
   border-color: #dce6eb;
   border-radius: 14px;
   background: #fff;
@@ -11,14 +10,12 @@
 
 .os-card::before,
 .dataset-card::before,
-.dataset-card::after,
-.research-main .scenario-card-accent {
+.dataset-card::after {
   display: none;
 }
 
 .os-card:hover,
-.dataset-card:hover,
-.research-main .scenario-card:hover {
+.dataset-card:hover {
   border-color: #b8cdd9;
   box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.065);
   transform: none;
@@ -162,46 +159,154 @@ a.os-github:hover,
   transform: none;
 }
 
-/* Research detail cards keep their full academic prose and semantic icons. */
-.research-main .scenario-card--science {
-  --scenario-color: #087a63;
-  --scenario-tint: #edf8f4;
+/* Application cards use the homepage's approved surface on both research pages. */
+.research-section .scenario-grid,
+.research-main .scenario-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
-
-.research-main .scenario-card--industrial {
+.research-section .scenario-section,
+.research-main .scenario-section {
+  margin: 28px 0 20px;
+}
+.research-section .scenario-heading-row,
+.research-main .scenario-heading-row {
+  margin-bottom: 6px;
+}
+.research-section .scenario-heading-row::after,
+.research-main .scenario-heading-row::after {
+  display: none;
+}
+.research-section .scenario-heading,
+.research-main .scenario-heading {
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 90px;
+}
+.research-section .scenario-intro,
+.research-main .scenario-intro {
+  margin: 0 0 14px;
+  color: #637783;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+}
+.research-section .scenario-card,
+.research-main .scenario-card {
   --scenario-color: var(--accent);
-  --scenario-tint: #eaf2f6;
+  --scenario-tint: var(--accent-light);
+  padding: 12px 15px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
+  box-shadow: 0 6px 18px rgba(var(--accent-rgb), 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-
-.research-main .scenario-card--user {
-  --scenario-color: #9b641d;
-  --scenario-tint: #fbf5eb;
+.research-section .scenario-card-header,
+.research-main .scenario-card-header {
+  min-height: 36px;
+  gap: 10px;
+  padding: 0;
 }
-
+.research-section .scenario-card-icon,
 .research-main .scenario-card-icon {
-  border-color: transparent;
-  border-radius: 10px;
+  flex-basis: 32px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
   background: var(--scenario-tint);
   color: var(--scenario-color);
 }
-
+.research-section .scenario-card-title,
 .research-main .scenario-card-title {
-  font-size: 17px;
+  color: var(--accent);
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.015em;
+  text-wrap: balance;
 }
-
+.research-section .scenario-card-body,
 .research-main .scenario-card-body {
-  color: #516773;
-  line-height: 1.75;
+  margin: 10px 0 12px;
+  padding: 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: auto;
+  text-wrap: pretty;
+}
+.research-section .scenario-card-topics,
+.research-main .scenario-card-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+.research-section .scenario-card-topics span,
+.research-main .scenario-card-topics span {
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: var(--scenario-tint);
+  color: var(--scenario-color);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+@media (hover: hover) and (pointer: fine) {
+  .research-section .scenario-card:hover,
+  .research-main .scenario-card:hover {
+    border-color: rgba(var(--accent-rgb), 0.2);
+    border-left-color: var(--accent);
+    box-shadow: 0 10px 24px rgba(var(--accent-rgb), 0.07);
+    transform: none;
+  }
+}
+@media (min-width: 901px) and (max-width: 1050px) {
+  .research-section .scenario-card-topics,
+  .research-main .scenario-card-topics {
+    min-height: 67px;
+    align-content: flex-start;
+  }
+}
+@media (max-width: 900px) {
+  .research-section .scenario-grid,
+  .research-main .scenario-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-.research-main .scenario-card-body strong,
 .research-vision-desc strong,
 .pillar-card-desc strong {
   color: #354e5b;
   font-weight: 600;
+}
+
+/* The same categories organize the homepage selections and complete archive. */
+.os-categories,
+.dataset-categories {
+  display: grid;
+  gap: 28px;
+  margin-top: 8px;
+}
+.os-category-heading,
+.dataset-category-heading {
+  margin: 0 0 12px;
+  padding-left: 11px;
+  border-left: 3px solid var(--accent);
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .pub-filters {
@@ -321,6 +426,7 @@ html[lang] .research-section p,
 html[lang] .research-section li,
 html[lang] .research-section .research-note,
 html[lang] .research-section .scenario-intro,
+html[lang] .research-main .scenario-intro,
 html[lang] .research-section .scenario-card-body,
 html[lang] .research-main .scenario-card-body,
 html[lang] .research-vision-desc,
@@ -396,6 +502,7 @@ html[lang] .outcome-panel p {
 
   .os-card,
   .dataset-card,
+  .research-section .scenario-card,
   .research-main .scenario-card,
   .dataset-kicker,
   .dataset-name,

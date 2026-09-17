@@ -803,6 +803,6 @@ test('Publications page has an accessible semantic shell and social metadata', (
     assert.match(button, /aria-pressed="(?:true|false)"/);
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
-  assert.match(body, /Last updated in August 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20260831"><\/script>/);
+  assert.match(body, /Last updated in September 2026\./);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20260917-consistency"><\/script>/);
 });

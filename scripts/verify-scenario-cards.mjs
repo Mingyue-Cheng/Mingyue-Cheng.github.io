@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (relativePath) => readFileSync(join(root, relativePath), 'utf8');
@@ -11,30 +12,28 @@ const researchHtml = read('research.html');
 const siteLanguageJs = read('files/assets/site-language.js');
 const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
+const sharedContentCss = read('files/assets/site-content.css');
 const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">';
+const researchIntroEnglish = 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining).';
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function cssRuleBlocks(source, selector) {
-  const cleanSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
-  const pattern = new RegExp(`${escapeRegex(selector)}\\s*\\{([^{}]*)\\}`, 'g');
+  const styles = [...source.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)];
+  const cssSource = styles.length ? styles.map((match) => match[1]).join('\n') : source;
+  const cleanSource = cssSource.replace(/\/\*[\s\S]*?\*\//g, '');
+  const pattern = /([^{}]+)\{([^{}]*)\}/g;
   return [...cleanSource.matchAll(pattern)]
-    .filter((match) => {
-      const previousBoundary = Math.max(
-        cleanSource.lastIndexOf('{', match.index - 1),
-        cleanSource.lastIndexOf('}', match.index - 1)
-      );
-      return cleanSource.slice(previousBoundary + 1, match.index).trim() === '';
-    })
+    .filter((match) => match[1].split(',').some((part) => part.trim() === selector))
     .map((match) => {
       let depth = 0;
       for (let index = 0; index < match.index; index += 1) {
         if (cleanSource[index] === '{') depth += 1;
         if (cleanSource[index] === '}') depth -= 1;
       }
-      return { body: match[1], depth };
+      return { body: match[2], depth };
     });
 }
 
@@ -86,7 +85,7 @@ function sectionBetween(source, startMarker, endMarker) {
 
 test('Homepage application cards share the neighboring research-card surface', () => {
   const researchCard = cssRule(indexHtml, '.research-list li');
-  const scenarioCard = cssRule(indexHtml, '.research-section .scenario-card');
+  const scenarioCard = cssRule(sharedContentCss, '.research-section .scenario-card');
   for (const property of ['padding', 'border', 'border-radius', 'background', 'box-shadow']) {
     assert.equal(
       finalDeclarationValue(scenarioCard, property),
@@ -98,7 +97,7 @@ test('Homepage application cards share the neighboring research-card surface', (
     finalDeclarationValue(scenarioCard, 'border-left'),
     finalDeclarationValue(cssRule(indexHtml, '.primary-directions li'), 'border-left')
   );
-  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card-body'), {
+  assertFinalDeclarations(cssRule(sharedContentCss, '.research-section .scenario-card-body'), {
     color: 'var(--text)',
     'line-height': '1.8',
     'text-align': 'justify',
@@ -107,22 +106,22 @@ test('Homepage application cards share the neighboring research-card surface', (
 });
 
 test('Homepage application icons and topics use one Prussian-blue palette', () => {
-  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card'), {
+  assertFinalDeclarations(cssRule(sharedContentCss, '.research-section .scenario-card'), {
     '--scenario-color': 'var(--accent)',
     '--scenario-tint': 'var(--accent-light)',
   }, 'Homepage application palette');
   for (const variant of ['science', 'industrial', 'user']) {
     assert.equal(
-      cssRuleBlocks(indexHtml, `.research-section .scenario-card--${variant}`).length,
+      cssRuleBlocks(sharedContentCss, `.research-section .scenario-card--${variant}`).length,
       0,
       `${variant} must not override the unified homepage palette`
     );
   }
-  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card-icon'), {
+  assertFinalDeclarations(cssRule(sharedContentCss, '.research-section .scenario-card-icon'), {
     color: 'var(--scenario-color)',
     background: 'var(--scenario-tint)',
   }, 'Homepage application icon');
-  assertFinalDeclarations(cssRule(indexHtml, '.research-section .scenario-card-topics span'), {
+  assertFinalDeclarations(cssRule(sharedContentCss, '.research-section .scenario-card-topics span'), {
     color: 'var(--scenario-color)',
     background: 'var(--scenario-tint)',
   }, 'Homepage application topic');
@@ -130,7 +129,7 @@ test('Homepage application icons and topics use one Prussian-blue palette', () =
 
 test('Homepage application topic dividers stay aligned when desktop labels wrap', () => {
   const compactDesktop = sectionBetween(
-    indexHtml,
+    sharedContentCss,
     '@media (min-width: 901px) and (max-width: 1050px)',
     '@media (prefers-reduced-motion: reduce)'
   );
@@ -623,11 +622,11 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   assert.ok(siteLanguageJs.includes("timeseriesTitle: '时间序列智能'"));
   assert.match(
     researchHtml,
-    /<meta name="description" content="[^"]*Time Series Intelligence[^"]*">/
+    /<meta name="description" content="[^"]*time-series intelligence[^"]*">/
   );
   assert.match(
     researchHtml,
-    /<meta property="og:description" content="[^"]*Time Series Intelligence[^"]*">/
+    /<meta property="og:description" content="[^"]*time-series intelligence[^"]*">/
   );
   assert.match(normalizedResearchDirectionsSection, new RegExp(escapeRegex(expectedResearchCard)));
 
@@ -813,19 +812,10 @@ test('homepage keeps two technical directions while Research retains Prediction 
     'Research-page language switching must not rebuild collections from links alone'
   );
 
-  assert.equal(
-    matchCount(
-      siteLanguageJs,
-      /join: '欢迎脚踏实地而又积极主动的本科生、研究生同学加入认知智能全国重点实验室 /g
-    ),
-    2,
-    'English and Chinese Research-page join copy must match the homepage'
-  );
-  assert.doesNotMatch(siteLanguageJs, /join: 'Welcome motivated undergraduate and graduate students/);
-  assert.match(
-    siteLanguageJs,
-    /subtitle: '我的研究面向复杂数据挖掘中的认知智能方法，以大语言模型与智能体 AI 为核心，并由时序观测和科学知识双重基础驱动。方法上聚焦情境表征与推理，通过多模态语义理解、慢思考时序推理与自主智能体交互，构建面向复杂系统的预测智能。'/
-  );
+  assert.ok(siteLanguageJs.includes("join: 'Prospective students and research collaborators"));
+  assert.ok(siteLanguageJs.includes("join: '欢迎脚踏实地、积极主动的本科生和研究生"));
+  assert.match(siteLanguageJs, /subtitle: '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。'/);
+
 });
 
 test('research collections omit table research without removing its publication category', () => {
@@ -852,11 +842,11 @@ test('research collections omit table research without removing its publication 
   assert.match(indexHtml, /<li data-tags="[^"]*\btable\b[^"]*">/);
   assert.match(
     indexHtml,
-    /<meta property="og:description" content="[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
+    /<meta property="og:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
   );
   assert.match(
     indexHtml,
-    /<meta name="twitter:description" content="[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
+    /<meta name="twitter:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
   );
 });
 
@@ -901,7 +891,7 @@ test('research page preserves domain identities shared with the homepage', () =>
     'Prediction Intelligence must not remain duplicated in the Homepage application scenarios'
   );
   assert.ok(
-    cssRule(indexHtml, '.research-section .scenario-grid').includes(
+    cssRule(sharedContentCss, '.research-section .scenario-grid').includes(
       'grid-template-columns: repeat(3, minmax(0, 1fr));'
     ),
     'The three Homepage scenarios must use a balanced three-column layout'
@@ -931,7 +921,7 @@ test('research page preserves domain identities shared with the homepage', () =>
   );
   assert.match(
     researchArticles.user,
-    /<p class="scenario-card-body" data-page-i18n="userBody">Adaptive user intelligence and personalized recommendation through behavior understanding, preference modeling, and contextual reasoning\.<\/p>/,
+    /<p class="scenario-card-body" data-page-i18n="userBody">Understanding behaviors and preferences to deliver adaptive, personalized recommendations\.<\/p>/,
     'The Research-page Recommender Systems card must retain its full research narrative'
   );
 
@@ -967,15 +957,16 @@ test('research page keeps shared pillar icons and complete framework translation
     'Research scenario content must remain compatible with site-language.js'
   );
   assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20260831"></script>'),
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20260917-consistency"></script>'),
     'Research page must request the current site-language.js content version'
   );
   assert.ok(
     siteLanguageJs.includes(
-      "labels: ['研究愿景', '核心技术支柱', '应用领域与评测场景']"
+      "labels: ['研究愿景', '核心技术支柱', '应用领域']"
     )
   );
   for (const key of [
+    'researchQuestion',
     'visionTitle',
     'visionBody',
     'agentTitle',
@@ -995,7 +986,7 @@ test('research page keeps shared pillar icons and complete framework translation
     );
   }
   for (const chineseLabel of [
-    '科学数据与知识智能',
+    '科学数据与知识',
     '科技文献挖掘',
     '科学建模',
     '科学推理',
@@ -1004,14 +995,81 @@ test('research page keeps shared pillar icons and complete framework translation
     '可信决策辅助',
     '工业系统',
     '云服务',
-    '工业运行',
-    '用户行为理解',
-    '偏好建模',
+    '持续演变的复杂系统',
+    '用户行为与偏好',
+    '行为与偏好建模',
     '情境推理',
-    '自适应用户智能',
+    '自适应的个性化推荐',
     '个性化推荐'
   ]) {
     assert.ok(siteLanguageJs.includes(chineseLabel), `Missing Research-page translation: ${chineseLabel}`);
+  }
+});
+
+test('research vision opens with the core agent reasoning question', () => {
+  const vision = sectionBetween(researchHtml, '<!-- Research Vision -->', '<!-- Core Technical Pillars -->');
+  const question = vision.match(/<p class="research-vision-desc research-question" data-page-i18n="researchQuestion">([\s\S]*?)<\/p>/);
+  assert.ok(question, 'Core research question must appear in the research vision');
+  assert.equal(
+    question[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
+    'How can agents reliably solve problems through reasoning and interaction when information is incomplete, environments change, and feedback is costly?'
+  );
+  assert.ok(question.index < vision.indexOf('<article class="research-vision-card">'));
+  assertFinalDeclarations(cssRule(researchHtml, '.research-question'), {
+    margin: '0 0 18px',
+    'font-size': '16px'
+  }, 'Core research question');
+});
+
+test('research hero uses the supplied English introduction in fallback markup and translation', () => {
+  const hero = researchHtml.match(/<p class="page-hero-sub">([\s\S]*?)<\/p>/);
+  assert.ok(hero, 'Research hero introduction must exist');
+  assert.equal(hero[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(), researchIntroEnglish);
+  assert.ok(siteLanguageJs.includes("subtitle: '" + researchIntroEnglish + "'"));
+});
+
+test('research introduction and core question survive language switching', () => {
+  const questionMarkup = researchHtml.match(/<p class="research-vision-desc research-question" data-page-i18n="researchQuestion">([\s\S]*?)<\/p>/);
+  assert.ok(questionMarkup, 'Research question must have a translation target');
+  const expected = {
+    en: 'How can agents reliably solve problems through reasoning and interaction when information is incomplete, environments change, and feedback is costly?',
+    zh: '在信息不完整、环境会变化、反馈有成本的条件下，智能体如何通过推理与交互可靠地解决问题。'
+  };
+  for (const initialLanguage of ['en', 'zh']) {
+    const subtitle = { textContent: '' };
+    const question = {
+      innerHTML: questionMarkup[1],
+      getAttribute: (name) => name === 'data-page-i18n' ? 'researchQuestion' : null
+    };
+    let onToggle;
+    const toggle = {
+      textContent: '',
+      setAttribute() {},
+      addEventListener: (type, handler) => { if (type === 'click') onToggle = handler; }
+    };
+    const storage = new Map([['homepage-language', initialLanguage]]);
+    const document = {
+      readyState: 'complete',
+      documentElement: { lang: '' },
+      querySelector: (selector) => selector === '.page-hero-sub' ? subtitle : null,
+      querySelectorAll: (selector) => selector === '[data-page-i18n]' ? [question] : [],
+      getElementById: (id) => id === 'languageToggle' ? toggle : null
+    };
+    vm.runInNewContext(siteLanguageJs, {
+      document,
+      localStorage: {
+        getItem: (key) => storage.get(key) ?? null,
+        setItem: (key, value) => storage.set(key, value)
+      },
+      window: { location: { pathname: '/research.html' } }
+    }, { filename: 'site-language.js' });
+    for (const lang of [initialLanguage, initialLanguage === 'en' ? 'zh' : 'en', initialLanguage]) {
+      if (document.documentElement.lang !== (lang === 'zh' ? 'zh-CN' : 'en')) onToggle();
+      assert.equal(question.innerHTML.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(), expected[lang]);
+      assert.match(question.innerHTML, /<strong>/);
+      assert.equal(storage.get('homepage-language'), lang);
+      if (lang === 'en') assert.equal(subtitle.textContent, researchIntroEnglish);
+    }
   }
 });
 

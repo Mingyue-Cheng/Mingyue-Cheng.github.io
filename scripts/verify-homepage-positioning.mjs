@@ -343,11 +343,11 @@ function findRetiredActionSelectors(styleText) {
 test('homepage hero states the research thesis in both languages', () => {
   assert.match(
     indexHtml,
-    /<p class="profile-thesis" data-i18n="profile\.thesis">I build prediction intelligence for complex systems by combining time-series observations, scientific knowledge, and agentic reasoning\.<\/p>/
+    /<p class="profile-thesis" data-i18n="profile\.thesis">I study LLM-driven reasoning and AI agents, motivated by complex tasks in time-series intelligence and science intelligence\.<\/p>/
   );
   assert.match(
     indexHtml,
-    /"profile\.thesis": "面向复杂系统，我致力于融合时间序列观测、科学知识与智能体推理，构建预测智能。"/
+    /"profile\.thesis": "以大模型推理与智能体为核心，以时序智能和科学智能中的复杂任务为牵引。"/
   );
 });
 
@@ -414,6 +414,12 @@ test('homepage translatePage applies surviving content and accessible-name trans
       return name === 'data-i18n' ? 'profile.thesis' : null;
     }
   };
+  const researchIntro = {
+    innerHTML: '',
+    getAttribute(name) {
+      return name === 'data-i18n' ? 'research.intro' : null;
+    }
+  };
   const profileHome = {
     attributes: new Map(),
     getAttribute(name) {
@@ -426,7 +432,7 @@ test('homepage translatePage applies surviving content and accessible-name trans
   const document = {
     documentElement: { lang: 'en' },
     querySelectorAll(selector) {
-      if (selector === '[data-i18n]') return [thesis];
+      if (selector === '[data-i18n]') return [thesis, researchIntro];
       if (selector === '[data-i18n-aria-label]') return [profileHome];
       return [];
     },
@@ -441,7 +447,14 @@ test('homepage translatePage applies surviving content and accessible-name trans
   );
 
   assert.equal(document.documentElement.lang, 'zh-CN');
-  assert.equal(thesis.innerHTML, '面向复杂系统，我致力于融合时间序列观测、科学知识与智能体推理，构建预测智能。');
+  assert.equal(thesis.innerHTML, '以大模型推理与智能体为核心，以时序智能和科学智能中的复杂任务为牵引。');
+  assert.equal(
+    researchIntro.innerHTML.replace(/<[^>]*>/g, ''),
+    '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。'
+  );
+  for (const keyword of ['大模型推理与智能体', '情境感知推理', '自主交互学习', '持续学习与适应', '时序智能', '科学智能']) {
+    assert.ok(researchIntro.innerHTML.includes('<span class="research-keyword">' + keyword + '</span>'));
+  }
   assert.equal(profileHome.attributes.get('aria-label'), '刷新主页');
 });
 

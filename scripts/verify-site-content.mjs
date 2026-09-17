@@ -135,20 +135,19 @@ test('long descriptions retain restrained emphasis even while hovering a dataset
   assert.equal(declarations('.dataset-card:hover .dataset-repo-link').transform, 'none');
 });
 
-test('research scenarios share the surface treatment without overriding homepage layout', () => {
-  const rule = declarations('.research-main .scenario-card');
-  assert.equal(rule.background, '#fff');
-  assert.equal(rule['border-radius'], '14px');
-  assert.equal(rule['border-color'], '#dce6eb');
-  assert.equal(declarations('.research-main .scenario-card:hover').transform, 'none');
-  assert.equal(declarations('.research-main .scenario-card-accent').display, 'none');
-  assert.equal(declarations('.research-main .scenario-card-icon').color, 'var(--scenario-color)');
-  assert.equal(declarations('.research-main .scenario-card--science')['--scenario-color'], '#087a63');
-  assert.equal(declarations('.research-main .scenario-card--user')['--scenario-color'], '#9b641d');
-  assert.equal(declarations('html[lang] .research-main .scenario-card-body')['text-align'], 'justify',
-    'research prose must share the site-wide justification contract');
-  assert.doesNotMatch(css, /\.research-section\s+\.scenario-card\s*\{/,
-    'homepage scenario layout is owned by its existing page rules');
+test('both research surfaces share the approved Prussian-blue application cards', () => {
+  for (const scope of ['.research-section', '.research-main']) {
+    const rule = declarations(`${scope} .scenario-card`);
+    assert.equal(rule.background, 'linear-gradient(180deg, #ffffff 0%, #f7fafb 100%)');
+    assert.equal(rule['border-radius'], '8px');
+    assert.equal(rule.border, '1px solid var(--border)');
+    assert.equal(rule['border-left'], '3px solid var(--accent)');
+    assert.equal(rule['--scenario-color'], 'var(--accent)');
+    assert.equal(rule['--scenario-tint'], 'var(--accent-light)');
+    assert.equal(declarations(`${scope} .scenario-card-icon`).color, 'var(--scenario-color)');
+    assert.equal(declarations(`html[lang] ${scope} .scenario-card-body`)['text-align'], 'justify');
+    assert.equal(declarations(`${scope} .scenario-card:hover`, mediaBlock('(hover: hover) and (pointer: fine)')).transform, 'none');
+  }
 });
 
 test('prose is justified at every width with language-aware specificity and natural last lines', () => {

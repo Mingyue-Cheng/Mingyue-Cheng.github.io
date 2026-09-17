@@ -13,7 +13,7 @@ const sources = brands.map((brand) => `files/assets/industry/${brand}.png`);
 
 test('homepage requests the refreshed content stylesheet after the logo update', () => {
   const href = html.match(/href="(files\/assets\/site-content\.css[^\"]*)"/)?.[1];
-  assert.equal(href, 'files/assets/site-content.css?v=20260916-industry-hover');
+  assert.equal(href, 'files/assets/site-content.css?v=20260917-consistency');
 });
 
 test('the six public grants stay in the timeline with industry support separate', () => {

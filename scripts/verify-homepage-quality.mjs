@@ -30,15 +30,15 @@ test('homepage metadata describes the current research portfolio', () => {
   );
   assert.match(
     head,
-    /<meta name="description" content="[^"]*LLMs and Agentic AI[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
+    /<meta name="description" content="[^"]*LLM-driven reasoning and AI agents[^"]*time-series intelligence[^"]*science intelligence[^"]*">/
   );
   assert.match(
     head,
-    /<meta property="og:description" content="[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
+    /<meta property="og:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
   );
   assert.match(
     head,
-    /<meta name="twitter:description" content="[^"]*prediction intelligence[^"]*AI for Science[^"]*">/
+    /<meta name="twitter:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
   );
   assert.match(
     head,
@@ -329,7 +329,7 @@ test('accepted open-source cards display their venue badges', () => {
   const tabClawMeta = sectionBetween(
     projectsHtml,
     '<div class="os-card-name">TabClaw</div>',
-    '<div class="os-card-desc"><span class="os-inline-highlight">TabClaw</span>'
+    '<div class="os-card-desc"'
   );
   const paperScoutMeta = sectionBetween(
     indexHtml,
@@ -395,8 +395,8 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /data-i18n="profile\.title">Ph\.D\. &nbsp;·&nbsp; Associate Researcher<\/div>/);
   assert.match(indexHtml, />Professional Experience<\/h2>/);
   assert.match(indexHtml, /Computer Science and Technology, Ph\.D\. degree,/);
-  assert.match(indexHtml, /Last updated in August 2026\./);
-  assert.match(indexHtml, /最后更新于 2026 年 8 月。/);
+  assert.match(indexHtml, /Last updated in September 2026\./);
+  assert.match(indexHtml, /最后更新于 2026 年 9 月。/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "Science Intelligence"/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
   for (const [key, english, chinese] of [

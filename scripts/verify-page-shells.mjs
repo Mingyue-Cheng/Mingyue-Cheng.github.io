@@ -13,7 +13,7 @@ const pages = [
   {
     path: 'research.html',
     title: 'Research — Mingyue Cheng',
-    description: 'Research directions of Mingyue Cheng: Prediction Intelligence, LLMs and Agentic AI, Time Series Intelligence, and applications in AI for Science, industrial and complex systems, and recommender systems.',
+    description: 'Research by Mingyue Cheng on LLM-driven reasoning and AI agents: context-aware reasoning, autonomous interactive learning, and continual learning and adaptation, motivated by time-series intelligence and science intelligence.',
     currentHref: 'research.html',
     h1Class: 'page-hero-title',
     mainVisualOrder: ['page-hero', 'research-main']
@@ -55,7 +55,7 @@ const pages = [
     title: 'Resources — Mingyue Cheng',
     description: 'Resources shared by Mingyue Cheng, including academic guidelines and useful documents.',
     currentHref: 'resources.html',
-    h1Class: 'section-heading',
+    h1Class: 'page-hero-title',
     mainVisualOrder: ['page-hero', 'resources-main']
   },
   {
@@ -374,12 +374,12 @@ export function validatePageChromeSource(source, page) {
   const footer = singleNode(bodyNodes, (node) => node.name === 'footer', `${page.path} must contain one footer`);
   const footerSource = nodeInnerSource(document, footer);
   assert.equal(
-    count(footerSource, /Last updated in August 2026\./g),
+    count(footerSource, /Last updated in September 2026\./g),
     1,
-    `${page.path} must contain one August 2026 footer timestamp`
+    `${page.path} must contain one September 2026 footer timestamp`
   );
   assert.doesNotMatch(footerSource, /Last updated in July 2026\./, `${page.path} must not retain the July footer`);
-  const languageVersion = page.path === 'awards.html' ? '20260916-grants' : '20260831';
+  const languageVersion = '20260917-consistency';
   const languageScripts = document.nodes.filter(
     (node) => node.name === 'script' && attribute(node.raw, 'src') === `files/assets/site-language.js?v=${languageVersion}`
   );
@@ -436,7 +436,7 @@ export function validateSitemapSource(sitemap, expectedUrls) {
   assert.equal(new Set(entries.map((entry) => entry.loc)).size, 9, 'sitemap URLs must be unique');
   assert.deepEqual(entries.map((entry) => entry.loc), expectedUrls, 'sitemap URLs must match the public page set');
   for (const entry of entries) {
-    assert.equal(entry.lastmod, '2026-08-31', `${entry.loc} must use the current lastmod`);
+    assert.equal(entry.lastmod, '2026-09-17', `${entry.loc} must use the current lastmod`);
   }
 }
 
@@ -464,7 +464,7 @@ test('owned pages provide canonical, Open Graph, and Twitter metadata from exist
   for (const page of pages) validatePageMetadataSource(page.html, page);
 });
 
-test('owned pages use the August 2026 footer and the current shared-script cache key', () => {
+test('owned pages use the September 2026 footer and the current shared-script cache key', () => {
   for (const page of pages) validatePageChromeSource(page.html, page);
 });
 
@@ -593,8 +593,8 @@ test('mutation: rejects incomplete and structurally invalid sitemap url blocks',
       '  <url><loc>https://mingyue-cheng.github.io/incomplete.html</loc>\n</urlset>'
     ),
     sitemap.replace(
-      '<lastmod>2026-08-31</lastmod>',
-      '<lastmod>2026-08-31</lastmod><changefreq>monthly</changefreq>'
+      '<lastmod>2026-09-17</lastmod>',
+      '<lastmod>2026-09-17</lastmod><changefreq>monthly</changefreq>'
     ),
     sitemap.replace(
       '<loc>https://mingyue-cheng.github.io/</loc>',

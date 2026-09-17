@@ -29,6 +29,46 @@ html a.dataset-stars:focus-visible .github-stars {
   text-underline-offset: 2px;
 }
 
+/* Standard subpages share one title, intro, and spacing hierarchy. */
+html .page-hero,
+html .pub-hero {
+  padding: 32px 0 28px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(160deg, #edf3f6 0%, #fff 65%);
+}
+
+html .page-hero-title,
+html .pub-hero-title {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+html .page-hero-sub,
+html .pub-hero-sub {
+  max-width: none;
+  margin: 0;
+  color: #516773;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+@media (max-width: 680px) {
+  html .page-hero-title,
+  html .pub-hero-title {
+    font-size: 22px;
+  }
+
+  html .page-hero-sub,
+  html .pub-hero-sub {
+    font-size: 14px;
+  }
+}
+
 /* The header scope also overrides older Chinese-language spacing rules. */
 html .site-header {
   position: sticky;

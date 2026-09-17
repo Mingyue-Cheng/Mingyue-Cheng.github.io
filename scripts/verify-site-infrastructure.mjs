@@ -244,7 +244,7 @@ test('language switching remains functional beside the navigation behavior', () 
   assert.equal(harness.localStorage.getItem('homepage-language'), 'zh');
   assert.equal(harness.languageToggle.textContent, 'EN');
   assert.equal(harness.logo.textContent, '主页');
-  assert.equal(harness.navLinks[0].textContent, '研究');
+  assert.equal(harness.navLinks[0].textContent, '研究方向');
 });
 
 test('opening the mobile menu synchronizes state and focuses its first visible link', () => {

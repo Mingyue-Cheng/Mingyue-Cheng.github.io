@@ -31,8 +31,8 @@ const grants = [
   },
   {
     key: 'ustc', period: '2025.01–2026.12',
-    en: 'USTC New Medicine Joint Fund Cultivation Project (Double First-Class Discipline Development Special Program); Time Series Modeling Methods and Applications Using Perioperative Physiological Data; Project Partner Lead',
-    zh: '中国科学技术大学新医学联合基金培育项目（双一流学科建设专项），基于围术期生理数据的时序建模方法及应用研究，项目方负责人',
+    en: 'USTC New Medicine Joint Fund Cultivation Project (Double First-Class Discipline Development Special Program); Time Series Modeling Methods and Applications Using Perioperative Physiological Data; Project Lead',
+    zh: '中国科学技术大学新医学联合基金培育项目（双一流学科建设专项），基于围术期生理数据的时序建模方法及应用研究，项目负责人',
   },
   {
     key: 'anhui', period: '2024.09–2026.08',

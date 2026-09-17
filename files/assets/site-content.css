@@ -269,6 +269,15 @@ a:focus-visible,
   background: #fff;
   border: 1px solid #e2eaee;
   border-radius: 12px;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .industry-support-logo:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--accent-rgb), 0.28);
+    box-shadow: 0 12px 28px rgba(var(--accent-rgb), 0.12);
+  }
 }
 
 .industry-support-logo img {
@@ -377,6 +386,14 @@ html[lang] .outcome-panel p {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .industry-support-logo {
+    transition: none;
+  }
+
+  .industry-support-logo:hover {
+    transform: none;
+  }
+
   .os-card,
   .dataset-card,
   .research-main .scenario-card,

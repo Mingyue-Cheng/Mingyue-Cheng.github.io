@@ -10,6 +10,7 @@ const awardsHtml = readFileSync(join(root, 'awards.html'), 'utf8');
 const newsHtml = readFileSync(join(root, 'news.html'), 'utf8');
 const publicationsHtml = readFileSync(join(root, 'publications.html'), 'utf8');
 const projectsHtml = readFileSync(join(root, 'projects.html'), 'utf8');
+const serviceHtml = readFileSync(join(root, 'service.html'), 'utf8');
 const count = (source, pattern) => (source.match(pattern) || []).length;
 
 function sectionBetween(source, startMarker, endMarker) {
@@ -153,7 +154,7 @@ test('homepage selected-publication filters and year groups remain accessible', 
   const visibleEntries = [...publications.replace(/<!--[\s\S]*?-->/g, '').matchAll(
     /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
   )];
-  assert.equal(visibleEntries.length, 70);
+  assert.equal(visibleEntries.length, 72);
   assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>View all publications →<\/a>/);
   for (const [key, label] of [
     ['pub.preprint', '📘 Preprint'],
@@ -401,53 +402,71 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });
 
-test('CAS Strategic Priority Research Program grant is synchronized across grant surfaces', () => {
-  const grantTitle = 'The Strategic Priority Research Program (B) of the Chinese Academy of Sciences';
-  const homepageGrant = `2026.08–2029.07, the Strategic Priority Research Program (B) of the Chinese Academy of Sciences`;
-  const chineseGrant = '2026.08–2029.07，中国科学院战略性先导科技专项（B类）';
-  const homepageGrants = sectionBetween(indexHtml, '<!-- ===== Research Grants ===== -->', '<!-- ===== Related Links ===== -->');
-  const awardsGrants = sectionBetween(awardsHtml, '<!-- Research Grants -->', '</div>\n\n  </div>\n</div>');
+test('homepage lists Science China Information Sciences once under journal reviewing', () => {
+  const journals = sectionBetween(indexHtml, 'data-i18n="service.journal"', '<!-- ===== Research Grants ===== -->')
+    .replace(/<!--[\s\S]*?-->/g, '');
+  assert.equal(count(journals, /<li>Science China Information Sciences \(SCIS\)<\/li>/g), 1);
+});
 
-  assert.match(
-    homepageGrants,
-    /<li data-i18n="grants\.casPriority">2026\.08–2029\.07, the Strategic Priority Research Program \(B\) of the Chinese Academy of Sciences<\/li>/
-  );
-  assert.ok(homepageGrants.indexOf(homepageGrant) < homepageGrants.indexOf('2026.01–2028.12'));
-  assert.match(indexHtml, /"grants\.casPriority": "2026\.08–2029\.07, the Strategic Priority Research Program \(B\) of the Chinese Academy of Sciences"/);
-  assert.ok(indexHtml.includes(`"grants.casPriority": "${chineseGrant}"`));
+test('service page lists Science China Information Sciences once under journal reviewing', () => {
+  const journals = sectionBetween(serviceHtml, '<!-- Journal Reviewer -->', '</main>')
+    .replace(/<!--[\s\S]*?-->/g, '');
+  assert.equal(count(journals, /<span class="journal-name">Science China Information Sciences \(SCIS\)<\/span>/g), 1);
+});
 
-  assert.match(
-    awardsGrants,
-    /<span class="grant-period">2026\.08–2029\.07<\/span>\s*<div class="grant-title">The Strategic Priority Research Program \(B\) of the Chinese Academy of Sciences<\/div>/
-  );
-  assert.ok(awardsGrants.indexOf(grantTitle) < awardsGrants.indexOf('National Natural Science Foundation of China'));
+const updatedGrants = [
+  {
+    key: 'casPriority', period: '2026.07–2029.06',
+    english: 'Chinese Academy of Sciences Strategic Priority Research Program for Basic and Interdisciplinary Frontier Research (Category B); Mechanisms and Methods for Autonomous Interactive Learning in Large Models; Project Lead',
+    chinese: '中国科学院基础与交叉前沿科研先导专项（B类），大模型自主交互学习机制及方法，项目负责人',
+  },
+  {
+    key: 'newGenerationAI', period: '2026.08–2028.07',
+    english: 'New-Generation Artificial Intelligence National Science and Technology Major Project; Scientific Data Governance Toolchain and Datasets — Chemistry; Core Project Member',
+    chinese: '新一代人工智能国家科技重大专项，科学数据治理工具链与数据集-化学领域，项目骨干',
+  },
+  {
+    key: 'nsfc', period: '2026.01–2028.12',
+    english: 'National Natural Science Foundation of China — Young Scientists Fund (Category C); Cross-Domain Context-Aware Time Series Representation Learning and Forecasting; Project Lead',
+    chinese: '国家自然科学基金青年科学基金C类，跨域情境感知的时间序列表征学习及预测方法，项目负责人',
+  },
+  {
+    key: 'ustcYouth', period: '2027.01–2028.12',
+    english: 'USTC Youth Innovation Fund Project; Multi-Turn Interactive Learning and Continual Evolution for Large-Model Agents: Methods and Applications; Project Lead',
+    chinese: '中国科学技术大学青年创新基金项目，大模型智能体多轮交互学习与持续进化方法研究及应用，项目负责人',
+  },
+  {
+    key: 'ustc', period: '2025.01–2026.12',
+    english: 'USTC New Medicine Joint Fund Cultivation Project (Double First-Class Discipline Development Special Program); Time Series Modeling Methods and Applications Using Perioperative Physiological Data; Project Partner Lead',
+    chinese: '中国科学技术大学新医学联合基金培育项目（双一流学科建设专项），基于围术期生理数据的时序建模方法及应用研究，项目方负责人',
+  },
+  {
+    key: 'anhui', period: '2024.09–2026.08',
+    english: 'Anhui Provincial Natural Science Foundation; Table Semantic Understanding and Reasoning for Scientific Literature; Project Lead',
+    chinese: '安徽省自然科学基金，面向科技文献的表格语义理解与推理研究，项目负责人',
+  },
+];
+
+for (const [index, grant] of updatedGrants.entries()) {
+  test(`${grant.key} grant details are synchronized across homepage languages and Awards`, () => {
+    const homepageGrants = sectionBetween(indexHtml, '<!-- ===== Research Grants ===== -->', '<!-- ===== Related Links ===== -->');
+    const english = `${grant.period}, ${grant.english}`;
+    const chinese = `${grant.period}，${grant.chinese}`;
+    assert.ok(homepageGrants.includes(`<li data-i18n="grants.${grant.key}">${english}</li>`), 'Homepage fallback has the full project details');
+    assert.ok(indexHtml.includes(`"grants.${grant.key}": "${english}"`), 'English dictionary matches fallback');
+    assert.ok(indexHtml.includes(`"grants.${grant.key}": "${chinese}"`), 'Chinese dictionary preserves the supplied project details');
+    const cards = [...awardsHtml.matchAll(/<div class="grant-card">[\s\S]*?<div class="grant-title"[^>]*>[\s\S]*?<\/div>\s*<\/div>/g)].map(match => match[0]);
+    assert.ok(cards[index]?.includes(`<span class="grant-period">${grant.period}</span>`), 'Awards period and order match');
+    assert.ok(cards[index]?.includes(`>${grant.english}</div>`), 'Awards includes full English details');
+  });
+}
+
+test('grant cards retain their responsive layout after the content update', () => {
   assert.match(awardsHtml, /\.grant-card\s*\{[\s\S]*?grid-template-columns: 120px 1fr;/);
   assert.match(
     awardsHtml,
     /@media \(max-width: 680px\)[\s\S]*?\.grant-card\s*\{\s*grid-template-columns: 108px 1fr;\s*\}/
   );
-});
-
-test('New Generation AI Major Project grant is synchronized across grant surfaces', () => {
-  const grantTitle = 'New Generation Artificial Intelligence–National Science and Technology Major Project';
-  const homepageGrant = `2026.08–2028.07, ${grantTitle}`;
-  const chineseGrant = '2026.08–2028.07，新一代人工智能国家科技重大专项';
-  const homepageGrants = sectionBetween(indexHtml, '<!-- ===== Research Grants ===== -->', '<!-- ===== Related Links ===== -->');
-  const awardsGrants = sectionBetween(awardsHtml, '<!-- Research Grants -->', '</div>\n\n  </div>\n</div>');
-
-  assert.match(
-    homepageGrants,
-    /<li data-i18n="grants\.newGenerationAI">2026\.08–2028\.07, New Generation Artificial Intelligence–National Science and Technology Major Project<\/li>/
-  );
-  assert.ok(homepageGrants.indexOf(homepageGrant) < homepageGrants.indexOf('grants.casPriority'));
-  assert.ok(indexHtml.includes(`"grants.newGenerationAI": "${homepageGrant}"`));
-  assert.ok(indexHtml.includes(`"grants.newGenerationAI": "${chineseGrant}"`));
-
-  assert.match(
-    awardsGrants,
-    /<span class="grant-period">2026\.08–2028\.07<\/span>\s*<div class="grant-title">New Generation Artificial Intelligence–National Science and Technology Major Project<\/div>/
-  );
-  assert.ok(awardsGrants.indexOf(grantTitle) < awardsGrants.indexOf('The Strategic Priority Research Program'));
 });
 
 test('complete Publications page keeps the requested preprint order', () => {
@@ -628,6 +647,36 @@ test('OneCast TKDD acceptance is synchronized in the 2026 publication list', () 
   }
 });
 
+const icdmDemoPapers = [
+  {
+    name: 'CastClaw',
+    title: 'CastClaw: A Human-in-the-Loop Autonomous Agent for Industry Time Series Forecasting',
+    authors: 'Xiaoyu Tao, <strong>Mingyue Cheng</strong>, Ze Guo, Bokai Pan, Qi Liu, Shijin Wang, Enhong Chen',
+    tags: 'timeseries agent llm',
+    code: 'https://github.com/ustc-time-series/CastClaw',
+  },
+  {
+    name: 'Claw-R1',
+    title: 'Claw-R1: Interactive Data Lifecycle Management for Agentic Reinforcement Learning',
+    authors: 'Daoyu Wang, <strong>Mingyue Cheng</strong>, Qingchuan Li, Shuo Yu, Jie Ouyang, Qi Liu, Enhong Chen',
+    tags: 'llm agent',
+    code: 'https://github.com/AgentR1/Claw-R1',
+  },
+];
+
+for (const paper of icdmDemoPapers) {
+  test(`${paper.name} ICDM 2026 Demo Track acceptance matches the supplied author order on both lists`, () => {
+    const expected = `<li data-tags="${paper.tags}">${paper.authors}, <strong>${paper.title}</strong>. <em>IEEE ICDM 2026 Demo Track Accepted</em>. [<a href="${paper.code}" target="_blank" rel="noopener">Code</a>]</li>`;
+    for (const [name, source] of [['homepage', indexHtml], ['publications', publicationsHtml]]) {
+      const year = sectionBetween(source, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->').replace(/<!--[\s\S]*?-->/g, '');
+      const entries = [...year.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map(match => match[0]);
+      assert.deepEqual(entries.filter(entry => entry.includes(`<strong>${paper.title}</strong>`)), [expected], `${name}: exact authors, title, acceptance, tags, and existing code link`);
+      const preprints = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->');
+      assert.ok(!preprints.includes(paper.title), `${name}: no accepted paper duplicated under preprints`);
+    }
+  });
+}
+
 test('CIKM 2026 Demo Track papers remain at the end of the complete 2026 list', () => {
   const agentR1Title = 'Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning';
   const tabClawTitle = 'TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning';
@@ -721,14 +770,28 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
   }
 });
 
-test('September 2026 TKDE survey acceptance leads both news surfaces', () => {
+test('September 2026 ICDM demo acceptance leads both news surfaces', () => {
+  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>Claw-R1</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
+  const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
+  const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
+  const lists = [
+    [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => match[1]),
+    [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map(match => match[1]),
+  ];
+  for (const entries of lists) {
+    assert.equal(entries[0], expected);
+    assert.equal(entries.filter(entry => entry === expected).length, 1);
+  }
+});
+
+test('September 2026 TKDE survey acceptance follows the latest ICDM demo news', () => {
   const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
   const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
   const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
   const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
   const newsPageEntries = [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map((match) => match[1]);
   for (const entries of [homepageEntries, newsPageEntries]) {
-    assert.equal(entries[0], expected);
+    assert.equal(entries[1], expected);
     assert.equal(entries.filter((entry) => entry === expected).length, 1);
   }
   assert.ok(newsHtml.includes('<strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong>'), 'Keep the historical preprint announcement');

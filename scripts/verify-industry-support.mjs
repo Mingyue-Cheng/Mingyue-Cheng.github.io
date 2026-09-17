@@ -13,13 +13,13 @@ const sources = brands.map((brand) => `files/assets/industry/${brand}.png`);
 
 test('homepage requests the refreshed content stylesheet after the logo update', () => {
   const href = html.match(/href="(files\/assets\/site-content\.css[^\"]*)"/)?.[1];
-  assert.equal(href, 'files/assets/site-content.css?v=20260914-justify');
+  assert.equal(href, 'files/assets/site-content.css?v=20260916-industry-hover');
 });
 
-test('the five public grants stay in the timeline with industry support separate', () => {
+test('the six public grants stay in the timeline with industry support separate', () => {
   const timeline = grants.match(/<ul class="timeline-list">([\s\S]*?)<\/ul>/)?.[1] || '';
   assert.deepEqual([...timeline.matchAll(/data-i18n="([^"]+)"/g)].map((match) => match[1]), [
-    'grants.newGenerationAI', 'grants.casPriority', 'grants.nsfc', 'grants.ustc', 'grants.anhui',
+    'grants.casPriority', 'grants.newGenerationAI', 'grants.nsfc', 'grants.ustcYouth', 'grants.ustc', 'grants.anhui',
   ]);
   assert.match(grants, /<\/ul>\s*<div class="industry-support">/);
 });
@@ -72,4 +72,23 @@ test('logo layout is four columns on desktop and two on small screens without im
   assert.match(imageRule, /height:\s*auto/);
   assert.match(imageRule, /object-fit:\s*contain/);
   assert.doesNotMatch(imageRule, /filter:|transform:|animation:/);
+});
+
+test('industry cards have a restrained fine-pointer hover lift without changing artwork or semantics', () => {
+  const cardRule = css.match(/\.industry-support-logo\s*\{([^}]+)\}/)?.[1] || '';
+  assert.match(cardRule, /transition:\s*transform 220ms ease,\s*box-shadow 220ms ease,\s*border-color 220ms ease\s*;/);
+  assert.doesNotMatch(cardRule, /animation:|cursor:\s*pointer/);
+  const hoverMedia = css.match(/@media\s*\(hover:\s*hover\)\s*and\s*\(pointer:\s*fine\)\s*\{\s*\.industry-support-logo:hover\s*\{([^}]+)\}\s*\}/)?.[1] || '';
+  assert.match(hoverMedia, /transform:\s*translateY\(-4px\)\s*;/);
+  assert.match(hoverMedia, /border-color:\s*rgba\(var\(--accent-rgb\),\s*0\.28\)\s*;/);
+  assert.match(hoverMedia, /box-shadow:\s*0 12px 28px rgba\(var\(--accent-rgb\),\s*0\.12\)\s*;/);
+  assert.doesNotMatch(grants, /tabindex=|role="button"|onmouseenter|onmousemove/);
+});
+
+test('industry-card hover respects reduced motion without changing the default geometry', () => {
+  const reduced = css.slice(css.lastIndexOf('@media (prefers-reduced-motion: reduce)'));
+  assert.match(reduced, /\.industry-support-logo\s*\{\s*transition:\s*none;\s*\}/);
+  assert.match(reduced, /\.industry-support-logo:hover\s*\{\s*transform:\s*none;\s*\}/);
+  const cardRule = css.match(/\.industry-support-logo\s*\{([^}]+)\}/)?.[1] || '';
+  assert.doesNotMatch(cardRule, /transform:|animation:/);
 });

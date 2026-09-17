@@ -567,7 +567,7 @@ for (const page of pages) {
     const head = html.match(/<head>([\s\S]*?)<\/head>/)?.[1] || '';
     const styles = [...head.matchAll(/<style\b[\s\S]*?<\/style>|<link\b[^>]*rel="stylesheet"[^>]*>/g)]
       .map((match) => match[0].startsWith('<style') ? '<style>' : match[0]);
-    const contentVersion = '20260914-justify';
+    const contentVersion = page === 'index.html' ? '20260916-industry-hover' : '20260914-justify';
     assert.deepEqual(styles.slice(-2), [
       '<link rel="stylesheet" href="files/assets/site-theme.css?v=20260913-stars">',
       `<link rel="stylesheet" href="files/assets/site-content.css?v=${contentVersion}">`

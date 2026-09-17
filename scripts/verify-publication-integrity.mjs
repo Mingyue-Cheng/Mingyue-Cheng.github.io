@@ -482,8 +482,8 @@ test('in-memory conflict fixtures expose one arXiv ID mapped to different titles
   );
 });
 
-test('publication title baseline locks the complete 70-paper order on both publication surfaces', () => {
-  assert.equal(titleBaseline.publications.length, 70, 'fixture must intentionally list 70 publications');
+test('publication title baseline locks the complete 72-paper order on both publication surfaces', () => {
+  assert.equal(titleBaseline.publications.length, 72, 'fixture must intentionally list 72 publications');
   assert.deepEqual(
     publicationRecords(publicationsHtml, 'publications.html').map((record) => record.title),
     titleBaseline.publications
@@ -748,8 +748,8 @@ test('homepage presents the complete year-grouped publication catalog with a lin
 
   assert.equal(
     selectedEntries.length,
-    70,
-    `Selected Publications must contain the complete 70-paper catalog; found ${selectedEntries.length}`
+    72,
+    `Selected Publications must contain the complete 72-paper catalog; found ${selectedEntries.length}`
   );
   assert.match(selected, /<a\b[^>]*href="publications\.html"[^>]*>/, 'link to full publication list');
   for (const title of requiredTitles) {
@@ -760,7 +760,7 @@ test('homepage presents the complete year-grouped publication catalog with a lin
     );
   }
   const completeEntries = publicationEntries(publicationsHtml);
-  assert.equal(completeEntries.length, 70, `Publications page must retain the complete list; found ${completeEntries.length}`);
+  assert.equal(completeEntries.length, 72, `Publications page must retain the complete list; found ${completeEntries.length}`);
   assert.deepEqual(selectedEntries.map(normalizeText), completeEntries.map(normalizeText));
 });
 

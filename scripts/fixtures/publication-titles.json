@@ -30,6 +30,8 @@
     "From Hypothesis to Premises: LLM-based Backward Logical Reasoning with Selective Symbolic Translation",
     "BLADE: A Behavior-Level Data Augmentation Framework with Dual Fusion Modeling for Multi-Behavior Sequential Recommendation",
     "PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization",
+    "CastClaw: A Human-in-the-Loop Autonomous Agent for Industry Time Series Forecasting",
+    "Claw-R1: Interactive Data Lifecycle Management for Agentic Reinforcement Learning",
     "Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning",
     "TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning",
     "ConvTimeNet: A Deep Hierarchical Fully Convolutional Model for Multivariate Time Series Analysis",

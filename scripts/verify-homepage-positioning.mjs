@@ -340,15 +340,37 @@ function findRetiredActionSelectors(styleText) {
     .filter((selector) => retiredActionSelectorPattern.test(selector));
 }
 
-test('homepage hero states the research thesis in both languages', () => {
-  assert.match(
-    indexHtml,
-    /<p class="profile-thesis" data-i18n="profile\.thesis">I study LLM-driven reasoning and AI agents, motivated by complex tasks in time-series intelligence and science intelligence\.<\/p>/
-  );
-  assert.match(
-    indexHtml,
-    /"profile\.thesis": "以大模型推理与智能体为核心，以时序智能和科学智能中的复杂任务为牵引。"/
-  );
+test('homepage hero omits the removed research summary and its bilingual hooks', () => {
+  assert.equal(/profile-thesis|profile\.thesis/.test(indexHtml), false,
+    'the removed summary markup, styles, and translation keys must be absent');
+  assert.equal(/I study LLM-driven reasoning|以大模型推理与智能体为核心，以时序智能/.test(indexHtml), false,
+    'neither language dictionary should retain the removed summary');
+  const sharedCss = readFileSync(join(root, 'files/assets/site-content.css'), 'utf8');
+  assert.equal(sharedCss.includes('.profile-thesis'), false,
+    'shared prose styles should not target the removed summary');
+  assert.match(indexHtml, /<div class="profile-affil">[\s\S]*?<\/div>\s*<div class="profile-badges">/);
+});
+
+test('homepage displays the academic title once beside the name', () => {
+  const heading = indexHtml.match(/<h1 class="profile-name">([\s\S]*?)<\/h1>/)?.[1] || '';
+  assert.ok(heading.includes('Mingyue Cheng'), 'the English name remains the main heading');
+  assert.equal(heading.includes('data-i18n="profile.title"'), true,
+    'the academic title must be placed inside the name heading');
+  assert.match(heading, /<span class="profile-title" data-i18n="profile\.title">Ph\.D\. &nbsp;·&nbsp; Associate Researcher<\/span>/);
+  assert.equal(heading.includes('程明月'), false, 'the title replaces the Chinese name beside the English name');
+  assert.equal(count(indexHtml, /data-i18n="profile\.title"/g), 1, 'the title appears only once');
+  assert.equal(/<div class="profile-title"/.test(indexHtml), false, 'the old standalone title row is removed');
+  assert.equal(indexHtml.includes('profile-name-cn'), false, 'unused Chinese-name styles are removed');
+});
+
+test('homepage name and academic title align on desktop and can wrap on narrow screens', () => {
+  const style = extractStyleText(indexHtml);
+  const nameRule = style.match(/\.profile-name\s*\{([^}]+)\}/)?.[1] || '';
+  const titleRule = style.match(/\.profile-title\s*\{([^}]+)\}/)?.[1] || '';
+  assert.match(nameRule, /display:\s*flex/);
+  assert.match(nameRule, /align-items:\s*baseline/);
+  assert.match(nameRule, /flex-wrap:\s*wrap/);
+  assert.match(titleRule, /margin:\s*0\s*;/);
 });
 
 test('homepage hero starts closer to the refined shared navigation', () => {
@@ -408,10 +430,10 @@ test('homepage translatePage applies surviving content and accessible-name trans
 
   const dictionaryContext = {};
   vm.runInNewContext(`globalThis.dictionary = (${i18nLiteral});`, dictionaryContext);
-  const thesis = {
+  const profileTitle = {
     innerHTML: '',
     getAttribute(name) {
-      return name === 'data-i18n' ? 'profile.thesis' : null;
+      return name === 'data-i18n' ? 'profile.title' : null;
     }
   };
   const researchIntro = {
@@ -432,7 +454,7 @@ test('homepage translatePage applies surviving content and accessible-name trans
   const document = {
     documentElement: { lang: 'en' },
     querySelectorAll(selector) {
-      if (selector === '[data-i18n]') return [thesis, researchIntro];
+      if (selector === '[data-i18n]') return [profileTitle, researchIntro];
       if (selector === '[data-i18n-aria-label]') return [profileHome];
       return [];
     },
@@ -447,7 +469,7 @@ test('homepage translatePage applies surviving content and accessible-name trans
   );
 
   assert.equal(document.documentElement.lang, 'zh-CN');
-  assert.equal(thesis.innerHTML, '以大模型推理与智能体为核心，以时序智能和科学智能中的复杂任务为牵引。');
+  assert.equal(profileTitle.innerHTML, '博士 &nbsp;·&nbsp; 副研究员');
   assert.equal(
     researchIntro.innerHTML.replace(/<[^>]*>/g, ''),
     '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。'

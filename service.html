@@ -209,6 +209,8 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 }
 .venue-name a { color: var(--accent); text-decoration: none; }
 .venue-name a:hover { text-decoration: underline; }
+.organization-grid .venue-card-top { grid-row: 1; }
+.organization-grid .venue-name { grid-column: 2 / -1; }
 
 /* ===== Journal Cards ===== */
 .journal-grid {
@@ -314,15 +316,15 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 
     <!-- Program Committee -->
     <div class="section-block">
-      <h2 class="section-heading">Program Committee Member</h2>
+      <h2 class="section-heading" data-page-i18n="service.pc">Program Committee Member</h2>
       <div class="venue-grid">
 
         <div class="venue-card">
           <div class="venue-card-top">
-            <span class="venue-abbr">AAAI</span>
+            <span class="venue-abbr">KDD</span>
           </div>
-          <div class="venue-years">2026, 2027</div>
-          <div class="venue-name">AAAI Conference on Artificial Intelligence</div>
+          <div class="venue-years">2023, 2024, 2025, 2026, 2027</div>
+          <div class="venue-name">ACM SIGKDD Conference on Knowledge Discovery and Data Mining</div>
         </div>
 
         <div class="venue-card">
@@ -335,26 +337,26 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 
         <div class="venue-card">
           <div class="venue-card-top">
-            <span class="venue-abbr">KDD</span>
+            <span class="venue-abbr">WSDM</span>
           </div>
-          <div class="venue-years">2023, 2024, 2025, 2026, 2027</div>
-          <div class="venue-name">ACM SIGKDD Conference on Knowledge Discovery and Data Mining</div>
+          <div class="venue-years">2025, 2027</div>
+          <div class="venue-name">International Conference on Web Search and Data Mining</div>
         </div>
 
         <div class="venue-card">
           <div class="venue-card-top">
-            <span class="venue-abbr">SIGSPATIAL</span>
+            <span class="venue-abbr">CIKM</span>
           </div>
-          <div class="venue-years">2026</div>
-          <div class="venue-name">ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems</div>
+          <div class="venue-years">2024, 2025</div>
+          <div class="venue-name">ACM International Conference on Information and Knowledge Management</div>
         </div>
 
         <div class="venue-card">
           <div class="venue-card-top">
-            <span class="venue-abbr">ICLR</span>
+            <span class="venue-abbr">ICDM</span>
           </div>
-          <div class="venue-years">2025</div>
-          <div class="venue-name">International Conference on Learning Representations</div>
+          <div class="venue-years"></div>
+          <div class="venue-name">IEEE International Conference on Data Mining</div>
         </div>
 
         <div class="venue-card">
@@ -363,6 +365,14 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
           </div>
           <div class="venue-years">2025, 2026</div>
           <div class="venue-name">International Conference on Machine Learning</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">ICLR</span>
+          </div>
+          <div class="venue-years">2025, 2027</div>
+          <div class="venue-name">International Conference on Learning Representations <span class="venue-role" data-page-i18n="service.iclrAreaChair">Area Chair 2027</span></div>
         </div>
 
         <div class="venue-card">
@@ -383,19 +393,35 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 
         <div class="venue-card">
           <div class="venue-card-top">
+            <span class="venue-abbr">EMNLP</span>
+          </div>
+          <div class="venue-years"></div>
+          <div class="venue-name">Conference on Empirical Methods in Natural Language Processing</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">AAAI</span>
+          </div>
+          <div class="venue-years">2026, 2027</div>
+          <div class="venue-name">AAAI Conference on Artificial Intelligence</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">SIGSPATIAL</span>
+          </div>
+          <div class="venue-years">2026</div>
+          <div class="venue-name">ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
             <span class="venue-abbr">IJCAI</span>
             <span class="venue-role">SPC 2026</span>
           </div>
           <div class="venue-years">2024, 2025, 2026</div>
           <div class="venue-name">International Joint Conference on Artificial Intelligence</div>
-        </div>
-
-        <div class="venue-card">
-          <div class="venue-card-top">
-            <span class="venue-abbr">WSDM</span>
-          </div>
-          <div class="venue-years">2025</div>
-          <div class="venue-name">International Conference on Web Search and Data Mining</div>
         </div>
 
         <div class="venue-card">
@@ -408,34 +434,10 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 
         <div class="venue-card">
           <div class="venue-card-top">
-            <span class="venue-abbr">CIKM</span>
-          </div>
-          <div class="venue-years">2024, 2025</div>
-          <div class="venue-name">ACM International Conference on Information and Knowledge Management</div>
-        </div>
-
-        <div class="venue-card">
-          <div class="venue-card-top">
             <span class="venue-abbr">DASFAA</span>
           </div>
           <div class="venue-years">2024, 2025</div>
           <div class="venue-name">Database Systems for Advanced Applications</div>
-        </div>
-
-        <div class="venue-card">
-          <div class="venue-card-top">
-            <span class="venue-abbr">IEEE DEAL</span>
-          </div>
-          <div class="venue-years"></div>
-          <div class="venue-name">IEEE Task Force on Data-Efficient Agentic Learning (DEAL)</div>
-        </div>
-
-        <div class="venue-card">
-          <div class="venue-card-top">
-            <span class="venue-abbr">IEEE TF</span>
-          </div>
-          <div class="venue-years"></div>
-          <div class="venue-name"><a href="https://cis.taskforce.ieee.org/ai4tst/" target="_blank" rel="noopener">IEEE Task Force on AI for Time Series and Spatio-Temporal Data</a></div>
         </div>
 
       </div>
@@ -443,7 +445,7 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
 
     <!-- Journal Reviewer -->
     <div class="section-block">
-      <h2 class="section-heading">Journal Reviewer</h2>
+      <h2 class="section-heading" data-page-i18n="service.journal">Journal Reviewer</h2>
       <div class="journal-grid">
 
         <div class="journal-card">
@@ -501,6 +503,42 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
       </div>
     </div>
 
+    <!-- Academic Organizations -->
+    <div class="section-block" id="academic-organizations">
+      <h2 class="section-heading" data-page-i18n="service.organizations">Academic Organization Service</h2>
+      <div class="venue-grid organization-grid">
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">IEEE DEAL</span>
+          </div>
+          <div class="venue-name" data-page-i18n="service.ieeeDeal">IEEE Task Force on Data-Efficient Agentic Learning (DEAL)</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">IEEE TF</span>
+          </div>
+          <div class="venue-name"><a href="https://cis.taskforce.ieee.org/ai4tst/" target="_blank" rel="noopener" data-page-i18n="service.ieeeAi4tst">IEEE Task Force on AI for Time Series and Spatio-Temporal Data</a></div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">CCF</span>
+          </div>
+          <div class="venue-name" data-page-i18n="service.ccfAipr">Technical Committee on Artificial Intelligence and Pattern Recognition, China Computer Federation (CCF) — Executive Committee Member</div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card-top">
+            <span class="venue-abbr">CIPS</span>
+          </div>
+          <div class="venue-name" data-page-i18n="service.cipsIr">Information Retrieval Technical Committee, Chinese Information Processing Society of China (CIPS) — Corresponding Member</div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -531,6 +569,6 @@ body { font-family: var(--font); color: var(--text); background: var(--bg); line
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20260917-consistency"></script>
+<script src="files/assets/site-language.js?v=20260917-service"></script>
 </body>
 </html>

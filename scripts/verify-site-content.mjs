@@ -8,7 +8,6 @@ const css = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 const clean = (source) => source.replace(/\/\*[\s\S]*?\*\//g, '');
 const proseSelectors = [
   ".section p",
-  ".profile-thesis",
   ".profile-affil",
   ".research-section p",
   ".research-section li",

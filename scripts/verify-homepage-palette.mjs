@@ -27,7 +27,7 @@ test('muted hero text remains readable on the pale blue gradient', () => {
     return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
   }).reduce((sum, value, i) => sum + value * [0.2126, 0.7152, 0.0722][i], 0);
   const surface = css.match(/radial-gradient\(ellipse at 0 10%, (#[\da-f]{6})/i)[1];
-  for (const name of ['profile-name-cn', 'profile-contact']) {
+  for (const name of ['profile-title', 'profile-contact']) {
     const rule = css.match(new RegExp(`\\.${name}\\s*\\{([^}]+)\\}`))[1];
     const color = rule.match(/(?:^|;)\s*color:\s*(#[\da-f]{6})/i)[1];
     const contrast = (luminance(surface) + 0.05) / (luminance(color) + 0.05);

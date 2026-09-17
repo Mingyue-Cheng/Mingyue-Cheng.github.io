@@ -15,6 +15,22 @@ const sharedCopy = vm.runInNewContext(`(${sharedLiteral})`);
 const pages = ['index.html', 'research.html', 'news.html', 'publications.html', 'projects.html', 'awards.html', 'service.html', 'resources.html', 'prediction-intelligence.html'];
 const introEn = 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining).';
 const introZh = '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。';
+const organizationCopy = {
+  en: {
+    organizations: 'Academic Organization Service',
+    ieeeDeal: 'IEEE Task Force on Data-Efficient Agentic Learning (DEAL)',
+    ieeeAi4tst: 'IEEE Task Force on AI for Time Series and Spatio-Temporal Data',
+    ccfAipr: 'Technical Committee on Artificial Intelligence and Pattern Recognition, China Computer Federation (CCF) — Executive Committee Member',
+    cipsIr: 'Information Retrieval Technical Committee, Chinese Information Processing Society of China (CIPS) — Corresponding Member'
+  },
+  zh: {
+    organizations: '学术组织任职',
+    ieeeDeal: 'IEEE 数据高效智能体学习工作组（DEAL）',
+    ieeeAi4tst: 'IEEE 时间序列与时空数据人工智能工作组（AI4TST）',
+    ccfAipr: '中国计算机学会人工智能与模式识别专业委员会 — 执行委员',
+    cipsIr: '中国中文信息学会信息检索专业委员会 — 通讯委员'
+  }
+};
 
 function keyedMarkup(html, attribute, key) {
   const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -24,6 +40,31 @@ function keyedMarkup(html, attribute, key) {
 }
 
 for (const lang of ['en', 'zh']) {
+  test(`${lang}: academic organization names and appointments agree across both service surfaces`, () => {
+    const expected = {
+      ...organizationCopy[lang],
+      pc: lang === 'en' ? 'Program Committee Member' : '程序委员会委员',
+      journal: lang === 'en' ? 'Journal Reviewer' : '期刊审稿人'
+    };
+    for (const [suffix, value] of Object.entries(expected)) {
+      const key = `service.${suffix}`;
+      assert.equal(homeCopy[lang][key], value, key);
+      assert.equal(sharedCopy[lang].pages['service.html'].content?.[key], value, key);
+      keyedMarkup(home, 'data-i18n', key);
+      keyedMarkup(read('service.html'), 'data-page-i18n', key);
+    }
+  });
+
+  test(`${lang}: inline ICLR Area Chair role agrees between homepage and service page`, () => {
+    const expected = lang === 'en' ? 'Area Chair 2027' : '领域主席 2027';
+    assert.equal(homeCopy[lang]['service.iclrAreaChair'], expected);
+    assert.equal(sharedCopy[lang].pages['service.html'].content?.['service.iclrAreaChair'], expected);
+    assert.equal(homeCopy[lang]['service.areaChair'], undefined);
+    assert.equal(sharedCopy[lang].pages['service.html'].content?.['service.areaChair'], undefined);
+    keyedMarkup(home, 'data-i18n', 'service.iclrAreaChair');
+    keyedMarkup(read('service.html'), 'data-page-i18n', 'service.iclrAreaChair');
+  });
+
   test(`${lang}: homepage and Research share the latest introduction`, () => {
     const expected = lang === 'en' ? introEn : introZh;
     assert.equal(plain(homeCopy[lang]['research.intro']), expected);
@@ -71,6 +112,13 @@ for (const lang of ['en', 'zh']) {
   });
 }
 
+test('academic organization fallback text matches the English translations on both pages', () => {
+  for (const [suffix, expected] of Object.entries(organizationCopy.en)) {
+    assert.equal(plain(keyedMarkup(home, 'data-i18n', `service.${suffix}`)), expected);
+    assert.equal(plain(keyedMarkup(read('service.html'), 'data-page-i18n', `service.${suffix}`)), expected);
+  }
+});
+
 test('default homepage markup and metadata no longer describe the superseded research positioning', () => {
   assert.equal(plain(keyedMarkup(home, 'data-i18n', 'research.intro')), introEn);
   for (const path of ['index.html', 'research.html', 'publications.html']) {
@@ -79,7 +127,7 @@ test('default homepage markup and metadata no longer describe the superseded res
       assert.match(match[1], /LLM-driven reasoning and AI agents/, path);
     }
   }
-  assert.match(plain(keyedMarkup(home, 'data-i18n', 'profile.thesis')), /LLM-driven reasoning and AI agents/);
+  assert.equal(home.includes('data-i18n="profile.thesis"'), false, 'the hero should not duplicate the research introduction');
 });
 
 test('Research application fallback markup matches homepage summaries and topics', () => {
@@ -117,7 +165,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
-    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260917-consistency/, path);
+    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260917-service/, path);
   }
 });
 
@@ -134,7 +182,7 @@ test('shared styles own both application-card surfaces and standard page heroes'
 
 // Execute the actual shared script against text nodes used by each real page.
 // Storage and DOM are the only doubles; translation logic is never mocked.
-for (const path of ['research.html', 'projects.html', 'publications.html']) {
+for (const path of ['research.html', 'projects.html', 'publications.html', 'service.html']) {
   test(`${path}: saved language and round-trip switching update all bound content`, () => {
     for (const initialLang of ['en', 'zh']) {
       const elements = [...active(read(path)).matchAll(/<([a-z][\w-]*)\b[^>]*data-page-i18n="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/g)].map((match) => ({

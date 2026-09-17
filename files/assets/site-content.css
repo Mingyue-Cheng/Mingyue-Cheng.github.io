@@ -420,7 +420,6 @@ a:focus-visible,
 /* Reading text uses the same alignment in both languages and at every width.
    Keep the final line natural and leave headings, controls and logos untouched. */
 html[lang] .section p,
-html[lang] .profile-thesis,
 html[lang] .profile-affil,
 html[lang] .research-section p,
 html[lang] .research-section li,

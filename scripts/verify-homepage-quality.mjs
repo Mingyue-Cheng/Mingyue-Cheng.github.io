@@ -392,7 +392,7 @@ test('homepage content polish stays current and layout-stable', () => {
     indexHtml,
     /<img class="profile-photo" src="\.\/HomePage_files\/Mycheng-6\.png" alt="Mingyue Cheng" width="358" height="441" decoding="async">/
   );
-  assert.match(indexHtml, /data-i18n="profile\.title">Ph\.D\. &nbsp;·&nbsp; Associate Researcher<\/div>/);
+  assert.match(indexHtml, /<span class="profile-title" data-i18n="profile\.title">Ph\.D\. &nbsp;·&nbsp; Associate Researcher<\/span>/);
   assert.match(indexHtml, />Professional Experience<\/h2>/);
   assert.match(indexHtml, /Computer Science and Technology, Ph\.D\. degree,/);
   assert.match(indexHtml, /Last updated in September 2026\./);
@@ -416,6 +416,94 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.doesNotMatch(indexHtml, /citations\?user=74IhSx8AAAAJ&hl/);
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });
+
+test('homepage merges ICLR Area Chair into its single program committee entry', () => {
+  const services = sectionBetween(indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Research Grants ===== -->');
+  assert.equal(services.includes('data-i18n="service.areaChair"'), false, 'the separate Area Chair group must be removed');
+  assert.equal(count(services, /\(ICLR\)/g), 1, 'ICLR should only appear once in the service list');
+  const pc = sectionBetween(services, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
+  assert.ok(pc.includes('International Conference on Learning Representations (ICLR): 2025, 2027 (<span data-i18n="service.iclrAreaChair">Area Chair 2027</span>)'));
+});
+
+test('service subpage merges ICLR Area Chair into the existing conference row', () => {
+  assert.equal(serviceHtml.includes('<!-- Area Chair -->'), false, 'the separate Area Chair block must be removed');
+  assert.equal(serviceHtml.includes('data-page-i18n="service.areaChair"'), false);
+  assert.equal(count(serviceHtml, /class="venue-abbr">ICLR<\/span>/g), 1, 'ICLR should only appear once');
+  const pc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
+  assert.match(pc, /class="venue-abbr">ICLR<\/span>\s*<\/div>\s*<div class="venue-years">2025, 2027<\/div>/);
+  assert.match(pc, /class="venue-name">International Conference on Learning Representations <span class="venue-role" data-page-i18n="service\.iclrAreaChair">Area Chair 2027<\/span><\/div>/);
+});
+
+const serviceOrder = [
+  'KDD', 'TheWebConf', 'WSDM', 'CIKM', 'ICDM', 'ICML', 'ICLR', 'NeurIPS',
+  'ACL', 'EMNLP', 'AAAI', 'SIGSPATIAL', 'IJCAI', 'SDM', 'DASFAA'
+];
+
+test('homepage conference service follows the requested order with remaining entries last', () => {
+  const pc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
+  const order = [...pc.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => {
+    if (match[1].includes('IEEE Task Force on Data-Efficient Agentic Learning')) return 'IEEE DEAL';
+    if (match[1].includes('IEEE Task Force on AI for Time Series')) return 'IEEE TF';
+    return match[1].match(/\(([^)]+)\)/)?.[1];
+  });
+  assert.deepEqual(order, serviceOrder);
+});
+
+test('service subpage conference order matches the homepage', () => {
+  const pc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
+  const order = [...pc.matchAll(/class="venue-abbr">([^<]+)<\/span>/g)].map((match) => match[1]);
+  assert.deepEqual(order, serviceOrder);
+});
+
+test('new ICDM and EMNLP service entries do not invent reviewing years', () => {
+  const homepagePc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
+  const servicePc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
+  for (const [abbr, fullName] of [
+    ['ICDM', 'IEEE International Conference on Data Mining'],
+    ['EMNLP', 'Conference on Empirical Methods in Natural Language Processing']
+  ]) {
+    assert.ok(homepagePc.includes(`<li>${fullName} (${abbr})</li>`));
+    assert.ok(servicePc.includes(`<span class="venue-abbr">${abbr}</span>\n          </div>\n          <div class="venue-years"></div>\n          <div class="venue-name">${fullName}</div>`));
+  }
+});
+
+test('homepage groups the four academic organization appointments outside conference reviewing', () => {
+  const pc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
+  assert.doesNotMatch(pc, /IEEE Task Force|service\.(?:ccfAipr|cipsIr)/);
+  const organizations = sectionBetween(indexHtml, '<!-- Academic Organizations -->', '<!-- ===== Research Grants ===== -->');
+  assert.match(organizations, /class="services-label" data-i18n="service.organizations">Academic Organization Service<\/div>/);
+  assert.equal(count(organizations, /<li\b/g), 4);
+  assert.deepEqual([...organizations.matchAll(/data-i18n="service\.(ieeeDeal|ieeeAi4tst|ccfAipr|cipsIr)"/g)].map((match) => match[1]), ['ieeeDeal', 'ieeeAi4tst', 'ccfAipr', 'cipsIr']);
+  assert.match(organizations, /href="https:\/\/cis\.taskforce\.ieee\.org\/ai4tst\/"[^>]*data-i18n="service.ieeeAi4tst"/);
+});
+
+test('service subpage groups IEEE, CCF and CIPS in a separate academic organization section', () => {
+  const pc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
+  assert.doesNotMatch(pc, /IEEE Task Force|service\.(?:ccfAipr|cipsIr)/);
+  const organizations = sectionBetween(serviceHtml, '<!-- Academic Organizations -->', '</main>');
+  assert.match(organizations, /class="section-heading" data-page-i18n="service.organizations">Academic Organization Service<\/h2>/);
+  assert.deepEqual([...organizations.matchAll(/class="venue-abbr">([^<]+)<\/span>/g)].map((match) => match[1]), ['IEEE DEAL', 'IEEE TF', 'CCF', 'CIPS']);
+  assert.deepEqual([...organizations.matchAll(/data-page-i18n="service\.(ieeeDeal|ieeeAi4tst|ccfAipr|cipsIr)"/g)].map((match) => match[1]), ['ieeeDeal', 'ieeeAi4tst', 'ccfAipr', 'cipsIr']);
+  assert.match(organizations, /href="https:\/\/cis\.taskforce\.ieee\.org\/ai4tst\/"[^>]*data-page-i18n="service.ieeeAi4tst"/);
+  assert.doesNotMatch(organizations, /class="venue-years"/, 'no appointment dates were supplied');
+});
+
+for (const [abbr, fullName, years] of [
+  ['WSDM', 'International Conference on Web Search and Data Mining', '2025, 2027'],
+  ['AAAI', 'AAAI Conference on Artificial Intelligence', '2026, 2027'],
+  ['ICLR', 'International Conference on Learning Representations', '2025, 2027']
+]) {
+  test(`${abbr} 2027 PC service is synchronized without duplicate records or lost earlier years`, () => {
+    const homepagePc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
+    const entries = [...homepagePc.matchAll(/<li>([\s\S]*?)<\/li>/g)]
+      .map((match) => match[1]).filter((entry) => entry.includes(`(${abbr})`));
+    const role = abbr === 'ICLR' ? ' (<span data-i18n="service.iclrAreaChair">Area Chair 2027</span>)' : '';
+    assert.deepEqual(entries, [`${fullName} (${abbr}): ${years}${role}`]);
+    const servicePc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
+    const record = new RegExp(`class="venue-abbr">${abbr}<\\/span>\\s*<\\/div>\\s*<div class="venue-years">([^<]+)<\\/div>`, 'g');
+    assert.deepEqual([...servicePc.matchAll(record)].map((match) => match[1]), [years]);
+  });
+}
 
 test('homepage lists Science China Information Sciences once under journal reviewing', () => {
   const journals = sectionBetween(indexHtml, 'data-i18n="service.journal"', '<!-- ===== Research Grants ===== -->')

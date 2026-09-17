@@ -114,7 +114,17 @@
         },
         'service.html': {
           title: 'Professional Service',
-          subtitle: 'Selected program committee service, journal reviewing, teaching, and academic community contributions.'
+          subtitle: 'Selected program committee service, journal reviewing, teaching, and academic community contributions.',
+          content: {
+            'service.iclrAreaChair': 'Area Chair 2027',
+            'service.pc': 'Program Committee Member',
+            'service.journal': 'Journal Reviewer',
+            'service.organizations': 'Academic Organization Service',
+            'service.ieeeDeal': 'IEEE Task Force on Data-Efficient Agentic Learning (DEAL)',
+            'service.ieeeAi4tst': 'IEEE Task Force on AI for Time Series and Spatio-Temporal Data',
+            'service.ccfAipr': 'Technical Committee on Artificial Intelligence and Pattern Recognition, China Computer Federation (CCF) — Executive Committee Member',
+            'service.cipsIr': 'Information Retrieval Technical Committee, Chinese Information Processing Society of China (CIPS) — Corresponding Member'
+          }
         },
         'resources.html': {
           title: 'Resources',
@@ -237,7 +247,17 @@
         },
         'service.html': {
           title: '学术服务',
-          subtitle: '代表性程序委员会、期刊审稿、教学与学术共同体服务。'
+          subtitle: '代表性程序委员会、期刊审稿、教学与学术共同体服务。',
+          content: {
+            'service.iclrAreaChair': '领域主席 2027',
+            'service.pc': '程序委员会委员',
+            'service.journal': '期刊审稿人',
+            'service.organizations': '学术组织任职',
+            'service.ieeeDeal': 'IEEE 数据高效智能体学习工作组（DEAL）',
+            'service.ieeeAi4tst': 'IEEE 时间序列与时空数据人工智能工作组（AI4TST）',
+            'service.ccfAipr': '中国计算机学会人工智能与模式识别专业委员会 — 执行委员',
+            'service.cipsIr': '中国中文信息学会信息检索专业委员会 — 通讯委员'
+          }
         },
         'resources.html': {
           title: '资源',

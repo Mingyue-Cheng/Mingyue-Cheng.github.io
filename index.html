@@ -245,12 +245,16 @@ body {
 }
 .profile-info { flex: 1; min-width: 0; }
 .profile-name {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 18px;
   font-size: clamp(30px, 3.5vw, 40px);
   font-weight: 750;
   color: var(--accent);
   letter-spacing: -0.04em;
   line-height: 1.25;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 .profile-home-link {
   display: inline-flex;
@@ -269,18 +273,13 @@ body {
   outline-offset: 4px;
   border-radius: var(--radius);
 }
-.profile-name-cn {
-  font-size: 22px;
-  color: #5a6e79;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-}
 .profile-title {
-  font-size: 14px;
+  font-size: 16px;
   color: #315b70;
-  margin: 0 0 12px;
+  margin: 0;
   font-weight: 600;
   letter-spacing: 0.01em;
+  line-height: 1.5;
 }
 .profile-affil {
   font-size: 14px;
@@ -291,17 +290,6 @@ body {
 .profile-affil a { color: inherit; text-decoration: none; }
 .profile-affil a:last-child { color: var(--accent); font-weight: 600; }
 .profile-affil a:hover { text-decoration: underline; }
-.profile-thesis {
-  max-width: 660px;
-  margin: 0 0 20px;
-  padding-left: 16px;
-  border-left: 3px solid #aec6d4;
-  color: #344c5a;
-  font-size: 16px;
-  font-weight: 450;
-  line-height: 1.75;
-  text-align: left;
-}
 .profile-badges {
   display: flex;
   gap: 8px;
@@ -1433,9 +1421,7 @@ html[lang="zh-CN"] .footer-title {
   .profile-wrap { flex-direction: column; gap: 24px; }
   .profile-photo { width: 140px; height: 173px; border-width: 5px; margin-top: 0; }
   .profile-info { width: 100%; }
-  .profile-name-cn { font-size: 20px; }
   .profile-affil { margin-bottom: 18px; }
-  .profile-thesis { font-size: 15px; }
   .profile-badges { gap: 6px; }
   .profile-badges .badge { padding: 6px 10px; font-size: 12px; }
   .os-grid { grid-template-columns: 1fr; }
@@ -1609,15 +1595,14 @@ html[lang="zh-CN"] .footer-title {
       <img class="profile-photo" src="./HomePage_files/Mycheng-6.png" alt="Mingyue Cheng" width="358" height="441" decoding="async">
       <div class="profile-info">
         <h1 class="profile-name">
-          <a class="profile-home-link" href="index.html" aria-label="Refresh homepage" data-i18n-aria-label="a11y.profileHome">Mingyue Cheng &nbsp;<span class="profile-name-cn">程明月</span></a>
+          <a class="profile-home-link" href="index.html" aria-label="Refresh homepage" data-i18n-aria-label="a11y.profileHome">Mingyue Cheng</a>
+          <span class="profile-title" data-i18n="profile.title">Ph.D. &nbsp;·&nbsp; Associate Researcher</span>
         </h1>
-        <div class="profile-title" data-i18n="profile.title">Ph.D. &nbsp;·&nbsp; Associate Researcher</div>
         <div class="profile-affil">
           <a href="http://cogskl.iflytek.com/" target="_blank" rel="noopener">State Key Laboratory of Cognitive Intelligence</a><br>
           <a href="http://cs.ustc.edu.cn/" target="_blank" rel="noopener">School of Computer Science and Technology</a>,&nbsp;
           <a href="http://www.ustc.edu.cn/" target="_blank" rel="noopener">University of Science and Technology of China</a>
         </div>
-        <p class="profile-thesis" data-i18n="profile.thesis">I study LLM-driven reasoning and AI agents, motivated by complex tasks in time-series intelligence and science intelligence.</p>
         <div class="profile-badges">
           <a href="https://ustcagi.github.io/" target="_blank" rel="noopener" class="badge">USTC-AGI Group</a>
           <a href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl" target="_blank" rel="noopener" class="badge">Google Scholar</a>
@@ -2299,21 +2284,21 @@ html[lang="zh-CN"] .footer-title {
     <div class="services-group">
       <div class="services-label" data-i18n="service.pc">Program Committee Member</div>
       <ul class="services-list">
-        <li>AAAI Conference on Artificial Intelligence (AAAI): 2026, 2027</li>
-        <li>ACM International World Wide Web Conference (TheWebConf): 2024, 2025, 2026</li>
         <li>ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD): 2023, 2024, 2025, 2026, 2027</li>
-        <li>ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems (SIGSPATIAL): 2026</li>
-        <li>International Conference on Learning Representations (ICLR): 2025</li>
+        <li>ACM International World Wide Web Conference (TheWebConf): 2024, 2025, 2026</li>
+        <li>International Conference on Web Search and Data Mining (WSDM): 2025, 2027</li>
+        <li>ACM International Conference on Information and Knowledge Management (CIKM): 2024, 2025</li>
+        <li>IEEE International Conference on Data Mining (ICDM)</li>
         <li>International Conference on Machine Learning (ICML): 2025, 2026</li>
+        <li>International Conference on Learning Representations (ICLR): 2025, 2027 (<span data-i18n="service.iclrAreaChair">Area Chair 2027</span>)</li>
         <li>Conference on Neural Information Processing Systems (NeurIPS): 2024, 2025, 2026</li>
         <li>Annual Meeting of the Association for Computational Linguistics (ACL): 2025, 2026</li>
+        <li>Conference on Empirical Methods in Natural Language Processing (EMNLP)</li>
+        <li>AAAI Conference on Artificial Intelligence (AAAI): 2026, 2027</li>
+        <li>ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems (SIGSPATIAL): 2026</li>
         <li>International Joint Conference on Artificial Intelligence (IJCAI): 2024, 2025, 2026 (SPC)</li>
-        <li>International Conference on Web Search and Data Mining (WSDM): 2025</li>
         <li>SIAM International Conference on Data Mining (SDM): 2024</li>
-        <li>ACM International Conference on Information and Knowledge Management (CIKM): 2024, 2025</li>
         <li>Database Systems for Advanced Applications (DASFAA): 2024, 2025</li>
-        <li>IEEE Task Force on Data-Efficient Agentic Learning (DEAL)</li>
-        <li><a href="https://cis.taskforce.ieee.org/ai4tst/" target="_blank" rel="noopener">IEEE Task Force on AI for Time Series and Spatio-Temporal Data</a></li>
       </ul>
     </div>
 
@@ -2333,6 +2318,17 @@ html[lang="zh-CN"] .footer-title {
         <li>Science China Information Sciences (SCIS)</li>
         <li>软件学报</li>
         <li>计算机学报</li>
+      </ul>
+    </div>
+
+    <!-- Academic Organizations -->
+    <div class="services-group" id="academic-organizations">
+      <div class="services-label" data-i18n="service.organizations">Academic Organization Service</div>
+      <ul class="services-list">
+        <li data-i18n="service.ieeeDeal">IEEE Task Force on Data-Efficient Agentic Learning (DEAL)</li>
+        <li><a href="https://cis.taskforce.ieee.org/ai4tst/" target="_blank" rel="noopener" data-i18n="service.ieeeAi4tst">IEEE Task Force on AI for Time Series and Spatio-Temporal Data</a></li>
+        <li data-i18n="service.ccfAipr">Technical Committee on Artificial Intelligence and Pattern Recognition, China Computer Federation (CCF) — Executive Committee Member</li>
+        <li data-i18n="service.cipsIr">Information Retrieval Technical Committee, Chinese Information Processing Society of China (CIPS) — Corresponding Member</li>
       </ul>
     </div>
   </div>
@@ -2497,7 +2493,6 @@ const i18n = {
     "a11y.publicationFilters": "Filter publications by research area",
     "a11y.backToTop": "Back to top",
     "profile.title": "Ph.D. &nbsp;·&nbsp; Associate Researcher",
-    "profile.thesis": "I study LLM-driven reasoning and AI agents, motivated by complex tasks in time-series intelligence and science intelligence.",
     "profile.emailLabel": "Email:",
     "profile.addressLabel": "Address:",
     "profile.address": "B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui, China, 230031",
@@ -2568,8 +2563,14 @@ const i18n = {
     "teaching.heading": "Teaching",
     "honors.heading": "Honors and Awards",
     "service.heading": "Professional Service",
+    "service.iclrAreaChair": "Area Chair 2027",
     "service.pc": "Program Committee Member",
     "service.journal": "Journal Reviewer",
+    "service.organizations": "Academic Organization Service",
+    "service.ieeeDeal": "IEEE Task Force on Data-Efficient Agentic Learning (DEAL)",
+    "service.ieeeAi4tst": "IEEE Task Force on AI for Time Series and Spatio-Temporal Data",
+    "service.ccfAipr": "Technical Committee on Artificial Intelligence and Pattern Recognition, China Computer Federation (CCF) — Executive Committee Member",
+    "service.cipsIr": "Information Retrieval Technical Committee, Chinese Information Processing Society of China (CIPS) — Corresponding Member",
     "grants.heading": "Research Grants",
     "grants.newGenerationAI": "2026.08–2028.07, New-Generation Artificial Intelligence National Science and Technology Major Project; Scientific Data Governance Toolchain and Datasets — Chemistry; Core Project Member",
     "grants.casPriority": "2026.07–2029.06, Chinese Academy of Sciences Strategic Priority Research Program for Basic and Interdisciplinary Frontier Research (Category B); Mechanisms and Methods for Autonomous Interactive Learning in Large Models; Project Lead",
@@ -2610,7 +2611,6 @@ const i18n = {
     "a11y.publicationFilters": "按研究方向筛选论文",
     "a11y.backToTop": "返回顶部",
     "profile.title": "博士 &nbsp;·&nbsp; 副研究员",
-    "profile.thesis": "以大模型推理与智能体为核心，以时序智能和科学智能中的复杂任务为牵引。",
     "profile.emailLabel": "邮箱：",
     "profile.addressLabel": "地址：",
     "profile.address": "安徽省合肥市中国科学技术大学高新校区信智楼 B709，230031",
@@ -2681,8 +2681,14 @@ const i18n = {
     "teaching.heading": "教学",
     "honors.heading": "荣誉与奖励",
     "service.heading": "学术服务",
+    "service.iclrAreaChair": "领域主席 2027",
     "service.pc": "程序委员会委员",
     "service.journal": "期刊审稿人",
+    "service.organizations": "学术组织任职",
+    "service.ieeeDeal": "IEEE 数据高效智能体学习工作组（DEAL）",
+    "service.ieeeAi4tst": "IEEE 时间序列与时空数据人工智能工作组（AI4TST）",
+    "service.ccfAipr": "中国计算机学会人工智能与模式识别专业委员会 — 执行委员",
+    "service.cipsIr": "中国中文信息学会信息检索专业委员会 — 通讯委员",
     "grants.heading": "科研项目",
     "grants.newGenerationAI": "2026.08–2028.07，新一代人工智能国家科技重大专项，科学数据治理工具链与数据集-化学领域，项目骨干",
     "grants.casPriority": "2026.07–2029.06，中国科学院基础与交叉前沿科研先导专项（B类），大模型自主交互学习机制及方法，项目负责人",

@@ -790,7 +790,7 @@ test('homepage keeps two technical directions while Research retains Prediction 
   );
 
   const expectedEnglishCollectionHtml =
-    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">AI for Science</a>';
+    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence</a>';
   const expectedChineseCollectionHtml = expectedEnglishCollectionHtml.replace(
     'Research collections: ',
     '研究主页：'
@@ -828,7 +828,7 @@ test('homepage keeps two technical directions while Research retains Prediction 
   );
 });
 
-test('research collections omit Tabular Data Mining without changing publication taxonomy', () => {
+test('research collections omit table research without removing its publication category', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -847,7 +847,7 @@ test('research collections omit Tabular Data Mining without changing publication
 
   assert.match(
     indexHtml,
-    /<button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub\.filterTable">Tabular Data Mining<\/button>/
+    /<button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub\.filterTable">Tabular Data Intelligence<\/button>/
   );
   assert.match(indexHtml, /<li data-tags="[^"]*\btable\b[^"]*">/);
   assert.match(

@@ -17,13 +17,14 @@ const publicHtmlSource = readdirSync(root)
 const expectedRepos = [
   'AgentR1/WebMind',
   'ustc-time-series/CastClaw',
+  'ustc-time-series/CastMind',
   'ustc-time-series/CastFactory',
-  'ustc-time-series/Future-Cast',
   'ustc-ai4science/academic-search',
   'AgentR1/PaperScout',
   'ustc-table-mining/TabClaw',
   'AgentR1/Claw-R1',
   'AgentR1/Agent-R1',
+  'ustc-time-series/Future-Cast',
   'benchen4395/KuaiSearch',
   'ustc-ai4science/PaperArena',
   'ustc-ai4science/ChemTable',
@@ -172,8 +173,25 @@ test('visible GitHub star counts map to canonical repository and stargazer links
   const homepageMappings = extractMappings(indexHtml);
   const subpageMappings = extractMappings(projectsHtml);
 
-  assert.deepEqual(homepageMappings.map(({ repo }) => repo), expectedRepos);
-  assert.deepEqual(subpageMappings, homepageMappings);
+  const homepageRepos = [
+    'AgentR1/Agent-R1',
+    'AgentR1/Claw-R1',
+    'ustc-time-series/CastClaw',
+    'ustc-time-series/CastMind',
+    'AgentR1/PaperScout',
+    'ustc-ai4science/academic-search',
+    'ustc-ai4science/PaperArena',
+    'ustc-ai4science/ChemTable',
+    'ustc-time-series/Future-Cast',
+    'benchen4395/KuaiSearch',
+    '0russwest0/HoH'
+  ];
+  assert.deepEqual(homepageMappings.map(({ repo }) => repo), homepageRepos);
+  assert.deepEqual(subpageMappings.map(({ repo }) => repo), expectedRepos);
+  assert.deepEqual(
+    homepageRepos.map((repo) => subpageMappings.find((mapping) => mapping.repo === repo)),
+    homepageMappings
+  );
 
   for (const source of [indexHtml, projectsHtml]) {
     assert.equal(

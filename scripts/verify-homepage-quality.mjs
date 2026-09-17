@@ -129,13 +129,13 @@ test('homepage selected-publication filters and year groups remain accessible', 
   const filterButtons = [...publications.matchAll(/<button class="pub-filter-btn[^"]*"[^>]*>/g)]
     .map((match) => match[0]);
 
-  assert.equal(filterButtons.length, 5);
+  assert.equal(filterButtons.length, 6);
   for (const button of filterButtons) {
     assert.match(button, /type="button"/);
     assert.match(button, /aria-pressed="(?:true|false)"/);
   }
-  assert.match(publications, /data-filter="ai4science"[^>]*>AI for Science<\/button>/);
-  assert.doesNotMatch(publications, /data-filter="recsys"/);
+  assert.match(publications, /data-filter="ai4science"[^>]*>Science Intelligence<\/button>/);
+  assert.match(publications, /data-filter="recsys"[^>]*>Recommender Systems<\/button>/);
 
   const yearToggles = [...publications.matchAll(
     /<button\b(?=[^>]*class="pub-year-toggle")(?=[^>]*aria-expanded="true")(?=[^>]*aria-controls="([^"]+)")[^>]*>/g
@@ -190,11 +190,11 @@ test('homepage selected-publication filters and year groups remain accessible', 
   );
 });
 
-test('homepage presents WebMind as the latest open-source project', () => {
+test('open-source subpage presents WebMind as the latest project', () => {
   const openSource = sectionBetween(
-    indexHtml,
-    '<!-- ===== Open Source Projects ===== -->',
-    '<!-- ===== Datasets ===== -->'
+    projectsHtml,
+    '<!-- ===== Open Source ===== -->',
+    '<!-- ===== Benchmarks & Datasets ===== -->'
   );
   const webMindCard = sectionBetween(
     openSource,
@@ -235,7 +235,7 @@ test('homepage keeps NeoResearch source-preserved but hidden', () => {
   );
 });
 
-test('open-source subpage mirrors homepage projects and venue badges', () => {
+test('open-source subpage matches shared homepage projects and venue badges', () => {
   const homepageOpenSource = sectionBetween(
     indexHtml,
     '<!-- ===== Open Source Projects ===== -->',
@@ -246,31 +246,39 @@ test('open-source subpage mirrors homepage projects and venue badges', () => {
     '<!-- ===== Open Source ===== -->',
     '<!-- ===== Benchmarks & Datasets ===== -->'
   );
+  const subpageOnlyCardNames = ['WebMind', 'CastFactory（炼星坊）', 'TabClaw'];
   const visible = (source) => source.replace(/<!--[\s\S]*?-->/g, '');
   const cardNames = (source) => [...visible(source).matchAll(
     /<div class="os-card-name">([^<]+)<\/div>/g
   )].map((match) => match[1]);
+  const sortedCards = (source) => visible(source)
+    .split('<div class="os-card">').slice(1)
+    .sort((left, right) => cardNames(left)[0].localeCompare(cardNames(right)[0]));
+  const sharedSubpageOpenSource = sortedCards(subpageOpenSource)
+    .filter((card) => !subpageOnlyCardNames.includes(cardNames(card)[0]))
+    .join('<div class="os-card">');
+  const sortedHomepageOpenSource = sortedCards(homepageOpenSource).join('<div class="os-card">');
   const normalizedMatches = (source, pattern) => [...visible(source).matchAll(pattern)]
     .map((match) => match[1].replace(/\s+/g, ' ').trim());
   const venueBadges = (source, className) => [...visible(source).matchAll(
     new RegExp(`<span class="${className}">([^<]+)<\\/span>`, 'g')
   )].map((match) => match[1]);
 
-  assert.deepEqual(cardNames(subpageOpenSource), cardNames(homepageOpenSource));
+  assert.deepEqual(cardNames(sharedSubpageOpenSource), cardNames(sortedHomepageOpenSource));
   for (const pattern of [
     /<span class="os-year">([^<]+)<\/span>/g,
     /<a\b[^>]*href="([^"]+)"[^>]*>/g,
     /data-repo="([^"]+)"/g,
-    /<div class="os-card-desc">([\s\S]*?)<\/div>/g
+    /<div class="os-card-desc"[^>]*>([\s\S]*?)<\/div>/g
   ]) {
     assert.deepEqual(
-      normalizedMatches(subpageOpenSource, pattern),
-      normalizedMatches(homepageOpenSource, pattern)
+      normalizedMatches(sharedSubpageOpenSource, pattern),
+      normalizedMatches(sortedHomepageOpenSource, pattern)
     );
   }
   assert.deepEqual(
-    venueBadges(subpageOpenSource, 'os-venue'),
-    venueBadges(homepageOpenSource, 'os-venue')
+    venueBadges(sharedSubpageOpenSource, 'os-venue'),
+    venueBadges(sortedHomepageOpenSource, 'os-venue')
   );
   assert.doesNotMatch(visible(subpageOpenSource), /NeoResearch（智多星）/);
   assert.match(
@@ -278,16 +286,22 @@ test('open-source subpage mirrors homepage projects and venue badges', () => {
     /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?<div class="os-card-name">NeoResearch（智多星）<\/div>[\s\S]*?-->/
   );
 
-  const homepageDatasets = sectionBetween(
+  const sortedDatasetCards = (source) => [...visible(source).matchAll(
+    /<article class="dataset-card">[\s\S]*?<\/article>/g
+  )].map(([card]) => card).sort((left, right) => {
+    const name = (card) => normalizedMatches(card, /<span class="dataset-name">([^<]+)<\/span>/g)[0];
+    return name(left).localeCompare(name(right));
+  }).join('\n');
+  const homepageDatasets = sortedDatasetCards(sectionBetween(
     indexHtml,
     '<!-- ===== Datasets ===== -->',
     '<!-- ===== Education ===== -->'
-  );
-  const subpageDatasets = sectionBetween(
+  ));
+  const subpageDatasets = sortedDatasetCards(sectionBetween(
     projectsHtml,
     '<!-- ===== Benchmarks & Datasets ===== -->',
     '</main>'
-  );
+  ));
   assert.deepEqual(
     venueBadges(subpageDatasets, 'dataset-venue'),
     venueBadges(homepageDatasets, 'dataset-venue')
@@ -297,7 +311,7 @@ test('open-source subpage mirrors homepage projects and venue badges', () => {
     /<span class="os-year">([^<]+)<\/span>/g,
     /<a\b[^>]*href="([^"]+)"[^>]*>/g,
     /data-repo="([^"]+)"/g,
-    /<div class="dataset-card-desc">([\s\S]*?)<\/div>/g
+    /<div class="dataset-card-desc"[^>]*>([\s\S]*?)<\/div>/g
   ]) {
     assert.deepEqual(
       normalizedMatches(subpageDatasets, pattern),
@@ -310,17 +324,17 @@ test('accepted open-source cards display their venue badges', () => {
   const agentR1Meta = sectionBetween(
     indexHtml,
     '<div class="os-card-name">Agent-R1</div>',
-    '<div class="os-card-desc"><span class="os-inline-highlight">Agent-R1</span>'
+    '<div class="os-card-desc"'
   );
   const tabClawMeta = sectionBetween(
-    indexHtml,
+    projectsHtml,
     '<div class="os-card-name">TabClaw</div>',
     '<div class="os-card-desc"><span class="os-inline-highlight">TabClaw</span>'
   );
   const paperScoutMeta = sectionBetween(
     indexHtml,
     '<div class="os-card-name">PaperScout</div>',
-    '<div class="os-card-desc"><span class="os-inline-highlight">PaperScout</span>'
+    '<div class="os-card-desc"'
   );
 
   assert.match(
@@ -383,7 +397,7 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /Computer Science and Technology, Ph\.D\. degree,/);
   assert.match(indexHtml, /Last updated in August 2026\./);
   assert.match(indexHtml, /最后更新于 2026 年 8 月。/);
-  assert.match(indexHtml, /"pub\.filterKnowledge": "AI for Science"/);
+  assert.match(indexHtml, /"pub\.filterKnowledge": "Science Intelligence"/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
   for (const [key, english, chinese] of [
     ['pub.preprint', '📘 Preprint', '📘 预印本'],
@@ -397,7 +411,8 @@ test('homepage content polish stays current and layout-stable', () => {
     assert.ok(indexHtml.includes(`"${key}": "${chinese}"`));
   }
   assert.doesNotMatch(indexHtml, /"pub\.representative":/);
-  assert.doesNotMatch(indexHtml, /"pub\.filterRec":/);
+  assert.match(indexHtml, /"pub\.filterRec": "Recommender Systems"/);
+  assert.match(indexHtml, /"pub\.filterRec": "推荐系统"/);
   assert.doesNotMatch(indexHtml, /citations\?user=74IhSx8AAAAJ&hl/);
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });

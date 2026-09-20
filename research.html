@@ -349,6 +349,10 @@ body {
 .pillar-card--timeseries::before {
   background: linear-gradient(90deg, var(--accent), #0891b2);
 }
+.pillar-card--science {
+  grid-column: 1 / -1;
+  color: var(--accent);
+}
 .pillar-card:hover {
   border-color: rgba(var(--accent-rgb), 0.25);
   box-shadow: 0 14px 34px rgba(var(--accent-rgb), 0.10);
@@ -651,7 +655,7 @@ body {
         <p class="page-hero-sub">
           My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning,
           autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in
-          time-series intelligence and science intelligence (scientific knowledge and tool mining).
+          time-series intelligence and science intelligence (scientific knowledge and tool mining). These application-driven directions are framed by 科言 SciToken — understanding the scientific world, and 科语 SciTime — modeling the dynamic world.
         </p>
       </div>
     </div>
@@ -717,9 +721,26 @@ body {
           <div class="pillar-card-copy">
             <h3 class="pillar-card-title" data-page-i18n="timeseriesTitle">Time Series Intelligence</h3>
             <p class="pillar-card-desc" data-page-i18n="timeseriesBody">
+              <strong>科语 SciTime — Modeling the dynamic world.</strong>
               Developing <strong>context-aware predictive intelligence</strong>, with a focus on
               <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>,
               <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.
+            </p>
+          </div>
+        </article>
+
+        <article class="pillar-card pillar-card--science">
+          <span class="pillar-card-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path>
+            </svg>
+          </span>
+          <div class="pillar-card-copy">
+            <h3 class="pillar-card-title" data-page-i18n="scienceIntelligenceTitle">Science Intelligence</h3>
+            <p class="pillar-card-desc" data-page-i18n="scienceIntelligenceBody">
+              <strong>科言 SciToken — Understanding the scientific world.</strong>
+              Focusing on <strong>scientific data</strong>, <strong>scientific tools</strong>,
+              <strong>scientific knowledge</strong>, and <strong>capability enhancement of scientific foundation models</strong>.
             </p>
           </div>
         </article>
@@ -741,7 +762,7 @@ body {
                 <path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path>
               </svg>
             </span>
-            <h3 class="scenario-card-title" data-page-i18n="scienceTitle">AI for Science</h3>
+            <h3 class="scenario-card-title" data-page-i18n="scienceTitle">Scientific Discovery</h3>
           </div>
           <p class="scenario-card-body" data-page-i18n="scienceBody">Connecting scientific data and knowledge to support reasoning and autonomous discovery.</p>
           <div class="scenario-card-topics" data-page-i18n="scienceTopics"><span>Literature mining</span><span>Scientific modeling</span></div>
@@ -816,6 +837,6 @@ body {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20260918-datasets"></script>
+<script src="files/assets/site-language.js?v=20260921-research-brands"></script>
 </body>
 </html>

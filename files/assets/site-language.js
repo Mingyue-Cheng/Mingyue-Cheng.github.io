@@ -25,7 +25,7 @@
       pages: {
         'research.html': {
           title: 'Research Interests',
-          subtitle: 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining).',
+          subtitle: 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining). These application-driven directions are framed by 科言 SciToken — understanding the scientific world, and 科语 SciTime — modeling the dynamic world.',
           labels: ['Research Vision', 'Core Technical Pillars', 'Application Domains'],
           scenarios: {
             researchQuestion: 'How can agents <strong>reliably solve problems through reasoning and interaction</strong> when <strong>information is incomplete</strong>, <strong>environments change</strong>, and <strong>feedback is costly</strong>?',
@@ -34,8 +34,10 @@
             agentTitle: 'LLMs and Agentic AI',
             agentBody: 'Developing <strong>autonomous interactive learning</strong> for large language models, including <strong>environment-interactive Agentic RL</strong>, <strong>tool-augmented reasoning</strong>, <strong>multi-agent orchestration</strong>, and continual capability evolution through context, knowledge, and memory.',
             timeseriesTitle: 'Time Series Intelligence',
-            timeseriesBody: 'Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.',
-            scienceTitle: 'AI for Science',
+            timeseriesBody: '<strong>科语 SciTime — Modeling the dynamic world.</strong> Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.',
+            scienceIntelligenceTitle: 'Science Intelligence',
+            scienceIntelligenceBody: '<strong>科言 SciToken — Understanding the scientific world.</strong> Focusing on <strong>scientific data</strong>, <strong>scientific tools</strong>, <strong>scientific knowledge</strong>, and <strong>capability enhancement of scientific foundation models</strong>.',
+            scienceTitle: 'Scientific Discovery',
             scienceBody: 'Connecting scientific data and knowledge to support reasoning and autonomous discovery.',
             industrialTitle: 'Industrial Systems',
             industrialBody: 'Forecasting and decision support for complex, evolving real-world systems.',
@@ -158,7 +160,7 @@
       pages: {
         'research.html': {
           title: '研究兴趣',
-          subtitle: '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。',
+          subtitle: '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。',
           labels: ['研究愿景', '核心技术支柱', '应用领域'],
           scenarios: {
             researchQuestion: '在<strong>信息不完整</strong>、<strong>环境会变化</strong>、<strong>反馈有成本</strong>的条件下，智能体如何通过<strong>推理与交互</strong>可靠地解决问题。',
@@ -167,8 +169,10 @@
             agentTitle: '大语言模型与智能体 AI',
             agentBody: '面向大语言模型研究<strong>自主交互学习</strong>，重点关注<strong>环境交互式 Agentic RL</strong>、<strong>工具增强推理</strong>、<strong>多智能体协同</strong>，以及基于情境、知识与记忆的持续能力演化。',
             timeseriesTitle: '时间序列智能',
-            timeseriesBody: '发展<strong>情境感知预测智能</strong>，重点研究<strong>多模态情境表征</strong>、<strong>慢思考推理</strong>、<strong>不确定性感知预测</strong>与<strong>自主智能体交互</strong>。',
-            scienceTitle: 'AI for Science',
+            timeseriesBody: '<strong>科语 SciTime：建模动态世界。</strong>发展<strong>情境感知预测智能</strong>，重点研究<strong>多模态情境表征</strong>、<strong>慢思考推理</strong>、<strong>不确定性感知预测</strong>与<strong>自主智能体交互</strong>。',
+            scienceIntelligenceTitle: '科学智能',
+            scienceIntelligenceBody: '<strong>科言 SciToken：理解科学世界。</strong>重点研究<strong>科学数据</strong>、<strong>科学工具</strong>、<strong>科学知识</strong>与<strong>科学基础模型能力增强</strong>等。',
+            scienceTitle: 'Scientific Discovery',
             scienceBody: '融合科学数据与知识，支持科学推理与自主发现。',
             industrialTitle: '工业系统',
             industrialBody: '面向持续演变的复杂系统，开展预测与决策支持。',

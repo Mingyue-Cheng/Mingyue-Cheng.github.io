@@ -333,7 +333,7 @@ test('accepted open-source cards display their venue badges', () => {
   );
   const paperScoutMeta = sectionBetween(
     indexHtml,
-    '<div class="os-card-name">PaperScout</div>',
+    '<div class="os-card-name">PaperScout（科言乐问）</div>',
     '<div class="os-card-desc"'
   );
 

@@ -472,7 +472,7 @@ test('homepage translatePage applies surviving content and accessible-name trans
   assert.equal(profileTitle.innerHTML, '博士 &nbsp;·&nbsp; 副研究员');
   assert.equal(
     researchIntro.innerHTML.replace(/<[^>]*>/g, ''),
-    '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。'
+    '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。'
   );
   for (const keyword of ['大模型推理与智能体', '情境感知推理', '自主交互学习', '持续学习与适应', '时序智能', '科学智能']) {
     assert.ok(researchIntro.innerHTML.includes('<span class="research-keyword">' + keyword + '</span>'));

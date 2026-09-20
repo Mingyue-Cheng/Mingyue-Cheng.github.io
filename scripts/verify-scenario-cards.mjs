@@ -14,7 +14,7 @@ const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 const sharedContentCss = read('files/assets/site-content.css');
 const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">';
-const researchIntroEnglish = 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining).';
+const researchIntroEnglish = 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining). These application-driven directions are framed by 科言 SciToken — understanding the scientific world, and 科语 SciTime — modeling the dynamic world.';
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -453,7 +453,7 @@ test('homepage scenario cards use concise domain summaries', () => {
   assert.match(
     scienceArticle,
     /<p class="scenario-card-body" data-i18n="research\.scienceBody">Connecting scientific data and knowledge to support reasoning and autonomous discovery\.<\/p>/,
-    'AI for Science must retain the scientific data, knowledge, and discovery focus'
+    'Scientific Discovery must retain the scientific data, knowledge, and discovery focus'
   );
   assert.match(
     industrialArticle,
@@ -484,7 +484,7 @@ test('homepage scenario summaries and topics stay synchronized with both diction
       'Real-world settings for developing and evaluating intelligent systems.',
       '在真实任务中发展智能方法，并检验其有效性。'
     ],
-    'research.scienceTitle': ['AI for Science', 'AI for Science'],
+    'research.scienceTitle': ['Scientific Discovery', 'Scientific Discovery'],
     'research.scienceBody': [
       'Connecting scientific data and knowledge to support reasoning and autonomous discovery.',
       '融合科学数据与知识，支持科学推理与自主发现。'
@@ -532,7 +532,8 @@ test('homepage scenario summaries and topics stay synchronized with both diction
     assert.equal(removedKeyPattern.test(indexHtml), false, `${removedKey} must be absent`);
   }
 
-  for (const oldKey of ['research.science', 'research.energy', 'research.recsys']) {
+  // research.science now describes the dedicated primary direction, not a legacy application card.
+  for (const oldKey of ['research.energy', 'research.recsys']) {
     assert.doesNotMatch(indexHtml, new RegExp(`"${escapeRegex(oldKey)}"\\s*:`));
   }
 });
@@ -583,9 +584,9 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   const oldObservationFrame = 'dynamic system observations';
   const oldReasoning = 'slow-thinking temporal reasoning';
   const expectedEnglishTimeseries =
-    '<span class="research-label">📊<strong>Time Series Intelligence:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
+    '<span class="research-label">📊<strong>Time Series Intelligence:</strong></span> <span class="research-keyword">科语 SciTime — Modeling the dynamic world.</span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
   const expectedResearchCard =
-    'Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.';
+    '<strong>科语 SciTime — Modeling the dynamic world.</strong> Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.';
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -648,7 +649,7 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   }
 });
 
-test('homepage keeps two technical directions while Research retains Prediction Intelligence as its vision', () => {
+test('homepage and Research keep three technical directions while retaining the research vision', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -678,11 +679,16 @@ test('homepage keeps two technical directions while Research retains Prediction 
 
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
-    2,
-    'Homepage must expose only LLMs and Time Series Intelligence as primary directions'
+    3,
+    'Homepage must expose LLMs, Time Series Intelligence and Science Intelligence as primary directions'
   );
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--agent" data-i18n="research\.agent">/);
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
+  assert.match(homepageDirections, /<li class="primary-direction primary-direction--science" data-i18n="research\.science">/);
+  assert.ok(
+    homepageDirections.indexOf('Time Series Intelligence') < homepageDirections.indexOf('Science Intelligence'),
+    'Science Intelligence must follow Time Series Intelligence'
+  );
   assert.doesNotMatch(
     homepageDirections,
     /primary-direction--prediction|prediction-intelligence\.html|research\.prediction(?:Title|Body)/,
@@ -730,11 +736,17 @@ test('homepage keeps two technical directions while Research retains Prediction 
   );
   assert.equal(
     startTagsWithClass(technicalPillars, 'article', 'pillar-card').length,
-    2,
-    'Research page must present exactly two core technical pillars'
+    3,
+    'Research page must present exactly three core technical pillars'
   );
   assert.match(technicalPillars, /<article class="pillar-card pillar-card--agent">/);
   assert.match(technicalPillars, /<article class="pillar-card pillar-card--timeseries">/);
+  assert.match(technicalPillars, /<article class="pillar-card pillar-card--science">/);
+  assert.ok(
+    technicalPillars.indexOf('Time Series Intelligence') < technicalPillars.indexOf('Science Intelligence'),
+    'Research must keep the new Science Intelligence pillar after Time Series Intelligence'
+  );
+  assert.equal(finalDeclarationValue(cssRule(researchHtml, '.pillar-card--science'), 'grid-column'), '1 / -1');
   assert.ok(
     technicalPillars.indexOf('LLMs and Agentic AI') <
       technicalPillars.indexOf('Time Series Intelligence'),
@@ -814,7 +826,7 @@ test('homepage keeps two technical directions while Research retains Prediction 
 
   assert.ok(siteLanguageJs.includes("join: 'Prospective students and research collaborators"));
   assert.ok(siteLanguageJs.includes("join: '欢迎脚踏实地、积极主动的本科生和研究生"));
-  assert.match(siteLanguageJs, /subtitle: '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。'/);
+  assert.match(siteLanguageJs, /subtitle: '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。'/);
 
 });
 
@@ -957,7 +969,7 @@ test('research page keeps shared pillar icons and complete framework translation
     'Research scenario content must remain compatible with site-language.js'
   );
   assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20260918-datasets"></script>'),
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20260921-research-brands"></script>'),
     'Research page must request the current site-language.js content version'
   );
   assert.ok(
@@ -973,6 +985,8 @@ test('research page keeps shared pillar icons and complete framework translation
     'agentBody',
     'timeseriesTitle',
     'timeseriesBody',
+    'scienceIntelligenceTitle',
+    'scienceIntelligenceBody',
     'scienceTitle',
     'scienceBody',
     'industrialTitle',

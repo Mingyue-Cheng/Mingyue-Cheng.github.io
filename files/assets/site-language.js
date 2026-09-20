@@ -39,7 +39,7 @@
             scienceIntelligenceBody: '<strong>科言 SciToken — Understanding the scientific world.</strong> Focusing on <strong>scientific data</strong>, <strong>scientific tools</strong>, <strong>scientific knowledge</strong>, and <strong>capability enhancement of scientific foundation models</strong>.',
             scienceTitle: 'Scientific Discovery',
             scienceBody: 'Connecting scientific data and knowledge to support reasoning and autonomous discovery.',
-            industrialTitle: 'Industrial Systems',
+            industrialTitle: 'Industrial Intelligence',
             industrialBody: 'Forecasting and decision support for complex, evolving real-world systems.',
             userTitle: 'Recommender Systems',
             userBody: 'Understanding behaviors and preferences to deliver adaptive, personalized recommendations.',
@@ -48,7 +48,7 @@
             industrialTopics: '<span>Energy &amp; traffic</span><span>Cloud &amp; finance</span>',
             userTopics: '<span>Behavior modeling</span><span>Contextual reasoning</span>'
           },
-          collections: 'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence</a>',
+          collections: 'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI（认知大模型）</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence（科语）</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence（科言）</a>',
           join: 'Prospective students and research collaborators are welcome to explore the <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a> and <a href="mailto:mycheng@ustc.edu.cn">contact me by email</a>.'
         },
         'news.html': {
@@ -174,7 +174,7 @@
             scienceIntelligenceBody: '<strong>科言 SciToken：理解科学世界。</strong>重点研究<strong>科学数据</strong>、<strong>科学工具</strong>、<strong>科学知识</strong>与<strong>科学基础模型能力增强</strong>等。',
             scienceTitle: 'Scientific Discovery',
             scienceBody: '融合科学数据与知识，支持科学推理与自主发现。',
-            industrialTitle: '工业系统',
+            industrialTitle: '工业智能',
             industrialBody: '面向持续演变的复杂系统，开展预测与决策支持。',
             userTitle: '推荐系统',
             userBody: '理解用户行为与偏好，实现自适应的个性化推荐。',
@@ -183,7 +183,7 @@
             industrialTopics: '<span>能源与交通</span><span>云服务与金融</span>',
             userTopics: '<span>行为与偏好建模</span><span>情境推理</span>'
           },
-          collections: '研究主页：🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence</a>',
+          collections: '研究主页：🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI（认知大模型）</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence（科语）</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence（科言）</a>',
           join: '欢迎脚踏实地、积极主动的本科生和研究生加入认知智能全国重点实验室 <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>；也欢迎围绕智能体、时间序列与 AI for Science 开展学术或产业合作，可<a href="mailto:mycheng@ustc.edu.cn">通过邮箱联系我</a>。'
         },
         'news.html': {

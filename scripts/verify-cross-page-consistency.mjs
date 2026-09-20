@@ -44,6 +44,26 @@ function keyedMarkup(html, attribute, key) {
 }
 
 for (const lang of ['en', 'zh']) {
+  test(`${lang}: research collection links carry the corresponding Chinese identities`, () => {
+    const expected = [
+      ['https://agentr1.github.io/', 'LLMs and Agentic AI（认知大模型）'],
+      ['https://ustc-time-series.github.io/', 'Time Series Intelligence（科语）'],
+      ['https://ustcagi-sci.github.io/', 'Science Intelligence（科言）']
+    ];
+    const researchFallback = read('research.html').match(/<div class="research-note-box">([\s\S]*?)<\/div>/)?.[1];
+    assert.ok(researchFallback, 'Research collection fallback must exist');
+    for (const source of [
+      homeCopy[lang]['research.collections'],
+      sharedCopy[lang].pages['research.html'].collections,
+      keyedMarkup(home, 'data-i18n', 'research.collections'),
+      researchFallback
+    ]) {
+      const links = [...source.matchAll(/<a href="([^"]+)" target="_blank" rel="noopener">([^<]+)<\/a>/g)]
+        .map((match) => [match[1], match[2]]);
+      assert.deepEqual(links, expected, 'Labels, destinations and order must stay aligned');
+    }
+  });
+
   test(`${lang}: SciToken and SciTime retain their distinct research identities`, () => {
     const research = sharedCopy[lang].pages['research.html'];
     const science = lang === 'en'
@@ -236,7 +256,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
-    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260921-research-brands/, path);
+    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260921-industrial-intelligence/, path);
   }
 });
 

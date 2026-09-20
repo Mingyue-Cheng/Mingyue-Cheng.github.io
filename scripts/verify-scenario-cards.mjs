@@ -457,13 +457,13 @@ test('homepage scenario cards use concise domain summaries', () => {
   );
   assert.match(
     industrialArticle,
-    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Industrial Systems<\/h4>/,
-    'The middle card must be titled Industrial Systems'
+    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Industrial Intelligence<\/h4>/,
+    'The middle card must be titled Industrial Intelligence'
   );
   assert.match(
     industrialArticle,
     /<p class="scenario-card-body" data-i18n="research\.industrialBody">Forecasting and decision support for complex, evolving real-world systems\.<\/p>/,
-    'Industrial Systems must retain the real-world forecasting and decision support focus'
+    'Industrial Intelligence must retain the real-world forecasting and decision support focus'
   );
   assert.match(
     userArticle,
@@ -493,7 +493,7 @@ test('homepage scenario summaries and topics stay synchronized with both diction
       '<span>Literature mining</span><span>Scientific modeling</span>',
       '<span>科技文献挖掘</span><span>科学建模</span>'
     ],
-    'research.industrialTitle': ['Industrial Systems', '工业系统'],
+    'research.industrialTitle': ['Industrial Intelligence', '工业智能'],
     'research.industrialBody': [
       'Forecasting and decision support for complex, evolving real-world systems.',
       '面向持续演变的复杂系统，开展预测与决策支持。'
@@ -774,7 +774,7 @@ test('homepage and Research keep three technical directions while retaining the 
   );
   const pillarGridRule = cssRule(researchHtml, '.pillar-grid');
   assert.ok(pillarGridRule.includes('display: grid;'));
-  assert.ok(pillarGridRule.includes('grid-template-columns: repeat(2, minmax(0, 1fr));'));
+  assert.ok(pillarGridRule.includes('grid-template-columns: minmax(0, 1fr);'));
   const responsivePrimary = sectionBetween(
     researchHtml,
     '@media (max-width: 960px)',
@@ -801,7 +801,7 @@ test('homepage and Research keep three technical directions while retaining the 
   );
 
   const expectedEnglishCollectionHtml =
-    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence</a>';
+    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI（认知大模型）</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence（科语）</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence（科言）</a>';
   const expectedChineseCollectionHtml = expectedEnglishCollectionHtml.replace(
     'Research collections: ',
     '研究主页：'
@@ -828,6 +828,30 @@ test('homepage and Research keep three technical directions while retaining the 
   assert.ok(siteLanguageJs.includes("join: '欢迎脚踏实地、积极主动的本科生和研究生"));
   assert.match(siteLanguageJs, /subtitle: '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。'/);
 
+});
+
+test('research technical pillars stack vertically at every breakpoint in canonical order', () => {
+  const pillars = sectionBetween(
+    researchHtml,
+    '<!-- Core Technical Pillars -->',
+    '<!-- /Research Framework -->'
+  );
+  const cards = startTagsWithClass(pillars, 'article', 'pillar-card');
+  assert.deepEqual(
+    cards.map((tag) => classTokens(tag).filter((token) => token.startsWith('pillar-card--'))),
+    [['pillar-card--agent'], ['pillar-card--timeseries'], ['pillar-card--science']],
+    'Technical directions must appear top to bottom as LLMs, time series, then science'
+  );
+
+  const gridRules = cssRuleBlocks(researchHtml, '.pillar-grid');
+  assert.ok(gridRules.length > 0, 'The research pillar grid must exist');
+  for (const { body } of gridRules) {
+    const columns = finalDeclarationValue(body, 'grid-template-columns');
+    if (columns !== undefined) {
+      assert.equal(columns, 'minmax(0, 1fr)', 'All breakpoints must keep one full-width pillar per row');
+    }
+  }
+  assert.equal(finalDeclarationValue(gridRules[0].body, 'display'), 'grid');
 });
 
 test('research collections omit table research without removing its publication category', () => {
@@ -928,8 +952,8 @@ test('research page preserves domain identities shared with the homepage', () =>
 
   assert.match(
     researchArticles.industrial,
-    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial Systems<\/h3>/,
-    'The Research page must include the Industrial Systems scenario'
+    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial Intelligence<\/h3>/,
+    'The Research page must include the Industrial Intelligence scenario'
   );
   assert.match(
     researchArticles.user,
@@ -969,7 +993,7 @@ test('research page keeps shared pillar icons and complete framework translation
     'Research scenario content must remain compatible with site-language.js'
   );
   assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20260921-research-brands"></script>'),
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20260921-industrial-intelligence"></script>'),
     'Research page must request the current site-language.js content version'
   );
   assert.ok(
@@ -1007,7 +1031,7 @@ test('research page keeps shared pillar icons and complete framework translation
     '自主发现',
     '可解释预测',
     '可信决策辅助',
-    '工业系统',
+    '工业智能',
     '云服务',
     '持续演变的复杂系统',
     '用户行为与偏好',

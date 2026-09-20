@@ -40,6 +40,14 @@ function keyedMarkup(html, attribute, key) {
 }
 
 for (const lang of ['en', 'zh']) {
+  test(`${lang}: science dataset headings include Scientific Tool and Knowledge on both pages`, () => {
+    const expected = lang === 'en'
+      ? 'Science Intelligence（Scientific Tool and Knowledge）'
+      : '科学智能（科学工具与知识）';
+    assert.equal(homeCopy[lang]['datasets.category.science'], expected);
+    assert.equal(sharedCopy[lang].pages['projects.html'].content['datasets.category.science'], expected);
+  });
+
   test(`${lang}: academic organization names and appointments agree across both service surfaces`, () => {
     const expected = {
       ...organizationCopy[lang],
@@ -112,6 +120,12 @@ for (const lang of ['en', 'zh']) {
   });
 }
 
+test('science dataset fallback headings include Scientific Tool and Knowledge on both pages', () => {
+  const expected = 'Science Intelligence（Scientific Tool and Knowledge）';
+  assert.equal(plain(keyedMarkup(home, 'data-i18n', 'datasets.category.science')), expected);
+  assert.equal(plain(keyedMarkup(read('projects.html'), 'data-page-i18n', 'datasets.category.science')), expected);
+});
+
 test('academic organization fallback text matches the English translations on both pages', () => {
   for (const [suffix, expected] of Object.entries(organizationCopy.en)) {
     assert.equal(plain(keyedMarkup(home, 'data-i18n', `service.${suffix}`)), expected);
@@ -139,7 +153,7 @@ test('Research application fallback markup matches homepage summaries and topics
 
 test('complete project and dataset pages use the homepage categories without dropping archive entries', () => {
   const projects = active(read('projects.html'));
-  for (const [attribute, expected] of [['data-os-category', ['agents', 'timeseries', 'science']], ['data-dataset-category', ['science', 'timeseries', 'retrieval']]]) {
+  for (const [attribute, expected] of [['data-os-category', ['agents', 'timeseries', 'science']], ['data-dataset-category', ['timeseries', 'science', 'retrieval']]]) {
     const values = (html) => [...html.matchAll(new RegExp(`${attribute}="([^"]+)"`, 'g'))].map((match) => match[1]);
     assert.deepEqual(values(projects), expected);
     assert.deepEqual(values(active(home)), expected);
@@ -165,7 +179,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
-    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260917-service/, path);
+    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260918-datasets/, path);
   }
 });
 

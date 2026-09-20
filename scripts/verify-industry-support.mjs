@@ -9,7 +9,7 @@ const css = readFileSync(new URL('files/assets/site-content.css', root), 'utf8')
 const grants = html.split('<!-- ===== Research Grants ===== -->')[1]?.split('<!-- ===== Related Links ===== -->')[0] || '';
 const brands = ['iflytek', 'huawei', 'tencent', 'kuaishou'];
 const names = ['科大讯飞 iFLYTEK', '华为 Huawei', '腾讯 Tencent', '快手 Kuaishou'];
-const sources = brands.map((brand) => `files/assets/industry/${brand}.png`);
+const sources = brands.map((brand) => `files/assets/industry/${brand === 'iflytek' ? 'iflytek-hd' : brand}.png`);
 
 test('homepage requests the refreshed content stylesheet after the logo update', () => {
   const href = html.match(/href="(files\/assets\/site-content\.css[^\"]*)"/)?.[1];
@@ -36,7 +36,7 @@ test('industry logos have the exact requested order and accessible image metadat
   assert.match(grants, /<ul class="industry-support-logos" aria-labelledby="industry-support-label">/);
 });
 
-test('all logos are local PNG assets with documented official sources', () => {
+test('all logos are local PNG assets with documented source provenance', () => {
   for (const source of sources) {
     const path = new URL(source, root);
     assert.ok(existsSync(path), `Missing logo: ${source}`);
@@ -50,6 +50,19 @@ test('all logos are local PNG assets with documented official sources', () => {
   for (const domain of ['huawei.com', 'tencent.com', 'kuaishou.com', 'iflytek.com']) {
     assert.ok(provenance.includes(domain), `Missing source: ${domain}`);
   }
+});
+
+test('the iFLYTEK logo has enough native pixels for high-density displays', () => {
+  const tag = grants.match(/<li class="industry-support-logo industry-support-logo--iflytek">\s*(<img\b[^>]*>)/)?.[1];
+  assert.ok(tag, 'Keep the complete iFLYTEK image in the first logo card');
+  const source = tag.match(/src="([^"]+)"/)?.[1];
+  const bytes = readFileSync(new URL(source, root));
+  const nativeWidth = bytes.readUInt32BE(16);
+  const nativeHeight = bytes.readUInt32BE(20);
+  const displayWidth = Number(css.match(/\.industry-support-logo--iflytek\s*\{\s*--logo-width:\s*(\d+)px/)?.[1]);
+  assert.ok(displayWidth > 0, 'The iFLYTEK display size must stay explicit');
+  assert.ok(nativeWidth >= displayWidth * 3, `${nativeWidth}px is insufficient for a ${displayWidth}px logo at 3x density`);
+  assert.ok(nativeHeight >= 37 * 3, 'Preserve sufficient detail in the Chinese and English lettering');
 });
 
 test('bilingual industry copy is concise and translation cannot replace the logos', () => {

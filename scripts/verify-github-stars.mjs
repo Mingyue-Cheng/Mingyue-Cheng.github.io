@@ -24,9 +24,9 @@ const expectedRepos = [
   'ustc-time-series/CastFactory',
   'AgentR1/PaperScout',
   'ustc-ai4science/academic-search',
+  'ustc-time-series/Future-Cast',
   'ustc-ai4science/PaperArena',
   'ustc-ai4science/ChemTable',
-  'ustc-time-series/Future-Cast',
   'benchen4395/KuaiSearch',
   '0russwest0/HoH'
 ];
@@ -180,9 +180,9 @@ test('visible GitHub star counts map to canonical repository and stargazer links
     'ustc-time-series/CastMind',
     'AgentR1/PaperScout',
     'ustc-ai4science/academic-search',
+    'ustc-time-series/Future-Cast',
     'ustc-ai4science/PaperArena',
     'ustc-ai4science/ChemTable',
-    'ustc-time-series/Future-Cast',
     'benchen4395/KuaiSearch',
     '0russwest0/HoH'
   ];

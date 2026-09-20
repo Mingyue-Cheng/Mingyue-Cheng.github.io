@@ -620,8 +620,30 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
     <div class="section-block">
       <h2 id="datasets" class="section-heading" data-page-i18n="datasets.heading">Benchmarks &amp; Datasets</h2>
       <div class="dataset-categories">
+      <section class="dataset-category" aria-labelledby="datasets-timeseries" data-dataset-category="timeseries">
+        <h3 id="datasets-timeseries" class="dataset-category-heading" data-page-i18n="datasets.category.timeseries">Time Series Intelligence</h3>
+        <div class="dataset-grid">
+          <article class="dataset-card">
+            <div class="dataset-kicker" data-page-i18n="datasets.futureCastKicker">Time Series Intelligence · Context-aware Forecasting</div>
+            <div class="dataset-card-header">
+              <div class="dataset-card-title dataset-card-title-row">
+                <div class="dataset-title-main">
+                  <span class="dataset-name">FutureCast（天星台）</span>
+                </div>
+                <div class="dataset-card-meta">
+                  <span class="os-year">2026.05</span>
+                  <a class="dataset-repo-link" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
+                  <a class="dataset-repo-link" href="https://ustc-time-series.github.io/future-cast/" target="_blank" rel="noopener">Website</a>
+                  <a class="dataset-stars" href="https://github.com/ustc-time-series/Future-Cast/stargazers" aria-label="ustc-time-series/Future-Cast: 2 GitHub stars" target="_blank" rel="noopener"><span aria-hidden="true">⭐</span> <span class="github-stars" data-repo="ustc-time-series/Future-Cast" data-stars="2">2</span></a>
+                </div>
+              </div>
+            </div>
+            <div class="dataset-card-desc" data-page-i18n="datasets.futureCast"><span class="os-inline-highlight">FutureCast（天星台）</span> is a <strong>multi-domain benchmark for context-aware time series forecasting</strong>. It pairs <strong>historical observations</strong> with <strong>numerical covariates, textual descriptions, and event context</strong>, and centers its evaluation design on <strong>context–sequence alignment, contextual reasoning, and adaptation to new evidence</strong>. Designed for <strong>time series foundation models and forecasting agents</strong>, it examines how external evidence informs trend judgments and <strong>forecast revision</strong>, with emphasis on <strong>forecast accuracy, reasoning quality, and evidence-based explanations</strong>.</div>
+          </article>
+        </div>
+      </section>
       <section class="dataset-category" aria-labelledby="datasets-science" data-dataset-category="science">
-        <h3 id="datasets-science" class="dataset-category-heading" data-page-i18n="datasets.category.science">Science Intelligence</h3>
+        <h3 id="datasets-science" class="dataset-category-heading" data-page-i18n="datasets.category.science">Science Intelligence（Scientific Tool and Knowledge）</h3>
         <div class="dataset-grid">
           <article class="dataset-card">
             <div class="dataset-kicker">Scientific Literature · Agentic Evaluation</div>
@@ -667,28 +689,6 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
               <strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong> introduces <strong>ChemTable</strong>, a real-world benchmark curated from chemical literature. It supports two core tasks:
               <strong>table recognition</strong> and <strong>table understanding</strong>, with expert annotations over cell polygons, logical layouts, and chemistry-specific semantic labels such as reagents, catalysts, yields, and graphical components.
             </div>
-          </article>
-        </div>
-      </section>
-      <section class="dataset-category" aria-labelledby="datasets-timeseries" data-dataset-category="timeseries">
-        <h3 id="datasets-timeseries" class="dataset-category-heading" data-page-i18n="datasets.category.timeseries">Time Series Intelligence</h3>
-        <div class="dataset-grid">
-          <article class="dataset-card">
-            <div class="dataset-kicker" data-page-i18n="datasets.futureCastKicker">Time Series Intelligence · Context-aware Forecasting</div>
-            <div class="dataset-card-header">
-              <div class="dataset-card-title dataset-card-title-row">
-                <div class="dataset-title-main">
-                  <span class="dataset-name">FutureCast（天星台）</span>
-                </div>
-                <div class="dataset-card-meta">
-                  <span class="os-year">2026.05</span>
-                  <a class="dataset-repo-link" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
-                  <a class="dataset-repo-link" href="https://ustc-time-series.github.io/future-cast/" target="_blank" rel="noopener">Website</a>
-                  <a class="dataset-stars" href="https://github.com/ustc-time-series/Future-Cast/stargazers" aria-label="ustc-time-series/Future-Cast: 2 GitHub stars" target="_blank" rel="noopener"><span aria-hidden="true">⭐</span> <span class="github-stars" data-repo="ustc-time-series/Future-Cast" data-stars="2">2</span></a>
-                </div>
-              </div>
-            </div>
-            <div class="dataset-card-desc" data-page-i18n="datasets.futureCast"><span class="os-inline-highlight">FutureCast（天星台）</span> is a <strong>multi-domain benchmark for context-aware time series forecasting</strong>. It pairs <strong>historical observations</strong> with <strong>numerical covariates, textual descriptions, and event context</strong>, and centers its evaluation design on <strong>context–sequence alignment, contextual reasoning, and adaptation to new evidence</strong>. Designed for <strong>time series foundation models and forecasting agents</strong>, it examines how external evidence informs trend judgments and <strong>forecast revision</strong>, with emphasis on <strong>forecast accuracy, reasoning quality, and evidence-based explanations</strong>.</div>
           </article>
         </div>
       </section>
@@ -778,6 +778,6 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
 
 </script>
 <script src="files/assets/github-stars.js?v=20260913-stars"></script>
-<script src="files/assets/site-language.js?v=20260917-service"></script>
+<script src="files/assets/site-language.js?v=20260918-datasets"></script>
 </body>
 </html>

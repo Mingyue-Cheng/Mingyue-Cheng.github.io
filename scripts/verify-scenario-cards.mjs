@@ -649,7 +649,7 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   }
 });
 
-test('homepage and Research keep three technical directions while retaining the research vision', () => {
+test('homepage and Research keep three technical directions and a question-only research vision', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -675,7 +675,6 @@ test('homepage and Research keep three technical directions while retaining the 
     '<!-- Core Technical Pillars -->',
     '<!-- /Research Framework -->'
   );
-  const normalizedResearchVision = researchVision.replace(/\s+/g, ' ');
 
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
@@ -721,18 +720,18 @@ test('homepage and Research keep three technical directions while retaining the 
   );
   assert.equal(
     startTagsWithClass(researchVision, 'article', 'research-vision-card').length,
-    1,
-    'Research page must present one full-width research vision'
+    0,
+    'Research vision must not display the removed Prediction Intelligence card'
   );
   assert.match(
-    normalizedResearchVision,
-    /<article class="research-vision-card">[\s\S]*?<a class="research-vision-title" href="prediction-intelligence\.html" data-page-i18n="visionTitle">Prediction Intelligence<\/a>[\s\S]*?<p class="research-vision-desc" data-page-i18n="visionBody"> Building <strong>context-aware<\/strong>, <strong>reasoning-driven<\/strong>, and <strong>uncertainty-aware predictive intelligence<\/strong> for <strong>complex and evolving systems<\/strong>, enabling <strong>explainable forecasting<\/strong> and <strong>trustworthy decision support<\/strong>\. <\/p>/
+    researchVision,
+    /<h2 id="research-vision-heading" class="rd-section-label">Research Vision<\/h2>/,
+    'Research Vision heading must remain above the core question'
   );
-  assert.ok(
-    siteLanguageJs.includes(
-      "visionBody: 'Building <strong>context-aware</strong>, <strong>reasoning-driven</strong>, and <strong>uncertainty-aware predictive intelligence</strong> for <strong>complex and evolving systems</strong>, enabling <strong>explainable forecasting</strong> and <strong>trustworthy decision support</strong>.'"
-    ),
-    'Research-page English vision translation must retain the approved copy'
+  assert.doesNotMatch(
+    researchVision,
+    /Prediction Intelligence|prediction-intelligence\.html|data-page-i18n="vision(?:Title|Body)"/,
+    'The removed card must not leave a title, description, or translation target behind'
   );
   assert.equal(
     startTagsWithClass(technicalPillars, 'article', 'pillar-card').length,
@@ -758,20 +757,6 @@ test('homepage and Research keep three technical directions while retaining the 
     'Research page must remove the obsolete flat primary-direction card system'
   );
 
-  const visionRule = cssRule(researchHtml, '.research-vision-card');
-  assert.ok(visionRule.includes('display: flex;'));
-  assert.ok(visionRule.includes('width: 100%;'));
-  const visionCopyRule = cssRule(researchHtml, '.research-vision-copy');
-  assert.equal(
-    finalDeclarationValue(visionCopyRule, 'flex'),
-    '1',
-    'Research vision copy must expand into the remaining card width'
-  );
-  assert.equal(
-    finalDeclarationValue(visionCopyRule, 'max-width'),
-    'none',
-    'Research vision copy must not preserve the old 790px width cap'
-  );
   const pillarGridRule = cssRule(researchHtml, '.pillar-grid');
   assert.ok(pillarGridRule.includes('display: grid;'));
   assert.ok(pillarGridRule.includes('grid-template-columns: minmax(0, 1fr);'));
@@ -993,7 +978,7 @@ test('research page keeps shared pillar icons and complete framework translation
     'Research scenario content must remain compatible with site-language.js'
   );
   assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20260921-industrial-intelligence"></script>'),
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20260923-open-project"></script>'),
     'Research page must request the current site-language.js content version'
   );
   assert.ok(
@@ -1003,8 +988,6 @@ test('research page keeps shared pillar icons and complete framework translation
   );
   for (const key of [
     'researchQuestion',
-    'visionTitle',
-    'visionBody',
     'agentTitle',
     'agentBody',
     'timeseriesTitle',
@@ -1044,7 +1027,7 @@ test('research page keeps shared pillar icons and complete framework translation
   }
 });
 
-test('research vision opens with the core agent reasoning question', () => {
+test('research vision retains the core agent reasoning question without the prediction card', () => {
   const vision = sectionBetween(researchHtml, '<!-- Research Vision -->', '<!-- Core Technical Pillars -->');
   const question = vision.match(/<p class="research-vision-desc research-question" data-page-i18n="researchQuestion">([\s\S]*?)<\/p>/);
   assert.ok(question, 'Core research question must appear in the research vision');
@@ -1052,7 +1035,7 @@ test('research vision opens with the core agent reasoning question', () => {
     question[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
     'How can agents reliably solve problems through reasoning and interaction when information is incomplete, environments change, and feedback is costly?'
   );
-  assert.ok(question.index < vision.indexOf('<article class="research-vision-card">'));
+  assert.equal(startTagsWithClass(vision, 'article', 'research-vision-card').length, 0);
   assertFinalDeclarations(cssRule(researchHtml, '.research-question'), {
     margin: '0 0 18px',
     'font-size': '16px'

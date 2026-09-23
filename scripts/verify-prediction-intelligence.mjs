@@ -58,7 +58,7 @@ test('page metadata and shell match the academic homepage', () => {
   }
   assert.match(pageHtml, /<main id="main-content" tabindex="-1">/);
   assert.match(pageHtml, /<footer class="site-footer">/);
-  assert.match(pageHtml, /<script src="files\/assets\/site-language\.js\?v=20260921-industrial-intelligence"><\/script>/);
+  assert.match(pageHtml, /<script src="files\/assets\/site-language\.js\?v=20260923-open-project"><\/script>/);
   assert.match(
     pageHtml,
     /<script src="files\/assets\/prediction-intelligence\.js\?v=20260728"><\/script>/
@@ -152,17 +152,18 @@ test('page-specific language switching covers the full research narrative', () =
   }
 });
 
-test('Prediction Intelligence stays off the homepage while the Research vision links to its subpage', () => {
+test('Prediction Intelligence stays off the homepage and Research overview while its standalone page remains', () => {
   assert.doesNotMatch(
     indexHtml,
     /<li class="primary-direction primary-direction--prediction">/,
     'Homepage must not include a Prediction Intelligence primary direction'
   );
-  assert.match(
+  assert.doesNotMatch(
     researchHtml,
-    /<article class="research-vision-card">[\s\S]*?<a class="research-vision-title" href="prediction-intelligence\.html" data-page-i18n="visionTitle">Prediction Intelligence<\/a>/,
-    'Research-page Prediction Intelligence vision must link to the subpage'
+    /<article\b[^>]*\bclass="[^"]*\bresearch-vision-card\b[^"]*"/,
+    'Research overview must not display the removed Prediction Intelligence card'
   );
+  assert.match(pageHtml, /<h1\b[^>]*class="pi-hero-title"[^>]*>Prediction Intelligence<\/h1>/);
   assert.doesNotMatch(
     indexHtml,
     /<article class="scenario-card scenario-card--prediction">/,

@@ -28,7 +28,7 @@ const pages = [
   },
   {
     path: 'projects.html',
-    title: 'Open Source & Benchmarks — Mingyue Cheng',
+    title: 'Open Project & Benchmarks — Mingyue Cheng',
     description: "Open source frameworks and benchmark datasets from Mingyue Cheng's research group at USTC.",
     currentHref: 'projects.html',
     h1Class: 'page-hero-title',
@@ -379,7 +379,7 @@ export function validatePageChromeSource(source, page) {
     `${page.path} must contain one September 2026 footer timestamp`
   );
   assert.doesNotMatch(footerSource, /Last updated in July 2026\./, `${page.path} must not retain the July footer`);
-  const languageVersion = '20260921-industrial-intelligence';
+  const languageVersion = '20260923-open-project';
   const languageScripts = document.nodes.filter(
     (node) => node.name === 'script' && attribute(node.raw, 'src') === `files/assets/site-language.js?v=${languageVersion}`
   );

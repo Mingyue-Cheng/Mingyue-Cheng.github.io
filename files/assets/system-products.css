@@ -1,0 +1,123 @@
+/* Homepage-only online systems, kept separate from open-source repositories. */
+.system-product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.system-product-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--accent);
+  text-decoration: none;
+  box-shadow: 0 3px 14px rgba(var(--accent-rgb), 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.system-product-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.system-product-logo {
+  display: block;
+  flex: 0 0 80px;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.system-product-brand {
+  font-size: 12px;
+  font-weight: 500;
+  color: #516773;
+  text-align: left;
+}
+
+.system-product-name {
+  color: var(--accent);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.systems-products .system-product-desc {
+  color: #516773;
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: justify;
+  text-align-last: left;
+  margin: 0 0 20px;
+}
+
+.system-product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+  font-size: 12px;
+}
+
+.system-product-domain {
+  min-width: 0;
+  color: #516773;
+  overflow-wrap: anywhere;
+}
+
+.system-product-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.system-product-card:focus-visible {
+  outline: 3px solid rgba(var(--accent-rgb), 0.36);
+  outline-offset: 3px;
+  border-color: var(--accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .system-product-card:hover {
+    border-color: #a9c2d0;
+    box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.08);
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 680px) {
+  .system-product-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .system-product-card {
+    padding: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .system-product-card {
+    transition: none;
+  }
+
+  .system-product-card:hover {
+    transform: none;
+  }
+}

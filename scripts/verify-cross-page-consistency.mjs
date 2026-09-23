@@ -44,6 +44,23 @@ function keyedMarkup(html, attribute, key) {
 }
 
 for (const lang of ['en', 'zh']) {
+  test(`${lang}: project navigation and section titles use the requested display name`, () => {
+    const expected = lang === 'en' ? 'Open Project' : '开源项目';
+    assert.equal(homeCopy[lang]['nav.opensource'], expected);
+    assert.equal(homeCopy[lang]['opensource.heading'], expected);
+    assert.equal(sharedCopy[lang].nav.projects, expected);
+    assert.equal(sharedCopy[lang].pages['projects.html'].content['opensource.heading'], expected);
+    if (lang === 'en') assert.equal(sharedCopy[lang].pages['projects.html'].title, 'Open Project & Benchmarks');
+  });
+
+  test(`${lang}: time-series project and dataset categories carry the Keyu parent brand`, () => {
+    const expected = lang === 'en' ? 'Time Series Intelligence（科语）' : '时序智能（科语）';
+    for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
+      assert.equal(homeCopy[lang][key], expected, `Homepage ${key}`);
+      assert.equal(sharedCopy[lang].pages['projects.html'].content[key], expected, `Projects ${key}`);
+    }
+  });
+
   test(`${lang}: research collection links carry the corresponding Chinese identities`, () => {
     const expected = [
       ['https://agentr1.github.io/', 'LLMs and Agentic AI（认知大模型）'],
@@ -182,6 +199,50 @@ for (const lang of ['en', 'zh']) {
   });
 }
 
+test('project fallback headings and navigation consistently show Open Project', () => {
+  for (const path of pages) {
+    const nav = active(read(path)).match(/<a href="projects\.html"[^>]*>([^<]+)<\/a>/);
+    assert.ok(nav, `${path} must retain the projects link`);
+    assert.equal(nav[1], 'Open Project', path);
+  }
+  assert.equal(plain(keyedMarkup(home, 'data-i18n', 'opensource.heading')), 'Open Project');
+  const projectHeadings = [...active(read('projects.html')).matchAll(/data-page-i18n="opensource.heading">([^<]+)</g)];
+  assert.equal(projectHeadings.length, 2);
+  for (const match of projectHeadings) assert.equal(match[1], 'Open Project');
+});
+
+test('time-series category fallback headings show the Keyu parent brand on both pages', () => {
+  for (const [path, attribute] of [['index.html', 'data-i18n'], ['projects.html', 'data-page-i18n']]) {
+    for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
+      assert.equal(plain(keyedMarkup(read(path), attribute, key)), 'Time Series Intelligence（科语）', `${path}/${key}`);
+    }
+  }
+});
+
+test('homepage language switching retains the Keyu parent brand in both time-series categories', () => {
+  const translate = home.match(/function translatePage\(lang\) \{[\s\S]*?\n\}\n\nfunction initLanguageToggle/)?.[0]
+    .replace(/\n\nfunction initLanguageToggle$/, '');
+  assert.ok(translate, 'Homepage translation function must exist');
+  const elements = ['opensource.category.timeseries', 'datasets.category.timeseries'].map(key => ({
+    innerHTML: keyedMarkup(home, 'data-i18n', key),
+    getAttribute: name => name === 'data-i18n' ? key : null
+  }));
+  const document = {
+    documentElement: { lang: 'en' },
+    querySelectorAll: selector => selector === '[data-i18n]' ? elements : [],
+    getElementById: () => null
+  };
+  const context = vm.createContext({ document });
+  vm.runInContext(`const i18n = ${literal}; ${translate}`, context);
+  for (const lang of ['en', 'zh', 'en']) {
+    vm.runInContext(`translatePage('${lang}');`, context);
+    assert.equal(document.documentElement.lang, lang === 'zh' ? 'zh-CN' : 'en');
+    for (const element of elements) {
+      assert.equal(element.innerHTML, lang === 'en' ? 'Time Series Intelligence（科语）' : '时序智能（科语）');
+    }
+  }
+});
+
 test('Science Intelligence fallback copy matches both English runtime translations', () => {
   const homepageDirection = keyedMarkup(home, 'data-i18n', 'research.science');
   assert.equal(homepageDirection, homeCopy.en['research.science']);
@@ -256,7 +317,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
-    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260921-industrial-intelligence/, path);
+    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260923-open-project/, path);
   }
 });
 

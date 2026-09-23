@@ -1559,6 +1559,7 @@ html[lang="zh-CN"] .footer-title {
 }
   </style>
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
+  <link rel="stylesheet" href="files/assets/system-products.css?v=20260923">
   <link rel="stylesheet" href="files/assets/site-theme.css?v=20260917-consistency">
   <link rel="stylesheet" href="files/assets/site-content.css?v=20260917-consistency">
 </head>
@@ -1574,7 +1575,7 @@ html[lang="zh-CN"] .footer-title {
         <a href="research.html" data-i18n="nav.research">Research</a>
         <a href="news.html" data-i18n="nav.news">News</a>
         <a href="publications.html" data-i18n="nav.publications">Publications</a>
-        <a href="projects.html" data-i18n="nav.opensource">Open Source</a>
+        <a href="projects.html" data-i18n="nav.opensource">Open Project</a>
         <a href="awards.html" data-i18n="nav.award">Awards</a>
         <a href="service.html" data-i18n="nav.service">Service</a>
         <a href="resources.html" data-i18n="nav.resources">Resources</a>
@@ -1903,10 +1904,44 @@ html[lang="zh-CN"] .footer-title {
 </div>
 
 
+<!-- ===== Systems Product ===== -->
+<section class="section systems-products" aria-labelledby="systems-product">
+  <div class="container">
+    <h2 id="systems-product" class="section-heading" data-i18n="systems.heading">Systems Product</h2>
+    <div class="system-product-grid">
+      <a class="system-product-card" href="https://lewen.bdaa.pro/" target="_blank" rel="noopener noreferrer" aria-labelledby="system-product-lewen-name">
+        <div class="system-product-header">
+          <img class="system-product-logo" src="files/assets/system-products/lewen-logo.png" alt="科言乐问 Logo" width="80" height="80" loading="lazy" decoding="async">
+          <span class="system-product-brand" data-i18n="systems.brand">科言 · Science Intelligence</span>
+        </div>
+        <h3 id="system-product-lewen-name" class="system-product-name">科言乐问</h3>
+        <p class="system-product-desc" data-i18n="systems.lewen">Discover scientific literature through quick search and in-depth retrieval.</p>
+        <div class="system-product-footer">
+          <span class="system-product-domain">lewen.bdaa.pro</span>
+          <span class="system-product-action"><span data-i18n="systems.visit">Visit website</span><span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
+      <a class="system-product-card" href="https://writelearn.bdaa.pro/" target="_blank" rel="noopener noreferrer" aria-labelledby="system-product-wenxiu-name">
+        <div class="system-product-header">
+          <img class="system-product-logo" src="files/assets/system-products/wenxiu-logo.png" alt="科言文修 Logo" width="80" height="80" loading="lazy" decoding="async">
+          <span class="system-product-brand" data-i18n="systems.brand">科言 · Science Intelligence</span>
+        </div>
+        <h3 id="system-product-wenxiu-name" class="system-product-name">科言文修</h3>
+        <p class="system-product-desc" data-i18n="systems.wenxiu">Support academic writing with polishing, proofreading, and translation tools.</p>
+        <div class="system-product-footer">
+          <span class="system-product-domain">writelearn.bdaa.pro</span>
+          <span class="system-product-action"><span data-i18n="systems.visit">Visit website</span><span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ===== /Systems Product ===== -->
+
 <!-- ===== Open Source Projects ===== -->
 <div class="section">
   <div class="container">
-    <h2 id="opensource" class="section-heading" data-i18n="opensource.heading">Open Source</h2>
+    <h2 id="opensource" class="section-heading" data-i18n="opensource.heading">Open Project</h2>
     <div class="os-categories">
       <section class="os-category" aria-labelledby="opensource-agents" data-os-category="agents">
         <h3 id="opensource-agents" class="os-category-heading" data-i18n="opensource.category.agents">LLMs and Agentic AI</h3>
@@ -1950,7 +1985,7 @@ html[lang="zh-CN"] .footer-title {
       </section>
 
       <section class="os-category" aria-labelledby="opensource-timeseries" data-os-category="timeseries">
-        <h3 id="opensource-timeseries" class="os-category-heading" data-i18n="opensource.category.timeseries">Time Series Intelligence</h3>
+        <h3 id="opensource-timeseries" class="os-category-heading" data-i18n="opensource.category.timeseries">Time Series Intelligence（科语）</h3>
         <div class="os-grid">
           <div class="os-card">
             <div class="os-body">
@@ -2092,7 +2127,7 @@ html[lang="zh-CN"] .footer-title {
     <h2 id="datasets" class="section-heading" data-i18n="datasets.heading">Benchmarks &amp; Datasets</h2>
     <div class="dataset-categories">
       <section class="dataset-category" aria-labelledby="datasets-timeseries" data-dataset-category="timeseries">
-        <h3 id="datasets-timeseries" class="dataset-category-heading" data-i18n="datasets.category.timeseries">Time Series Intelligence</h3>
+        <h3 id="datasets-timeseries" class="dataset-category-heading" data-i18n="datasets.category.timeseries">Time Series Intelligence（科语）</h3>
         <div class="dataset-grid">
           <article class="dataset-card">
             <div class="dataset-kicker" data-i18n="datasets.futureCastKicker">Time Series Intelligence · Context-aware Forecasting</div>
@@ -2483,7 +2518,7 @@ const i18n = {
     "nav.research": "Research",
     "nav.news": "News",
     "nav.publications": "Publications",
-    "nav.opensource": "Open Source",
+    "nav.opensource": "Open Project",
     "nav.award": "Awards",
     "nav.service": "Service",
     "nav.resources": "Resources",
@@ -2538,7 +2573,12 @@ const i18n = {
     "pub.filterKnowledge": "Science Intelligence",
     "pub.filterTable": "Tabular Data Intelligence",
     "pub.filterRec": "Recommender Systems",
-    "opensource.heading": "Open Source",
+    "systems.heading": "Systems Product",
+    "systems.brand": "科言 · Science Intelligence",
+    "systems.lewen": "Discover scientific literature through quick search and in-depth retrieval.",
+    "systems.wenxiu": "Support academic writing with polishing, proofreading, and translation tools.",
+    "systems.visit": "Visit website",
+    "opensource.heading": "Open Project",
     "opensource.agentR1": "<span class=\"os-inline-highlight\">Agent-R1</span> is a <strong>unified, modular training framework for Agentic RL</strong>. It models each round of agent interaction as a <strong>step-level RL transition</strong> and decouples <strong>trajectory representation, context construction, environment interfaces, and optimization algorithms</strong>. This allows <strong>GRPO, PPO, and other algorithms</strong> to be compared and extended on a <strong>shared foundation for multi-turn agent training</strong>.",
     "opensource.clawR1": "<span class=\"os-inline-highlight\">Claw-R1</span> provides the <strong>Data Foundation for Agentic RL</strong>, enabling the systematic <strong>collection, evaluation, and curation of high-quality training data</strong> from <strong>diverse agent interactions</strong>. It introduces a <strong>middleware layer (Gateway + DataPool)</strong> between the <strong>Agent Side</strong> and the <strong>Training Side</strong>, focusing on <strong>data infrastructure</strong> rather than training algorithms themselves.",
     "opensource.castClaw": "<span class=\"os-inline-highlight\">CastClaw（观星阁）</span> is an <strong>agent framework for human–AI collaboration</strong> in <strong>time series forecasting research</strong>. It uses three specialized agents, <strong>Planner, Forecaster, and Critic</strong>, to orchestrate the complete forecasting workflow and incorporates <strong>human confirmation at key stages</strong>. It packages <strong>data analysis, feature engineering, and classical time series model capabilities</strong> into an <strong>extensible runtime toolbox</strong>.",
@@ -2547,11 +2587,11 @@ const i18n = {
     "opensource.paperScout": "<span class=\"os-inline-highlight\">PaperScout</span> is an <strong>autonomous scientific literature retrieval agent</strong> for <strong>complex research queries</strong>. It treats paper discovery as <strong>multi-turn decision-making</strong>, using accumulated retrieval context to choose between <strong>Search</strong> for new candidates and <strong>Expand</strong> for following paper references. With <strong>process-aware, sequence-level reinforcement learning (PSPO)</strong>, it learns to refine its retrieval strategy from intermediate feedback and identify papers that match the <strong>research topic and query constraints</strong>.",
     "opensource.academicSearch": "<span class=\"os-inline-highlight\">Academic Search</span> is a <strong>scientific literature retrieval and metadata skill</strong> for <strong>Codex, Claude Code, and other AI agents</strong>. It brings together sources including <strong>arXiv, Semantic Scholar, OpenAlex, Google Scholar, and CNKI</strong>, supporting <strong>query expansion, citation tracing, record validation, cross-source deduplication, and BibTeX export</strong>, as well as <strong>open-access full-text retrieval</strong>. It adapts search strategies to the discipline and records source provenance and access status to support <strong>literature reviews and research surveys</strong>.",
     "opensource.category.agents": "LLMs and Agentic AI",
-    "opensource.category.timeseries": "Time Series Intelligence",
+    "opensource.category.timeseries": "Time Series Intelligence（科语）",
     "opensource.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
     "datasets.heading": "Benchmarks &amp; Datasets",
     "datasets.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
-    "datasets.category.timeseries": "Time Series Intelligence",
+    "datasets.category.timeseries": "Time Series Intelligence（科语）",
     "datasets.category.retrieval": "Retrieval &amp; Recommendation",
     "datasets.futureCastKicker": "Time Series Intelligence · Context-aware Forecasting",
     "education.heading": "Education",
@@ -2657,6 +2697,11 @@ const i18n = {
     "pub.filterKnowledge": "科学智能",
     "pub.filterTable": "表格数据智能",
     "pub.filterRec": "推荐系统",
+    "systems.heading": "系统产品",
+    "systems.brand": "科言 · 科学智能",
+    "systems.lewen": "面向科学文献智能获取，支持快速搜索与深度检索。",
+    "systems.wenxiu": "面向学术写作，提供智能润色、批阅纠错与语言翻译工具。",
+    "systems.visit": "访问系统",
     "opensource.heading": "开源项目",
     "opensource.agentR1": "<span class=\"os-inline-highlight\">Agent-R1</span> 是面向 <strong>Agentic RL 的统一模块化训练框架</strong>。它将每一轮 Agent 交互建模为<strong>步级强化学习转移（step-level RL transition）</strong>，并解耦<strong>轨迹表示、上下文构造、环境接口与优化算法</strong>，使 <strong>GRPO、PPO</strong> 等算法能够在<strong>同一多轮 Agent 训练底座</strong>上进行比较与扩展。",
     "opensource.clawR1": "<span class=\"os-inline-highlight\">Claw-R1</span> 为 <strong>Agentic RL</strong> 提供<strong>数据基础设施（Data Foundation）</strong>，用于系统化地从<strong>多样 Agent 交互</strong>中<strong>收集、评估与策划高质量训练数据</strong>。它在 <strong>Agent Side</strong> 与 <strong>Training Side</strong> 之间引入由 <strong>Gateway + DataPool</strong> 构成的<strong>中间件层（Middleware Layer）</strong>，专注于<strong>数据基础设施</strong>，而非训练算法本身。",
@@ -2666,11 +2711,11 @@ const i18n = {
     "opensource.paperScout": "<span class=\"os-inline-highlight\">PaperScout</span> 是面向<strong>复杂科研问题</strong>的<strong>自主科学文献检索智能体</strong>。它将论文检索建模为<strong>多轮序贯决策过程</strong>，依据已获取的文献与检索历史，自主选择 <strong>Search</strong> 发现候选论文，或通过 <strong>Expand</strong> 沿参考文献扩展搜索。结合<strong>过程感知的序列级强化学习优化（PSPO）</strong>，PaperScout 利用中间检索反馈持续调整策略，筛选满足<strong>研究主题与条件约束</strong>的相关文献。",
     "opensource.academicSearch": "<span class=\"os-inline-highlight\">Academic Search</span> 是面向 <strong>Codex、Claude Code 等智能体</strong>的<strong>科学文献检索与元数据整理 Skill</strong>。它整合 <strong>arXiv、Semantic Scholar、OpenAlex、Google Scholar、CNKI</strong> 等学术来源，支持<strong>查询扩展、引用追踪、记录校验、跨源去重与 BibTeX 导出</strong>，并按需获取<strong>开放获取全文</strong>。通过<strong>学科感知的检索策略</strong>与<strong>来源和访问状态记录</strong>，为文献综述和科研调研提供可追溯的文献资料。",
     "opensource.category.agents": "大模型与智能体",
-    "opensource.category.timeseries": "时序智能",
+    "opensource.category.timeseries": "时序智能（科语）",
     "opensource.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
     "datasets.heading": "基准与数据集",
     "datasets.category.science": "科学智能（科学工具与知识）",
-    "datasets.category.timeseries": "时序智能",
+    "datasets.category.timeseries": "时序智能（科语）",
     "datasets.category.retrieval": "检索推荐",
     "datasets.futureCastKicker": "时序智能 · 情境感知预测",
     "education.heading": "教育经历",

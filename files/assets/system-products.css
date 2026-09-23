@@ -1,4 +1,4 @@
-/* Homepage-only online systems, kept separate from open-source repositories. */
+/* Shared online system cards for the homepage and Open Project page. */
 .system-product-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -297,7 +297,7 @@ test('complete project and dataset pages use the homepage categories without dro
     assert.deepEqual(values(active(home)), expected);
   }
   const names = [...projects.matchAll(/<div class="os-card-name">([\s\S]*?)<\/div>/g)].map((match) => plain(match[1]));
-  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'WebMind', 'TabClaw', 'CastClaw（观星阁）', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
+  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（观星阁）', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
   assert.match(read('projects.html'), /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?NeoResearch（智多星）[\s\S]*?-->/);
   assert.equal((projects.match(/class="dataset-card"/g) || []).length, 5);
 });
@@ -317,7 +317,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
-    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260923-open-project/, path);
+    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260923-systems-in-projects/, path);
   }
 });
 

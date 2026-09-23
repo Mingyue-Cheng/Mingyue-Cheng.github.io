@@ -978,7 +978,7 @@ test('research page keeps shared pillar icons and complete framework translation
     'Research scenario content must remain compatible with site-language.js'
   );
   assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20260923-open-project"></script>'),
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20260923-systems-in-projects"></script>'),
     'Research page must request the current site-language.js content version'
   );
   assert.ok(

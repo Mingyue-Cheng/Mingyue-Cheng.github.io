@@ -6,11 +6,16 @@ import vm from 'node:vm';
 
 const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const home = read('index.html');
+const projects = read('projects.html');
+const sharedScript = read('files/assets/site-language.js');
 const css = existsSync(new URL('../files/assets/system-products.css', import.meta.url))
   ? read('files/assets/system-products.css') : '';
 const section = home.match(/<!-- ===== Systems Product ===== -->([\s\S]*?)<!-- ===== \/Systems Product ===== -->/)?.[1] || '';
+const projectSection = projects.match(/<!-- ===== Systems Product ===== -->([\s\S]*?)<!-- ===== \/Systems Product ===== -->/)?.[1] || '';
 const literal = home.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang/)?.[1];
 const copy = vm.runInNewContext(`(${literal})`);
+const sharedLiteral = sharedScript.match(/const translations = (\{[\s\S]*?\n  \});\n\n  const navTargets/)?.[1];
+const sharedCopy = vm.runInNewContext(`(${sharedLiteral})`);
 const plain = html => html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 const expected = {
   en: {
@@ -29,11 +34,11 @@ const expected = {
   }
 };
 
-function boundElements() {
-  return [...section.matchAll(/<([a-z][\w-]*)\b[^>]*data-i18n="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/g)]
+function boundElements(html = section, attribute = 'data-i18n') {
+  return [...html.matchAll(new RegExp(`<([a-z][\\w-]*)\\b[^>]*${attribute}="([^"]+)"[^>]*>([\\s\\S]*?)<\\/\\1>`, 'g'))]
     .map(match => ({
       key: match[2], innerHTML: match[3],
-      getAttribute(name) { return name === 'data-i18n' ? this.key : null; }
+      getAttribute(name) { return name === attribute ? this.key : null; }
     }));
 }
 
@@ -127,13 +132,72 @@ test('the real homepage language switch translates every product binding through
   }
 });
 
-test('system products use a homepage-only stylesheet and the shared Prussian-blue palette', () => {
-  assert.match(home, /<link rel="stylesheet" href="files\/assets\/system-products\.css\?v=20260923">/);
+test('system products share one stylesheet and the Prussian-blue palette across both pages', () => {
+  for (const html of [home, projects]) {
+    assert.match(html, /<link rel="stylesheet" href="files\/assets\/system-products\.css\?v=20260923">/);
+    assert.ok(html.indexOf('system-products.css') < html.indexOf('site-theme.css'),
+      'Shared theme and content layers must keep final authority over component styles');
+  }
   for (const declaration of ['color: var(--accent)', 'border: 1px solid var(--border)', 'border-radius: 14px', 'background: #fff']) {
     assert.ok(css.includes(declaration), declaration);
   }
-  assert.ok(home.indexOf('system-products.css') < home.indexOf('site-theme.css'),
-    'Shared theme and content layers must keep final authority over component styles');
+});
+
+test('Systems Product is integrated into the Open Project page before projects and benchmarks', () => {
+  assert.ok(projectSection, 'The existing Open Project page must include Systems Product');
+  assert.equal((projects.match(/id="systems-product"/g) || []).length, 1);
+  assert.match(projectSection, /<section class="section-block systems-products" aria-labelledby="systems-product">/);
+  assert.match(projectSection, /<h2 id="systems-product" class="section-heading" data-page-i18n="systems.heading">Systems Product<\/h2>/);
+  assert.match(projects, /<!-- ===== \/Systems Product ===== -->\s*<!-- ===== Open Source ===== -->/);
+  const headings = [...projects.matchAll(/<h2 id="([^"]+)" class="section-heading"/g)].map(match => match[1]);
+  assert.deepEqual(headings, ['systems-product', 'opensource', 'datasets']);
+  const jumpNav = projects.match(/<nav class="page-jump-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || '';
+  const links = [...jumpNav.matchAll(/<a href="([^"]+)" data-page-i18n="([^"]+)"/g)].map(match => [match[1], match[2]]);
+  assert.deepEqual(links, [
+    ['#systems-product', 'systems.heading'], ['#opensource', 'opensource.heading'], ['#datasets', 'datasets.heading']
+  ]);
+});
+
+test('both pages display the same two system cards, original logos and safe destinations', () => {
+  const cards = html => [...html.matchAll(/<a\b[^>]*class="system-product-card"[^>]*>[\s\S]*?<\/a>/g)]
+    .map(match => match[0].replaceAll('data-page-i18n=', 'data-i18n=').replace(/\s+/g, ' ').trim());
+  assert.equal(cards(projectSection).length, 2);
+  assert.deepEqual(cards(projectSection), cards(section));
+});
+
+test('projects reuse every English and Chinese system-product translation from the homepage', () => {
+  const elements = boundElements(projectSection, 'data-page-i18n');
+  assert.equal(elements.length, 7);
+  for (const lang of ['en', 'zh']) {
+    for (const [key, value] of Object.entries(expected[lang])) {
+      assert.equal(sharedCopy[lang].pages['projects.html'].content[key], value, `${lang}/${key}`);
+      assert.equal(sharedCopy[lang].pages['projects.html'].content[key], copy[lang][key]);
+    }
+  }
+  for (const element of elements) assert.equal(plain(element.innerHTML), expected.en[element.key]);
+});
+
+test('the real shared language code translates the products and jump link through a round trip', () => {
+  const jumpNav = projects.match(/<nav class="page-jump-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || '';
+  const elements = boundElements(projectSection + jumpNav, 'data-page-i18n')
+    .filter(element => element.key.startsWith('systems.'));
+  assert.equal(elements.length, 8);
+  const boundary = sharedScript.indexOf('  function initLanguageToggle()');
+  assert.ok(boundary > 0);
+  const runtime = sharedScript.slice(0, boundary).replace(/^\(function \(\) \{\n/, '');
+  const document = {
+    documentElement: { lang: 'en' },
+    querySelector: () => null,
+    querySelectorAll: selector => selector === '[data-page-i18n]' ? elements : [],
+    getElementById: () => null
+  };
+  const context = vm.createContext({ document, window: { location: { pathname: '/projects.html' } } });
+  vm.runInContext(runtime, context);
+  for (const lang of ['en', 'zh', 'en']) {
+    vm.runInContext(`applyLanguage('${lang}')`, context);
+    assert.equal(document.documentElement.lang, lang === 'zh' ? 'zh-CN' : 'en');
+    for (const element of elements) assert.equal(element.innerHTML, expected[lang][element.key]);
+  }
 });
 
 test('system cards use two desktop columns and one mobile column with wrapping footers', () => {

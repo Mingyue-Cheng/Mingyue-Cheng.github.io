@@ -79,6 +79,11 @@
           title: 'Open Project & Benchmarks',
           subtitle: 'Open-source frameworks, tools, benchmarks, and datasets for LLM reasoning and AI agents, time-series intelligence, and science intelligence.',
           content: {
+            'systems.heading': 'Systems Product',
+            'systems.brand': '科言 · Science Intelligence',
+            'systems.lewen': 'Discover scientific literature through quick search and in-depth retrieval.',
+            'systems.wenxiu': 'Support academic writing with polishing, proofreading, and translation tools.',
+            'systems.visit': 'Visit website',
             'opensource.heading': 'Open Project',
             'opensource.agentR1': '<span class="os-inline-highlight">Agent-R1</span> is a <strong>unified, modular training framework for Agentic RL</strong>. It models each round of agent interaction as a <strong>step-level RL transition</strong> and decouples <strong>trajectory representation, context construction, environment interfaces, and optimization algorithms</strong>. This allows <strong>GRPO, PPO, and other algorithms</strong> to be compared and extended on a <strong>shared foundation for multi-turn agent training</strong>.',
             'opensource.clawR1': '<span class="os-inline-highlight">Claw-R1</span> provides the <strong>Data Foundation for Agentic RL</strong>, enabling the systematic <strong>collection, evaluation, and curation of high-quality training data</strong> from <strong>diverse agent interactions</strong>. It introduces a <strong>middleware layer (Gateway + DataPool)</strong> between the <strong>Agent Side</strong> and the <strong>Training Side</strong>, focusing on <strong>data infrastructure</strong> rather than training algorithms themselves.',
@@ -214,6 +219,11 @@
           title: '开源项目与评测基准',
           subtitle: '面向大模型推理与智能体、时序智能和科学智能的开源框架、工具、评测基准与数据集。',
           content: {
+            'systems.heading': '系统产品',
+            'systems.brand': '科言 · 科学智能',
+            'systems.lewen': '面向科学文献智能获取，支持快速搜索与深度检索。',
+            'systems.wenxiu': '面向学术写作，提供智能润色、批阅纠错与语言翻译工具。',
+            'systems.visit': '访问系统',
             'opensource.heading': '开源项目',
             'opensource.agentR1': '<span class="os-inline-highlight">Agent-R1</span> 是面向 <strong>Agentic RL 的统一模块化训练框架</strong>。它将每一轮 Agent 交互建模为<strong>步级强化学习转移（step-level RL transition）</strong>，并解耦<strong>轨迹表示、上下文构造、环境接口与优化算法</strong>，使 <strong>GRPO、PPO</strong> 等算法能够在<strong>同一多轮 Agent 训练底座</strong>上进行比较与扩展。',
             'opensource.clawR1': '<span class="os-inline-highlight">Claw-R1</span> 为 <strong>Agentic RL</strong> 提供<strong>数据基础设施（Data Foundation）</strong>，用于系统化地从<strong>多样 Agent 交互</strong>中<strong>收集、评估与策划高质量训练数据</strong>。它在 <strong>Agent Side</strong> 与 <strong>Training Side</strong> 之间引入由 <strong>Gateway + DataPool</strong> 构成的<strong>中间件层（Middleware Layer）</strong>，专注于<strong>数据基础设施</strong>，而非训练算法本身。',

@@ -379,6 +379,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
   }
 }
   </style>
+  <link rel="stylesheet" href="files/assets/system-products.css?v=20260923">
   <link rel="stylesheet" href="files/assets/site-theme.css?v=20260917-consistency">
   <link rel="stylesheet" href="files/assets/site-content.css?v=20260917-consistency">
 </head>
@@ -414,6 +415,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
     <h1 class="page-hero-title">Open Project &amp; Benchmarks</h1>
     <p class="page-hero-sub">Open-source frameworks, tools, benchmarks, and datasets for LLM reasoning and AI agents, time-series intelligence, and science intelligence.</p>
     <nav class="page-jump-nav" aria-label="Jump to section">
+      <a href="#systems-product" data-page-i18n="systems.heading">Systems Product</a>
       <a href="#opensource" data-page-i18n="opensource.heading">Open Project</a>
       <a href="#datasets" data-page-i18n="datasets.heading">Benchmarks &amp; Datasets</a>
     </nav>
@@ -423,6 +425,38 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
 <!-- ===== Main ===== -->
 <div class="projects-main">
   <div class="container">
+
+    <!-- ===== Systems Product ===== -->
+    <section class="section-block systems-products" aria-labelledby="systems-product">
+      <h2 id="systems-product" class="section-heading" data-page-i18n="systems.heading">Systems Product</h2>
+      <div class="system-product-grid">
+        <a class="system-product-card" href="https://lewen.bdaa.pro/" target="_blank" rel="noopener noreferrer" aria-labelledby="system-product-lewen-name">
+          <div class="system-product-header">
+            <img class="system-product-logo" src="files/assets/system-products/lewen-logo.png" alt="科言乐问 Logo" width="80" height="80" loading="lazy" decoding="async">
+            <span class="system-product-brand" data-page-i18n="systems.brand">科言 · Science Intelligence</span>
+          </div>
+          <h3 id="system-product-lewen-name" class="system-product-name">科言乐问</h3>
+          <p class="system-product-desc" data-page-i18n="systems.lewen">Discover scientific literature through quick search and in-depth retrieval.</p>
+          <div class="system-product-footer">
+            <span class="system-product-domain">lewen.bdaa.pro</span>
+            <span class="system-product-action"><span data-page-i18n="systems.visit">Visit website</span><span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+        <a class="system-product-card" href="https://writelearn.bdaa.pro/" target="_blank" rel="noopener noreferrer" aria-labelledby="system-product-wenxiu-name">
+          <div class="system-product-header">
+            <img class="system-product-logo" src="files/assets/system-products/wenxiu-logo.png" alt="科言文修 Logo" width="80" height="80" loading="lazy" decoding="async">
+            <span class="system-product-brand" data-page-i18n="systems.brand">科言 · Science Intelligence</span>
+          </div>
+          <h3 id="system-product-wenxiu-name" class="system-product-name">科言文修</h3>
+          <p class="system-product-desc" data-page-i18n="systems.wenxiu">Support academic writing with polishing, proofreading, and translation tools.</p>
+          <div class="system-product-footer">
+            <span class="system-product-domain">writelearn.bdaa.pro</span>
+            <span class="system-product-action"><span data-page-i18n="systems.visit">Visit website</span><span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <!-- ===== /Systems Product ===== -->
 
     <!-- ===== Open Source ===== -->
     <div class="section-block">
@@ -467,6 +501,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
             </div>
           </div>
 
+          <!-- Temporarily hidden: WebMind open source project.
           <div class="os-card">
             <div class="os-body">
               <div class="os-card-header">
@@ -483,6 +518,9 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
             </div>
           </div>
 
+          -->
+
+          <!-- Temporarily hidden: TabClaw open source project.
           <div class="os-card">
             <div class="os-body">
               <div class="os-card-header">
@@ -501,6 +539,7 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
               <div class="os-card-desc" data-page-i18n="opensource.tabClaw"><span class="os-inline-highlight">TabClaw</span> is an open-source agentic framework that empowers LLMs to reason over <strong>complex, real-world tabular data</strong>. It decomposes table-centric tasks into <strong>structured sub-goals</strong>, equips agents with <strong>code execution</strong>, <strong>schema-aware lookup</strong>, and <strong>formula tools</strong>, and coordinates them through <strong>multi-step decision workflows</strong>. TabClaw is designed to tackle challenges beyond flat QA — including <strong>multi-hop joins</strong>, <strong>conditional aggregation</strong>, and <strong>cross-table inference</strong> — making it suitable for enterprise data analysis and scientific table understanding.</div>
             </div>
           </div>
+          -->
         </div>
       </section>
       <section class="os-category" aria-labelledby="opensource-timeseries" data-os-category="timeseries">
@@ -778,6 +817,6 @@ a.os-github:hover { background: var(--accent-light); border-color: #ccdbe4; }
 
 </script>
 <script src="files/assets/github-stars.js?v=20260913-stars"></script>
-<script src="files/assets/site-language.js?v=20260923-open-project"></script>
+<script src="files/assets/site-language.js?v=20260923-systems-in-projects"></script>
 </body>
 </html>

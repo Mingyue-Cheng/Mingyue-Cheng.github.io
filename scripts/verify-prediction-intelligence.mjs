@@ -58,7 +58,7 @@ test('page metadata and shell match the academic homepage', () => {
   }
   assert.match(pageHtml, /<main id="main-content" tabindex="-1">/);
   assert.match(pageHtml, /<footer class="site-footer">/);
-  assert.match(pageHtml, /<script src="files\/assets\/site-language\.js\?v=20260923-open-project"><\/script>/);
+  assert.match(pageHtml, /<script src="files\/assets\/site-language\.js\?v=20260923-systems-in-projects"><\/script>/);
   assert.match(
     pageHtml,
     /<script src="files\/assets\/prediction-intelligence\.js\?v=20260728"><\/script>/

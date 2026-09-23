@@ -190,34 +190,30 @@ test('homepage selected-publication filters and year groups remain accessible', 
   );
 });
 
-test('open-source subpage presents WebMind as the latest project', () => {
+test('WebMind and the table-agent project are hidden from both project displays', () => {
+  for (const html of [indexHtml, projectsHtml]) {
+    const visible = html.replace(/<!--[\s\S]*?-->/g, '');
+    assert.doesNotMatch(visible, /<div class="os-card-name">(?:WebMind|TabMind|TabClaw)<\/div>/);
+    assert.doesNotMatch(visible, /data-repo="(?:AgentR1\/WebMind|ustc-table-mining\/TabClaw)"/);
+    assert.doesNotMatch(visible, /data-(?:page-)?i18n="opensource\.(?:webMind|tabMind|tabClaw)"/);
+  }
+});
+
+test('hidden WebMind and TabClaw cards remain recoverable without removing academic records', () => {
   const openSource = sectionBetween(
     projectsHtml,
     '<!-- ===== Open Source ===== -->',
     '<!-- ===== Benchmarks & Datasets ===== -->'
   );
-  const webMindCard = sectionBetween(
-    openSource,
-    '<div class="os-card-name">WebMind</div>',
-    '<div class="os-card-name">CastClaw（观星阁）</div>'
-  );
-
-  assert.match(
-    openSource,
-    /<div class="os-grid">\s*<div class="os-card">[\s\S]*?<div class="os-card-name">WebMind<\/div>/
-  );
-  assert.match(
-    webMindCard,
-    /<span class="os-year">2026\.09<\/span>\s*<a class="os-github" href="https:\/\/github\.com\/AgentR1\/WebMind" target="_blank" rel="noopener">GitHub<\/a>/
-  );
-  assert.match(webMindCard, /data-repo="AgentR1\/WebMind"/);
-  assert.match(webMindCard, /<span class="os-inline-highlight">WebMind<\/span> is a <strong>web-task skill<\/strong> for <strong>AI agents<\/strong>/);
-  assert.match(webMindCard, /<strong>isolated, persistent browser environment<\/strong>/);
-  assert.match(webMindCard, /<strong>no Google sign-in<\/strong>/);
-  assert.match(webMindCard, /does not use personal data from the user's everyday Chrome profile by default/);
-  assert.match(webMindCard, /<strong>topic research<\/strong>, <strong>information collection<\/strong>, and <strong>repeatable web workflows<\/strong>/);
-  assert.equal(count(openSource, /<div class="os-card-name">WebMind<\/div>/g), 1);
-  assert.equal(count(openSource, /href="https:\/\/github\.com\/AgentR1\/WebMind"/g), 1);
+  const hiddenCards = [...openSource.matchAll(/<!-- Temporarily hidden: (WebMind|TabClaw) open source project\.([\s\S]*?)-->/g)];
+  assert.deepEqual(hiddenCards.map(match => match[1]), ['WebMind', 'TabClaw']);
+  for (const [, name, markup] of hiddenCards) {
+    assert.ok(markup.includes(`<div class="os-card-name">${name}</div>`));
+    assert.match(markup, /class="os-card-desc"/);
+    assert.match(markup, /class="os-github"/);
+  }
+  assert.match(publicationsHtml, /TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning/);
+  assert.match(newsHtml, /<strong>TabClaw<\/strong>/);
 });
 
 test('homepage keeps NeoResearch source-preserved but hidden', () => {
@@ -246,7 +242,7 @@ test('open-source subpage matches shared homepage projects and venue badges', ()
     '<!-- ===== Open Source ===== -->',
     '<!-- ===== Benchmarks & Datasets ===== -->'
   );
-  const subpageOnlyCardNames = ['WebMind', 'CastFactory（炼星坊）', 'TabClaw'];
+  const subpageOnlyCardNames = ['CastFactory（炼星坊）'];
   const visible = (source) => source.replace(/<!--[\s\S]*?-->/g, '');
   const cardNames = (source) => [...visible(source).matchAll(
     /<div class="os-card-name">([^<]+)<\/div>/g

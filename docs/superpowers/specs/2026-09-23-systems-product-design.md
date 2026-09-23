@@ -42,3 +42,11 @@ Proceed autonomously under the user's standing preference against routine confir
 ## Self-review
 
 The card count, names, destinations, section placement, bilingual copy, accessibility, responsiveness and non-publication boundary are explicit. The module adds no tracking, external embeds or dependencies.
+
+## Open Project integration (2026-09-23 follow-up)
+
+The user requests that Systems Product belong to the existing Open Project subpage, not a separate new page. Keep the homepage module unchanged and reuse its two cards, exact logos, safe destinations and bilingual copy in `projects.html`. Within the existing main container, order the sections as Systems Product, Open Project, then Benchmarks & Datasets. Add Systems Product to the existing in-page jump navigation; do not add a global navigation item or a standalone product page.
+
+The existing product stylesheet becomes shared by the homepage and projects page, loaded before the shared theme/content layers. Add the five existing translation keys to the projects page's shared English/Chinese dictionaries and refresh the shared language-script cache version consistently. Preserve the existing page title and all other project/dataset content. This follow-up supersedes the original homepage-only stylesheet boundary, but does not authorize a commit, push or deployment.
+
+Verify parity of both card bodies, translation switching, section order, anchor navigation, logo loading and responsive rendering on desktop and narrow screens. No new visual design, runtime dependency or product capability claim is needed.

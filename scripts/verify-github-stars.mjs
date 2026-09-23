@@ -17,8 +17,6 @@ const publicHtmlSource = readdirSync(root)
 const expectedRepos = [
   'AgentR1/Agent-R1',
   'AgentR1/Claw-R1',
-  'AgentR1/WebMind',
-  'ustc-table-mining/TabClaw',
   'ustc-time-series/CastClaw',
   'ustc-time-series/CastMind',
   'ustc-time-series/CastFactory',

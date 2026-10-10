@@ -26,15 +26,15 @@ test('compact Related Links scopes its tighter section spacing', () => {
   const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
   assert.match(related, /<div class="section related-section">/);
   assert.equal(count(indexHtml, /class="section related-section"/g), 1);
-  assert.match(css, /\.related-section\s*\{[^}]*padding:\s*20px 0 16px\s*;/);
-  assert.match(css, /\.related-section \.section-heading\s*\{[^}]*margin-bottom:\s*10px\s*;/);
+  assert.match(css, /\.related-section\s*\{[^}]*padding:\s*16px 0 8px\s*;/);
+  assert.match(css, /\.related-section \.section-heading\s*\{[^}]*margin-bottom:\s*8px\s*;/);
 });
 
-test('compact Related Links fits smaller cards into four default columns', () => {
+test('compact Related Links balances six cards across three default columns', () => {
   const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
   const grid = css.match(/\.related-grid\s*\{([^}]*)\}/)?.[1] || '';
   const card = css.match(/\.related-card\s*\{([^}]*)\}/)?.[1] || '';
-  assert.match(grid, /grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)\s*;/);
+  assert.match(grid, /grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)\s*;/);
   assert.match(grid, /gap:\s*8px\s*;/);
   assert.match(card, /gap:\s*10px\s*;/);
   assert.match(card, /padding:\s*10px 12px\s*;/);
@@ -58,11 +58,16 @@ test('compact Related Links keeps readable text and smaller badges without trunc
   assert.doesNotMatch(css, /(?:line-clamp|text-overflow)\s*:|white-space:\s*nowrap|overflow(?:-[xy])?:\s*(?:hidden|clip)/);
 });
 
-test('compact Related Links gives text the full card width in four-column layouts', () => {
+test('compact Related Links keeps text and badges in a horizontal card layout', () => {
   const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
-  const wideCards = css.slice(css.indexOf('@media (min-width: 801px)'));
-  assert.match(wideCards, /\.related-card\s*\{[^}]*flex-direction:\s*column\s*;[^}]*align-items:\s*flex-start\s*;/);
-  assert.match(wideCards, /\.related-card-main\s*\{[^}]*width:\s*100%\s*;/);
+  const card = css.match(/\.related-card\s*\{([^}]*)\}/)?.[1] || '';
+  const main = css.match(/\.related-card-main\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(card, /display:\s*flex\s*;/);
+  assert.match(card, /align-items:\s*center\s*;/);
+  assert.match(card, /justify-content:\s*space-between\s*;/);
+  assert.match(main, /min-width:\s*0\s*;/);
+  assert.doesNotMatch(css, /flex-direction:\s*column\s*;/);
+  assert.doesNotMatch(css, /\.related-card-main\s*\{[^}]*width:\s*100%\s*;/);
 });
 
 test('compact Related Links provides an explicit keyboard focus outline', () => {

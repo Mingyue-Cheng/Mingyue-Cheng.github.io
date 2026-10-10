@@ -87,7 +87,7 @@ test('Related Links follows the requested person order and preserves profile lin
   const names = cards.map(match => match[3].match(/class="related-card-name">([^<]+)<\/div>/)?.[1]);
   assert.deepEqual(names, [
     'Prof. Enhong Chen', 'Prof. Qi Liu', 'Prof. Defu Lian',
-    'Prof. Le Wu', 'Prof. Tong Xu', 'Prof. Hongke Zhao', 'Prof. Zhenya Huang'
+    'Prof. Le Wu', 'Prof. Tong Xu', 'Prof. Hongke Zhao'
   ]);
   assert.deepEqual(cards.slice(0, 2).map(match => match[1]), [
     'http://staff.ustc.edu.cn/~cheneh/',
@@ -110,10 +110,6 @@ for (const { name, href, role, badge } of [
   {
     name: 'Prof. Tong Xu', href: 'http://staff.ustc.edu.cn/~tongxu/',
     role: 'University of Science and Technology of China', badge: 'USTC'
-  },
-  {
-    name: 'Prof. Zhenya Huang', href: 'http://staff.ustc.edu.cn/~huangzhy/',
-    role: 'University of Science and Technology of China', badge: 'USTC'
   }
 ]) {
   test(`Related Links shows the verified profile for ${name}`, () => {
@@ -129,6 +125,14 @@ for (const { name, href, role, badge } of [
     assert.ok(body.includes(`<span class="related-card-badge">${badge}</span>`));
   });
 }
+
+test('removing Zhenya Huang from Related Links preserves publication credits', () => {
+  const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
+  assert.doesNotMatch(related, /Zhenya Huang|~huangzhy\//);
+  for (const html of [indexHtml, publicationsHtml]) {
+    assert.match(html, /Zhi Li, Zhenya Huang, Enhong Chen, Longfei Li, Jun Zhou, <strong>Empowering Sequential Recommender Systems/);
+  }
+});
 
 test('replacing a related-person card preserves Fajie Yuan publication credits', () => {
   for (const html of [indexHtml, publicationsHtml]) {

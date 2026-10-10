@@ -21,6 +21,133 @@ function sectionBetween(source, startMarker, endMarker) {
   return source.slice(start, end);
 }
 
+test('compact Related Links scopes its tighter section spacing', () => {
+  const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
+  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
+  assert.match(related, /<div class="section related-section">/);
+  assert.equal(count(indexHtml, /class="section related-section"/g), 1);
+  assert.match(css, /\.related-section\s*\{[^}]*padding:\s*20px 0 16px\s*;/);
+  assert.match(css, /\.related-section \.section-heading\s*\{[^}]*margin-bottom:\s*10px\s*;/);
+});
+
+test('compact Related Links fits smaller cards into four default columns', () => {
+  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
+  const grid = css.match(/\.related-grid\s*\{([^}]*)\}/)?.[1] || '';
+  const card = css.match(/\.related-card\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(grid, /grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)\s*;/);
+  assert.match(grid, /gap:\s*8px\s*;/);
+  assert.match(card, /gap:\s*10px\s*;/);
+  assert.match(card, /padding:\s*10px 12px\s*;/);
+  assert.match(card, /border-radius:\s*10px\s*;/);
+});
+
+test('compact Related Links keeps readable text and smaller badges without truncation', () => {
+  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
+  const name = css.match(/\.related-card-name\s*\{([^}]*)\}/)?.[1] || '';
+  const role = css.match(/\.related-card-role\s*\{([^}]*)\}/)?.[1] || '';
+  const badge = css.match(/\.related-card-badge\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(name, /font-size:\s*15px\s*;/);
+  assert.match(name, /font-weight:\s*700\s*;/);
+  assert.match(name, /line-height:\s*1\.35\s*;/);
+  assert.match(role, /margin-top:\s*2px\s*;/);
+  assert.match(role, /font-size:\s*12px\s*;/);
+  assert.match(role, /line-height:\s*1\.45\s*;/);
+  assert.match(badge, /padding:\s*3px 7px\s*;/);
+  assert.match(badge, /font-size:\s*11px\s*;/);
+  assert.match(badge, /line-height:\s*1\.5\s*;/);
+  assert.doesNotMatch(css, /(?:line-clamp|text-overflow)\s*:|white-space:\s*nowrap|overflow(?:-[xy])?:\s*(?:hidden|clip)/);
+});
+
+test('compact Related Links gives text the full card width in four-column layouts', () => {
+  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
+  const wideCards = css.slice(css.indexOf('@media (min-width: 801px)'));
+  assert.match(wideCards, /\.related-card\s*\{[^}]*flex-direction:\s*column\s*;[^}]*align-items:\s*flex-start\s*;/);
+  assert.match(wideCards, /\.related-card-main\s*\{[^}]*width:\s*100%\s*;/);
+});
+
+test('compact Related Links provides an explicit keyboard focus outline', () => {
+  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
+  const focus = css.match(/\.related-card:focus-visible\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(focus, /outline:\s*2px solid var\(--accent\)\s*;/);
+  assert.match(focus, /outline-offset:\s*3px\s*;/);
+});
+
+test('compact Related Links changes to two columns at 800px and one at 680px', () => {
+  const responsive = sectionBetween(indexHtml, '/* ===== Responsive ===== */', '@media (prefers-reduced-motion: reduce)');
+  const tablet = sectionBetween(responsive, '@media (max-width: 800px)', '@media (max-width: 900px)');
+  const mobile = sectionBetween(responsive, '@media (max-width: 680px)', '@media (max-width: 900px)');
+  assert.ok(responsive.indexOf('@media (max-width: 800px)') < responsive.indexOf('@media (max-width: 900px)'));
+  assert.match(tablet, /\.related-grid\s*\{\s*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)\s*;/);
+  assert.match(mobile, /\.related-grid\s*\{\s*grid-template-columns:\s*1fr\s*;/);
+});
+
+test('Related Links follows the requested person order and preserves profile links', () => {
+  const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
+  const cards = [...related.matchAll(/<a class="related-card" href="([^"]+)"([^>]*)>([\s\S]*?)<\/a>/g)];
+  const names = cards.map(match => match[3].match(/class="related-card-name">([^<]+)<\/div>/)?.[1]);
+  assert.deepEqual(names, [
+    'Prof. Enhong Chen', 'Prof. Qi Liu', 'Prof. Defu Lian',
+    'Prof. Le Wu', 'Prof. Tong Xu', 'Prof. Hongke Zhao', 'Prof. Zhenya Huang'
+  ]);
+  assert.deepEqual(cards.slice(0, 2).map(match => match[1]), [
+    'http://staff.ustc.edu.cn/~cheneh/',
+    'http://staff.ustc.edu.cn/~qiliuql/'
+  ]);
+  const [, href, attributes, body] = cards[2];
+  assert.equal(href, 'https://faculty.ustc.edu.cn/liandefu/en/index.htm');
+  assert.match(attributes, /target="_blank"/);
+  assert.match(attributes, /rel="noopener"/);
+  assert.match(body, /class="related-card-role">University of Science and Technology of China<\/div>/);
+  assert.match(body, /class="related-card-badge">USTC<\/span>/);
+  assert.doesNotMatch(related, /Fajie Yuan|fajieyuan|Westlake University|>WU</);
+});
+
+for (const { name, href, role, badge } of [
+  {
+    name: 'Prof. Le Wu', href: 'https://le-wu.com/',
+    role: 'Hefei University of Technology', badge: 'HFUT'
+  },
+  {
+    name: 'Prof. Tong Xu', href: 'http://staff.ustc.edu.cn/~tongxu/',
+    role: 'University of Science and Technology of China', badge: 'USTC'
+  },
+  {
+    name: 'Prof. Zhenya Huang', href: 'http://staff.ustc.edu.cn/~huangzhy/',
+    role: 'University of Science and Technology of China', badge: 'USTC'
+  }
+]) {
+  test(`Related Links shows the verified profile for ${name}`, () => {
+    const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
+    const cards = [...related.matchAll(/<a class="related-card" href="([^"]+)"([^>]*)>([\s\S]*?)<\/a>/g)];
+    const matches = cards.filter(match => match[3].includes(`<div class="related-card-name">${name}</div>`));
+    assert.equal(matches.length, 1, `${name} should have exactly one card`);
+    const [, actualHref, attributes, body] = matches[0];
+    assert.equal(actualHref, href);
+    assert.match(attributes, /target="_blank"/);
+    assert.match(attributes, /rel="noopener"/);
+    assert.ok(body.includes(`<div class="related-card-role">${role}</div>`));
+    assert.ok(body.includes(`<span class="related-card-badge">${badge}</span>`));
+  });
+}
+
+test('replacing a related-person card preserves Fajie Yuan publication credits', () => {
+  for (const html of [indexHtml, publicationsHtml]) {
+    assert.match(html, /Jie Wang, Fajie Yuan, <strong>Mingyue Cheng<\/strong>, et al\., <strong>TransRec:/);
+    assert.match(html, /<strong>Mingyue Cheng<\/strong>, Fajie Yuan<sup>\+<\/sup>, Qi Liu\*, Xin Xin, Enhong Chen/);
+  }
+});
+
+test('the removed Tencent internship award is absent from both award listings', () => {
+  for (const html of [indexHtml, awardsHtml]) {
+    assert.doesNotMatch(html, /腾讯科技平台与事业群实习生\s*Mini\s*项目卓越奖/);
+  }
+  const homepageHonors = sectionBetween(indexHtml, '<!-- ===== Honors ===== -->', '<!-- ===== Professional Activities ===== -->');
+  const awardsHonors = sectionBetween(awardsHtml, '<!-- Honors and Awards -->', '<!-- Research Grants -->');
+  assert.equal(count(homepageHonors, /<li>/g), 11);
+  assert.equal(count(awardsHonors, /class="award-card"/g), 11);
+  assert.match(indexHtml, /data-i18n="experience\.tencent">Jun\. 2019 ~ Oct\. 2019, Research Intern/);
+});
+
 test('homepage metadata describes the current research portfolio', () => {
   const head = sectionBetween(indexHtml, '<head>', '</head>');
 
@@ -413,6 +540,23 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });
 
+for (const [page, html, start, end, headings] of [
+  ['homepage', indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Research Grants ===== -->', /class="services-label" data-i18n="service\.([^"]+)"/g],
+  ['service subpage', serviceHtml, '<div class="service-main">', '</main>', /class="section-heading" data-page-i18n="service\.([^"]+)"/g]
+]) {
+  test(`${page} places Conference Organization last in professional service`, () => {
+    const services = sectionBetween(html, start, end);
+    assert.deepEqual([...services.matchAll(headings)].map(match => match[1]), [
+      'pc', 'journal', 'organizations', 'conferenceOrganization'
+    ]);
+    assert.equal(count(services, /data-(?:page-)?i18n="service\.icebePublicationChair"/g), 1);
+    const organization = services.slice(services.indexOf('data-' + (page === 'homepage' ? '' : 'page-') + 'i18n="service.conferenceOrganization"'));
+    assert.match(organization, /ICEBE/);
+    assert.match(organization, /2026/);
+    assert.match(organization, />Publication Chair<\/span>/);
+  });
+}
+
 test('homepage merges ICLR Area Chair into its single program committee entry', () => {
   const services = sectionBetween(indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Research Grants ===== -->');
   assert.equal(services.includes('data-i18n="service.areaChair"'), false, 'the separate Area Chair group must be removed');
@@ -466,7 +610,7 @@ test('new ICDM and EMNLP service entries do not invent reviewing years', () => {
 test('homepage groups the four academic organization appointments outside conference reviewing', () => {
   const pc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
   assert.doesNotMatch(pc, /IEEE Task Force|service\.(?:ccfAipr|cipsIr)/);
-  const organizations = sectionBetween(indexHtml, '<!-- Academic Organizations -->', '<!-- ===== Research Grants ===== -->');
+  const organizations = sectionBetween(indexHtml, '<!-- Academic Organizations -->', '\n    </div>');
   assert.match(organizations, /class="services-label" data-i18n="service.organizations">Academic Organization Service<\/div>/);
   assert.equal(count(organizations, /<li\b/g), 4);
   assert.deepEqual([...organizations.matchAll(/data-i18n="service\.(ieeeDeal|ieeeAi4tst|ccfAipr|cipsIr)"/g)].map((match) => match[1]), ['ieeeDeal', 'ieeeAi4tst', 'ccfAipr', 'cipsIr']);
@@ -476,7 +620,7 @@ test('homepage groups the four academic organization appointments outside confer
 test('service subpage groups IEEE, CCF and CIPS in a separate academic organization section', () => {
   const pc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
   assert.doesNotMatch(pc, /IEEE Task Force|service\.(?:ccfAipr|cipsIr)/);
-  const organizations = sectionBetween(serviceHtml, '<!-- Academic Organizations -->', '</main>');
+  const organizations = sectionBetween(serviceHtml, '<!-- Academic Organizations -->', '\n    </div>');
   assert.match(organizations, /class="section-heading" data-page-i18n="service.organizations">Academic Organization Service<\/h2>/);
   assert.deepEqual([...organizations.matchAll(/class="venue-abbr">([^<]+)<\/span>/g)].map((match) => match[1]), ['IEEE DEAL', 'IEEE TF', 'CCF', 'CIPS']);
   assert.deepEqual([...organizations.matchAll(/data-page-i18n="service\.(ieeeDeal|ieeeAi4tst|ccfAipr|cipsIr)"/g)].map((match) => match[1]), ['ieeeDeal', 'ieeeAi4tst', 'ccfAipr', 'cipsIr']);

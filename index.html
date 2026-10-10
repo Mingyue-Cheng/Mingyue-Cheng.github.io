@@ -383,19 +383,25 @@ body {
 .plain-list li a:hover { text-decoration: underline; }
 
 /* ===== Related Links ===== */
+.related-section {
+  padding: 20px 0 16px;
+}
+.related-section .section-heading {
+  margin-bottom: 10px;
+}
 .related-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
 }
 .related-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 10px 12px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   background:
     linear-gradient(180deg, #ffffff 0%, #f7fafb 100%);
   text-decoration: none;
@@ -406,18 +412,23 @@ body {
   box-shadow: 0 10px 24px rgba(var(--accent-rgb), 0.08);
   transform: translateY(-1px);
 }
+.related-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
 .related-card-main {
   min-width: 0;
 }
 .related-card-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
   line-height: 1.35;
 }
 .related-card-role {
-  margin-top: 4px;
-  font-size: 13px;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.45;
   color: var(--text-muted);
 }
 .related-card-badge {
@@ -425,14 +436,24 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 10px;
+  padding: 3px 7px;
   border-radius: 999px;
   border: 1px solid rgba(var(--accent-rgb), 0.1);
   background: var(--accent-light);
   color: var(--accent);
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1.5;
   font-weight: 700;
   letter-spacing: 0.03em;
+}
+@media (min-width: 801px) {
+  .related-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .related-card-main {
+    width: 100%;
+  }
 }
 
 /* ===== Research Interests ===== */
@@ -1411,6 +1432,9 @@ html[lang="zh-CN"] .footer-title {
 }
 
 /* ===== Responsive ===== */
+@media (max-width: 800px) {
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 900px) {
   .research-section .scenario-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -2306,7 +2330,6 @@ html[lang="zh-CN"] .footer-title {
       <li>May. 2022, 2022年中国科学技术大学"创新创业"基金</li>
       <li>Dec. 2021, "创青春"中国青年创新创业项目支持——大学生创业"金种子"计划（团中央）</li>
       <li>Sep. 2021, 博士研究生国家奖学金（教育部）</li>
-      <li>Sep. 2019, 腾讯科技平台与事业群实习生Mini项目卓越奖</li>
     </ul>
   </div>
 </div>
@@ -2367,6 +2390,13 @@ html[lang="zh-CN"] .footer-title {
         <li data-i18n="service.cipsIr">Information Retrieval Technical Committee, Chinese Information Processing Society of China (CIPS) — Corresponding Member</li>
       </ul>
     </div>
+
+    <div class="services-group">
+      <div class="services-label" data-i18n="service.conferenceOrganization">Conference Organization</div>
+      <ul class="services-list">
+        <li>IEEE ICEBE 2026 — <span data-i18n="service.icebePublicationChair">Publication Chair</span></li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -2405,17 +2435,10 @@ html[lang="zh-CN"] .footer-title {
 
 
 <!-- ===== Related Links ===== -->
-<div class="section">
+<div class="section related-section">
   <div class="container">
     <h2 class="section-heading" data-i18n="related.heading">Related Links</h2>
     <div class="related-grid">
-      <a class="related-card" href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener">
-        <div class="related-card-main">
-          <div class="related-card-name">Prof. Qi Liu</div>
-          <div class="related-card-role">University of Science and Technology of China</div>
-        </div>
-        <span class="related-card-badge">USTC</span>
-      </a>
       <a class="related-card" href="http://staff.ustc.edu.cn/~cheneh/" target="_blank" rel="noopener">
         <div class="related-card-main">
           <div class="related-card-name">Prof. Enhong Chen</div>
@@ -2423,12 +2446,33 @@ html[lang="zh-CN"] .footer-title {
         </div>
         <span class="related-card-badge">USTC</span>
       </a>
-      <a class="related-card" href="https://fajieyuan.github.io/" target="_blank" rel="noopener">
+      <a class="related-card" href="http://staff.ustc.edu.cn/~qiliuql/" target="_blank" rel="noopener">
         <div class="related-card-main">
-          <div class="related-card-name">Prof. Fajie Yuan</div>
-          <div class="related-card-role">Westlake University</div>
+          <div class="related-card-name">Prof. Qi Liu</div>
+          <div class="related-card-role">University of Science and Technology of China</div>
         </div>
-        <span class="related-card-badge">WU</span>
+        <span class="related-card-badge">USTC</span>
+      </a>
+      <a class="related-card" href="https://faculty.ustc.edu.cn/liandefu/en/index.htm" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Defu Lian</div>
+          <div class="related-card-role">University of Science and Technology of China</div>
+        </div>
+        <span class="related-card-badge">USTC</span>
+      </a>
+      <a class="related-card" href="https://le-wu.com/" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Le Wu</div>
+          <div class="related-card-role">Hefei University of Technology</div>
+        </div>
+        <span class="related-card-badge">HFUT</span>
+      </a>
+      <a class="related-card" href="http://staff.ustc.edu.cn/~tongxu/" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Tong Xu</div>
+          <div class="related-card-role">University of Science and Technology of China</div>
+        </div>
+        <span class="related-card-badge">USTC</span>
       </a>
       <a class="related-card" href="http://come.tju.edu.cn/info/1526/5697.htm" target="_blank" rel="noopener">
         <div class="related-card-main">
@@ -2436,6 +2480,13 @@ html[lang="zh-CN"] .footer-title {
           <div class="related-card-role">Tianjin University</div>
         </div>
         <span class="related-card-badge">TJU</span>
+      </a>
+      <a class="related-card" href="http://staff.ustc.edu.cn/~huangzhy/" target="_blank" rel="noopener">
+        <div class="related-card-main">
+          <div class="related-card-name">Prof. Zhenya Huang</div>
+          <div class="related-card-role">University of Science and Technology of China</div>
+        </div>
+        <span class="related-card-badge">USTC</span>
       </a>
     </div>
   </div>
@@ -2605,6 +2656,8 @@ const i18n = {
     "teaching.heading": "Teaching",
     "honors.heading": "Honors and Awards",
     "service.heading": "Professional Service",
+    "service.conferenceOrganization": "Conference Organization",
+    "service.icebePublicationChair": "Publication Chair",
     "service.iclrAreaChair": "Area Chair 2027",
     "service.pc": "Program Committee Member",
     "service.journal": "Journal Reviewer",
@@ -2729,6 +2782,8 @@ const i18n = {
     "teaching.heading": "教学",
     "honors.heading": "荣誉与奖励",
     "service.heading": "学术服务",
+    "service.conferenceOrganization": "会议组织任职",
+    "service.icebePublicationChair": "出版主席",
     "service.iclrAreaChair": "领域主席 2027",
     "service.pc": "程序委员会委员",
     "service.journal": "期刊审稿人",

@@ -123,6 +123,8 @@
           title: 'Professional Service',
           subtitle: 'Selected program committee service, journal reviewing, teaching, and academic community contributions.',
           content: {
+            'service.conferenceOrganization': 'Conference Organization',
+            'service.icebePublicationChair': 'Publication Chair',
             'service.iclrAreaChair': 'Area Chair 2027',
             'service.pc': 'Program Committee Member',
             'service.journal': 'Journal Reviewer',
@@ -263,6 +265,8 @@
           title: '学术服务',
           subtitle: '代表性程序委员会、期刊审稿、教学与学术共同体服务。',
           content: {
+            'service.conferenceOrganization': '会议组织任职',
+            'service.icebePublicationChair': '出版主席',
             'service.iclrAreaChair': '领域主席 2027',
             'service.pc': '程序委员会委员',
             'service.journal': '期刊审稿人',

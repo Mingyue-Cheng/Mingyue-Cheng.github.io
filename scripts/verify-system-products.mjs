@@ -69,18 +69,43 @@ test('the two system cards preserve the requested names, order and safe website 
 });
 
 test('each system card embeds its matching user-supplied logo instead of a placeholder icon', () => {
-  const cards = [...section.matchAll(/<a\b[^>]*class="system-product-card"[^>]*>([\s\S]*?)<\/a>/g)];
-  assert.equal(cards.length, 2);
-  for (const [index, [key, name]] of [['lewen', '科言乐问'], ['wenxiu', '科言文修']].entries()) {
-    const images = [...cards[index][1].matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
-    assert.equal(images.length, 1, `${name} needs one original logo`);
-    for (const attribute of [
-      'class="system-product-logo"', `src="files/assets/system-products/${key}-logo.png"`,
-      `alt="${name} Logo"`, 'width="80"', 'height="80"', 'loading="lazy"', 'decoding="async"'
-    ]) assert.ok(images[0].includes(attribute), `${name}: ${attribute}`);
-    assert.doesNotMatch(cards[index][1], /<svg\b/);
+  for (const [page, html] of [['home', section], ['projects', projectSection]]) {
+    const cards = [...html.matchAll(/<a\b[^>]*class="system-product-card"[^>]*>([\s\S]*?)<\/a>/g)];
+    assert.equal(cards.length, 2);
+    for (const [index, [key, name]] of [['lewen', '科言乐问'], ['wenxiu', '科言文修']].entries()) {
+      const images = [...cards[index][1].matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
+      assert.equal(images.length, 1, `${page}/${name} needs one original logo`);
+      for (const attribute of [
+        'class="system-product-logo"', `src="files/assets/system-products/${key}-logo.png"`,
+        `alt="${name} Logo"`, 'width="64"', 'height="64"', 'loading="lazy"', 'decoding="async"'
+      ]) assert.ok(images[0].includes(attribute), `${page}/${name}: ${attribute}`);
+      assert.doesNotMatch(cards[index][1], /<svg\b/);
+    }
   }
 });
+
+for (const [page, html, attribute] of [
+  ['home', section, 'data-i18n'], ['projects', projectSection, 'data-page-i18n']
+]) {
+  for (const [index, [key, name]] of [['lewen', '科言乐问'], ['wenxiu', '科言文修']].entries()) {
+    test(`${page}: ${name} groups its logo, name and bilingual brand in one compact header`, () => {
+      const cards = [...html.matchAll(/<a\b([^>]*class="system-product-card"[^>]*)>([\s\S]*?)<\/a>/g)];
+      assert.equal(cards.length, 2);
+      const [, attributes, content] = cards[index];
+      const id = `system-product-${key}-name`;
+      const header = content.match(/^\s*<div class="system-product-header">\s*(<img\b[^>]*>)\s*<div class="system-product-identity">([\s\S]*?)<\/div>\s*<\/div>/);
+      assert.ok(header, `${page}/${name} must place its logo and identity inside the header`);
+      assert.ok(header[1].includes(`src="files/assets/system-products/${key}-logo.png"`));
+      assert.match(header[2], new RegExp(`^\\s*<h3 id="${id}" class="system-product-name">${name}<\\/h3>\\s*<span class="system-product-brand" ${attribute}="systems.brand">科言 · Science Intelligence<\\/span>\\s*$`));
+      assert.ok(attributes.includes(`aria-labelledby="${id}"`));
+      assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1);
+      assert.equal((content.match(/class="system-product-name"/g) || []).length, 1);
+      assert.equal(plain(content).split(name).length - 1, 1, 'The visible product name must appear only once');
+      assert.doesNotMatch(header[0], /system-product-desc/);
+      assert.match(content.slice(header[0].length), new RegExp(`^\\s*<p class="system-product-desc" ${attribute}="systems.${key}">`));
+    });
+  }
+}
 
 test('product logo assets preserve the exact supplied originals and cannot be interchanged', () => {
   for (const [key, digest] of [
@@ -95,8 +120,9 @@ test('product logo assets preserve the exact supplied originals and cannot be in
 
 test('product logos have equal reserved space and retain their full uncropped proportions', () => {
   const rule = css.match(/\.system-product-logo\s*\{([^}]+)\}/)?.[1] || '';
-  assert.match(rule, /width:\s*80px/);
-  assert.match(rule, /height:\s*80px/);
+  assert.match(rule, /flex:\s*0 0 64px/);
+  assert.match(rule, /width:\s*64px/);
+  assert.match(rule, /height:\s*64px/);
   assert.match(rule, /object-fit:\s*contain/);
   assert.doesNotMatch(rule, /filter\s*:|transform\s*:/);
 });
@@ -134,7 +160,8 @@ test('the real homepage language switch translates every product binding through
 
 test('system products share one stylesheet and the Prussian-blue palette across both pages', () => {
   for (const html of [home, projects]) {
-    assert.match(html, /<link rel="stylesheet" href="files\/assets\/system-products\.css\?v=20260923">/);
+    const stylesheet = html.match(/<link rel="stylesheet" href="(files\/assets\/system-products\.css[^"]*)">/)?.[1];
+    assert.equal(stylesheet, 'files/assets/system-products.css?v=20261011-compact');
     assert.ok(html.indexOf('system-products.css') < html.indexOf('site-theme.css'),
       'Shared theme and content layers must keep final authority over component styles');
   }
@@ -206,7 +233,48 @@ test('system cards use two desktop columns and one mobile column with wrapping f
   assert.match(css, /\.system-product-card\s*\{[^}]*min-width:\s*0/);
   assert.match(css, /\.system-product-footer\s*\{[^}]*flex-wrap:\s*wrap/);
   assert.match(css, /\.system-product-domain\s*\{[^}]*overflow-wrap:\s*anywhere/);
-  assert.match(css, /\.systems-products \.system-product-desc\s*\{[^}]*text-align:\s*justify;[^}]*text-align-last:\s*left/);
+});
+
+test('system cards use compact desktop and mobile spacing without clipping content', () => {
+  const grid = css.match(/\.system-product-grid\s*\{([^}]+)\}/)?.[1] || '';
+  const card = css.match(/\.system-product-card\s*\{([^}]+)\}/)?.[1] || '';
+  const footer = css.match(/\.system-product-footer\s*\{([^}]+)\}/)?.[1] || '';
+  assert.match(grid, /gap:\s*14px;/);
+  assert.match(card, /padding:\s*18px 20px;/);
+  assert.match(footer, /padding-top:\s*10px;/);
+  assert.match(css, /@media \(max-width: 680px\)[\s\S]*?\.system-product-card\s*\{\s*padding:\s*16px;/);
+  assert.doesNotMatch(card, /(?:^|;)\s*(?:height|min-height|max-height)\s*:/);
+  assert.doesNotMatch(css, /(?:line-clamp|text-overflow)\s*:|overflow\s*:\s*(?:hidden|clip)|white-space\s*:\s*nowrap/);
+});
+
+test('system product identity keeps the name above the brand beside the logo', () => {
+  const header = css.match(/\.system-product-header\s*\{([^}]+)\}/)?.[1] || '';
+  const identity = css.match(/\.system-product-identity\s*\{([^}]+)\}/)?.[1] || '';
+  const name = css.match(/\.system-product-name\s*\{([^}]+)\}/)?.[1] || '';
+  const brand = css.match(/\.system-product-brand\s*\{([^}]+)\}/)?.[1] || '';
+  assert.match(header, /display:\s*flex;/);
+  assert.match(header, /align-items:\s*center;/);
+  assert.match(header, /gap:\s*12px;/);
+  assert.match(header, /margin-bottom:\s*12px;/);
+  assert.doesNotMatch(header, /flex-wrap\s*:/);
+  assert.match(identity, /min-width:\s*0;/);
+  assert.match(name, /font-size:\s*22px;/);
+  assert.match(name, /line-height:\s*1\.4;/);
+  assert.match(name, /margin:\s*0 0 3px;/);
+  assert.match(brand, /display:\s*block;/);
+  assert.match(brand, /font-size:\s*12px;/);
+  assert.match(brand, /line-height:\s*1\.5;/);
+});
+
+test('product descriptions use compact left-aligned text that overrides global paragraph alignment', () => {
+  const rule = css.match(/html\[lang\] \.systems-products \.system-product-desc\s*\{([^}]+)\}/)?.[1] || '';
+  assert.ok(rule, 'The description selector must outrank the shared global paragraph rules');
+  assert.match(rule, /color:\s*#516773;/);
+  assert.match(rule, /font-size:\s*14px;/);
+  assert.match(rule, /line-height:\s*1\.65;/);
+  assert.match(rule, /text-align:\s*left;/);
+  assert.match(rule, /text-align-last:\s*left;/);
+  assert.match(rule, /margin:\s*0 0 12px;/);
 });
 
 test('system cards retain visible keyboard focus and disable motion when requested', () => {

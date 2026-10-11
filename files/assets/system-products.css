@@ -2,7 +2,7 @@
 .system-product-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
   margin-top: 4px;
 }
 
@@ -10,7 +10,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 18px 20px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: #fff;
@@ -23,22 +23,27 @@
 .system-product-header {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .system-product-logo {
   display: block;
-  flex: 0 0 80px;
-  width: 80px;
-  height: 80px;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
 }
 
+.system-product-identity {
+  min-width: 0;
+}
+
 .system-product-brand {
+  display: block;
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.5;
   color: #516773;
   text-align: left;
 }
@@ -49,16 +54,16 @@
   font-weight: 700;
   line-height: 1.4;
   text-align: left;
-  margin-bottom: 10px;
+  margin: 0 0 3px;
 }
 
-.systems-products .system-product-desc {
+html[lang] .systems-products .system-product-desc {
   color: #516773;
   font-size: 14px;
-  line-height: 1.8;
-  text-align: justify;
+  line-height: 1.65;
+  text-align: left;
   text-align-last: left;
-  margin: 0 0 20px;
+  margin: 0 0 12px;
 }
 
 .system-product-footer {
@@ -68,7 +73,7 @@
   flex-wrap: wrap;
   gap: 8px 16px;
   margin-top: auto;
-  padding-top: 14px;
+  padding-top: 10px;
   border-top: 1px solid var(--border);
   text-align: left;
   font-size: 12px;
@@ -108,7 +113,7 @@
   }
 
   .system-product-card {
-    padding: 20px;
+    padding: 16px;
   }
 }
 

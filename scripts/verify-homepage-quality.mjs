@@ -902,14 +902,14 @@ test('OneCast TKDD acceptance is synchronized in the 2026 publication list', () 
 const icdmDemoPapers = [
   {
     name: 'CastClaw',
-    title: 'CastClaw: A Human-in-the-Loop Autonomous Agent for Industry Time Series Forecasting',
+    title: 'CastClaw: A Human-in-the-Loop Autonomous Agent for Interactive Time Series Forecasting',
     authors: 'Xiaoyu Tao, <strong>Mingyue Cheng</strong>, Ze Guo, Bokai Pan, Qi Liu, Shijin Wang, Enhong Chen',
     tags: 'timeseries agent llm',
     code: 'https://github.com/ustc-time-series/CastClaw',
   },
   {
-    name: 'Claw-R1',
-    title: 'Claw-R1: Interactive Data Lifecycle Management for Agentic Reinforcement Learning',
+    name: 'AgentWorld',
+    title: 'AgentWorld: A Data Factory for Training LLM Agents from Multi-Turn Interactions',
     authors: 'Daoyu Wang, <strong>Mingyue Cheng</strong>, Qingchuan Li, Shuo Yu, Jie Ouyang, Qi Liu, Enhong Chen',
     tags: 'llm agent',
     code: 'https://github.com/AgentR1/Claw-R1',
@@ -1023,7 +1023,7 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
 });
 
 test('September 2026 ICDM demo acceptance leads both news surfaces', () => {
-  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>Claw-R1</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
+  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
   const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
   const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
   const lists = [

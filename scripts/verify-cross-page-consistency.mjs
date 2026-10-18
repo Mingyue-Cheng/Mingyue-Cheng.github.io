@@ -258,6 +258,32 @@ test('PaperScout project titles include the Chinese name on both pages', () => {
   }
 });
 
+test('CastClaw uses 星辰 in project titles and bilingual descriptions', () => {
+  const expected = 'CastClaw（星辰）';
+  for (const [path, attribute] of [['index.html', 'data-i18n'], ['projects.html', 'data-page-i18n']]) {
+    const html = active(read(path));
+    const names = [...html.matchAll(/<div class="os-card-name">([\s\S]*?)<\/div>/g)].map((match) => plain(match[1]));
+    assert.deepEqual(names.filter((name) => name.startsWith('CastClaw')), [expected], path);
+    assert.ok(plain(keyedMarkup(html, attribute, 'opensource.castClaw')).startsWith(expected), path);
+    for (const href of ['https://github.com/ustc-time-series/CastClaw', 'https://ustc-time-series.github.io/cast-claw/', 'https://ustc-time-series.github.io/cast-claw/docs/']) {
+      assert.ok(html.includes(`href="${href}"`), `${path} must retain ${href}`);
+    }
+  }
+  for (const lang of ['en', 'zh']) {
+    const copy = homeCopy[lang]['opensource.castClaw'];
+    assert.ok(plain(copy).startsWith(expected), `${lang} homepage description`);
+    assert.equal(sharedCopy[lang].pages['projects.html'].content['opensource.castClaw'], copy, `${lang} projects description`);
+  }
+});
+
+test('homepage and news archive use the current CastClaw Chinese name', () => {
+  for (const [path, expectedCount] of [['index.html', 1], ['news.html', 3]]) {
+    const html = active(read(path));
+    assert.equal((html.match(/<strong>CastClaw（星辰）<\/strong>/g) || []).length, expectedCount, path);
+    assert.equal(html.includes('观星阁'), false, `${path} must not display the former name`);
+  }
+});
+
 test('science dataset fallback headings include Scientific Tool and Knowledge on both pages', () => {
   const expected = 'Science Intelligence（Scientific Tool and Knowledge）';
   assert.equal(plain(keyedMarkup(home, 'data-i18n', 'datasets.category.science')), expected);
@@ -297,7 +323,7 @@ test('complete project and dataset pages use the homepage categories without dro
     assert.deepEqual(values(active(home)), expected);
   }
   const names = [...projects.matchAll(/<div class="os-card-name">([\s\S]*?)<\/div>/g)].map((match) => plain(match[1]));
-  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（观星阁）', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
+  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（星辰）', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
   assert.match(read('projects.html'), /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?NeoResearch（智多星）[\s\S]*?-->/);
   assert.equal((projects.match(/class="dataset-card"/g) || []).length, 5);
 });
@@ -317,7 +343,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
-    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20260923-systems-in-projects/, path);
+    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20261015-castclaw-name/, path);
   }
 });
 

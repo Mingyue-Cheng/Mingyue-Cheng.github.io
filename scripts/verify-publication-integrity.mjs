@@ -658,7 +658,7 @@ for (const [page, source] of pages) {
     const records = publicationRecords(source, page).filter((record) => record.title === title);
     assert.equal(records.length, 1, `${page} must contain exactly one matching survey`);
     const authors = textFromHtml(records[0].html).split(title)[0].replace(/,\s*$/, '');
-    assert.equal(authors, 'Mingyue Cheng, Xiaoyu Tao, Zhiding Liu, Qi Liu*, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen');
+    assert.equal(authors, 'Mingyue Cheng, Zhiding Liu, Xiaoyu Tao, Qi Liu*, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen');
   });
 
   test(`${page} files the TKDE accepted forecasting survey in 2026 with its original links`, () => {
@@ -804,5 +804,5 @@ test('Publications page has an accessible semantic shell and social metadata', (
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
   assert.match(body, /Last updated in September 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20260923-systems-in-projects"><\/script>/);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261015-castclaw-name"><\/script>/);
 });

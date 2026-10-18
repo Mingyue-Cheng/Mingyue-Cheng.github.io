@@ -1,0 +1,414 @@
+% !TeX program = xelatex
+% Standalone academic CV. Compile twice with XeLaTeX.
+% Evidence: local index.html, publications.html, projects.html; user-confirmed research positioning.
+% Snapshot: 2026-10-18. Status follows the supplied homepage, not independent acceptance verification.
+% Author order and corresponding-author marks are preserved. No citation metrics or grant amounts inferred.
+\documentclass[UTF8,fontset=fandol,scheme=plain,11pt,a4paper]{ctexart}
+\usepackage[left=20mm,right=20mm,top=17mm,bottom=18mm,footskip=9mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\usepackage{microtype,xcolor,enumitem,tabularx,titlesec,fancyhdr,lastpage,needspace,etoolbox}
+\definecolor{ink}{HTML}{17354A}
+\definecolor{muted}{HTML}{555D65}
+\definecolor{rulecolor}{HTML}{BAC6CF}
+\usepackage[unicode,colorlinks=true,urlcolor=ink,linkcolor=ink]{hyperref}
+\hypersetup{pdftitle={Mingyue Cheng - Academic Curriculum Vitae},pdfauthor={Mingyue Cheng}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.04}
+\raggedbottom
+\setlength{\emergencystretch}{2em}
+\setcounter{secnumdepth}{0}
+\titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{1pt}\color{rulecolor}\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{7pt}{3pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=3pt,topsep=3pt,parsep=0pt}
+\newlist{publist}{enumerate}{1}
+\setlist[publist]{label={[\arabic*]},leftmargin=2.3em,labelsep=0.5em,itemsep=6pt,topsep=3pt,parsep=0pt}
+\newcommand{\entry}[4]{%
+  \Needspace{4\baselineskip}
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{#2} & {\small\color{muted}#1}
+  \end{tabularx}\par\nobreak
+  #3\par\nobreak
+  \ifstrempty{#4}{}{{\small\color{muted}#4}\par}\vspace{3pt}}
+\newcommand{\grant}[4]{%
+  \Needspace{4\baselineskip}
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    \textbf{#2} & {\small\color{muted}#1}
+  \end{tabularx}\par\nobreak
+  #3\par\nobreak {\small #4}\par\vspace{4pt}}
+% Keep each publication together across page breaks.
+\newcommand{\pubentry}[1]{\item \begin{minipage}[t]{\linewidth}#1\end{minipage}}
+\newcommand{\system}[3]{\item \textbf{\href{#2}{#1}}: #3}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\small\color{muted}Mingyue Cheng \enspace|\enspace Curriculum Vitae}
+\fancyfoot[R]{\small\color{muted}\thepage\,/\,\pageref*{LastPage}}
+\begin{document}
+
+\begingroup
+\setlength{\parskip}{0pt}
+\raggedright
+{\fontsize{24}{28}\selectfont\bfseries Mingyue Cheng\enspace
+ {\fontsize{11}{14}\selectfont\mdseries\color{muted}程明月}}\hfill
+{\fontsize{9}{12}\selectfont\color{muted}Updated: 18 October 2026}\par
+\vspace{3pt}
+{\fontsize{11}{14}\selectfont Ph.D.\enspace\textperiodcentered\enspace Associate Researcher}\par
+\vspace{5pt}
+{\fontsize{10.5}{13.5}\selectfont
+School of Computer Science and Technology, University of Science and Technology of China\\
+State Key Laboratory of Cognitive Intelligence\par}
+\vspace{5pt}
+{\fontsize{9.5}{12.5}\selectfont
+\href{mailto:mycheng@ustc.edu.cn}{mycheng@ustc.edu.cn}
+\enspace\textperiodcentered\enspace\href{https://mingyue-cheng.github.io/}{Homepage}
+\enspace\textperiodcentered\enspace\href{https://scholar.google.com/citations?user=74IhSx8AAAAJ}{Google Scholar}
+\enspace\textperiodcentered\enspace\href{https://github.com/Mingyue-Cheng/}{GitHub}\\
+B709, Xinzhi Building, Gaoxin Campus of USTC, Hefei, Anhui 230031, China
+\par}
+\endgroup
+\vspace{5pt}
+\section{Research Profile}
+My research centers on \textbf{LLM reasoning and AI agents}, with a focus on context-aware reasoning, autonomous interactive learning, continual adaptation, and agent evolution. Complex tasks in time-series intelligence and scientific intelligence provide the application settings for this research.
+
+\textit{Core question: How can agents reliably solve problems through reasoning and interaction when information is incomplete, environments change, and feedback is costly?}
+\begin{itemize}
+\item \textbf{Time-series intelligence --- modeling the dynamic world.}
+Context awareness, heterogeneous time-series modeling, slow-thinking cognitive reasoning, and autonomous agent interaction for understanding complex dynamic systems.
+\item \textbf{Scientific intelligence --- understanding the scientific world.}
+Scientific data, tools, literature and knowledge; tool-augmented scientific reasoning; and capability enhancement of scientific foundation models.
+\item \textbf{Autonomous learning and evolving agents.}
+Capability enhancement, agentic reinforcement learning, continual learning, memory, and the evolution of both models and agents through interaction.
+\end{itemize}
+\section{Academic Appointments \& Research Experience}
+\entry{Jun.\ 2023 -- present}{Associate Researcher}
+{School of Computer Science and Technology, USTC, Hefei, China.}
+{Affiliated with the State Key Laboratory of Cognitive Intelligence.}
+\entry{Jun.\ 2019 -- Oct.\ 2019}{Research Intern}
+{Data Service Center, Platform and Content Group, Tencent, Shenzhen, China.}{}
+\entry{Jul.\ 2018 -- Sep.\ 2018}{Engineering Intern}
+{Lab of Big Data, Core Technology R\&D Platform, iFLYTEK, Hefei, China.}{}
+\section{Education}
+\entry{Sep.\ 2017 -- Jun.\ 2023}{Ph.D.\ in Computer Science and Technology}
+{University of Science and Technology of China, Hefei, China.}{Supervisor: Prof.\ Qi Liu.}
+\entry{Sep.\ 2013 -- Jul.\ 2017}{Bachelor of Management}
+{Hefei University of Technology, Hefei, China.}{Major: Marketing Management.}
+
+\newpage
+\section{Publications}
+{\small Complete list of 72 records from the \href{https://mingyue-cheng.github.io/publications.html}{personal homepage}, including demonstration papers, workshop contributions, and preprints. \textsuperscript{*}Corresponding author; \textsuperscript{+}equal contribution.}\par
+\begingroup
+\fontsize{10.2}{13.4}\selectfont
+\Needspace{7\baselineskip}
+\subsection{2026}
+\begin{publist}[start=1]
+% Homepage record 7: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Yucong Luo, Jie Ouyang, Qi Liu\textsuperscript{*}, Huijie Liu, Li Li, Shuo Yu, Bohou Zhang, Jiawei Cao, Jie Ma, Daoyu Wang, Enhong Chen. \href{https://arxiv.org/pdf/2503.10677}{A Survey on Knowledge-Oriented Retrieval-Augmented Generation}. \emph{ACM Transactions on Information Systems (ACM TOIS) Accepted}. \href{https://github.com/USTCAGI/Awesome-Papers-Retrieval-Augmented-Generation}{[Code]}}
+
+% Homepage record 8: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Zhiding Liu, Xiaoyu Tao, Qi Liu\textsuperscript{*}, Jintao Zhang, Tingyue Pan, Shilong Zhang, Panjing He, Xiaohan Zhang, Daoyu Wang, Jiahao Wang, Enhong Chen. \href{https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint\_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf}{A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions}. \emph{IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE) Accepted}. \href{https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting}{[Code]}}
+
+% Homepage record 9: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Qingyang Mao, Qi Liu\textsuperscript{*}, Yitong Zhou, Yupeng Li, Jiahao Wang, Jiaying Lin, Jiawei Cao, Enhong Chen. \href{https://www.techrxiv.org/doi/full/10.36227/techrxiv.174352282.22844759/v1}{A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects}. \emph{ACM Computing Surveys (ACM CSUR) Accepted}. \href{https://github.com/USTCAGI/Awesome-LLM-Table-Mining}{[Code]}}
+
+% Homepage record 10: 2026; author order and status preserved.
+\pubentry{Tingyue Pan, \textbf{Mingyue Cheng}\textsuperscript{*}, Shilong Zhang, Zhiding Liu, Xiaoyu Tao, Yucong Luo, Jintao Zhang, Qi Liu. \href{https://arxiv.org/pdf/2510.24028}{OneCast: Structured Decomposition and Modular Generation for Cross-Domain Time Series Forecasting}. \emph{ACM Transactions on Knowledge Discovery from Data (ACM TKDD) Accepted}.}
+
+% Homepage record 11: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Daoyu Wang, Qi Liu\textsuperscript{*}, Shuo Yu, Xiaoyu Tao, Yuqian Wang, Chengzhong Chu, Yu Duan, Mingkang Long, Enhong Chen. \href{https://arxiv.org/pdf/2601.04879}{Mind2Report: A Cognitive Deep Research Agent for Expert-Level Commercial Report Synthesis}. \emph{ACM CIKM 2026 Accepted}. \href{https://github.com/Melmaphother/Mind2Report}{[Code]}}
+
+% Homepage record 12: 2026; author order and status preserved.
+\pubentry{Yitong Zhou, Yucong Luo, \textbf{Mingyue Cheng}\textsuperscript{*}, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen. \href{https://arxiv.org/pdf/2506.10630}{Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs}. \emph{ACM CIKM 2026 Accepted}. \href{https://github.com/lqzxt/Time-R1}{[Code]}}
+
+% Homepage record 13: 2026; author order and status preserved.
+\pubentry{Xiaohan Zhang, Tian Gao, \textbf{Mingyue Cheng}\textsuperscript{*}, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, Qi Liu. \href{https://arxiv.org/pdf/2511.08947}{AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting}. \emph{ACM CIKM 2026 Accepted}. \href{https://github.com/SkyeGT/AlphaCast\_Official}{[Code]}}
+
+% Homepage record 14: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Xiaoyu Tao, Huajian Zhang, Qi Liu\textsuperscript{*}, Enhong Chen. \href{https://arxiv.org/pdf/2601.14968}{InstructTime++: Time Series Classification with Multimodal Language Modeling via Implicit Feature Enhancement}. \emph{ACM Transactions on Intelligent Systems and Technology (ACM TIST) Accepted}. \href{https://github.com/Mingyue-Cheng/InstructTime}{[Code]}}
+
+% Homepage record 15: 2026; author order and status preserved.
+\pubentry{Yitong Zhou, \textbf{Mingyue Cheng}\textsuperscript{*}, Qingyang Mao, Yucong Luo, Qi Liu, Yupeng Li, Xiaohan Zhang, Deguang Liu, Xin Li, Enhong Chen. \href{https://arxiv.org/pdf/2506.11375}{Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables}. \emph{KDD 2026 Accepted}. \href{https://github.com/ustc-ai4science/ChemTable}{[Code]}}
+
+% Homepage record 16: 2026; author order and status preserved.
+\pubentry{Xiaoyu Tao, \textbf{Mingyue Cheng}\textsuperscript{*}, Ze Guo, Shuo Yu, Yaguo Liu, Qi Liu, Shijin Wang. \href{https://www.arxiv.org/pdf/2602.03164}{MemCast: Memory-Driven Time Series Forecasting with Experience-Conditioned Reasoning}. \emph{ICML 2026 Accepted}.}
+
+% Homepage record 17: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Yaguo Liu, Daoyu Wang, Xiaoyu Tao, Qi Liu\textsuperscript{*}. \href{https://arxiv.org/pdf/2602.03564}{CoGenCast: A Coupled Autoregressive-Flow Generative Framework for Time Series Forecasting}. \emph{ICML 2026 Accepted}.}
+
+% Homepage record 18: 2026; author order and status preserved.
+\pubentry{Xiaoyu Tao, Shilong Zhang, \textbf{Mingyue Cheng}\textsuperscript{*}, Daoyu Wang, Tingyue Pan, Bokai Pan, Changqing Zhang, Shijin Wang. \href{https://arxiv.org/pdf/2508.09191}{From Values to Tokens: An LLM-Driven Framework for Context-aware Time Series Forecasting via Symbolic Discretization}. \emph{IJCAI 2026 Accepted}.}
+
+% Homepage record 19: 2026; author order and status preserved.
+\pubentry{Bohou Zhang, Xiaoyu Tao, \textbf{Mingyue Cheng}\textsuperscript{*}, Huijie Liu, Qi Liu. ScholarSum: Student-Teacher Abstractive Summarization via Knowledge Graph Reasoning and Reflective Refinement. \emph{IJCAI 2026 Accepted}.}
+
+% Homepage record 20: 2026; author order and status preserved.
+\pubentry{Jiawei Cao, Jie Ouyang, \textbf{Mingyue Cheng}\textsuperscript{*}, Zhaomeng Zhou, Chunli Liu, Yupeng Li, Zirui Liu, Shijin Wang. Re\textsuperscript{3}: Relevance \& Recency Retrieval for Mitigating Temporal Hallucination. \emph{ACL 2026 Accepted}.}
+
+% Homepage record 21: 2026; author order and status preserved.
+\pubentry{Huajian Zhang, \textbf{Mingyue Cheng}\textsuperscript{*}, Yucong Luo, Xiaoyu Tao. \href{https://arxiv.org/pdf/2511.11233}{STaR: Towards Cognitive Table Reasoning via Slow-Thinking Large Language Models}. \emph{ACM WWW 2026}. \href{https://github.com/zhjai/STaR}{[Code]}}
+
+% Homepage record 22: 2026; author order and status preserved.
+\pubentry{Zhiding Liu, Ben Chen, \textbf{Mingyue Cheng}\textsuperscript{*}, Enhong Chen, Li Li, Chenyi Lei\textsuperscript{*}, Wenwu Ou, Han Li and Kun Gai. \href{https://arxiv.org/abs/2510.16925}{Towards Context-aware Reasoning-enhanced Generative Searching in E-commerce}. \emph{ACM WWW 2026}.}
+
+% Homepage record 23: 2026; author order and status preserved.
+\pubentry{Shuo Yu, \textbf{Mingyue Cheng}\textsuperscript{*}, Daoyu Wang, Qi Liu, Zirui Liu, Ze Guo, Xiaoyu Tao. \href{https://arxiv.org/abs/2510.07713}{MemWeaver: A Hierarchical Memory from Textual Interactive Behaviors for Personalized Generation}. \emph{ACM WWW 2026}.}
+
+% Homepage record 24: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Jiahao Wang, Daoyu Wang, Xiaoyu Tao, Qi Liu\textsuperscript{*}, Enhong Chen. \href{https://dl.acm.org/doi/10.1145/3773966.3777931}{Can Slow-Thinking LLMs Reason Over Time? Empirical Studies in Time Series Forecasting}. \emph{ACM WSDM 2026}: 99--110, Feb 2026. \href{https://github.com/realwangjiahao/TimeReasoner}{[Code]}}
+
+% Homepage record 25: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Xiaoyu Tao, Zhiding Liu, Qi Liu\textsuperscript{*}, Hao Zhang, Rujiao Zhang and Enhong Chen. \href{https://arxiv.org/abs/2303.00320}{TimeMAE: Self-Supervised Representations of Time Series with Decoupled Masked Autoencoders}. \emph{ACM WSDM 2026}: 498--508, Feb 2026. \href{https://github.com/Mingyue-Cheng/TimeMAE}{[Code]}}
+
+% Homepage record 26: 2026; author order and status preserved.
+\pubentry{Chuang Jiang, \textbf{Mingyue Cheng}\textsuperscript{*}, Xiaoyu Tao, Qingyang Mao, Jie Ouyang and Qi Liu. \href{https://arxiv.org/pdf/2509.06278}{TableMind: An Autonomous Programmatic Agent for Tool-Augmented Table Reasoning}. \emph{ACM WSDM 2026}: 260--270, Feb 2026. \href{https://github.com/lennendd/TableMind-Repo}{[Code]}}
+
+% Homepage record 27: 2026; author order and status preserved.
+\pubentry{Qingchuan Li, \textbf{Mingyue Cheng}\textsuperscript{*}, Zirui Liu, Daoyu Wang, Yuting Zeng, Tongxuan Liu. \href{https://ojs.aaai.org/index.php/AAAI/article/download/40434/44395}{From Hypothesis to Premises: LLM-based Backward Logical Reasoning with Selective Symbolic Translation}. \emph{AAAI 2026}: 31671--31679, Mar 2026.}
+
+% Homepage record 28: 2026; author order and status preserved.
+\pubentry{Yupeng Li, \textbf{Mingyue Cheng}\textsuperscript{*}, Yucong Luo, Yitong Zhou, Qingyang Mao, Shijin Wang. \href{https://ojs.aaai.org/index.php/AAAI/article/download/38543/42505}{BLADE: A Behavior-Level Data Augmentation Framework with Dual Fusion Modeling for Multi-Behavior Sequential Recommendation}. \emph{AAAI 2026}: 15189--15197, Mar 2026.}
+
+% Homepage record 29: 2026; author order and status preserved.
+\pubentry{Tingyue Pan, Jie Ouyang, \textbf{Mingyue Cheng}, Qingchuan Li, Zirui Liu, Daoyu Wang, Mingfan Pan, Shuo Yu, Qi Liu. \href{https://arxiv.org/pdf/2601.10029.pdf}{PaperScout: An Autonomous Agent for Academic Paper Search with Process-Aware Sequence-Level Policy Optimization}. \emph{Findings of EMNLP 2026 Accepted}.}
+
+% Homepage record 30: 2026; author order and status preserved.
+\pubentry{Xiaoyu Tao, \textbf{Mingyue Cheng}, Ze Guo, Bokai Pan, Qi Liu, Shijin Wang, Enhong Chen. CastClaw: A Human-in-the-Loop Autonomous Agent for Industry Time Series Forecasting. \emph{IEEE ICDM 2026 Demo Track Accepted}. \href{https://github.com/ustc-time-series/CastClaw}{[Code]}}
+
+% Homepage record 31: 2026; author order and status preserved.
+\pubentry{Daoyu Wang, \textbf{Mingyue Cheng}, Qingchuan Li, Shuo Yu, Jie Ouyang, Qi Liu, Enhong Chen. Claw-R1: Interactive Data Lifecycle Management for Agentic Reinforcement Learning. \emph{IEEE ICDM 2026 Demo Track Accepted}. \href{https://github.com/AgentR1/Claw-R1}{[Code]}}
+
+% Homepage record 32: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Jie Ouyang, Yucong Luo, Yitong Zhou, Qi Liu\textsuperscript{*}, Enhong Chen. Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning. \emph{ACM CIKM 2026 Demo Track Accepted}.}
+
+% Homepage record 33: 2026; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Qingyang Mao, Yitong Zhou, Qi Liu\textsuperscript{*}. TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning. \emph{ACM CIKM 2026 Demo Track Accepted}.}
+
+\end{publist}
+
+\Needspace{7\baselineskip}
+\subsection{2025}
+\begin{publist}[start=28]
+% Homepage record 34: 2025; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Jiqian Yang, Tingyue Pan, Qi Liu\textsuperscript{*}, Zhi Li. \href{https://arxiv.org/pdf/2403.01493}{ConvTimeNet: A Deep Hierarchical Fully Convolutional Model for Multivariate Time Series Analysis}. \emph{ACM WWW 2025}, Sydney, 2025. --- Included in \href{https://www.sktime.net/en/stable/}{\emph{sktime}}. \href{https://github.com/Mingyue-Cheng/ConvTimeNet}{[Code]}}
+
+% Homepage record 35: 2025; author order and status preserved.
+\pubentry{Xiaoyu Tao, Tingyue Pan, \textbf{Mingyue Cheng}\textsuperscript{*}, Yucong Luo, Qi Liu, Enhong Chen. \href{https://arxiv.org/pdf/2410.18686}{Hierarchical Multimodal LLMs with Semantic Space Alignment for Enhanced Time Series Classification}. (\emph{ACM Transactions on Intelligent Systems and Technology (ACM TIST)}). \href{https://github.com/Xiaoyu-Tao/HiTime}{[Code]}}
+
+% Homepage record 36: 2025; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Yiheng Chen, Qi Liu\textsuperscript{*}, Zhiding Liu, Yucong Luo, Enhong Chen. \href{https://dl.acm.org/doi/abs/10.1145/3701551.3703499}{InstrucTime: Advancing Time Series Classification with Multimodal Language Modeling}. \emph{ACM WSDM 2025} (\textbf{Best of WSDM}): 792--800, Hannover, 2025. \href{https://github.com/Mingyue-Cheng/InstructTime}{[Code]} \href{https://mingyue-cheng.github.io/files/posters/instructtime\_poster.pdf}{[Poster]}}
+
+% Homepage record 37: 2025; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Xiaoyu Tao, Qi Liu\textsuperscript{*}, Hao Zhang, Yiheng Chen, Defu Lian. \href{https://arxiv.org/pdf/2403.12372.pdf}{Cross-Domain Pre-training with Language Models for Transferable Time Series Representations}. \emph{ACM WSDM 2025}: 175--183, Hannover, 2025. \href{https://github.com/Mingyue-Cheng/CrossTimeNet}{[Code]} \href{https://mingyue-cheng.github.io/files/posters/crosstimenet-poster.pdf}{[Poster]}}
+
+% Homepage record 38: 2025; author order and status preserved.
+\pubentry{Daoyu Wang, \textbf{Mingyue Cheng}\textsuperscript{*}, Zhiding Liu, Qi Liu. \href{https://arxiv.org/html/2410.05711v1}{TimeDART: A Diffusion Autoregressive Transformer for Self-supervised Time Series Representation}. \emph{ICML 2025}, Vancouver, PMLR 267, 2025. \href{https://github.com/Melmaphother/TimeDART}{[Code]}}
+
+% Homepage record 39: 2025; author order and status preserved.
+\pubentry{Jie Ouyang, Tingyue Pan, \textbf{Mingyue Cheng}\textsuperscript{*}, Ruiran Yan, Yucong Luo, Jiaying Lin, Qi Liu. \href{https://aclanthology.org/2025.acl-long.301.pdf}{HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG}. \emph{ACL 2025}: 6036--6063, Vienna, 2025. \href{https://github.com/0russwest0/HoH}{[Code]}}
+
+% Homepage record 40: 2025; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Jintao Zhang, Zhiding Liu, Chunli Liu\textsuperscript{*}. \href{https://www.arxiv.org/pdf/2409.11064}{A Hybrid Multi-Factor Framework for Dynamic Intraoperative Hypotension Prediction}. \emph{IJCAI 2025}: 4923--4931, Montreal, 2025.}
+
+% Homepage record 41: 2025; author order and status preserved.
+\pubentry{Jintao Zhang, \textbf{Mingyue Cheng}\textsuperscript{*}, Xiaoyu Tao, Zhiding Liu, Daoyu Wang. \href{https://arxiv.org/pdf/2410.13253}{Conditional Denoising Meets Polynomial Modeling: A Flexible Decoupled Framework for Time Series Forecasting}. \emph{IJCAI 2025}: 6993--7001, Montreal, 2025. \href{https://github.com/zjt-gpu/FDF}{[Code]}}
+
+% Homepage record 42: 2025; author order and status preserved.
+\pubentry{Yitong Zhou, \textbf{Mingyue Cheng}\textsuperscript{*}, Qingyang Mao, Feiyang Xu, Xin Li. \href{https://arxiv.org/abs/2412.20662}{Enhancing Table Recognition with Vision LLMs: A Benchmark and Neighbor-Guided Toolchain Reasoner}. \emph{IJCAI 2025}: 2503--2511, Montreal, 2025. \href{https://github.com/lqzxt/NGTR}{[Code]}}
+
+% Homepage record 43: 2025; author order and status preserved.
+\pubentry{Hao Zhang, \textbf{Mingyue Cheng}\textsuperscript{*}, Qi Liu, Zhiding Liu, Linbo Zhu, Yu Su. \href{https://arxiv.org/abs/2311.00388}{Towards Automatic Sampling of User Behaviors for Sequential Recommender Systems}. \emph{IJCAI 2025}: 3624--3632, Montreal, 2025. \href{https://github.com/zh-ustc/AutoSAM}{[Code]}}
+
+% Homepage record 44: 2025; author order and status preserved.
+\pubentry{Jiahao Wang, \textbf{Mingyue Cheng}\textsuperscript{*}, Qingyang Mao, Qi Liu, Feiyang Xu, Xin Li, Enhong Chen. \href{https://arxiv.org/pdf/2411.15737}{TableTime: Reformulating Time Series Classification as Zero-Shot Table Understanding via LLMs}. \emph{ACM CIKM 2025}. \href{https://github.com/realwangjiahao/TableTime}{[Code]}}
+
+% Homepage record 45: 2025; author order and status preserved.
+\pubentry{Shuo Yu, \textbf{Mingyue Cheng}\textsuperscript{*}, Jiqian Yang, Jie Ouyang, et al. Multi-Source Knowledge Pruning for Retrieval-Augmented Generation: A Benchmark and Empirical Study. \emph{ACM CIKM 2025}.}
+
+\end{publist}
+
+\Needspace{7\baselineskip}
+\subsection{2024}
+\begin{publist}[start=40]
+% Homepage record 46: 2024; author order and status preserved.
+\pubentry{Jie Ouyang, Yucong Luo, \textbf{Mingyue Cheng}\textsuperscript{*}, Shuo Yu, Daoyu Wang, Qi Liu, Enhong Chen. Revisiting the Solution of Meta KDD Cup 2024: CRAG. (KDD Cup Workshop, \textbf{2nd Place in Task 2 \& Task 3}). \href{https://mingyue-cheng.github.io/files/posters/KDD-slide-v4.pdf}{[Slides]} \href{https://mingyue-cheng.github.io/files/posters/crag\_kddcup.pdf}{[Poster]}}
+
+% Homepage record 47: 2024; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Qi Liu\textsuperscript{*}, Wenyu Zhang, Zhiding Liu, Hongke Zhao, Enhong Chen. \href{https://mingyue-cheng.github.io/files/papers/tailrec-fcs2024.pdf}{A General Tail Item Representation Enhancement Framework for Sequential Recommender Systems}. \emph{Frontiers of Computer Science (FCS)}, 2024, 18(6): 1--12. \href{https://github.com/Mingyue-Cheng/TailRec}{[Code]}}
+
+% Homepage record 48: 2024; author order and status preserved.
+\pubentry{Rujiao Zhang, Hao Zhang, Yucong Luo, Zhiding Liu, \textbf{Mingyue Cheng}, Qi Liu, Enhong Chen\textsuperscript{*}. \href{https://dl.acm.org/doi/pdf/10.1145/3627673.3679955}{Learning the Dynamics in Sequential Recommendation by Exploiting Real-time Information}. \emph{ACM CIKM 2024}: 4288--4292, Oct 2024.}
+
+% Homepage record 49: 2024; author order and status preserved.
+\pubentry{Jie Wang, Fajie Yuan, \textbf{Mingyue Cheng}, et al. \href{https://arxiv.org/pdf/2206.06190.pdf}{TransRec: Learning Transferable Recommendation from Mixture-of-Modality Feedback}. \emph{APWeb-WAIM 2024}: 193--208, Aug 2024.}
+
+% Homepage record 50: 2024; author order and status preserved.
+\pubentry{Zhiding Liu, Jiqian Yang, \textbf{Mingyue Cheng}\textsuperscript{*}, Yucong Luo, Zhi Li. \href{https://arxiv.org/pdf/2402.16516.pdf}{Generative Pretrained Hierarchical Transformer for Time Series Forecasting}. \emph{ACM SIGKDD 2024}: 2003--2013, Barcelona, 2024.}
+
+% Homepage record 51: 2024; author order and status preserved.
+\pubentry{Yucong Luo, \textbf{Mingyue Cheng}, Hao Zhang, Junyu Lu, Enhong Chen\textsuperscript{*}. \href{https://arxiv.org/pdf/2312.15661}{Unlocking the Potential of Large Language Models for Explainable Recommendations}. (DASFAA 2024). \href{https://github.com/GodFire66666/LLM\_rec\_explanation}{[Code]}}
+
+% Homepage record 52: 2024; author order and status preserved.
+\pubentry{Junzhe Jiang, Shang Qu, \textbf{Mingyue Cheng}\textsuperscript{*}, Qi Liu, et al. \href{https://arxiv.org/pdf/2309.10435}{Reformulating Sequential Recommendation: Learning Dynamic User Interest with Content-enriched Language Modeling}. (DASFAA 2024). \href{https://github.com/Gnimixy/lancer}{[Code]}}
+
+% Homepage record 53: 2024; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Hao Zhang, Qi Liu\textsuperscript{*}, Fajie Yuan, Zhi Li, Zhenya Huang, Enhong Chen, Longfei Li, Jun Zhou. \href{https://arxiv.org/pdf/2403.07623}{Empowering Sequential Recommender Systems from Mixture of Collaborative Signals and Semantic Relatedness}. (DASFAA 2024). \href{https://github.com/Mingyue-Cheng/TSSR}{[Code]}}
+
+% Homepage record 54: 2024; author order and status preserved.
+\pubentry{Hao Zhang, \textbf{Mingyue Cheng}\textsuperscript{*}, Qi Liu, Yucong Luo, Rui Li, Enhong Chen. \href{https://arxiv.org/pdf/2410.06536}{Learning Recommender Systems with Soft Target: A Decoupled Perspective}. \emph{DASFAA 2024}, LNCS 14852, Gifu, Japan, 2024. \href{https://github.com/zh-ustc/desorec/}{[Code]}}
+
+% Homepage record 55: 2024; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Hao Zhang, Jiqian Yang, Qi Liu\textsuperscript{*}, Li Li, Xin Huang, Liwei Song, Zhi Li, Zhenya Huang, Enhong Chen. Towards Personalized Evaluation of Large Language Models with An Anonymous Crowd-Sourcing Platform. (WWW 2024).}
+
+% Homepage record 56: 2024; author order and status preserved.
+\pubentry{Junchen Fu, Fajie Yuan, Yu Song, Zheng Yuan, \textbf{Mingyue Cheng}, et al. \href{https://arxiv.org/pdf/2305.15036}{Exploring Adapter-based Transfer Learning for Recommender Systems}. \emph{ACM WSDM 2024}: 208--217, Mar 2024. \href{https://github.com/westlake-repl/Adapter4Rec/}{[Code]}}
+
+\end{publist}
+
+\Needspace{7\baselineskip}
+\subsection{2023 and earlier}
+\begin{publist}[start=51]
+% Homepage record 57: 2023; author order and status preserved.
+\pubentry{Zhiding Liu, \textbf{Mingyue Cheng}, Zhi Li, Zhenya Huang, Qi Liu, Yanhu Xie, Enhong Chen. \href{https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf}{Adaptive Normalization for Non-stationary Time Series Forecasting: A Temporal Slice Perspective}. \emph{NeurIPS 2023}: 36, New Orleans, 2023. \href{https://github.com/icantnamemyself/SAN}{[Code]}}
+
+% Homepage record 58: 2023; author order and status preserved.
+% Verified English bibliographic metadata: https://crad.ict.ac.cn/cn/article/doi/10.7544/issn1000-1239.202330263
+\pubentry{Jie Geng, Chunli Liu\textsuperscript{*}, Xuemei Wei, \textbf{Mingyue Cheng}, Kun Yuan, Yang Li, Yezheng Liu. \href{https://doi.org/10.7544/issn1000-1239.202330263}{Product Recommendation Method Based on User Repurchase Behavior}. \emph{Journal of Computer Research and Development}, 2023, 60(8): 1795--1807. (In Chinese).}
+
+% Homepage record 59: 2023; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Qi Liu\textsuperscript{*}, Zhiding Liu, Zhi Li, Yucong Luo, Enhong Chen. \href{https://mingyue-cheng.github.io/files/papers/formertime-www2023.pdf}{FormerTime: Hierarchical Multi-scale Representation for Multivariate Time Series Classification}. \emph{ACM WWW 2023}: 1437--1445, Austin, 2023. \href{https://github.com/Mingyue-Cheng/FormerTime}{[Code]}}
+
+% Homepage record 60: 2023; author order and status preserved.
+\pubentry{Wenqiang He, \textbf{Mingyue Cheng}, Qi Liu\textsuperscript{*}, Zhi Li. ShapeWordNet: An Interpretable Shapelet Neural Network for Physiological Signal Classification. \emph{DASFAA 2023}: 353--369, Tianjin, 2023.}
+
+% Homepage record 61: 2023; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Zhiding Liu\textsuperscript{+}, Qi Liu\textsuperscript{*}, Shenyang Ge, Enhong Chen. Towards Automatic Designing of Deep Hybrid Network Architecture for Sequential Recommendation. \emph{ACM WWW 2022}: 1923--1932. \href{https://github.com/Mingyue-Cheng/NASR}{[Code]}}
+
+% Homepage record 62: 2023; author order and status preserved.
+\pubentry{Zhiding Liu, \textbf{Mingyue Cheng}, Zhi Li, Qi Liu, Enhong Chen\textsuperscript{*}. One Person, One Model --- Learning Compound Router for Sequential Recommendation. \emph{IEEE ICDM 2022}. \href{https://github.com/Mingyue-Cheng/CANet}{[Code]}}
+
+% Homepage record 63: 2023; author order and status preserved.
+\pubentry{Junzhe Jiang, \textbf{Mingyue Cheng}, Qi Liu\textsuperscript{*}, Zhi Li, Enhong Chen. Nested Named Entity Recognition from Medical Texts: A Multi-task Learning Approach. \emph{CAAI CICAI 2022}: 248--259.}
+
+% Homepage record 64: 2023; author order and status preserved.
+\pubentry{Runlong Yu, Qi Liu\textsuperscript{*}, Yuyang Ye, \textbf{Mingyue Cheng}, Enhong Chen, Jianhui Ma. Collaborative List-and-Pairwise Filtering from Implicit Feedback. \emph{IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)}, 2022, 34(6): 2667--2680.}
+
+% Homepage record 65: 2023; author order and status preserved.
+\pubentry{Kai Zhang, Qi Liu\textsuperscript{*}, Zhenya Huang, \textbf{Mingyue Cheng}, Kun Zhang, Mengdi Zhang, Wei Wu, Enhong Chen. Graph Adaptive Semantic Transfer for Cross-domain Sentiment Classification. \emph{ACM SIGIR 2022}: 1566--1576.}
+
+% Homepage record 66: 2023; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Fajie Yuan\textsuperscript{+}, Qi Liu\textsuperscript{*}, Xin Xin, Enhong Chen. Learning Transferrable User Representations with Sequential Behaviors via Contrastive Pre-training. \emph{IEEE ICDM 2021}: 51--60.}
+
+% Homepage record 67: 2023; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Fajie Yuan\textsuperscript{+}, Qi Liu\textsuperscript{*}, Shenyang Ge, Zhi Li, Runlong Yu, Defu Lian, Senchao Yuan, Enhong Chen. Learning Recommender Systems with Implicit Feedback via Soft Target Enhancement. \emph{ACM SIGIR 2021}: 575--584.}
+
+% Homepage record 68: 2023; author order and status preserved.
+\pubentry{Linan Yue, Qi Liu\textsuperscript{*}, Han Wu, Kai Zhang, Yanqing An, \textbf{Mingyue Cheng}, Biao Yin, Dayong Wu. NeurJudge: A Circumstance-aware Neural Framework for Legal Judgment Prediction. \emph{ACM SIGIR 2021}: 973--982.}
+
+% Homepage record 69: 2023; author order and status preserved.
+\pubentry{Yanqing An, Qi Liu\textsuperscript{*}, Han Wu, Kai Zhang, Linan Yue, \textbf{Mingyue Cheng}, Hongke Zhao, Senchao Yuan, Enhong Chen. LawyerPAN: A Proficiency Assessment Network for Trial Lawyers. \emph{ACM SIGKDD 2021}: 5--13.}
+
+% Homepage record 70: 2023; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Runlong Yu, Qi Liu\textsuperscript{*}, Hongke Zhao, Hefu Zhang, Enhong Chen. Alpha-Beta Sampling for Pairwise Ranking in One-Class Collaborative Filtering. \emph{IEEE ICDM 2019}: 1000--1005.}
+
+% Homepage record 71: 2023; author order and status preserved.
+% Verified English bibliographic metadata: https://webgao.github.io/
+\pubentry{\textbf{Mingyue Cheng}, Qi Liu\textsuperscript{*}, Zhi Li, Runlong Yu, Weibo Gao, Enhong Chen. Multi-pair Bayesian personalized ranking. \emph{Journal of Nanjing University of Information Science and Technology (Natural Science Edition)}, 2019, 11(3): 302--308. (In Chinese).}
+
+\end{publist}
+
+\Needspace{7\baselineskip}
+\subsection{Preprints}
+\begin{publist}[start=66]
+% Homepage record 0: preprint; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Xiaoyu Tao, Qi Liu, Ze Guo, Enhong Chen. \href{https://arxiv.org/pdf/2602.01776.pdf}{Position: Beyond Model-Centric Prediction --- Agentic Time Series Forecasting}. (Preprint).}
+
+% Homepage record 1: preprint; author order and status preserved.
+\pubentry{Xiaoyu Tao, \textbf{Mingyue Cheng}, Bokai Pan, Chuang Jiang, Huanjian Zhang, Tian Gao, Yaguo Liu, Qi Liu, Enhong Chen. \href{https://arxiv.org/abs/2608.03031}{CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting}. (Preprint).}
+
+% Homepage record 2: preprint; author order and status preserved.
+\pubentry{Bokai Pan, \textbf{Mingyue Cheng}\textsuperscript{*}, Zhiding Liu, Shuo Yu, Xiaoyu Tao, Yuchong Wu, Qi Liu, Defu Lian, Enhong Chen. \href{https://arxiv.org/pdf/2604.27840}{CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting}. (Preprint). \href{https://github.com/Forever-Pan/CastFlow}{[Code]}}
+
+% Homepage record 3: preprint; author order and status preserved.
+\pubentry{Xiaoyu Tao, \textbf{Mingyue Cheng}, Chuang Jiang, Tian Gao, Huanjian Zhang, Yaguo Liu, Qi Liu. \href{https://arxiv.org/pdf/2602.13802}{Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting}. (Preprint). \href{https://github.com/Xiaoyu-Tao/Cast-R1-TS}{[Code]}}
+
+% Homepage record 4: preprint; author order and status preserved.
+\pubentry{Daoyu Wang, \textbf{Mingyue Cheng}\textsuperscript{*}, Shuo Yu, Zirui Liu, Ze Guo, Xin Li, Qi Liu. \href{https://arxiv.org/pdf/2510.10909}{PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature}. (Preprint). \href{https://github.com/ustc-ai4science/PaperArena}{[Code]}}
+
+% Homepage record 5: preprint; author order and status preserved.
+\pubentry{Daoyu Wang, Qingchuan Li, \textbf{Mingyue Cheng}, Jie Ouyang, Shuo Yu, Qi Liu, Enhong Chen. \href{https://arxiv.org/pdf/2604.18401v1}{StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning}. (Preprint).}
+
+% Homepage record 6: preprint; author order and status preserved.
+\pubentry{\textbf{Mingyue Cheng}, Daoyu Wang, Shuo Yu, Qingchuan Li, Jie Ouyang, Yucong Luo, Yiju Zhang, Qi Liu\textsuperscript{*}, Enhong Chen. \href{https://www.preprints.org/manuscript/202604.0935}{A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective}. (Preprint).}
+
+\end{publist}
+
+\endgroup
+
+\Needspace{7\baselineskip}
+\section{Research Grants}
+\grant{Jul.\ 2026 -- Jun.\ 2029}{Chinese Academy of Sciences}
+{Strategic Priority Research Program for Basic and Interdisciplinary Frontier Research (Category B). \textit{Mechanisms and Methods for Autonomous Interactive Learning in Large Models}.}
+{\textbf{Role:} Project Lead.}
+\grant{Aug.\ 2026 -- Jul.\ 2028}{National Science and Technology Major Project}
+{New-Generation Artificial Intelligence. \textit{Scientific Data Governance Toolchain and Datasets --- Chemistry}.}
+{\textbf{Role:} Core Project Member.}
+\grant{Jan.\ 2026 -- Dec.\ 2028}{National Natural Science Foundation of China}
+{Young Scientists Fund (Category C). \textit{Cross-Domain Context-Aware Time Series Representation Learning and Forecasting}.}
+{\textbf{Role:} Project Lead.}
+\grant{Jan.\ 2027 -- Dec.\ 2028}{USTC Youth Innovation Fund}
+{\textit{Multi-Turn Interactive Learning and Continual Evolution for Large-Model Agents: Methods and Applications}.}
+{\textbf{Role:} Project Lead. \textit{Scheduled to start in January 2027.}}
+\grant{Jan.\ 2025 -- Dec.\ 2026}{USTC New Medicine Joint Fund}
+{Cultivation Project, Double First-Class Discipline Development Special Program. \textit{Time Series Modeling Methods and Applications Using Perioperative Physiological Data}.}
+{\textbf{Role:} Lead for the participating project team.}
+\grant{Sep.\ 2024 -- Aug.\ 2026}{Anhui Provincial Natural Science Foundation}
+{\textit{Table Semantic Understanding and Reasoning for Scientific Literature}.}
+{\textbf{Role:} Project Lead.}
+{\small Additional industry research support: iFLYTEK, Huawei, Tencent and Kuaishou.}
+\section{Selected Open Projects \& Research Systems}
+\begin{itemize}[itemsep=4pt]
+\system{Agent-R1}{https://github.com/AgentR1/Agent-R1}{A unified, modular framework for multi-turn agentic reinforcement learning.}
+\system{Claw-R1}{https://github.com/AgentR1/Claw-R1}{Data infrastructure for collecting, evaluating and curating agent-interaction trajectories.}
+\system{CastClaw}{https://ustc-time-series.github.io/cast-claw/}{Human-in-the-loop agents for time-series forecasting research.}
+\system{PaperScout}{https://agentr1.github.io/paperscout/}{Autonomous scientific literature retrieval with process-aware policy optimization.}
+\system{Academic Search}{https://github.com/ustc-ai4science/academic-search}{Multi-source scholarly retrieval, metadata validation, deduplication and BibTeX export.}
+\item \textbf{SciToken applications:} \href{https://lewen.bdaa.pro/}{Scientific literature discovery}; \href{https://writelearn.bdaa.pro/}{academic writing assistance}, including polishing, proofreading and translation.
+\end{itemize}
+
+\newpage
+\section{Academic Service}
+\subsection{Conference and journal reviewing}
+\textbf{Conference service.} KDD (2023--2027); TheWebConf (2024--2026); WSDM (2025, 2027); CIKM (2024, 2025); ICDM; ICML (2025, 2026); \textbf{ICLR (2025, 2027; Area Chair, 2027)}; NeurIPS (2024--2026); ACL (2025, 2026); EMNLP; AAAI (2026, 2027); SIGSPATIAL (2026); IJCAI (2024--2026; Senior Program Committee, 2026); SDM (2024); DASFAA (2024, 2025).
+
+{\small\color{muted}Entries for 2027 are forthcoming appointments.}
+
+\textbf{Journal reviewer.} IEEE TKDE, TPAMI, TNNLS, TII and Transactions on Audio, Speech and Language Processing; ACM TKDD and TIST; Transactions on Machine Learning Research; Neurocomputing; Frontiers of Computer Science; Science China Information Sciences; Journal of Software; Chinese Journal of Computers.
+\subsection{Academic organizations}
+\begin{itemize}[itemsep=3pt]
+\item \textbf{Executive Committee Member}, Technical Committee on Artificial Intelligence and Pattern Recognition, China Computer Federation.
+\item \textbf{Corresponding Member}, Information Retrieval Technical Committee, Chinese Information Processing Society of China.
+\item IEEE Task Force on Data-Efficient Agentic Learning (DEAL).
+\item \href{https://cis.taskforce.ieee.org/ai4tst/}{IEEE Task Force on AI for Time Series and Spatio-Temporal Data}.
+\end{itemize}
+\subsection{Conference organization and tutorials}
+\textbf{Publication Chair}, IEEE International Conference on e-Business Engineering (ICEBE), 2026.
+
+\textbf{Tutorial organizer and speaker}, \emph{Context-Aware Time Series Forecasting: From Pattern Extrapolation to Cognitive Reasoning}, IEEE ICDM 2026 Industry Tutorial Session. \textit{Accepted; forthcoming.}
+\section{Selected Honors \& Awards}
+\begin{itemize}[itemsep=3pt]
+\item \textbf{2025} --- Hongzhuan Young Talent Program, USTC.
+\item \textbf{2025} --- Best of WSDM recognition for \textit{InstrucTime}.
+\item \textbf{2024} --- Gold Award, National Finals of the Ascend AI Innovation Competition (\textit{faculty advisor}).
+\item \textbf{2024} --- Second Place in Tasks 2 and 3, KDD Cup 2024.
+\item \textbf{2023} --- National Silver Award, China International College Students' Innovation Competition.
+\item \textbf{2023} --- Outstanding Graduate, USTC.
+\item \textbf{2021} --- National Scholarship for Doctoral Students, Ministry of Education of China.
+\end{itemize}
+\section{Teaching}
+\textbf{Introduction to Data Science}, undergraduate course, USTC. Spring 2024, 2025 and 2026.
+
+\textbf{Introduction to Systems Programming}, undergraduate course, USTC. Spring 2026.
+\end{document}

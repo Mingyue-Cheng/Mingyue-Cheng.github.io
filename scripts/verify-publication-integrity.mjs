@@ -804,5 +804,5 @@ test('Publications page has an accessible semantic shell and social metadata', (
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
   assert.match(body, /Last updated in September 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261015-castclaw-name"><\/script>/);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261020-www-area-chair"><\/script>/);
 });

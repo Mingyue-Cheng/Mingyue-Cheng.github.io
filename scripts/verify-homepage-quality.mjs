@@ -638,19 +638,24 @@ test('service subpage groups IEEE, CCF and CIPS in a separate academic organizat
 });
 
 for (const [abbr, fullName, years] of [
+  ['TheWebConf', 'ACM International World Wide Web Conference', '2024, 2025, 2026, 2027'],
   ['WSDM', 'International Conference on Web Search and Data Mining', '2025, 2027'],
   ['AAAI', 'AAAI Conference on Artificial Intelligence', '2026, 2027'],
   ['ICLR', 'International Conference on Learning Representations', '2025, 2027']
 ]) {
-  test(`${abbr} 2027 PC service is synchronized without duplicate records or lost earlier years`, () => {
+  test(`${abbr} 2027 conference service is synchronized without duplicate records or lost earlier years`, () => {
     const homepagePc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
     const entries = [...homepagePc.matchAll(/<li>([\s\S]*?)<\/li>/g)]
       .map((match) => match[1]).filter((entry) => entry.includes(`(${abbr})`));
-    const role = abbr === 'ICLR' ? ' (<span data-i18n="service.iclrAreaChair">Area Chair 2027</span>)' : '';
+    const roleKey = { ICLR: 'iclrAreaChair', TheWebConf: 'wwwAreaChair' }[abbr];
+    const role = roleKey ? ` (<span data-i18n="service.${roleKey}">Area Chair 2027</span>)` : '';
     assert.deepEqual(entries, [`${fullName} (${abbr}): ${years}${role}`]);
     const servicePc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
     const record = new RegExp(`class="venue-abbr">${abbr}<\\/span>\\s*<\\/div>\\s*<div class="venue-years">([^<]+)<\\/div>`, 'g');
     assert.deepEqual([...servicePc.matchAll(record)].map((match) => match[1]), [years]);
+    if (roleKey) {
+      assert.ok(servicePc.includes(`<div class="venue-name">${fullName} <span class="venue-role" data-page-i18n="service.${roleKey}">Area Chair 2027</span></div>`));
+    }
   });
 }
 
@@ -1022,8 +1027,8 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
   }
 });
 
-test('September 2026 ICDM demo acceptance leads both news surfaces', () => {
-  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
+test('October 2026 WWW Area Chair announcement leads both news surfaces once', () => {
+  const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.';
   const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
   const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
   const lists = [
@@ -1036,6 +1041,20 @@ test('September 2026 ICDM demo acceptance leads both news surfaces', () => {
   }
 });
 
+test('September 2026 ICDM demo acceptance follows the latest WWW Area Chair announcement', () => {
+  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
+  const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
+  const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
+  const lists = [
+    [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => match[1]),
+    [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map(match => match[1]),
+  ];
+  for (const entries of lists) {
+    assert.equal(entries[1], expected);
+    assert.equal(entries.filter(entry => entry === expected).length, 1);
+  }
+});
+
 test('September 2026 TKDE survey acceptance follows the latest ICDM demo news', () => {
   const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
   const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
@@ -1043,7 +1062,7 @@ test('September 2026 TKDE survey acceptance follows the latest ICDM demo news', 
   const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
   const newsPageEntries = [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map((match) => match[1]);
   for (const entries of [homepageEntries, newsPageEntries]) {
-    assert.equal(entries[1], expected);
+    assert.equal(entries[2], expected);
     assert.equal(entries.filter((entry) => entry === expected).length, 1);
   }
   assert.ok(newsHtml.includes('<strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong>'), 'Keep the historical preprint announcement');

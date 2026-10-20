@@ -140,14 +140,16 @@ for (const lang of ['en', 'zh']) {
     }
   });
 
-  test(`${lang}: inline ICLR Area Chair role agrees between homepage and service page`, () => {
+  test(`${lang}: inline Area Chair roles agree between homepage and service page`, () => {
     const expected = lang === 'en' ? 'Area Chair 2027' : '领域主席 2027';
-    assert.equal(homeCopy[lang]['service.iclrAreaChair'], expected);
-    assert.equal(sharedCopy[lang].pages['service.html'].content?.['service.iclrAreaChair'], expected);
+    for (const key of ['service.iclrAreaChair', 'service.wwwAreaChair']) {
+      assert.equal(homeCopy[lang][key], expected, key);
+      assert.equal(sharedCopy[lang].pages['service.html'].content?.[key], expected, key);
+      keyedMarkup(home, 'data-i18n', key);
+      keyedMarkup(read('service.html'), 'data-page-i18n', key);
+    }
     assert.equal(homeCopy[lang]['service.areaChair'], undefined);
     assert.equal(sharedCopy[lang].pages['service.html'].content?.['service.areaChair'], undefined);
-    keyedMarkup(home, 'data-i18n', 'service.iclrAreaChair');
-    keyedMarkup(read('service.html'), 'data-page-i18n', 'service.iclrAreaChair');
   });
 
   test(`${lang}: homepage and Research share the latest introduction`, () => {
@@ -343,7 +345,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
-    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20261015-castclaw-name/, path);
+    if (path !== 'index.html') assert.match(html, /site-language\.js\?v=20261020-www-area-chair/, path);
   }
 });
 

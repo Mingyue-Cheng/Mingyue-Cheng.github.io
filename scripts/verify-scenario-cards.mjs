@@ -452,8 +452,8 @@ test('homepage scenario cards use concise domain summaries', () => {
 
   assert.match(
     scienceArticle,
-    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Connecting scientific data and knowledge to support reasoning and autonomous discovery\.<\/p>/,
-    'Scientific Discovery must retain the scientific data, knowledge, and discovery focus'
+    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Focusing on scientific tools, scientific knowledge mining, and autonomous scientific discovery\.<\/p>/,
+    'Science Intelligence must use the shared Focusing on phrasing for scientific tools, knowledge mining, and autonomous discovery'
   );
   assert.match(
     industrialArticle,
@@ -462,13 +462,13 @@ test('homepage scenario cards use concise domain summaries', () => {
   );
   assert.match(
     industrialArticle,
-    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Forecasting and decision support for complex, evolving real-world systems\.<\/p>/,
-    'Industrial Intelligence must retain the real-world forecasting and decision support focus'
+    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Focusing on forecasting and decision support for complex, evolving real-world systems\.<\/p>/,
+    'Industrial Intelligence must use the shared Focusing on phrasing for forecasting and decision support'
   );
   assert.match(
     userArticle,
-    /<p class="scenario-card-body" data-i18n="research\.userBody">Understanding behaviors and preferences to deliver adaptive, personalized recommendations\.<\/p>/,
-    'Recommender Systems must retain the behavior, preferences, and personalization focus'
+    /<p class="scenario-card-body" data-i18n="research\.userBody">Focusing on user behavior and preference modeling for adaptive, personalized recommendations\.<\/p>/,
+    'Recommender Systems must use the shared Focusing on phrasing for user behavior, preference modeling, and personalization'
   );
   assert.match(
     userArticle,
@@ -484,10 +484,10 @@ test('homepage scenario summaries and topics stay synchronized with both diction
       'Real-world settings for developing and evaluating intelligent systems.',
       '在真实任务中发展智能方法，并检验其有效性。'
     ],
-    'research.scienceTitle': ['Scientific Discovery', 'Scientific Discovery'],
+    'research.scienceTitle': ['Science Intelligence', '科学智能'],
     'research.scienceBody': [
-      'Connecting scientific data and knowledge to support reasoning and autonomous discovery.',
-      '融合科学数据与知识，支持科学推理与自主发现。'
+      'Focusing on scientific tools, scientific knowledge mining, and autonomous scientific discovery.',
+      '聚焦科学工具、科学知识挖掘与自主科学发现。'
     ],
     'research.scienceTopics': [
       '<span>Literature mining</span><span>Scientific modeling</span>',
@@ -495,8 +495,8 @@ test('homepage scenario summaries and topics stay synchronized with both diction
     ],
     'research.industrialTitle': ['Industrial Intelligence', '工业智能'],
     'research.industrialBody': [
-      'Forecasting and decision support for complex, evolving real-world systems.',
-      '面向持续演变的复杂系统，开展预测与决策支持。'
+      'Focusing on forecasting and decision support for complex, evolving real-world systems.',
+      '聚焦持续演变的复杂系统中的预测与决策支持。'
     ],
     'research.industrialTopics': [
       '<span>Energy &amp; traffic</span><span>Cloud &amp; finance</span>',
@@ -504,8 +504,8 @@ test('homepage scenario summaries and topics stay synchronized with both diction
     ],
     'research.userTitle': ['Recommender Systems', '推荐系统'],
     'research.userBody': [
-      'Understanding behaviors and preferences to deliver adaptive, personalized recommendations.',
-      '理解用户行为与偏好，实现自适应的个性化推荐。'
+      'Focusing on user behavior and preference modeling for adaptive, personalized recommendations.',
+      '聚焦用户行为与偏好建模，支持自适应的个性化推荐。'
     ],
     'research.userTopics': [
       '<span>Behavior modeling</span><span>Contextual reasoning</span>',
@@ -584,7 +584,7 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   const oldObservationFrame = 'dynamic system observations';
   const oldReasoning = 'slow-thinking temporal reasoning';
   const expectedEnglishTimeseries =
-    '<span class="research-label">📊<strong>Time Series Intelligence:</strong></span> <span class="research-keyword">科语 SciTime — Modeling the dynamic world.</span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
+    '<span class="research-label">📊<strong>Time Series Intelligence:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
   const expectedResearchCard =
     '<strong>科语 SciTime — Modeling the dynamic world.</strong> Developing <strong>context-aware predictive intelligence</strong>, with a focus on <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>, <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.';
   const homepageSection = sectionBetween(
@@ -612,9 +612,10 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   );
   assert.match(
     decodedTranslationEntries('research.timeseries')[1],
-    /^<span class="research-label">📊<strong>时间序列智能：<\/strong>/,
+    /^<span class="research-label">📊<strong>时间序列智能：<\/strong><\/span> 发展/,
     'Chinese research.timeseries translation must use 时间序列智能 without a space after the icon'
   );
+  assert.doesNotMatch(decodedTranslationEntries('research.timeseries')[1], /科语 SciTime/);
   assert.match(
     researchDirectionsSection,
     /<h3 class="pillar-card-title" data-page-i18n="timeseriesTitle">Time Series Intelligence<\/h3>/
@@ -679,14 +680,14 @@ test('homepage and Research keep three technical directions and a question-only 
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
     3,
-    'Homepage must expose LLMs, Time Series Intelligence and Science Intelligence as primary directions'
+    'Homepage must expose LLMs, Time Series Intelligence and Scientific Literature Mining as primary directions'
   );
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--agent" data-i18n="research\.agent">/);
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--science" data-i18n="research\.science">/);
   assert.ok(
-    homepageDirections.indexOf('Time Series Intelligence') < homepageDirections.indexOf('Science Intelligence'),
-    'Science Intelligence must follow Time Series Intelligence'
+    homepageDirections.indexOf('Time Series Intelligence') < homepageDirections.indexOf('Scientific Literature Mining'),
+    'Scientific Literature Mining must follow Time Series Intelligence'
   );
   assert.doesNotMatch(
     homepageDirections,
@@ -942,8 +943,8 @@ test('research page preserves domain identities shared with the homepage', () =>
   );
   assert.match(
     researchArticles.user,
-    /<p class="scenario-card-body" data-page-i18n="userBody">Understanding behaviors and preferences to deliver adaptive, personalized recommendations\.<\/p>/,
-    'The Research-page Recommender Systems card must retain its full research narrative'
+    /<p class="scenario-card-body" data-page-i18n="userBody">Focusing on user behavior and preference modeling for adaptive, personalized recommendations\.<\/p>/,
+    'The Research-page Recommender Systems card must use the shared Focusing on phrasing'
   );
 
   for (const modifier of ['science', 'industrial', 'user']) {
@@ -1007,11 +1008,11 @@ test('research page keeps shared pillar icons and complete framework translation
     );
   }
   for (const chineseLabel of [
-    '科学数据与知识',
+    '科学工具',
     '科技文献挖掘',
     '科学建模',
-    '科学推理',
-    '自主发现',
+    '科学知识挖掘',
+    '自主科学发现',
     '可解释预测',
     '可信决策辅助',
     '工业智能',

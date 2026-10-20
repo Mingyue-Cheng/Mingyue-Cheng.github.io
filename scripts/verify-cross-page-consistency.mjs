@@ -19,6 +19,14 @@ const scienceDirectionCopy = {
   en: '科言 SciToken — Understanding the scientific world. Focusing on scientific data, scientific tools, scientific knowledge, and capability enhancement of scientific foundation models.',
   zh: '科言 SciToken：理解科学世界。重点研究科学数据、科学工具、科学知识与科学基础模型能力增强等。'
 };
+const homepageScienceDirectionCopy = {
+  en: 'Focusing on scientific knowledge acquisition, scientific knowledge parsing, scientific knowledge extraction, scientific knowledge-enhanced reasoning, and scientific knowledge innovation and discovery.',
+  zh: '重点研究科学知识获取、科学知识解析、科学知识抽取、科学知识增强的推理、科学知识创新与发现。'
+};
+const scienceDirectionTagline = {
+  en: '科言 SciToken — Understanding the scientific world.',
+  zh: '科言 SciToken：理解科学世界。'
+};
 const organizationCopy = {
   en: {
     organizations: 'Academic Organization Service',
@@ -81,25 +89,25 @@ for (const lang of ['en', 'zh']) {
     }
   });
 
-  test(`${lang}: SciToken and SciTime retain their distinct research identities`, () => {
+  test(`${lang}: homepage card and Research page keep their intended brand placement`, () => {
     const research = sharedCopy[lang].pages['research.html'];
-    const science = lang === 'en'
-      ? '科言 SciToken — Understanding the scientific world.'
-      : '科言 SciToken：理解科学世界。';
+    const science = scienceDirectionTagline[lang];
     const timeseries = lang === 'en'
       ? '科语 SciTime — Modeling the dynamic world.'
       : '科语 SciTime：建模动态世界。';
-    for (const [key, bodyKey, tagline, otherBrand] of [
-      ['science', 'scienceIntelligenceBody', science, 'SciTime'],
-      ['timeseries', 'timeseriesBody', timeseries, 'SciToken']
-    ]) {
-      const homeBody = plain(homeCopy[lang][`research.${key}`]);
-      const researchBody = plain(research.scenarios[bodyKey]);
-      assert.ok(homeBody.includes(tagline), `${key} homepage direction needs its brand positioning`);
-      assert.ok(researchBody.startsWith(tagline), `${key} Research direction needs its brand positioning`);
-      assert.equal(homeBody.includes(otherBrand), false, `${key} must not use the other parent brand`);
-      assert.equal(researchBody.includes(otherBrand), false, `${bodyKey} must not use the other parent brand`);
-    }
+    const homeScience = plain(homeCopy[lang]['research.science']);
+    const researchScience = plain(research.scenarios.scienceIntelligenceBody);
+    assert.equal(homeScience.includes('SciToken'), false);
+    assert.ok(researchScience.startsWith(science));
+    assert.equal(homeScience.includes('SciTime'), false);
+    assert.equal(researchScience.includes('SciTime'), false);
+
+    const homeTimeseries = plain(homeCopy[lang]['research.timeseries']);
+    const researchTimeseries = plain(research.scenarios.timeseriesBody);
+    assert.equal(homeTimeseries.includes('SciTime'), false);
+    assert.ok(researchTimeseries.startsWith(timeseries));
+    assert.equal(homeTimeseries.includes('SciToken'), false);
+    assert.equal(researchTimeseries.includes('SciToken'), false);
     for (const intro of [plain(homeCopy[lang]['research.intro']), research.subtitle]) {
       assert.ok(intro.includes('科言 SciToken'));
       assert.ok(intro.includes('科语 SciTime'));
@@ -107,12 +115,12 @@ for (const lang of ['en', 'zh']) {
     assert.doesNotMatch(research.scenarios.agentBody, /SciToken|SciTime/);
   });
 
-  test(`${lang}: Science Intelligence covers all four research focuses on both pages`, () => {
+  test(`${lang}: homepage literature mining and Research science descriptions retain their current focuses`, () => {
     const homepageDirection = homeCopy[lang]['research.science'];
-    assert.ok(homepageDirection, 'Homepage needs a Science Intelligence direction');
+    assert.ok(homepageDirection, 'Homepage needs a Scientific Literature Mining direction');
     const body = homepageDirection.replace(/^<span class="research-label">[\s\S]*?<\/span>\s*/, '');
     const research = sharedCopy[lang].pages['research.html'].scenarios;
-    assert.equal(plain(body), scienceDirectionCopy[lang]);
+    assert.equal(plain(body), homepageScienceDirectionCopy[lang]);
     assert.equal(plain(research.scienceIntelligenceBody || ''), scienceDirectionCopy[lang]);
     assert.equal(research.scienceIntelligenceTitle, lang === 'en' ? 'Science Intelligence' : '科学智能');
   });
@@ -168,7 +176,19 @@ for (const lang of ['en', 'zh']) {
       const direction = homeCopy[lang][`research.${key}`];
       assert.equal(typeof direction, 'string', `Missing research.${key} translation`);
       const homepageBody = direction.replace(/^<span class="research-label">[\s\S]*?<\/span>\s*/, '');
-      assert.equal(plain(homepageBody), plain(research.scenarios[bodyKey]), key);
+      const researchBody = plain(research.scenarios[bodyKey]);
+      if (key === 'science') {
+        assert.equal(plain(homepageBody), homepageScienceDirectionCopy[lang], key);
+        assert.equal(researchBody, scienceDirectionCopy[lang], key);
+      } else if (key === 'timeseries') {
+        const tagline = lang === 'en'
+          ? '科语 SciTime — Modeling the dynamic world.'
+          : '科语 SciTime：建模动态世界。';
+        assert.ok(researchBody.startsWith(tagline), `Research page keeps the ${key} tagline`);
+        assert.equal(plain(homepageBody), researchBody.slice(tagline.length).trimStart(), key);
+      } else {
+        assert.equal(plain(homepageBody), researchBody, key);
+      }
     }
     assert.equal(research.collections, homeCopy[lang]['research.collections']);
     assert.equal(research.join, homeCopy[lang]['research.join']);

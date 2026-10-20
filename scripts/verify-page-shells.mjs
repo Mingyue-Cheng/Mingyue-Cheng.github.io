@@ -13,7 +13,7 @@ const pages = [
   {
     path: 'research.html',
     title: 'Research — Mingyue Cheng',
-    description: 'Research by Mingyue Cheng on LLM-driven reasoning and AI agents: context-aware reasoning, autonomous interactive learning, and continual learning and adaptation, motivated by time-series intelligence and science intelligence.',
+    description: 'Research by Mingyue Cheng on cognitive intelligence: LLM agents and autonomous learning, scientific knowledge and tool mining, and cognitive intelligence for structured data.',
     currentHref: 'research.html',
     h1Class: 'page-hero-title',
     mainVisualOrder: ['page-hero', 'research-main']
@@ -379,7 +379,7 @@ export function validatePageChromeSource(source, page) {
     `${page.path} must contain one September 2026 footer timestamp`
   );
   assert.doesNotMatch(footerSource, /Last updated in July 2026\./, `${page.path} must not retain the July footer`);
-  const languageVersion = '20261020-www-area-chair';
+  const languageVersion = page.path === 'research.html' ? '20261020-cognitive-research' : '20261020-www-area-chair';
   const languageScripts = document.nodes.filter(
     (node) => node.name === 'script' && attribute(node.raw, 'src') === `files/assets/site-language.js?v=${languageVersion}`
   );

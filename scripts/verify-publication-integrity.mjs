@@ -602,7 +602,7 @@ test('the actual homepage collapse and filter script keeps visual and ARIA state
   assert.equal(harness.timeList.style.display, 'none');
 });
 
-test('older homepage years start collapsed and filters preserve subsequent user choices', () => {
+test('explicitly collapsed year fixtures preserve subsequent user choices through filters', () => {
   const harness = createPublicationBehaviorHarness({ collapsible: true, collapsedByDefault: true });
   const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction initClustrMaps');
   vm.runInNewContext(source, { document: harness.document, window: harness.window });
@@ -735,6 +735,35 @@ test('StepPO title and authors stay pinned to the matching arXiv v1', () => {
     newsItem.includes('href="https://arxiv.org/abs/2604.18401v1"'),
     'the StepPO news link must point to the title-matching arXiv v1'
   );
+});
+
+test('all homepage publication year groups are expanded by default in markup', () => {
+  const headings = [...withoutComments(indexHtml).matchAll(/<h3\b[^>]*class="pub-year-heading"[^>]*>/g)].map((match) => match[0]);
+  assert.equal(headings.length, 5, 'Preprints and every publication year group must remain present');
+  for (const heading of headings) {
+    assert.doesNotMatch(heading, /data-default-collapsed="true"/, `${heading} must start expanded`);
+  }
+});
+
+test('homepage runtime initializes every real year group expanded and still permits manual collapse', () => {
+  const headings = [...withoutComments(indexHtml).matchAll(/<h3\b[^>]*class="pub-year-heading"[^>]*>/g)].map((match) => match[0]);
+  const source = publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction initClustrMaps');
+  for (const heading of headings) {
+    const harness = createPublicationBehaviorHarness({
+      collapsible: true,
+      collapsedByDefault: /data-default-collapsed="true"/.test(heading)
+    });
+    vm.runInNewContext(source, { document: harness.document, window: harness.window });
+    assert.equal(harness.timeList.style.display, '', `${heading} list must be visible on load`);
+    assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'true');
+    assert.equal(harness.timeHeading.classList.contains('pub-year-collapsed'), false);
+    harness.timeToggle.click();
+    assert.equal(harness.timeList.style.display, 'none', 'Manual collapse must remain available');
+    assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'false');
+    harness.timeToggle.click();
+    assert.equal(harness.timeList.style.display, '', 'Manual expansion must remain available');
+    assert.equal(harness.timeToggle.getAttribute('aria-expanded'), 'true');
+  }
 });
 
 test('homepage presents the complete year-grouped publication catalog with a link to Publications', () => {

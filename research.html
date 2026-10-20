@@ -6,12 +6,12 @@
   <title>Research — Mingyue Cheng</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="theme-color" content="#003153">
-  <meta name="description" content="Research by Mingyue Cheng on LLM-driven reasoning and AI agents: context-aware reasoning, autonomous interactive learning, and continual learning and adaptation, motivated by time-series intelligence and science intelligence.">
+  <meta name="description" content="Research by Mingyue Cheng on cognitive intelligence: LLM agents and autonomous learning, scientific knowledge and tool mining, and cognitive intelligence for structured data.">
   <meta name="author" content="Mingyue Cheng">
   <link rel="canonical" href="https://mingyue-cheng.github.io/research.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Research — Mingyue Cheng">
-  <meta property="og:description" content="Research by Mingyue Cheng on LLM-driven reasoning and AI agents: context-aware reasoning, autonomous interactive learning, and continual learning and adaptation, motivated by time-series intelligence and science intelligence.">
+  <meta property="og:description" content="Research by Mingyue Cheng on cognitive intelligence: LLM agents and autonomous learning, scientific knowledge and tool mining, and cognitive intelligence for structured data.">
   <meta property="og:url" content="https://mingyue-cheng.github.io/research.html">
   <meta property="og:image" content="https://mingyue-cheng.github.io/HomePage_files/Mycheng-6.png">
   <meta name="twitter:card" content="summary">
@@ -619,8 +619,9 @@ body {
   <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
   <link rel="stylesheet" href="files/assets/site-theme.css?v=20260917-consistency">
   <link rel="stylesheet" href="files/assets/site-content.css?v=20260917-consistency">
+  <link rel="stylesheet" href="files/assets/research-page.css?v=20261020-cognitive-research">
 </head>
-<body>
+<body class="research-page">
 <a class="skip-link" href="#main-content">Skip to main content</a>
 
 <!-- ===== Nav ===== -->
@@ -651,11 +652,10 @@ body {
   <div class="container">
     <div class="page-hero-content">
       <div class="page-hero-copy">
-        <h1 class="page-hero-title">Research Interests</h1>
+        <p class="research-eyebrow" data-page-i18n="heroEyebrow">Research Overview</p>
+        <h1 class="page-hero-title">Cognitive Intelligence</h1>
         <p class="page-hero-sub">
-          My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning,
-          autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in
-          time-series intelligence and science intelligence (scientific knowledge and tool mining). These application-driven directions are framed by 科言 SciToken — understanding the scientific world, and 科语 SciTime — modeling the dynamic world.
+          My research focuses on cognitive intelligence: enabling machines to understand, reason, and interact. I study LLM agents and autonomous learning as general intelligent mechanisms, with scientific knowledge and tools and structured data as two core research objects. The three directions address independent scientific questions while sharing foundations in cognitive intelligence. Autonomous learning, continual evolution, and human–AI collaboration support long-term capability improvement.
         </p>
       </div>
     </div>
@@ -667,19 +667,9 @@ body {
   <div class="container">
 
     <!-- Research Framework -->
-    <!-- Research Vision -->
-    <section class="research-tier research-tier--vision" aria-labelledby="research-vision-heading">
-      <h2 id="research-vision-heading" class="rd-section-label">Research Vision</h2>
-      <p class="research-vision-desc research-question" data-page-i18n="researchQuestion">
-        How can agents <strong>reliably solve problems through reasoning and interaction</strong> when
-        <strong>information is incomplete</strong>, <strong>environments change</strong>, and
-        <strong>feedback is costly</strong>?
-      </p>
-    </section>
-
     <!-- Core Technical Pillars -->
     <section class="research-tier research-tier--pillars" aria-labelledby="technical-pillars-heading">
-      <h2 id="technical-pillars-heading" class="rd-section-label">Core Technical Pillars</h2>
+      <h2 id="technical-pillars-heading" class="rd-section-label">Core Research Directions</h2>
       <div class="pillar-grid">
         <article class="pillar-card pillar-card--agent">
           <span class="pillar-card-icon" aria-hidden="true">
@@ -688,47 +678,98 @@ body {
             </span>
           </span>
           <div class="pillar-card-copy">
-            <h3 class="pillar-card-title" data-page-i18n="agentTitle">LLMs and Agentic AI</h3>
-            <p class="pillar-card-desc" data-page-i18n="agentBody">
-              Developing <strong>autonomous interactive learning</strong> for large language models, including
-              <strong>environment-interactive Agentic RL</strong>, <strong>tool-augmented reasoning</strong>,
-              <strong>multi-agent orchestration</strong>, and continual capability evolution through context, knowledge, and memory.
-            </p>
+            <p class="pillar-card-role" data-page-i18n="agentRole">01 · General Mechanisms of Intelligence</p>
+            <h3 class="pillar-card-title" data-page-i18n="agentTitle">LLM Agents &amp; Autonomous Learning</h3>
+            <p class="pillar-card-desc" data-page-i18n="agentBody">Study how LLM agents make autonomous decisions in open environments, accumulate experience, optimize learning strategies, and continually evolve. Research focuses on <strong>agent architectures and harnesses, long-term memory, autonomous interaction, and learning mechanisms</strong>.</p>
+            <div class="pillar-question">
+              <span class="question-label" data-page-i18n="questionLabel">Scientific question</span>
+              <p data-page-i18n="agentQuestion">How can LLM agents make autonomous decisions, accumulate transferable experience, and continually improve their capabilities?</p>
+            </div>
+            <p class="research-topics" data-page-i18n="agentTopics"><span>Agent Harness</span><span>Agent Memory</span><span>Self-Evolution</span><span>Autonomous Learning</span></p>
           </div>
         </article>
 
-        <article class="pillar-card pillar-card--timeseries">
+        <article class="pillar-card pillar-card--knowledge">
           <span class="pillar-card-icon" aria-hidden="true">
-            <span class="visual-icon icon-series">
-              <i></i><i></i><i></i><i></i>
-            </span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path></svg>
           </span>
           <div class="pillar-card-copy">
-            <h3 class="pillar-card-title" data-page-i18n="timeseriesTitle">Time Series Intelligence</h3>
-            <p class="pillar-card-desc" data-page-i18n="timeseriesBody">
-              <strong>科语 SciTime — Modeling the dynamic world.</strong>
-              Developing <strong>context-aware predictive intelligence</strong>, with a focus on
-              <strong>multimodal context representation</strong>, <strong>slow-thinking reasoning</strong>,
-              <strong>uncertainty-aware forecasting</strong>, and <strong>autonomous agentic interaction</strong>.
-            </p>
+            <p class="pillar-card-role" data-page-i18n="knowledgeRole">02 · Research for Scientific Innovation</p>
+            <h3 class="pillar-card-title" data-page-i18n="knowledgeTitle">Scientific Knowledge &amp; Tool Mining</h3>
+            <p class="pillar-card-desc" data-page-i18n="knowledgeBody">Discover, understand, and organize scientific knowledge and tools from research resources. Research spans <strong>scientific literature mining, knowledge extraction and reasoning, tool discovery, capability understanding, and autonomous tool composition</strong> to support scientific exploration and innovation.</p>
+            <div class="pillar-question">
+              <span class="question-label" data-page-i18n="questionLabel">Scientific question</span>
+              <p data-page-i18n="knowledgeQuestion">How can scientific knowledge and tools be discovered, organized, and reliably used to support scientific innovation?</p>
+            </div>
+            <p class="research-topics" data-page-i18n="knowledgeTopics"><span>Scientific Literature Mining</span><span>Scientific Tool Mining</span><span>Knowledge Discovery</span><span>Agentic Research</span></p>
           </div>
         </article>
 
-        <article class="pillar-card pillar-card--science">
+        <article class="pillar-card pillar-card--structured">
           <span class="pillar-card-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-              <path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="5" rx="1.3"></rect><rect x="2" y="17" width="6" height="5" rx="1.3"></rect><rect x="16" y="17" width="6" height="5" rx="1.3"></rect><path d="M12 7v5M5 17v-5h14v5"></path></svg>
           </span>
           <div class="pillar-card-copy">
-            <h3 class="pillar-card-title" data-page-i18n="scienceIntelligenceTitle">Science Intelligence</h3>
-            <p class="pillar-card-desc" data-page-i18n="scienceIntelligenceBody">
-              <strong>科言 SciToken — Understanding the scientific world.</strong>
-              Focusing on <strong>scientific data</strong>, <strong>scientific tools</strong>,
-              <strong>scientific knowledge</strong>, and <strong>capability enhancement of scientific foundation models</strong>.
-            </p>
+            <p class="pillar-card-role" data-page-i18n="structuredRole">03 · Research for Complex-System Cognition</p>
+            <h3 class="pillar-card-title" data-page-i18n="structuredTitle">Cognitive Intelligence for Structured Data</h3>
+            <p class="pillar-card-desc" data-page-i18n="structuredBody">Study semantics, context, complex relationships, and dynamic evolution in <strong>time series, tables, and graphs</strong>, moving from pattern recognition toward <strong>knowledge-grounded cognitive reasoning, interactive analysis, and decision support</strong> for complex systems.</p>
+            <div class="pillar-question">
+              <span class="question-label" data-page-i18n="questionLabel">Scientific question</span>
+              <p data-page-i18n="structuredQuestion">How can complex relationships and dynamic evolution in structured data be understood and reasoned about using knowledge and evidence?</p>
+            </div>
+            <p class="research-topics" data-page-i18n="structuredTopics"><span>Time Series</span><span>Tabular Data</span><span>Graph Data</span></p>
           </div>
         </article>
+      </div>
+    </section>
+
+    <section class="research-tier research-relations" aria-labelledby="research-relations-heading">
+      <h2 id="research-relations-heading" class="rd-section-label">How the Directions Connect</h2>
+      <p class="research-section-intro" data-page-i18n="relationsIntro">The three directions have independent scientific questions and share a technical foundation in cognitive intelligence. General mechanisms and object-specific research inform one another.</p>
+      <div class="research-relation-map">
+        <div class="relation-mechanism">
+          <p class="relation-label" data-page-i18n="mechanismLabel">General Intelligent Mechanisms</p>
+          <h3 data-page-i18n="mechanismTitle">LLM Agents &amp; Autonomous Learning</h3>
+          <p class="research-topics" data-page-i18n="mechanismTopics"><span>Harness</span><span>Memory</span><span>Self-Evolution</span><span>Autonomous Learning</span></p>
+        </div>
+        <p class="relation-feedback"><span aria-hidden="true">↕</span><span data-page-i18n="feedbackLabel">General methods support domain research; domain feedback improves intelligent capabilities.</span></p>
+        <div class="relation-objects">
+          <div class="relation-object relation-object--knowledge">
+            <h3 data-page-i18n="knowledgeObjectTitle">Scientific Knowledge &amp; Tools</h3>
+            <p data-page-i18n="knowledgeObjectBody">Scientific literature, knowledge, and tools: discovering and using scientific knowledge and capabilities.</p>
+          </div>
+          <div class="relation-object relation-object--structured">
+            <h3 data-page-i18n="structuredObjectTitle">Structured Data</h3>
+            <p data-page-i18n="structuredObjectBody">Time series, tables, and graphs: understanding structure and context, and reasoning about complex systems.</p>
+          </div>
+        </div>
+        <p class="relation-synergy"><span aria-hidden="true">↔</span><span data-page-i18n="synergyLabel">Knowledge–data synergy: knowledge and tools inform data analysis; data evidence tests knowledge and tool capabilities.</span></p>
+      </div>
+    </section>
+
+    <section class="research-tier cognitive-framework" aria-labelledby="cognitive-framework-heading">
+      <h2 id="cognitive-framework-heading" class="rd-section-label">Shared Cognitive Framework</h2>
+      <p class="research-section-intro" data-page-i18n="frameworkIntro">Understanding, reasoning, and interaction form a feedback loop. New evidence and interaction outcomes can revise understanding and guide further reasoning.</p>
+      <div class="cognitive-grid">
+        <article class="cognitive-step">
+          <span class="cognitive-step-number" aria-hidden="true">01</span>
+          <h3 data-page-i18n="understandTitle">Understand</h3>
+          <p data-page-i18n="understandBody">Interpret structure and relationships; understand semantics, context, scientific knowledge, and tool capabilities.</p>
+        </article>
+        <article class="cognitive-step">
+          <span class="cognitive-step-number" aria-hidden="true">02</span>
+          <h3 data-page-i18n="reasonTitle">Reason</h3>
+          <p data-page-i18n="reasonBody">Integrate knowledge and evidence to support cognitive reasoning, planning, and informed decisions.</p>
+        </article>
+        <article class="cognitive-step">
+          <span class="cognitive-step-number" aria-hidden="true">03</span>
+          <h3 data-page-i18n="interactTitle">Interact</h3>
+          <p data-page-i18n="interactBody">Actively acquire external evidence and interact with tools, environments, and people to update cognition.</p>
+        </article>
+      </div>
+      <div class="learning-mechanisms">
+        <h3 data-page-i18n="mechanismsTitle">Long-Term Capability Development</h3>
+        <p data-page-i18n="mechanismsBody"><strong>Autonomous learning · Continual evolution · Human–AI collaboration.</strong> Accumulate experience, reflect on feedback, and improve learning strategies to sustain the development of cognitive capabilities.</p>
       </div>
     </section>
     <!-- /Research Framework -->
@@ -822,6 +863,6 @@ body {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20261020-www-area-chair"></script>
+<script src="files/assets/site-language.js?v=20261020-cognitive-research"></script>
 </body>
 </html>

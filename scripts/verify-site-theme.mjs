@@ -568,13 +568,18 @@ for (const page of pages) {
     const styles = [...head.matchAll(/<style\b[\s\S]*?<\/style>|<link\b[^>]*rel="stylesheet"[^>]*>/g)]
       .map((match) => match[0].startsWith('<style') ? '<style>' : match[0]);
     const contentVersion = '20260917-consistency';
-    assert.deepEqual(styles.slice(-2), [
+    const expectedFinalLayers = [
       '<link rel="stylesheet" href="files/assets/site-theme.css?v=20260917-consistency">',
       `<link rel="stylesheet" href="files/assets/site-content.css?v=${contentVersion}">`
-    ]);
+    ];
+    if (page === 'research.html') {
+      expectedFinalLayers.push('<link rel="stylesheet" href="files/assets/research-page.css?v=20261020-cognitive-research">');
+    }
+    assert.deepEqual(styles.slice(-expectedFinalLayers.length), expectedFinalLayers);
     for (const name of ['site-theme', 'site-content']) {
       assert.equal(styles.filter((style) => style.includes(`${name}.css`)).length, 1);
     }
+    assert.equal(styles.filter((style) => style.includes('research-page.css')).length, page === 'research.html' ? 1 : 0);
   });
 
   test(`${page} uses the shared browser color and retains no former brand-blue accents`, () => {

@@ -313,7 +313,7 @@ test('homepage selected-publication filters and year groups remain accessible', 
   );
   const collapsedYears = [...publications.matchAll(/<h3\b(?=[^>]*id="(year-[^"]+)")(?=[^>]*data-default-collapsed="true")[^>]*>/g)]
     .map((match) => match[1]);
-  assert.deepEqual(collapsedYears, ['year-2025', 'year-2024', 'year-2023']);
+  assert.deepEqual(collapsedYears, [], 'Every publication year must be expanded by default');
   assert.doesNotMatch(indexHtml, /const startsExpanded =/);
   assert.match(indexHtml, /collapsedState\.set\(h, !collapsedState\.get\(h\)\);/);
   assert.match(

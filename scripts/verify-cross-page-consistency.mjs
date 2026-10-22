@@ -44,6 +44,17 @@ function keyedMarkup(html, attribute, key) {
 }
 
 for (const lang of ['en', 'zh']) {
+  test(`${lang}: ICML 2027 Area Chair news is synchronized and translatable on both news surfaces`, () => {
+    const key = 'news.icml2027AC';
+    const expected = lang === 'en'
+      ? '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.'
+      : '<strong>[2026 年 10 月]</strong> 🎉 我即将担任 <strong>ICML 2027</strong> 的<strong>领域主席（Area Chair，AC）</strong>。';
+    assert.equal(homeCopy[lang][key], expected);
+    assert.equal(sharedCopy[lang].pages['news.html'].content?.[key], expected);
+    assert.equal(keyedMarkup(home, 'data-i18n', key), homeCopy.en[key]);
+    assert.equal(keyedMarkup(read('news.html'), 'data-page-i18n', key), homeCopy.en[key]);
+  });
+
   test(`${lang}: project navigation and section titles use the requested display name`, () => {
     const expected = lang === 'en' ? 'Open Project' : '开源项目';
     assert.equal(homeCopy[lang]['nav.opensource'], expected);
@@ -335,7 +346,8 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
     if (path !== 'index.html') {
-      const version = path === 'research.html' ? '20261020-cognitive-research' : '20261020-www-area-chair';
+      const version = path === 'research.html' ? '20261020-cognitive-research'
+        : path === 'news.html' ? '20261021-icml-area-chair' : '20261020-www-area-chair';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }
   }

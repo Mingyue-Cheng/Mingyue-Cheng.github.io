@@ -1027,42 +1027,43 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
   }
 });
 
-test('October 2026 WWW Area Chair announcement leads both news surfaces once', () => {
-  const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.';
+function latestNewsLists() {
   const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
   const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
-  const lists = [
-    [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => match[1]),
-    [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map(match => match[1]),
+  return [
+    [...homepageNews.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)].map(match => match[1]),
+    [...newsPage2026.matchAll(/<span class="news-body"[^>]*>([\s\S]*?)<\/span>/g)].map(match => match[1]),
   ];
-  for (const entries of lists) {
+}
+
+test('October 2026 ICML Area Chair announcement leads both news surfaces once', () => {
+  const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.';
+  for (const entries of latestNewsLists()) {
     assert.equal(entries[0], expected);
+    assert.equal(entries.filter(entry => entry === expected).length, 1);
+  }
+});
+
+test('October 2026 WWW Area Chair announcement remains after the ICML announcement once', () => {
+  const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.';
+  for (const entries of latestNewsLists()) {
+    assert.equal(entries[1], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
   }
 });
 
 test('September 2026 ICDM demo acceptance follows the latest WWW Area Chair announcement', () => {
   const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
-  const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
-  const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
-  const lists = [
-    [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => match[1]),
-    [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map(match => match[1]),
-  ];
-  for (const entries of lists) {
-    assert.equal(entries[1], expected);
+  for (const entries of latestNewsLists()) {
+    assert.equal(entries[2], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
   }
 });
 
 test('September 2026 TKDE survey acceptance follows the latest ICDM demo news', () => {
   const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
-  const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
-  const newsPage2026 = sectionBetween(newsHtml, '<div class="news-year-heading">2026</div>', '<div class="news-year-heading">2025</div>');
-  const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
-  const newsPageEntries = [...newsPage2026.matchAll(/<span class="news-body">([\s\S]*?)<\/span>/g)].map((match) => match[1]);
-  for (const entries of [homepageEntries, newsPageEntries]) {
-    assert.equal(entries[2], expected);
+  for (const entries of latestNewsLists()) {
+    assert.equal(entries[3], expected);
     assert.equal(entries.filter((entry) => entry === expected).length, 1);
   }
   assert.ok(newsHtml.includes('<strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong>'), 'Keep the historical preprint announcement');

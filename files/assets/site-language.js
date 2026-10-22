@@ -80,7 +80,10 @@
         },
         'news.html': {
           title: 'News & Updates',
-          subtitle: 'Latest news from USTC AGI Research Group.'
+          subtitle: 'Latest news from USTC AGI Research Group.',
+          content: {
+            'news.icml2027AC': '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.'
+          }
         },
         'publications.html': {
           title: 'Publications',
@@ -250,7 +253,10 @@
         },
         'news.html': {
           title: '最新动态',
-          subtitle: 'USTC AGI Research Group 的最新动态。'
+          subtitle: 'USTC AGI Research Group 的最新动态。',
+          content: {
+            'news.icml2027AC': '<strong>[2026 年 10 月]</strong> 🎉 我即将担任 <strong>ICML 2027</strong> 的<strong>领域主席（Area Chair，AC）</strong>。'
+          }
         },
         'publications.html': {
           title: '论文发表',

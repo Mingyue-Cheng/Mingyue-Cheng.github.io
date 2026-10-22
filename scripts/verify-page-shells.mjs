@@ -379,7 +379,8 @@ export function validatePageChromeSource(source, page) {
     `${page.path} must contain one September 2026 footer timestamp`
   );
   assert.doesNotMatch(footerSource, /Last updated in July 2026\./, `${page.path} must not retain the July footer`);
-  const languageVersion = page.path === 'research.html' ? '20261020-cognitive-research' : '20261020-www-area-chair';
+  const languageVersion = page.path === 'research.html' ? '20261020-cognitive-research'
+    : page.path === 'news.html' ? '20261021-icml-area-chair' : '20261020-www-area-chair';
   const languageScripts = document.nodes.filter(
     (node) => node.name === 'script' && attribute(node.raw, 'src') === `files/assets/site-language.js?v=${languageVersion}`
   );

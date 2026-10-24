@@ -13,6 +13,16 @@ const homeCopy = vm.runInNewContext(`(${literal})`);
 const sharedLiteral = sharedScript.match(/const translations = (\{[\s\S]*?\n  \});\n\n  const navTargets/)?.[1];
 const sharedCopy = vm.runInNewContext(`(${sharedLiteral})`);
 const pages = ['index.html', 'research.html', 'news.html', 'publications.html', 'projects.html', 'awards.html', 'service.html', 'resources.html', 'prediction-intelligence.html'];
+const publicationFilters = [
+  ['all', 'filterAll', 'All', '全部'],
+  ['llm', 'filterReasoning', 'LLM-based Reasoning', '大模型推理'],
+  ['agent', 'filterAgent', 'Agentic AI', '智能体 AI'],
+  ['structured', 'filterStructured', 'Structured Data Mining', '结构化数据挖掘'],
+  ['timeseries', 'filterTime', 'Time Series Analysis', '时间序列分析'],
+  ['table', 'filterTable', 'Table Mining', '表格挖掘'],
+  ['ai4science', 'filterKnowledge', 'AI for Science', '科学智能'],
+  ['recsys', 'filterRec', 'Recommender Systems', '推荐系统']
+];
 const introEn = 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining). These application-driven directions are framed by 科言 SciToken — understanding the scientific world, and 科语 SciTime — modeling the dynamic world.';
 const introZh = '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。';
 const homepageScienceDirectionCopy = {
@@ -180,9 +190,17 @@ for (const lang of ['en', 'zh']) {
 
   test(`${lang}: publication filters use the homepage taxonomy after language changes`, () => {
     const content = sharedCopy[lang].pages['publications.html'].content || {};
-    for (const suffix of ['filterAll', 'filterAgent', 'filterTime', 'filterKnowledge', 'filterTable', 'filterRec', 'note', 'preprint', 'year2026', 'year2025', 'year2024', 'legacy']) {
+    for (const suffix of ['filterAll', 'filterReasoning', 'filterAgent', 'filterStructured', 'filterTime', 'filterKnowledge', 'filterTable', 'filterRec', 'note', 'preprint', 'year2026', 'year2025', 'year2024', 'legacy']) {
       assert.equal(content[`pub.${suffix}`], homeCopy[lang][`pub.${suffix}`], suffix);
       keyedMarkup(read('publications.html'), 'data-page-i18n', `pub.${suffix}`);
+    }
+  });
+
+  test(`${lang}: publication filter labels match the requested seven-category taxonomy`, () => {
+    for (const [, suffix, english, chinese] of publicationFilters) {
+      const expected = lang === 'en' ? english : chinese;
+      assert.equal(homeCopy[lang][`pub.${suffix}`], expected);
+      assert.equal(sharedCopy[lang].pages['publications.html'].content[`pub.${suffix}`], expected);
     }
   });
 
@@ -196,6 +214,20 @@ for (const lang of ['en', 'zh']) {
     }
   });
 }
+
+test('both publication surfaces expose All and seven ordered matching filters', () => {
+  const expected = publicationFilters.map(([filter, suffix, english]) => [filter, `pub.${suffix}`, english]);
+  for (const path of ['index.html', 'publications.html']) {
+    const buttons = [...active(read(path)).matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)]
+      .filter(match => /\bclass="pub-filter-btn(?:\s[^"]*)?"/.test(match[1]))
+      .map(match => [
+        match[1].match(/\bdata-filter="([^"]+)"/)?.[1],
+        match[1].match(/\bdata-(?:page-)?i18n="([^"]+)"/)?.[1],
+        plain(match[2])
+      ]);
+    assert.deepEqual(buttons, expected, path);
+  }
+});
 
 test('project fallback headings and navigation consistently show Open Project', () => {
   for (const path of pages) {
@@ -346,8 +378,9 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
     if (path !== 'index.html') {
-      const version = path === 'research.html' ? '20261020-cognitive-research'
-        : path === 'news.html' ? '20261021-icml-area-chair' : '20261020-www-area-chair';
+      const version = path === 'research.html' ? '20261024-ai-for-science'
+        : path === 'news.html' ? '20261021-icml-area-chair'
+        : path === 'publications.html' ? '20261024-publication-filters' : '20261020-www-area-chair';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }
   }

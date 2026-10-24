@@ -265,12 +265,12 @@ test('homepage selected-publication filters and year groups remain accessible', 
   const filterButtons = [...publications.matchAll(/<button class="pub-filter-btn[^"]*"[^>]*>/g)]
     .map((match) => match[0]);
 
-  assert.equal(filterButtons.length, 6);
+  assert.equal(filterButtons.length, 8);
   for (const button of filterButtons) {
     assert.match(button, /type="button"/);
     assert.match(button, /aria-pressed="(?:true|false)"/);
   }
-  assert.match(publications, /data-filter="ai4science"[^>]*>Science Intelligence<\/button>/);
+  assert.match(publications, /data-filter="ai4science"[^>]*>AI for Science<\/button>/);
   assert.match(publications, /data-filter="recsys"[^>]*>Recommender Systems<\/button>/);
 
   const yearToggles = [...publications.matchAll(
@@ -529,7 +529,7 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /Computer Science and Technology, Ph\.D\. degree,/);
   assert.match(indexHtml, /Last updated in September 2026\./);
   assert.match(indexHtml, /最后更新于 2026 年 9 月。/);
-  assert.match(indexHtml, /"pub\.filterKnowledge": "Science Intelligence"/);
+  assert.match(indexHtml, /"pub\.filterKnowledge": "AI for Science"/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
   for (const [key, english, chinese] of [
     ['pub.preprint', '📘 Preprint', '📘 预印本'],

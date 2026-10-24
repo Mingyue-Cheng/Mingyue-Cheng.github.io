@@ -116,7 +116,7 @@ test('Research uses an isolated stylesheet after shared styles and retains exist
   for (const page of readdirSync(new URL('..', import.meta.url)).filter((path) => path.endsWith('.html') && path !== 'research.html')) {
     assert.doesNotMatch(read(page), /files\/assets\/research-page\.css/, `${page} must not load Research-only styles`);
   }
-  assert.match(html, /site-language\.js\?v=20261020-cognitive-research/);
+  assert.match(html, /site-language\.js\?v=20261024-ai-for-science/);
   for (const destination of ['https://agentr1.github.io/', 'https://ustc-time-series.github.io/', 'https://ustcagi-sci.github.io/', 'https://ustcagi.github.io/', 'mailto:mycheng@ustc.edu.cn']) {
     assert.ok(html.includes(`href="${destination}"`), `Retain ${destination}`);
     for (const lang of ['en', 'zh']) {

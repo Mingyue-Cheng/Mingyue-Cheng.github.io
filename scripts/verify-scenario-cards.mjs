@@ -171,7 +171,7 @@ function hasAttributeValue(tag, attribute, value) {
 function assertCanonicalOrder(
   source,
   pageLabel,
-  expectedModifiers = ['science', 'industrial', 'user']
+  expectedModifiers = ['science', 'user', 'industrial']
 ) {
   const cardTags = startTagsWithClass(source, 'article', 'scenario-card');
   const modifierTokens = cardTags.map((tag) =>
@@ -196,7 +196,7 @@ function assertScenarioStructure(
   section,
   pageLabel,
   cardTitleTagName,
-  expectedModifiers = ['science', 'industrial', 'user']
+  expectedModifiers = ['science', 'user', 'industrial']
 ) {
   const expectedCardCount = expectedModifiers.length;
 
@@ -442,6 +442,20 @@ test('homepage uses semantic scenario cards in canonical order', () => {
   }
 });
 
+test('application science cards are titled AI for Science on both surfaces', () => {
+  assert.ok(indexHtml.includes('<h4 class="scenario-card-title" data-i18n="research.scienceTitle">AI for Science</h4>'), 'Homepage application title');
+  assert.ok(researchHtml.includes('<h3 class="scenario-card-title" data-page-i18n="scienceTitle">AI for Science</h3>'), 'Research application title');
+});
+
+test('forecasting application cards use a trend chart rather than the retired factory icon', () => {
+  for (const [page, source] of [['Homepage', indexHtml], ['Research', researchHtml]]) {
+    const article = articleFor(source, 'industrial');
+    assert.ok(article.includes('<path d="M4 4v16h16M7 14l4-4 4 3 5-7M16 6h4v4"></path>'), `${page} forecasting chart icon`);
+    assert.doesNotMatch(article, /M3 20h18M5 20V9/);
+    assert.doesNotMatch(article, /Industrial Intelligence|Energy &amp; traffic|Cloud &amp; finance/);
+  }
+});
+
 test('homepage scenario cards use concise domain summaries', () => {
   const researchArea = sectionBetween(
     indexHtml,
@@ -455,17 +469,17 @@ test('homepage scenario cards use concise domain summaries', () => {
   assert.match(
     scienceArticle,
     /<p class="scenario-card-body" data-i18n="research\.scienceBody">Focusing on scientific tools, scientific knowledge mining, and autonomous scientific discovery\.<\/p>/,
-    'Science Intelligence must use the shared Focusing on phrasing for scientific tools, knowledge mining, and autonomous discovery'
+    'AI for Science must use the shared Focusing on phrasing for scientific tools, knowledge mining, and autonomous discovery'
   );
   assert.match(
     industrialArticle,
-    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Industrial Intelligence<\/h4>/,
-    'The middle card must be titled Industrial Intelligence'
+    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Forecasting Intelligence<\/h4>/,
+    'The forecasting card must use the Forecasting Intelligence title'
   );
   assert.match(
     industrialArticle,
-    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Focusing on forecasting and decision support for complex, evolving real-world systems\.<\/p>/,
-    'Industrial Intelligence must use the shared Focusing on phrasing for forecasting and decision support'
+    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Focusing on context-aware forecasting, uncertainty estimation, and adaptive decision support for complex, evolving systems\.<\/p>/,
+    'Forecasting Intelligence must introduce forecasting, uncertainty estimation, and adaptive decision support'
   );
   assert.match(
     userArticle,
@@ -474,8 +488,8 @@ test('homepage scenario cards use concise domain summaries', () => {
   );
   assert.match(
     userArticle,
-    /<h4 class="scenario-card-title" data-i18n="research\.userTitle">Recommender Systems<\/h4>/,
-    'The homepage user-modeling card must remain titled Recommender Systems'
+    /<h4 class="scenario-card-title" data-i18n="research\.userTitle">Personalized Intelligence<\/h4>/,
+    'The homepage user-modeling card must be titled Personalized Intelligence'
   );
 });
 
@@ -486,32 +500,32 @@ test('homepage scenario summaries and topics stay synchronized with both diction
       'Real-world settings for developing and evaluating intelligent systems.',
       '在真实任务中发展智能方法，并检验其有效性。'
     ],
-    'research.scienceTitle': ['Science Intelligence', '科学智能'],
+    'research.scienceTitle': ['AI for Science', '科学智能'],
     'research.scienceBody': [
       'Focusing on scientific tools, scientific knowledge mining, and autonomous scientific discovery.',
       '聚焦科学工具、科学知识挖掘与自主科学发现。'
     ],
     'research.scienceTopics': [
-      '<span>Literature mining</span><span>Scientific modeling</span>',
-      '<span>科技文献挖掘</span><span>科学建模</span>'
+      '<span>Scientific Literature Mining</span><span>Scientific Tool Mining</span>',
+      '<span>科技文献挖掘</span><span>科学工具挖掘</span>'
     ],
-    'research.industrialTitle': ['Industrial Intelligence', '工业智能'],
+    'research.industrialTitle': ['Forecasting Intelligence', '预测智能'],
     'research.industrialBody': [
-      'Focusing on forecasting and decision support for complex, evolving real-world systems.',
-      '聚焦持续演变的复杂系统中的预测与决策支持。'
+      'Focusing on context-aware forecasting, uncertainty estimation, and adaptive decision support for complex, evolving systems.',
+      '聚焦复杂动态系统中的情境感知预测、不确定性估计与自适应决策支持。'
     ],
     'research.industrialTopics': [
-      '<span>Energy &amp; traffic</span><span>Cloud &amp; finance</span>',
-      '<span>能源与交通</span><span>云服务与金融</span>'
+      '<span>Context-aware forecasting</span><span>Uncertainty &amp; decisions</span>',
+      '<span>情境感知预测</span><span>不确定性与决策</span>'
     ],
-    'research.userTitle': ['Recommender Systems', '推荐系统'],
+    'research.userTitle': ['Personalized Intelligence', '个性化智能'],
     'research.userBody': [
       'Focusing on user behavior and preference modeling for adaptive, personalized recommendations.',
       '聚焦用户行为与偏好建模，支持自适应的个性化推荐。'
     ],
     'research.userTopics': [
-      '<span>Behavior modeling</span><span>Contextual reasoning</span>',
-      '<span>行为与偏好建模</span><span>情境推理</span>'
+      '<span>Behavior modeling</span><span>Contextual Memory</span>',
+      '<span>行为与偏好建模</span><span>情境记忆</span>'
     ]
   };
 
@@ -566,14 +580,14 @@ test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
   assert.equal(indexHtml.includes(newAgentFocus), true, 'New agent focus wording must be present');
 });
 
-test('Time Series Intelligence direction copy stays synchronized', () => {
+test('Time Series Mining direction copy stays synchronized', () => {
   const oldTitle = 'Time-Series Analysis';
   const supersededTitle = 'Temporal Data Mining';
   const oldFocus = 'context-aware predictive intelligence for complex systems';
   const oldObservationFrame = 'dynamic system observations';
   const oldReasoning = 'slow-thinking temporal reasoning';
   const expectedEnglishTimeseries =
-    '<span class="research-label">📊<strong>Time Series Intelligence:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
+    '<span class="research-label">📊<strong>Time Series Mining:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -593,8 +607,8 @@ test('Time Series Intelligence direction copy stays synchronized', () => {
   );
   assert.match(
     decodedTranslationEntries('research.timeseries')[1],
-    /^<span class="research-label">📊<strong>时间序列智能：<\/strong><\/span> 发展/,
-    'Chinese research.timeseries translation must use 时间序列智能 without a space after the icon'
+    /^<span class="research-label">📊<strong>时间序列挖掘：<\/strong><\/span> 发展/,
+    'Chinese research.timeseries translation must use 时间序列挖掘 without a space after the icon'
   );
   assert.doesNotMatch(decodedTranslationEntries('research.timeseries')[1], /科语 SciTime/);
 
@@ -630,14 +644,14 @@ test('homepage keeps its three primary directions and shared Research collection
   assert.equal(
     matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
     3,
-    'Homepage must expose LLMs, Time Series Intelligence and Scientific Literature Mining as primary directions'
+    'Homepage must expose LLMs, Time Series Mining and Scientific Literature Mining as primary directions'
   );
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--agent" data-i18n="research\.agent">/);
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
   assert.match(homepageDirections, /<li class="primary-direction primary-direction--science" data-i18n="research\.science">/);
   assert.ok(
-    homepageDirections.indexOf('Time Series Intelligence') < homepageDirections.indexOf('Scientific Literature Mining'),
-    'Scientific Literature Mining must follow Time Series Intelligence'
+    homepageDirections.indexOf('Time Series Mining') < homepageDirections.indexOf('Scientific Literature Mining'),
+    'Scientific Literature Mining must follow Time Series Mining'
   );
   assert.doesNotMatch(
     homepageDirections,
@@ -651,8 +665,8 @@ test('homepage keeps its three primary directions and shared Research collection
   );
   assert.ok(
     homepageDirections.indexOf('LLMs and Agentic AI') <
-      homepageDirections.indexOf('Time Series Intelligence'),
-    'Homepage primary directions must keep LLMs before Time Series Intelligence'
+      homepageDirections.indexOf('Time Series Mining'),
+    'Homepage primary directions must keep LLMs before Time Series Mining'
   );
 
   const homepagePrimaryGridRule = cssRule(indexHtml, '.primary-directions');
@@ -754,7 +768,7 @@ test('research collections omit table research without removing its publication 
 
   assert.match(
     indexHtml,
-    /<button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub\.filterTable">Tabular Data Intelligence<\/button>/
+    /<button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub\.filterTable">Table Mining<\/button>/
   );
   assert.match(indexHtml, /<li data-tags="[^"]*\btable\b[^"]*">/);
   assert.match(
@@ -833,13 +847,13 @@ test('research page preserves domain identities shared with the homepage', () =>
 
   assert.match(
     researchArticles.industrial,
-    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Industrial Intelligence<\/h3>/,
-    'The Research page must include the Industrial Intelligence scenario'
+    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Forecasting Intelligence<\/h3>/,
+    'The Research page must include the Forecasting Intelligence scenario'
   );
   assert.match(
     researchArticles.user,
     /<p class="scenario-card-body" data-page-i18n="userBody">Focusing on user behavior and preference modeling for adaptive, personalized recommendations\.<\/p>/,
-    'The Research-page Recommender Systems card must use the shared Focusing on phrasing'
+    'The Research-page Personalized Intelligence card must use the shared Focusing on phrasing'
   );
 
   for (const modifier of ['science', 'industrial', 'user']) {
@@ -869,7 +883,7 @@ test('research page keeps the shared language engine and complete framework tran
     'Research scenario content must remain compatible with site-language.js'
   );
   assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20261020-cognitive-research"></script>'),
+    researchHtml.includes('<script src="files/assets/site-language.js?v=20261024-ai-for-science"></script>'),
     'Research page must request the current site-language.js content version'
   );
   assert.ok(
@@ -916,15 +930,16 @@ test('research page keeps the shared language engine and complete framework tran
   for (const chineseLabel of [
     '科学工具',
     '科技文献挖掘',
-    '科学建模',
+    '科学工具挖掘',
     '科学知识挖掘',
     '自主科学发现',
-    '工业智能',
-    '云服务',
-    '持续演变的复杂系统',
+    '预测智能',
+    '情境感知预测',
+    '不确定性估计',
+    '自适应决策支持',
     '用户行为与偏好',
     '行为与偏好建模',
-    '情境推理',
+    '情境记忆',
     '自适应的个性化推荐',
     '个性化推荐'
   ]) {

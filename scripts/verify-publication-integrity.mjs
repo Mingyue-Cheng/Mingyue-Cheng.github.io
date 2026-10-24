@@ -372,7 +372,7 @@ function createPublicationBehaviorHarness({ collapsible, collapsedByDefault = fa
   const agentButton = new FakeElement({
     tagName: 'button',
     classes: ['pub-filter-btn'],
-    attributes: { 'aria-pressed': 'false', 'data-filter': 'llm-agent' }
+    attributes: { 'aria-pressed': 'false', 'data-filter': 'agent' }
   });
   const timeItem = new FakeElement({ tagName: 'li', attributes: { 'data-tags': 'timeseries' } });
   const agentItem = new FakeElement({ tagName: 'li', attributes: { 'data-tags': 'agent llm' } });
@@ -422,6 +422,65 @@ function createPublicationBehaviorHarness({ collapsible, collapsedByDefault = fa
     timeItem,
     timeList,
     timeToggle
+  };
+}
+
+function createPublicationFilterMatrixHarness(page) {
+  const document = new FakeDocument(`/${page}`);
+  const window = new FakeEventTarget();
+  window.location = { hash: '' };
+  const filters = ['all', 'llm', 'agent', 'structured', 'timeseries', 'table', 'ai4science', 'recsys'];
+  const buttons = new Map(filters.map((filter) => [filter, new FakeElement({
+    tagName: 'button',
+    classes: filter === 'all' ? ['pub-filter-btn', 'active'] : ['pub-filter-btn'],
+    attributes: { 'aria-pressed': String(filter === 'all'), 'data-filter': filter }
+  })]));
+  const fixtureTags = [
+    ['llm-only', 'llm'],
+    ['agent-only', 'agent'],
+    ['llm-and-agent', 'llm agent'],
+    ['time-only', 'timeseries'],
+    ['table-only', 'table'],
+    ['graph-only', 'graph'],
+    ['structured-only', 'structured'],
+    ['structured-overlap', 'timeseries table graph structured'],
+    ['science-only', 'ai4science'],
+    ['recommendation-only', 'recsys'],
+    ['substring-only', 'llm-extra agentic timeseries-extra table-mining graphing unstructured ai4science-extra recsys-extra'],
+    ['unrelated', 'other']
+  ];
+  const items = new Map(fixtureTags.map(([id, tags]) => [id, new FakeElement({
+    tagName: 'li',
+    attributes: { id, 'data-tags': tags }
+  })]));
+  const list = new FakeElement({ tagName: 'ol', attributes: { id: 'publication-list-fixture' } });
+  list.append(...items.values());
+  const heading = new FakeElement({ tagName: 'h3', classes: ['pub-year-heading'] });
+  heading.nextElementSibling = list;
+  const toggle = new FakeElement({
+    tagName: 'button',
+    classes: ['pub-year-toggle'],
+    attributes: { 'aria-expanded': 'true' }
+  });
+  if (page === 'index.html') heading.append(toggle);
+
+  document.multiple.set('.pub-filter-btn', [...buttons.values()]);
+  document.multiple.set('.pub-list li[data-tags]', [...items.values()]);
+  document.multiple.set('.pub-year-heading', [heading]);
+  document.multiple.set('.pub-year-toggle', page === 'index.html' ? [toggle] : []);
+  document.multiple.set('.pub-section-gap', []);
+
+  const source = page === 'index.html'
+    ? publicationBehaviorSource(indexHtml, '// ===== Publication Year Collapse + Filter =====', '\nfunction initClustrMaps')
+    : publicationBehaviorSource(publicationsHtml, '// Publication filter', '// Back to top');
+  vm.runInNewContext(source, { document, window }, { filename: `${page}-publication-filters.js` });
+
+  return {
+    buttons,
+    items,
+    visibleIds() {
+      return [...items].filter(([, item]) => item.style.display !== 'none').map(([id]) => id);
+    }
   };
 }
 
@@ -569,6 +628,54 @@ test('the actual Publications filter script synchronizes active, aria, item, and
   assert.equal(harness.agentHeading.style.display, 'none');
   assert.equal(harness.agentList.style.display, 'none');
 });
+
+for (const [page] of pages) {
+  test(`${page} actual filter script distinguishes LLM-only, agent-only, and shared publications`, () => {
+    const harness = createPublicationFilterMatrixHarness(page);
+    harness.buttons.get('llm').click();
+    assert.deepEqual(harness.visibleIds(), ['llm-only', 'llm-and-agent']);
+    harness.buttons.get('agent').click();
+    assert.deepEqual(harness.visibleIds(), ['agent-only', 'llm-and-agent']);
+  });
+
+  test(`${page} actual filter script matches complete tags rather than substrings`, () => {
+    const harness = createPublicationFilterMatrixHarness(page);
+    for (const [filter, button] of harness.buttons) {
+      if (filter === 'all') continue;
+      button.click();
+      assert.equal(harness.items.get('substring-only').style.display, 'none', `${filter} excludes partial tag matches`);
+      assert.equal(harness.items.get('unrelated').style.display, 'none', `${filter} excludes unrelated publications`);
+    }
+  });
+
+  test(`${page} actual structured filter includes every structured data area and counts overlap once`, () => {
+    const harness = createPublicationFilterMatrixHarness(page);
+    harness.buttons.get('structured').click();
+    assert.deepEqual(harness.visibleIds(), [
+      'time-only', 'table-only', 'graph-only', 'structured-only', 'structured-overlap'
+    ]);
+    assert.equal(harness.visibleIds().filter((id) => id === 'structured-overlap').length, 1);
+  });
+
+  test(`${page} actual filter script retains specific areas and restores every publication through All`, () => {
+    const harness = createPublicationFilterMatrixHarness(page);
+    const expectedByFilter = [
+      ['timeseries', ['time-only', 'structured-overlap']],
+      ['table', ['table-only', 'structured-overlap']],
+      ['ai4science', ['science-only']],
+      ['recsys', ['recommendation-only']]
+    ];
+    for (const [filter, expected] of expectedByFilter) {
+      harness.buttons.get(filter).click();
+      assert.deepEqual(harness.visibleIds(), expected);
+      assert.equal(harness.buttons.get(filter).getAttribute('aria-pressed'), 'true');
+      harness.buttons.get('all').click();
+      assert.deepEqual(harness.visibleIds(), [...harness.items.keys()]);
+      assert.equal(harness.buttons.get('all').getAttribute('aria-pressed'), 'true');
+      assert.equal(harness.buttons.get(filter).getAttribute('aria-pressed'), 'false');
+    }
+  });
+}
 
 test('the actual homepage collapse and filter script keeps visual and ARIA state synchronized', () => {
   const harness = createPublicationBehaviorHarness({ collapsible: true });
@@ -826,12 +933,12 @@ test('Publications page has an accessible semantic shell and social metadata', (
   assert.ok(filterGroup, 'publication filters need an accessible group label');
   const filterButtons = [...filterGroup.matchAll(/<button class="pub-filter-btn[^"]*"[^>]*>/g)]
     .map((match) => match[0]);
-  assert.equal(filterButtons.length, 6);
+  assert.equal(filterButtons.length, 8);
   for (const button of filterButtons) {
     assert.match(button, /type="button"/);
     assert.match(button, /aria-pressed="(?:true|false)"/);
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
   assert.match(body, /Last updated in September 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261020-www-area-chair"><\/script>/);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261024-publication-filters"><\/script>/);
 });

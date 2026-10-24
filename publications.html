@@ -523,10 +523,12 @@ body {
       <div class="pub-filters" role="group" aria-label="Filter publications by research area">
         <span class="pub-filters-label" data-page-i18n="pub.filterLabel">Filter by topic:</span>
         <button class="pub-filter-btn active" type="button" aria-pressed="true" data-filter="all" data-page-i18n="pub.filterAll">All</button>
-        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="llm-agent" data-page-i18n="pub.filterAgent">LLMs and Agentic AI</button>
-        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="timeseries" data-page-i18n="pub.filterTime">Time Series Intelligence</button>
-        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="ai4science" data-page-i18n="pub.filterKnowledge">Science Intelligence</button>
-        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-page-i18n="pub.filterTable">Tabular Data Intelligence</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="llm" data-page-i18n="pub.filterReasoning">LLM-based Reasoning</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="agent" data-page-i18n="pub.filterAgent">Agentic AI</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="structured" data-page-i18n="pub.filterStructured">Structured Data Mining</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="timeseries" data-page-i18n="pub.filterTime">Time Series Analysis</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-page-i18n="pub.filterTable">Table Mining</button>
+        <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="ai4science" data-page-i18n="pub.filterKnowledge">AI for Science</button>
         <button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="recsys" data-page-i18n="pub.filterRec">Recommender Systems</button>
       </div>
     </div>
@@ -724,8 +726,8 @@ body {
         } else {
           const tags = item.getAttribute('data-tags') || '';
           const tagList = tags.split(' ');
-          const isMatch = filter === 'llm-agent'
-            ? tagList.includes('llm') || tagList.includes('agent')
+          const isMatch = filter === 'structured'
+            ? ['timeseries', 'table', 'graph', 'structured'].some(tag => tagList.includes(tag))
             : tagList.includes(filter);
           item.style.display = isMatch ? '' : 'none';
         }
@@ -760,6 +762,6 @@ body {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 </script>
-<script src="files/assets/site-language.js?v=20261020-www-area-chair"></script>
+<script src="files/assets/site-language.js?v=20261024-publication-filters"></script>
 </body>
 </html>

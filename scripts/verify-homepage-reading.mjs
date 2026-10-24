@@ -31,9 +31,11 @@ function newsHarness(count = 20, present = true) {
   return { items, button, context, document };
 }
 
-test('homepage news keeps six recent items and can reveal every original item', () => {
+test('homepage news keeps twelve recent items and can reveal every original item', () => {
   const { items, button } = newsHarness();
-  assert.equal(items.filter((item) => !item.hidden).length, 6);
+  assert.equal(items.filter((item) => !item.hidden).length, 12);
+  assert.equal(items.slice(0, 12).every((item) => !item.hidden), true);
+  assert.equal(items.slice(12).every((item) => item.hidden), true);
   assert.equal(button.hidden, false);
   assert.equal(button.getAttribute('aria-expanded'), 'false');
   button.click();
@@ -41,7 +43,7 @@ test('homepage news keeps six recent items and can reveal every original item', 
   assert.equal(button.getAttribute('aria-expanded'), 'true');
   assert.equal(button.getAttribute('data-i18n'), 'news.collapse');
   button.click();
-  assert.equal(items.filter((item) => !item.hidden).length, 6);
+  assert.equal(items.filter((item) => !item.hidden).length, 12);
   assert.equal(button.getAttribute('aria-expanded'), 'false');
 });
 
@@ -53,15 +55,25 @@ test('news disclosure label follows the existing language switch without resetti
   assert.equal(items.filter((item) => !item.hidden).length, 20);
   button.click();
   assert.equal(button.textContent, '展开全部动态');
+  assert.equal(items.filter((item) => !item.hidden).length, 12);
 });
 
-test('news needs no disclosure when six or fewer items exist and tolerates missing markup', () => {
-  for (const count of [0, 3, 6]) {
+test('news needs no disclosure when twelve or fewer items exist and tolerates missing markup', () => {
+  for (const count of [0, 3, 6, 9, 10, 11, 12]) {
     const { items, button } = newsHarness(count);
     assert.equal(button.hidden, true);
     assert.equal(items.every((item) => !item.hidden), true);
   }
   assert.doesNotThrow(() => newsHarness(0, false));
+});
+
+test('thirteen news items enable disclosure and hide only the last item initially', () => {
+  const { items, button } = newsHarness(13);
+  assert.equal(button.hidden, false);
+  assert.equal(items.filter((item) => !item.hidden).length, 12);
+  assert.equal(items[12].hidden, true);
+  button.click();
+  assert.equal(items.every((item) => !item.hidden), true);
 });
 
 test('news progressively enhances accessible markup without hiding source entries', () => {

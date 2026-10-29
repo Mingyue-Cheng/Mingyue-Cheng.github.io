@@ -92,7 +92,7 @@
           content: {
             'pub.filterAll': 'All',
             'pub.filterReasoning': 'LLM-based Reasoning',
-            'pub.filterAgent': 'Agentic AI',
+            'pub.filterAgent': 'LLM-based Agentic AI',
             'pub.filterStructured': 'Structured Data Mining',
             'pub.filterTime': 'Time Series Analysis',
             'pub.filterTable': 'Table Mining',
@@ -267,7 +267,7 @@
           content: {
             'pub.filterAll': '全部',
             'pub.filterReasoning': '大模型推理',
-            'pub.filterAgent': '智能体 AI',
+            'pub.filterAgent': '大模型智能体',
             'pub.filterStructured': '结构化数据挖掘',
             'pub.filterTime': '时间序列分析',
             'pub.filterTable': '表格挖掘',

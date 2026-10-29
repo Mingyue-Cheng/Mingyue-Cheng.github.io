@@ -541,8 +541,8 @@ test('in-memory conflict fixtures expose one arXiv ID mapped to different titles
   );
 });
 
-test('publication title baseline locks the complete 72-paper order on both publication surfaces', () => {
-  assert.equal(titleBaseline.publications.length, 72, 'fixture must intentionally list 72 publications');
+test('publication title baseline locks the complete 74-paper order on both publication surfaces', () => {
+  assert.equal(titleBaseline.publications.length, 74, 'fixture must intentionally list 74 publications');
   assert.deepEqual(
     publicationRecords(publicationsHtml, 'publications.html').map((record) => record.title),
     titleBaseline.publications
@@ -744,12 +744,39 @@ test('year and list fragments reveal collapsed publications on load and hash cha
 });
 
 for (const [page, source] of pages) {
+  test(`${page} keeps the two under-review preprints in the requested order with exact authors and no links`, () => {
+    const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->');
+    const entries = publicationEntries(preprintSection);
+    const additions = [
+      {
+        title: 'CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy',
+        authors: 'Bokai Pan, Ruijie Yang, Mingyue Cheng, Jiahao Wang, Xiaoyu Tao',
+        tags: 'timeseries agent',
+        expectedIndex: 4
+      },
+      {
+        title: 'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
+        authors: 'Ze Guo, Mingyue Cheng, Xiaoyu Tao, Shuo Yu, Shangtong Ye',
+        tags: 'timeseries agent ai4science',
+        expectedIndex: 3
+      }
+    ];
+    additions.forEach(({ title, authors, tags, expectedIndex }) => {
+      const record = findRecord(page, title);
+      assert.equal(publicationTitle(entries[expectedIndex]), title, `${page} new preprint order`);
+      assert.equal(textFromHtml(record.html), `${authors}, ${title}. (under review)`);
+      assert.equal(attributeValue(record.html.match(/^<li\b[^>]*>/)[0], 'data-tags'), tags);
+      assert.match(record.html, /<strong>Mingyue Cheng<\/strong>/);
+      assert.doesNotMatch(record.html, /<a\b|\bhref\s*=|<sup\b/i);
+    });
+  });
+
   test(`${page} merges the contextual-cognition survey into Preprint without a separate survey group`, () => {
     const title = 'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective';
     const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->');
     const preprintList = preprintSection.match(/<ol\b[^>]*>[\s\S]*?<\/ol>/)?.[0] || '';
     const entries = publicationEntries(preprintList);
-    assert.equal(entries.length, 7, `${page} must contain seven preprints in one list`);
+    assert.equal(entries.length, 9, `${page} must contain nine preprints in one list`);
     assert.equal(publicationTitle(entries.at(-1)), title, `${page} must append the survey after the existing preprints`);
     const entry = entries.at(-1);
     assert.equal(publicationRecords(source, page).filter(record => record.title === title).length, 1);
@@ -884,8 +911,8 @@ test('homepage presents the complete year-grouped publication catalog with a lin
 
   assert.equal(
     selectedEntries.length,
-    72,
-    `Selected Publications must contain the complete 72-paper catalog; found ${selectedEntries.length}`
+    74,
+    `Selected Publications must contain the complete 74-paper catalog; found ${selectedEntries.length}`
   );
   assert.match(selected, /<a\b[^>]*href="publications\.html"[^>]*>/, 'link to full publication list');
   for (const title of requiredTitles) {
@@ -896,7 +923,7 @@ test('homepage presents the complete year-grouped publication catalog with a lin
     );
   }
   const completeEntries = publicationEntries(publicationsHtml);
-  assert.equal(completeEntries.length, 72, `Publications page must retain the complete list; found ${completeEntries.length}`);
+  assert.equal(completeEntries.length, 74, `Publications page must retain the complete list; found ${completeEntries.length}`);
   assert.deepEqual(selectedEntries.map(normalizeText), completeEntries.map(normalizeText));
 });
 
@@ -940,5 +967,5 @@ test('Publications page has an accessible semantic shell and social metadata', (
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
   assert.match(body, /Last updated in September 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261024-publication-filters"><\/script>/);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261024-llm-agentic-ai"><\/script>/);
 });

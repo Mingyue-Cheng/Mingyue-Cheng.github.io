@@ -16,7 +16,7 @@ const pages = ['index.html', 'research.html', 'news.html', 'publications.html', 
 const publicationFilters = [
   ['all', 'filterAll', 'All', '全部'],
   ['llm', 'filterReasoning', 'LLM-based Reasoning', '大模型推理'],
-  ['agent', 'filterAgent', 'Agentic AI', '智能体 AI'],
+  ['agent', 'filterAgent', 'LLM-based Agentic AI', '大模型智能体'],
   ['structured', 'filterStructured', 'Structured Data Mining', '结构化数据挖掘'],
   ['timeseries', 'filterTime', 'Time Series Analysis', '时间序列分析'],
   ['table', 'filterTable', 'Table Mining', '表格挖掘'],
@@ -26,8 +26,8 @@ const publicationFilters = [
 const introEn = 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining). These application-driven directions are framed by 科言 SciToken — understanding the scientific world, and 科语 SciTime — modeling the dynamic world.';
 const introZh = '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。';
 const homepageScienceDirectionCopy = {
-  en: 'Focusing on scientific knowledge acquisition, scientific knowledge parsing, scientific knowledge extraction, scientific knowledge-enhanced reasoning, and scientific knowledge innovation and discovery.',
-  zh: '重点研究科学知识获取、科学知识解析、科学知识抽取、科学知识增强的推理、科学知识创新与发现。'
+  en: 'Focusing on scientific literature retrieval, multimodal document understanding, and knowledge extraction from text, figures, and tables, with an emphasis on cross-paper knowledge integration and literature-grounded reasoning to support scientific discovery.',
+  zh: '聚焦科技文献检索、多模态文献理解与文本、图表中的知识抽取，重点研究跨文献知识整合与文献证据驱动推理，支撑科学知识发现。'
 };
 const organizationCopy = {
   en: {
@@ -115,7 +115,7 @@ for (const lang of ['en', 'zh']) {
     assert.ok(intro.includes('科语 SciTime'));
   });
 
-  test(`${lang}: homepage literature mining retains its current focus`, () => {
+  test(`${lang}: homepage literature mining centers on documents and literature-grounded methods`, () => {
     const homepageDirection = homeCopy[lang]['research.science'];
     assert.ok(homepageDirection, 'Homepage needs a Scientific Literature Mining direction');
     const body = homepageDirection.replace(/^<span class="research-label">[\s\S]*?<\/span>\s*/, '');
@@ -380,7 +380,7 @@ test('all public pages share the current footer and shared-asset versions', () =
     if (path !== 'index.html') {
       const version = path === 'research.html' ? '20261024-ai-for-science'
         : path === 'news.html' ? '20261021-icml-area-chair'
-        : path === 'publications.html' ? '20261024-publication-filters' : '20261020-www-area-chair';
+        : path === 'publications.html' ? '20261024-llm-agentic-ai' : '20261020-www-area-chair';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }
   }

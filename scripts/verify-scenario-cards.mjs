@@ -587,7 +587,9 @@ test('Time Series Mining direction copy stays synchronized', () => {
   const oldObservationFrame = 'dynamic system observations';
   const oldReasoning = 'slow-thinking temporal reasoning';
   const expectedEnglishTimeseries =
-    '<span class="research-label">📊<strong>Time Series Mining:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>.';
+    '<span class="research-label">📊<strong>Time Series Mining:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>. Applications include <span class="research-keyword">electricity load forecasting</span>, <span class="research-keyword">power generation forecasting</span>, and <span class="research-keyword">weather forecasting</span>.';
+  const expectedChineseTimeseries =
+    '<span class="research-label">📊<strong>时间序列挖掘：</strong></span> 发展<span class="research-keyword">情境感知预测智能</span>，重点研究<span class="research-keyword">多模态情境表征</span>、<span class="research-keyword">慢思考推理</span>、<span class="research-keyword">不确定性感知预测</span>与<span class="research-keyword">自主智能体交互</span>。同时关注<span class="research-keyword">电力负荷</span>、<span class="research-keyword">能源发电</span>与<span class="research-keyword">气象</span>等垂直领域的时序预测应用。';
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
@@ -605,10 +607,10 @@ test('Time Series Mining direction copy stays synchronized', () => {
     expectedEnglishTimeseries,
     'English research.timeseries translation must match the visible homepage copy'
   );
-  assert.match(
+  assert.equal(
     decodedTranslationEntries('research.timeseries')[1],
-    /^<span class="research-label">📊<strong>时间序列挖掘：<\/strong><\/span> 发展/,
-    'Chinese research.timeseries translation must use 时间序列挖掘 without a space after the icon'
+    expectedChineseTimeseries,
+    'Chinese research.timeseries translation must retain the methods and include the three application examples'
   );
   assert.doesNotMatch(decodedTranslationEntries('research.timeseries')[1], /科语 SciTime/);
 

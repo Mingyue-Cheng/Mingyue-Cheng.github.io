@@ -290,7 +290,7 @@ test('homepage selected-publication filters and year groups remain accessible', 
   const visibleEntries = [...publications.replace(/<!--[\s\S]*?-->/g, '').matchAll(
     /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
   )];
-  assert.equal(visibleEntries.length, 72);
+  assert.equal(visibleEntries.length, 74);
   assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>View all publications →<\/a>/);
   for (const [key, label] of [
     ['pub.preprint', '📘 Preprint'],
@@ -729,9 +729,11 @@ test('grant cards retain their responsive layout after the content update', () =
 test('complete Publications page keeps the requested preprint order', () => {
   const expectedTitles = [
     'Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting',
-    'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
-    'CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting',
     'Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting',
+    'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
+    'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
+    'CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy',
+    'CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting',
     'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
     'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning',
     'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective'
@@ -749,8 +751,8 @@ test('complete Publications page keeps the requested preprint order', () => {
     const preprints = source.replace(/<!--[\s\S]*?-->/g, '');
     const entries = [...preprints.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)]
       .map((match) => match[0]);
-    const titles = entries.map((entry) => entry.match(/<strong>([^<]+)<\/strong>\. \(Preprint\)/)?.[1] || '');
-    const castFsrEntry = entries[1] || '';
+    const titles = entries.map((entry) => entry.match(/<strong>([^<]+)<\/strong>\. \((?:Preprint|under review)\)/)?.[1] || '');
+    const castFsrEntry = entries.find((entry) => entry.includes('<strong>CastFSR:')) || '';
 
     assert.deepEqual(titles, expectedTitles, `${name} preprint order`);
     assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm">/, `${name} tags`);

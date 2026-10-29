@@ -1,9 +1,11 @@
 {
   "publications": [
     "Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting",
-    "CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting",
-    "CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting",
     "Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting",
+    "CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting",
+    "NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery",
+    "CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy",
+    "CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting",
     "PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature",
     "StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning",
     "A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective",

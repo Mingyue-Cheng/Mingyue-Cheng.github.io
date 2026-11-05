@@ -541,8 +541,8 @@ test('in-memory conflict fixtures expose one arXiv ID mapped to different titles
   );
 });
 
-test('publication title baseline locks the complete 74-paper order on both publication surfaces', () => {
-  assert.equal(titleBaseline.publications.length, 74, 'fixture must intentionally list 74 publications');
+test('publication title baseline locks the complete 77-paper order on both publication surfaces', () => {
+  assert.equal(titleBaseline.publications.length, 77, 'fixture must intentionally list 77 publications');
   assert.deepEqual(
     publicationRecords(publicationsHtml, 'publications.html').map((record) => record.title),
     titleBaseline.publications
@@ -744,21 +744,40 @@ test('year and list fragments reveal collapsed publications on load and hash cha
 });
 
 for (const [page, source] of pages) {
+  test(`${page} lists the three WSDM acceptances in 2027 and preserves PaperArena's links`, () => {
+    const section = sectionBetween(source, '<!-- ===== 2027 ===== -->', '<!-- ===== 2026 ===== -->');
+    assert.match(section, /<h3\b[^>]*\bid="year-2027"/);
+    const entries = publicationEntries(section);
+    assert.deepEqual(entries.map(publicationTitle), [
+      'One Forecast, One World: Adaptive Evidence Reasoning for Context-Aware Time Series Forecasting',
+      'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
+      'SheetCompass: Hierarchical Relation Graphs for Agentic Spreadsheet Reasoning'
+    ]);
+    for (const entry of entries) {
+      assert.match(textFromHtml(entry), /WSDM\s*2027/i);
+      assert.match(textFromHtml(entry), /accepted/i);
+      assert.doesNotMatch(textFromHtml(entry), /preprint|under review/i);
+    }
+    const paperArena = entries[1];
+    assert.ok(paperArena.includes('href="https://arxiv.org/pdf/2510.10909"'));
+    assert.ok(paperArena.includes('href="https://github.com/ustc-ai4science/PaperArena"'));
+  });
+
   test(`${page} keeps the two under-review preprints in the requested order with exact authors and no links`, () => {
-    const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->');
+    const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->');
     const entries = publicationEntries(preprintSection);
     const additions = [
       {
         title: 'CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy',
         authors: 'Bokai Pan, Ruijie Yang, Mingyue Cheng, Jiahao Wang, Xiaoyu Tao',
         tags: 'timeseries agent',
-        expectedIndex: 4
+        expectedIndex: 5
       },
       {
         title: 'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
         authors: 'Ze Guo, Mingyue Cheng, Xiaoyu Tao, Shuo Yu, Shangtong Ye',
         tags: 'timeseries agent ai4science',
-        expectedIndex: 3
+        expectedIndex: 4
       }
     ];
     additions.forEach(({ title, authors, tags, expectedIndex }) => {
@@ -773,7 +792,7 @@ for (const [page, source] of pages) {
 
   test(`${page} merges the contextual-cognition survey into Preprint without a separate survey group`, () => {
     const title = 'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective';
-    const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->');
+    const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->');
     const preprintList = preprintSection.match(/<ol\b[^>]*>[\s\S]*?<\/ol>/)?.[0] || '';
     const entries = publicationEntries(preprintList);
     assert.equal(entries.length, 9, `${page} must contain nine preprints in one list`);
@@ -804,7 +823,7 @@ for (const [page, source] of pages) {
     assert.ok(entry.includes('href="https://d197for5662m48.cloudfront.net/documents/publicationstatus/253323/preprint_pdf/0d1d8e876fb85a212190bc9200dcc3f3.pdf"'));
     assert.ok(entry.includes('href="https://github.com/USTCAGI/Awesome-Papers-Time-Series-Forecasting"'));
     assert.ok(sectionBetween(source, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->').includes(entry));
-    assert.ok(!sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->').includes(title));
+    assert.ok(!sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->').includes(title));
   });
 }
 
@@ -873,7 +892,7 @@ test('StepPO title and authors stay pinned to the matching arXiv v1', () => {
 
 test('all homepage publication year groups are expanded by default in markup', () => {
   const headings = [...withoutComments(indexHtml).matchAll(/<h3\b[^>]*class="pub-year-heading"[^>]*>/g)].map((match) => match[0]);
-  assert.equal(headings.length, 5, 'Preprints and every publication year group must remain present');
+  assert.equal(headings.length, 6, 'Preprints and every publication year group must remain present');
   for (const heading of headings) {
     assert.doesNotMatch(heading, /data-default-collapsed="true"/, `${heading} must start expanded`);
   }
@@ -911,8 +930,8 @@ test('homepage presents the complete year-grouped publication catalog with a lin
 
   assert.equal(
     selectedEntries.length,
-    74,
-    `Selected Publications must contain the complete 74-paper catalog; found ${selectedEntries.length}`
+    77,
+    `Selected Publications must contain the complete 77-paper catalog; found ${selectedEntries.length}`
   );
   assert.match(selected, /<a\b[^>]*href="publications\.html"[^>]*>/, 'link to full publication list');
   for (const title of requiredTitles) {
@@ -923,7 +942,7 @@ test('homepage presents the complete year-grouped publication catalog with a lin
     );
   }
   const completeEntries = publicationEntries(publicationsHtml);
-  assert.equal(completeEntries.length, 74, `Publications page must retain the complete list; found ${completeEntries.length}`);
+  assert.equal(completeEntries.length, 77, `Publications page must retain the complete list; found ${completeEntries.length}`);
   assert.deepEqual(selectedEntries.map(normalizeText), completeEntries.map(normalizeText));
 });
 
@@ -967,5 +986,5 @@ test('Publications page has an accessible semantic shell and social metadata', (
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
   assert.match(body, /Last updated in September 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261024-llm-agentic-ai"><\/script>/);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261105-wsdm2027-papers"><\/script>/);
 });

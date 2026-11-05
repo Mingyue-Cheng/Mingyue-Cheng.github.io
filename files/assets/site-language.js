@@ -82,6 +82,7 @@
           title: 'News & Updates',
           subtitle: 'Latest news from USTC AGI Research Group.',
           content: {
+            'news.wsdm2027Papers': '<strong>[Nov. 2026]</strong> 🎉 Congratulations on our papers <strong>AdaCast</strong>, <strong>PaperArena</strong>, and <strong>SheetCompass</strong> being accepted to <strong>ACM WSDM 2027</strong>!',
             'news.icml2027AC': '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.'
           }
         },
@@ -100,6 +101,7 @@
             'pub.filterRec': 'Recommender Systems',
             'pub.note': '(* Corresponding Author, <sup>+</sup> Equal Contribution)',
             'pub.preprint': '📘 Preprint',
+            'pub.year2027': '🐐 Year of the Fire Goat (Ding Wei Year, 2027)',
             'pub.year2026': '🐎 Year of the Fire Horse (Bing Wu Year, 2026)',
             'pub.year2025': '🐍 Year of the Wood Snake (Yi Si Year, 2025)',
             'pub.year2024': '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)',
@@ -121,7 +123,6 @@
             'opensource.clawR1': '<span class="os-inline-highlight">Claw-R1</span> provides the <strong>Data Foundation for Agentic RL</strong>, enabling the systematic <strong>collection, evaluation, and curation of high-quality training data</strong> from <strong>diverse agent interactions</strong>. It introduces a <strong>middleware layer (Gateway + DataPool)</strong> between the <strong>Agent Side</strong> and the <strong>Training Side</strong>, focusing on <strong>data infrastructure</strong> rather than training algorithms themselves.',
             'opensource.castClaw': '<span class="os-inline-highlight">CastClaw（星辰）</span> is an <strong>agent framework for human–AI collaboration</strong> in <strong>time series forecasting research</strong>. It uses three specialized agents, <strong>Planner, Forecaster, and Critic</strong>, to orchestrate the complete forecasting workflow and incorporates <strong>human confirmation at key stages</strong>. It packages <strong>data analysis, feature engineering, and classical time series model capabilities</strong> into an <strong>extensible runtime toolbox</strong>.',
             'opensource.castMind': '<span class="os-inline-highlight">CastMind（星思）</span> is a <strong>large model for time series projection in complex systems</strong>, driven by <strong>contextual reasoning</strong>. It integrates <strong>historical time series, external context, and domain knowledge</strong> and follows an <strong>extrapolate → understand → project → revise</strong> process for extended cognitive reasoning. Under specific conditions, it assesses whether future trends will <strong>persist, strengthen, weaken, shift, or reverse</strong>, enabling <strong>forecast revision and explanations of the underlying mechanisms</strong>.',
-            'datasets.futureCast': '<span class="os-inline-highlight">FutureCast（天星台）</span> is a <strong>multi-domain benchmark for context-aware time series forecasting</strong>. It pairs <strong>historical observations</strong> with <strong>numerical covariates, textual descriptions, and event context</strong>, and centers its evaluation design on <strong>context–sequence alignment, contextual reasoning, and adaptation to new evidence</strong>. Designed for <strong>time series foundation models and forecasting agents</strong>, it examines how external evidence informs trend judgments and <strong>forecast revision</strong>, with emphasis on <strong>forecast accuracy, reasoning quality, and evidence-based explanations</strong>.',
             'opensource.paperScout': '<span class="os-inline-highlight">PaperScout</span> is an <strong>autonomous scientific literature retrieval agent</strong> for <strong>complex research queries</strong>. It treats paper discovery as <strong>multi-turn decision-making</strong>, using accumulated retrieval context to choose between <strong>Search</strong> for new candidates and <strong>Expand</strong> for following paper references. With <strong>process-aware, sequence-level reinforcement learning (PSPO)</strong>, it learns to refine its retrieval strategy from intermediate feedback and identify papers that match the <strong>research topic and query constraints</strong>.',
             'opensource.academicSearch': '<span class="os-inline-highlight">Academic Search</span> is a <strong>scientific literature retrieval and metadata skill</strong> for <strong>Codex, Claude Code, and other AI agents</strong>. It brings together sources including <strong>arXiv, Semantic Scholar, OpenAlex, Google Scholar, and CNKI</strong>, supporting <strong>query expansion, citation tracing, record validation, cross-source deduplication, and BibTeX export</strong>, as well as <strong>open-access full-text retrieval</strong>. It adapts search strategies to the discipline and records source provenance and access status to support <strong>literature reviews and research surveys</strong>.',
             'opensource.category.agents': 'LLMs and Agentic AI',
@@ -129,9 +130,10 @@
             'opensource.category.science': 'Science Intelligence（Scientific Tool and Knowledge）',
             'datasets.heading': 'Benchmarks &amp; Datasets',
             'datasets.category.science': 'Science Intelligence（Scientific Tool and Knowledge）',
-            'datasets.category.timeseries': 'Time Series Intelligence（科语）',
+            'datasets.category.timeseries': 'Time Series Intelligence（Context-aware Time Series Forecasting）',
             'datasets.category.retrieval': 'Retrieval &amp; Recommendation',
-            'datasets.futureCastKicker': 'Time Series Intelligence · Context-aware Forecasting',
+            'datasets.world2ts': '<span class="os-inline-highlight">World2TS</span> is a <strong>human-reviewed dataset for event-aware time series forecasting</strong>. It links <strong>time series across six domains</strong> to relevant <strong>real-world events</strong>, preserving <strong>event descriptions, temporal metadata, and source evidence</strong>. It supports research on <strong>context-aware forecasting</strong> and <strong>evidence-grounded reasoning</strong> about external events.',
+            'datasets.world2tsKicker': 'Time Series Intelligence · Real-world Event Context',
             'opensource.webMind': '<span class="os-inline-highlight">WebMind</span> is a <strong>web-task skill</strong> for <strong>AI agents</strong>. It completes web search, reading, navigation, and interaction in an <strong>isolated, persistent browser environment</strong>, with built-in support for <strong>screenshots</strong>, <strong>mouse and keyboard control</strong>, and <strong>reusable local experience</strong>. It requires <strong>no Google sign-in</strong> and does not use personal data from the user\'s everyday Chrome profile by default, making it especially suitable for <strong>topic research</strong>, <strong>information collection</strong>, and <strong>repeatable web workflows</strong>.',
             'opensource.tabClaw': '<span class="os-inline-highlight">TabClaw</span> is an open-source agentic framework that empowers LLMs to reason over <strong>complex, real-world tabular data</strong>. It decomposes table-centric tasks into <strong>structured sub-goals</strong>, equips agents with <strong>code execution</strong>, <strong>schema-aware lookup</strong>, and <strong>formula tools</strong>, and coordinates them through <strong>multi-step decision workflows</strong>. TabClaw is designed to tackle challenges beyond flat QA — including <strong>multi-hop joins</strong>, <strong>conditional aggregation</strong>, and <strong>cross-table inference</strong> — making it suitable for enterprise data analysis and scientific table understanding.',
             'opensource.castFactory': '<span class="os-inline-highlight">CastFactory（炼星坊）</span> is an open-source framework for <strong>LLM-driven time series forecasting model training</strong>, designed to make it <strong>extremely easy</strong> for users to build and adapt TSF models with modern large-model pipelines. It provides a unified and practical workflow for <strong>continued pre-training (CPT)</strong>, <strong>supervised fine-tuning (SFT)</strong>, and <strong>reinforcement learning (RL)</strong>, helping researchers and practitioners develop, optimize, and evaluate LLM-based forecasting systems with much lower engineering overhead.',
@@ -257,6 +259,7 @@
           title: '最新动态',
           subtitle: 'USTC AGI Research Group 的最新动态。',
           content: {
+            'news.wsdm2027Papers': '<strong>[2026 年 11 月]</strong> 🎉 祝贺我们的论文 <strong>AdaCast</strong>、<strong>PaperArena</strong> 和 <strong>SheetCompass</strong> 被 <strong>ACM WSDM 2027</strong> 录用！',
             'news.icml2027AC': '<strong>[2026 年 10 月]</strong> 🎉 我即将担任 <strong>ICML 2027</strong> 的<strong>领域主席（Area Chair，AC）</strong>。'
           }
         },
@@ -275,6 +278,7 @@
             'pub.filterRec': '推荐系统',
             'pub.note': '（* 通讯作者，<sup>+</sup> 共同一作）',
             'pub.preprint': '📘 预印本',
+            'pub.year2027': '🐐 丁未羊年（2027）',
             'pub.year2026': '🐎 丙午马年（2026）',
             'pub.year2025': '🐍 乙巳蛇年（2025）',
             'pub.year2024': '🐉 甲辰龙年（2024）',
@@ -296,7 +300,6 @@
             'opensource.clawR1': '<span class="os-inline-highlight">Claw-R1</span> 为 <strong>Agentic RL</strong> 提供<strong>数据基础设施（Data Foundation）</strong>，用于系统化地从<strong>多样 Agent 交互</strong>中<strong>收集、评估与策划高质量训练数据</strong>。它在 <strong>Agent Side</strong> 与 <strong>Training Side</strong> 之间引入由 <strong>Gateway + DataPool</strong> 构成的<strong>中间件层（Middleware Layer）</strong>，专注于<strong>数据基础设施</strong>，而非训练算法本身。',
             'opensource.castClaw': '<span class="os-inline-highlight">CastClaw（星辰）</span> 是面向<strong>时间序列预测研究</strong>的<strong>人机协同智能体框架</strong>。CastClaw 通过 <strong>Planner、Forecaster、Critic</strong> 三个专属智能体编排完整预测流程，并在<strong>关键节点引入人类确认</strong>，将<strong>数据分析、特征工程与经典时序模型能力</strong>封装为<strong>可扩展的运行时工具箱</strong>。',
             'opensource.castMind': '<span class="os-inline-highlight">CastMind（星思）</span> 是面向<strong>复杂系统</strong>的<strong>情境推理驱动时间序列推演大模型</strong>。CastMind 融合<strong>历史序列、外部情境与领域知识</strong>，围绕<strong>“外推—理解—推演—修正”</strong>展开长链路认知推理，判断未来趋势在特定条件下的<strong>延续、增强、削弱、偏移或反转</strong>，并实现<strong>预测修正与机制解释</strong>。',
-            'datasets.futureCast': '<span class="os-inline-highlight">FutureCast（天星台）</span> 是面向<strong>情境感知时间序列预测</strong>的<strong>多领域评测基准</strong>。它结合<strong>历史序列、数值外生变量、文本描述与事件情境</strong>，围绕<strong>情境—序列对齐、情境推理与动态适应</strong>设计评测任务，关注模型能否利用外部证据解释趋势变化，并在新信息到来时<strong>修正预测</strong>。评测设计兼顾<strong>预测准确性、趋势判断、推理解释质量与情境适应能力</strong>，服务于<strong>时序基础模型与预测智能体</strong>研究。',
             'opensource.paperScout': '<span class="os-inline-highlight">PaperScout</span> 是面向<strong>复杂科研问题</strong>的<strong>自主科学文献检索智能体</strong>。它将论文检索建模为<strong>多轮序贯决策过程</strong>，依据已获取的文献与检索历史，自主选择 <strong>Search</strong> 发现候选论文，或通过 <strong>Expand</strong> 沿参考文献扩展搜索。结合<strong>过程感知的序列级强化学习优化（PSPO）</strong>，PaperScout 利用中间检索反馈持续调整策略，筛选满足<strong>研究主题与条件约束</strong>的相关文献。',
             'opensource.academicSearch': '<span class="os-inline-highlight">Academic Search</span> 是面向 <strong>Codex、Claude Code 等智能体</strong>的<strong>科学文献检索与元数据整理 Skill</strong>。它整合 <strong>arXiv、Semantic Scholar、OpenAlex、Google Scholar、CNKI</strong> 等学术来源，支持<strong>查询扩展、引用追踪、记录校验、跨源去重与 BibTeX 导出</strong>，并按需获取<strong>开放获取全文</strong>。通过<strong>学科感知的检索策略</strong>与<strong>来源和访问状态记录</strong>，为文献综述和科研调研提供可追溯的文献资料。',
             'opensource.category.agents': '大模型与智能体',
@@ -304,9 +307,10 @@
             'opensource.category.science': 'Science Intelligence（Scientific Tool and Knowledge）',
             'datasets.heading': '基准与数据集',
             'datasets.category.science': '科学智能（科学工具与知识）',
-            'datasets.category.timeseries': '时序智能（科语）',
+            'datasets.category.timeseries': '时序智能（Context-aware Time Series Forecasting）',
             'datasets.category.retrieval': '检索推荐',
-            'datasets.futureCastKicker': '时序智能 · 情境感知预测',
+            'datasets.world2ts': '<span class="os-inline-highlight">World2TS</span> 是面向<strong>事件情境感知时序预测</strong>的<strong>人工审核数据集</strong>。它将<strong>六类领域的时间序列</strong>与相关<strong>真实世界事件</strong>关联，保留<strong>事件描述、时间元数据与来源证据</strong>，支持<strong>情境感知预测</strong>与<strong>外部事件的证据驱动推理</strong>研究。',
+            'datasets.world2tsKicker': '时序智能 · 真实世界事件情境',
             'opensource.webMind': '<span class="os-inline-highlight">WebMind</span> 是面向<strong>智能体</strong>的<strong>网页任务 Skill</strong>，在<strong>独立、持久化的浏览器环境</strong>中完成检索、阅读、导航与交互，支持<strong>截图、鼠标键盘操作和可复用的本地经验</strong>。它<strong>无需登录 Google</strong>，默认不使用日常 Chrome 配置中的个人数据，适用于<strong>主题调研、信息采集与可重复的网页工作流</strong>。',
             'opensource.tabClaw': '<span class="os-inline-highlight">TabClaw</span> 是面向<strong>复杂真实表格数据</strong>的开源智能体框架。它将任务分解为<strong>结构化子目标</strong>，结合<strong>代码执行、模式感知检索与公式工具</strong>，通过<strong>多步决策流程</strong>完成推理，支持<strong>多跳连接、条件聚合与跨表推断</strong>，服务于企业数据分析与科学表格理解。',
             'opensource.castFactory': '<span class="os-inline-highlight">CastFactory（炼星坊）</span> 是面向<strong>大模型驱动的时间序列预测模型训练</strong>的开源框架。它提供覆盖<strong>持续预训练（CPT）、监督微调（SFT）与强化学习（RL）</strong>的统一工作流，降低构建、适配、优化与评测时序预测模型的工程成本。',

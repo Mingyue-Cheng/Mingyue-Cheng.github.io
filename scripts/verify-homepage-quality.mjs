@@ -278,6 +278,7 @@ test('homepage selected-publication filters and year groups remain accessible', 
   )].map((match) => match[1]);
   assert.deepEqual(yearToggles, [
     'publication-list-preprints',
+    'publication-list-2027',
     'publication-list-2026',
     'publication-list-2025',
     'publication-list-2024',
@@ -290,10 +291,11 @@ test('homepage selected-publication filters and year groups remain accessible', 
   const visibleEntries = [...publications.replace(/<!--[\s\S]*?-->/g, '').matchAll(
     /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
   )];
-  assert.equal(visibleEntries.length, 74);
+  assert.equal(visibleEntries.length, 77);
   assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>View all publications →<\/a>/);
   for (const [key, label] of [
     ['pub.preprint', '📘 Preprint'],
+    ['pub.year2027', '🐐 Year of the Fire Goat (Ding Wei Year, 2027)'],
     ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)'],
     ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)'],
     ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)'],
@@ -533,6 +535,7 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
   for (const [key, english, chinese] of [
     ['pub.preprint', '📘 Preprint', '📘 预印本'],
+    ['pub.year2027', '🐐 Year of the Fire Goat (Ding Wei Year, 2027)', '🐐 丁未羊年（2027）'],
     ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)', '🐎 丙午马年（2026）'],
     ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)', '🐍 乙巳蛇年（2025）'],
     ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)', '🐉 甲辰龙年（2024）'],
@@ -726,35 +729,35 @@ test('grant cards retain their responsive layout after the content update', () =
   );
 });
 
-test('complete Publications page keeps the requested preprint order', () => {
+test('both publication lists keep the requested preprint order and links', () => {
   const expectedTitles = [
+    'World2TS: Real-World Event Context for Time-Series Forecasting',
     'Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting',
     'Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting',
     'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
     'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
     'CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy',
     'CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting',
-    'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
     'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning',
     'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective'
   ];
-  const preprintSections = [[
-    'publications page',
-    sectionBetween(
-      publicationsHtml,
-      '<!-- ===== Preprint ===== -->',
-      '<!-- ===== 2026 ===== -->'
-    )
-  ]];
-
-  for (const [name, source] of preprintSections) {
-    const preprints = source.replace(/<!--[\s\S]*?-->/g, '');
+  for (const [name, source] of [['homepage', indexHtml], ['publications page', publicationsHtml]]) {
+    const preprints = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->')
+      .replace(/<!--[\s\S]*?-->/g, '');
     const entries = [...preprints.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)]
       .map((match) => match[0]);
     const titles = entries.map((entry) => entry.match(/<strong>([^<]+)<\/strong>\. \((?:Preprint|under review)\)/)?.[1] || '');
     const castFsrEntry = entries.find((entry) => entry.includes('<strong>CastFSR:')) || '';
 
     assert.deepEqual(titles, expectedTitles, `${name} preprint order`);
+    const world2tsEntry = entries[0];
+    const world2tsAuthors = world2tsEntry.split('<strong>World2TS:')[0]
+      .replace(/<[^>]+>/g, '').trim().replace(/,\s*$/, '');
+    assert.equal(world2tsAuthors, 'Zhiding Liu+, Jiqian Yang+, Mingyue Cheng*, Zhi Li*, Enhong Chen*', `${name} World2TS authors`);
+    assert.match(world2tsEntry, /^<li data-tags="timeseries">/, `${name} World2TS tags`);
+    assert.ok(world2tsEntry.includes('(Preprint)'), `${name} World2TS status`);
+    assert.ok(world2tsEntry.includes('href="https://arxiv.org/abs/2610.14861"'), `${name} World2TS arXiv link`);
+    assert.ok(world2tsEntry.includes('href="https://world2ts.github.io/"'), `${name} World2TS project link`);
     assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm">/, `${name} tags`);
     assert.match(
       castFsrEntry,
@@ -788,7 +791,7 @@ test('PaperScout Findings of EMNLP 2026 acceptance is synchronized on both publi
   const publicationsPreprints = sectionBetween(
     publicationsHtml,
     '<!-- ===== Preprint ===== -->',
-    '<!-- ===== 2026 ===== -->'
+    '<!-- ===== 2027 ===== -->'
   );
   const locations = [
     {
@@ -839,7 +842,7 @@ test('ACM CSUR survey is selected on the homepage and filed in the complete 2026
   const preprints = sectionBetween(
     publicationsHtml,
     '<!-- ===== Preprint ===== -->',
-    '<!-- ===== 2026 ===== -->'
+    '<!-- ===== 2027 ===== -->'
   );
   const publications2026 = sectionBetween(
     publicationsHtml,
@@ -930,7 +933,7 @@ for (const paper of icdmDemoPapers) {
       const year = sectionBetween(source, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->').replace(/<!--[\s\S]*?-->/g, '');
       const entries = [...year.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map(match => match[0]);
       assert.deepEqual(entries.filter(entry => entry.includes(`<strong>${paper.title}</strong>`)), [expected], `${name}: exact authors, title, acceptance, tags, and existing code link`);
-      const preprints = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->');
+      const preprints = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->');
       assert.ok(!preprints.includes(paper.title), `${name}: no accepted paper duplicated under preprints`);
     }
   });
@@ -1009,7 +1012,7 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
     },
     {
       name: 'publications page',
-      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== 2026 ===== -->'),
+      preprints: sectionBetween(publicationsHtml, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->'),
       publications2026: sectionBetween(publicationsHtml, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->')
     }
   ];
@@ -1038,10 +1041,17 @@ function latestNewsLists() {
   ];
 }
 
-test('October 2026 ICML Area Chair announcement leads both news surfaces once', () => {
+test('November 2026 WSDM acceptances lead both news surfaces once', () => {
+  for (const entries of latestNewsLists()) {
+    assert.match(entries[0], /WSDM\s*2027/);
+    assert.equal(entries.filter(entry => /WSDM\s*2027/.test(entry)).length, 1);
+  }
+});
+
+test('October 2026 ICML Area Chair announcement follows the WSDM news on both surfaces once', () => {
   const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.';
   for (const entries of latestNewsLists()) {
-    assert.equal(entries[0], expected);
+    assert.equal(entries[1], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
   }
 });
@@ -1049,23 +1059,23 @@ test('October 2026 ICML Area Chair announcement leads both news surfaces once', 
 test('October 2026 WWW Area Chair announcement remains after the ICML announcement once', () => {
   const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.';
   for (const entries of latestNewsLists()) {
-    assert.equal(entries[1], expected);
-    assert.equal(entries.filter(entry => entry === expected).length, 1);
-  }
-});
-
-test('September 2026 ICDM demo acceptance follows the latest WWW Area Chair announcement', () => {
-  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
-  for (const entries of latestNewsLists()) {
     assert.equal(entries[2], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
   }
 });
 
-test('September 2026 TKDE survey acceptance follows the latest ICDM demo news', () => {
-  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
+test('September 2026 ICDM demo acceptance follows the WWW Area Chair announcement', () => {
+  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
   for (const entries of latestNewsLists()) {
     assert.equal(entries[3], expected);
+    assert.equal(entries.filter(entry => entry === expected).length, 1);
+  }
+});
+
+test('September 2026 TKDE survey acceptance follows the ICDM demo news', () => {
+  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
+  for (const entries of latestNewsLists()) {
+    assert.equal(entries[4], expected);
     assert.equal(entries.filter((entry) => entry === expected).length, 1);
   }
   assert.ok(newsHtml.includes('<strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong>'), 'Keep the historical preprint announcement');

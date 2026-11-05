@@ -78,7 +78,7 @@ test('thirteen news items enable disclosure and hide only the last item initiall
 
 test('news progressively enhances accessible markup without hiding source entries', () => {
   const list = html.match(/<ul class="news-list" id="newsList">([\s\S]*?)<\/ul>/)[1];
-  assert.equal((list.match(/<li\b[^>]*>/g) || []).length, 23);
+  assert.equal((list.match(/<li\b[^>]*>/g) || []).length, 24);
   assert.doesNotMatch(list, /<li[^>]*\bhidden\b/);
   const button = html.match(/<button\b[^>]*id="newsToggle"[^>]*>/)?.[0];
   assert.ok(button, 'News uses a native disclosure button');

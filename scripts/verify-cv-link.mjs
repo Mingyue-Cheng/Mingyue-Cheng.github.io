@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import test from 'node:test';
@@ -8,9 +9,15 @@ import vm from 'node:vm';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const html = readFileSync(join(root, 'index.html'), 'utf8');
 const cvPath = 'output/pdf/Mingyue_Cheng_CV_EN.pdf';
+const pdf = readFileSync(join(root, cvPath));
+const cvVersion = createHash('sha256').update(pdf).digest('hex').slice(0, 12);
+const cvHref = `${cvPath}?v=${cvVersion}`;
 const badges = html.match(/<div class="profile-badges">([\s\S]*?)<\/div>/)?.[1] || '';
 const cvLinks = [...badges.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)]
-  .filter(([, attributes]) => attributes.includes(`href="${cvPath}"`));
+  .filter(([, attributes]) => {
+    const href = attributes.match(/\bhref="([^"]*)"/)?.[1];
+    return href === cvPath || href?.startsWith(`${cvPath}?`);
+  });
 
 test('homepage profile links expose the requested English CV once', () => {
   assert.equal(cvLinks.length, 1, 'the CV belongs in the existing profile badge row');
@@ -20,11 +27,11 @@ test('homepage profile links expose the requested English CV once', () => {
   assert.match(attributes, /\brel="noopener"/);
   assert.match(attributes, /\bdata-i18n="profile\.cv"/);
   assert.equal(label, 'CV (PDF)');
-  assert.equal(html.split(`href="${cvPath}"`).length - 1, 1);
+  assert.ok(attributes.includes(`href="${cvHref}"`), 'the CV link version must match the current PDF');
+  assert.equal(html.split(`href="${cvHref}"`).length - 1, 1);
 });
 
 test('the CV link points to the existing PDF document', () => {
-  const pdf = readFileSync(join(root, cvPath));
   assert.equal(pdf.subarray(0, 5).toString('ascii'), '%PDF-');
   assert.ok(pdf.length > 1000, 'the linked PDF must not be empty');
 });
@@ -53,6 +60,6 @@ test('the CV label switches languages without changing its destination', () => {
   for (const [lang, expected] of [['en', 'CV (PDF)'], ['zh', '英文简历 (PDF)'], ['en', 'CV (PDF)']]) {
     vm.runInContext(`translatePage('${lang}');`, context);
     assert.equal(link.innerHTML, expected);
-    assert.equal(link.getAttribute('href'), cvPath);
+    assert.equal(link.getAttribute('href'), cvHref);
   }
 });

@@ -54,6 +54,21 @@ function keyedMarkup(html, attribute, key) {
 }
 
 for (const lang of ['en', 'zh']) {
+  test(`${lang}: the November WSDM announcement matches the homepage and the News page`, () => {
+    const key = 'news.wsdm2027Papers';
+    const announcement = homeCopy[lang][key];
+    assert.equal(sharedCopy[lang].pages['news.html'].content[key], announcement);
+    assert.equal(keyedMarkup(home, 'data-i18n', key), homeCopy.en[key]);
+    assert.equal(keyedMarkup(read('news.html'), 'data-page-i18n', key), homeCopy.en[key]);
+    const text = plain(announcement);
+    assert.match(text, lang === 'en' ? /\[Nov\. 2026\]/ : /\[2026\s*年\s*11\s*月\]/);
+    assert.match(text, /WSDM\s*2027/);
+    assert.match(text, lang === 'en' ? /accepted/i : /录用|接收/);
+    assert.match(text, /One Forecast, One World|AdaCast/);
+    assert.match(text, /PaperArena/);
+    assert.match(text, /SheetCompass/);
+  });
+
   test(`${lang}: ICML 2027 Area Chair news is synchronized and translatable on both news surfaces`, () => {
     const key = 'news.icml2027AC';
     const expected = lang === 'en'
@@ -74,9 +89,10 @@ for (const lang of ['en', 'zh']) {
     if (lang === 'en') assert.equal(sharedCopy[lang].pages['projects.html'].title, 'Open Project & Benchmarks');
   });
 
-  test(`${lang}: time-series project and dataset categories carry the Keyu parent brand`, () => {
-    const expected = lang === 'en' ? 'Time Series Intelligence（科语）' : '时序智能（科语）';
+  test(`${lang}: time-series project and dataset categories use their requested labels`, () => {
     for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
+      const qualifier = key === 'datasets.category.timeseries' ? 'Context-aware Time Series Forecasting' : '科语';
+      const expected = `${lang === 'en' ? 'Time Series Intelligence' : '时序智能'}（${qualifier}）`;
       assert.equal(homeCopy[lang][key], expected, `Homepage ${key}`);
       assert.equal(sharedCopy[lang].pages['projects.html'].content[key], expected, `Projects ${key}`);
     }
@@ -190,7 +206,7 @@ for (const lang of ['en', 'zh']) {
 
   test(`${lang}: publication filters use the homepage taxonomy after language changes`, () => {
     const content = sharedCopy[lang].pages['publications.html'].content || {};
-    for (const suffix of ['filterAll', 'filterReasoning', 'filterAgent', 'filterStructured', 'filterTime', 'filterKnowledge', 'filterTable', 'filterRec', 'note', 'preprint', 'year2026', 'year2025', 'year2024', 'legacy']) {
+    for (const suffix of ['filterAll', 'filterReasoning', 'filterAgent', 'filterStructured', 'filterTime', 'filterKnowledge', 'filterTable', 'filterRec', 'note', 'preprint', 'year2027', 'year2026', 'year2025', 'year2024', 'legacy']) {
       assert.equal(content[`pub.${suffix}`], homeCopy[lang][`pub.${suffix}`], suffix);
       keyedMarkup(read('publications.html'), 'data-page-i18n', `pub.${suffix}`);
     }
@@ -206,7 +222,7 @@ for (const lang of ['en', 'zh']) {
 
   test(`${lang}: shared project descriptions and category names match the homepage`, () => {
     const content = sharedCopy[lang].pages['projects.html'].content || {};
-    const keys = Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.(?:category\.|agentR1$|clawR1$|castClaw$|castMind$|paperScout$|academicSearch$|futureCast$|futureCastKicker$)/.test(key));
+    const keys = Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.(?:category\.|agentR1$|clawR1$|castClaw$|castMind$|paperScout$|academicSearch$|world2ts$|world2tsKicker$)/.test(key));
     assert.ok(keys.length >= 13, 'All shared descriptions and category names must be covered');
     for (const key of keys) {
       assert.equal(content[key], homeCopy[lang][key], key);
@@ -241,15 +257,16 @@ test('project fallback headings and navigation consistently show Open Project', 
   for (const match of projectHeadings) assert.equal(match[1], 'Open Project');
 });
 
-test('time-series category fallback headings show the Keyu parent brand on both pages', () => {
+test('time-series category fallback headings use their requested labels on both pages', () => {
   for (const [path, attribute] of [['index.html', 'data-i18n'], ['projects.html', 'data-page-i18n']]) {
     for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
-      assert.equal(plain(keyedMarkup(read(path), attribute, key)), 'Time Series Intelligence（科语）', `${path}/${key}`);
+      const qualifier = key === 'datasets.category.timeseries' ? 'Context-aware Time Series Forecasting' : '科语';
+      assert.equal(plain(keyedMarkup(read(path), attribute, key)), `Time Series Intelligence（${qualifier}）`, `${path}/${key}`);
     }
   }
 });
 
-test('homepage language switching retains the Keyu parent brand in both time-series categories', () => {
+test('homepage language switching retains the distinct time-series category labels', () => {
   const translate = home.match(/function translatePage\(lang\) \{[\s\S]*?\n\}\n\nfunction initLanguageToggle/)?.[0]
     .replace(/\n\nfunction initLanguageToggle$/, '');
   assert.ok(translate, 'Homepage translation function must exist');
@@ -268,7 +285,8 @@ test('homepage language switching retains the Keyu parent brand in both time-ser
     vm.runInContext(`translatePage('${lang}');`, context);
     assert.equal(document.documentElement.lang, lang === 'zh' ? 'zh-CN' : 'en');
     for (const element of elements) {
-      assert.equal(element.innerHTML, lang === 'en' ? 'Time Series Intelligence（科语）' : '时序智能（科语）');
+      const qualifier = element.getAttribute('data-i18n') === 'datasets.category.timeseries' ? 'Context-aware Time Series Forecasting' : '科语';
+      assert.equal(element.innerHTML, `${lang === 'en' ? 'Time Series Intelligence' : '时序智能'}（${qualifier}）`);
     }
   }
 });
@@ -379,8 +397,8 @@ test('all public pages share the current footer and shared-asset versions', () =
     assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
     if (path !== 'index.html') {
       const version = path === 'research.html' ? '20261024-ai-for-science'
-        : path === 'news.html' ? '20261021-icml-area-chair'
-        : path === 'publications.html' ? '20261024-llm-agentic-ai' : '20261020-www-area-chair';
+        : (path === 'news.html' || path === 'publications.html') ? '20261105-wsdm2027-papers'
+        : path === 'projects.html' ? '20261105-context-aware' : '20261020-www-area-chair';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }
   }

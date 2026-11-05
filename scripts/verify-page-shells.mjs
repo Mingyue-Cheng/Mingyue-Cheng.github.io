@@ -380,8 +380,8 @@ export function validatePageChromeSource(source, page) {
   );
   assert.doesNotMatch(footerSource, /Last updated in July 2026\./, `${page.path} must not retain the July footer`);
   const languageVersion = page.path === 'research.html' ? '20261024-ai-for-science'
-    : page.path === 'news.html' ? '20261021-icml-area-chair'
-    : page.path === 'publications.html' ? '20261024-llm-agentic-ai' : '20261020-www-area-chair';
+    : (page.path === 'news.html' || page.path === 'publications.html') ? '20261105-wsdm2027-papers'
+    : page.path === 'projects.html' ? '20261105-context-aware' : '20261020-www-area-chair';
   const languageScripts = document.nodes.filter(
     (node) => node.name === 'script' && attribute(node.raw, 'src') === `files/assets/site-language.js?v=${languageVersion}`
   );

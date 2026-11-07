@@ -14,7 +14,7 @@ const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 const sharedContentCss = read('files/assets/site-content.css');
 const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">';
-const researchIntroEnglish = 'My research focuses on cognitive intelligence: enabling machines to understand, reason, and interact. I study LLM agents and autonomous learning as general intelligent mechanisms, with scientific knowledge and tools and structured data as two core research objects. The three directions address independent scientific questions while sharing foundations in cognitive intelligence. Autonomous learning, continual evolution, and human–AI collaboration support long-term capability improvement.';
+const researchIntroEnglish = "I study cognitive intelligence: enabling machines to understand, reason, and interact. My work spans three directions with independent scientific questions, connected through autonomous learning, continual evolution, and human–AI collaboration.";
 const researchCssPath = join(root, 'files/assets/research-page.css');
 const researchCss = existsSync(researchCssPath) ? readFileSync(researchCssPath, 'utf8') : '';
 
@@ -268,10 +268,12 @@ function decodedTranslationEntries(key) {
   return [...indexHtml.matchAll(pattern)].map((match) => JSON.parse(`"${match[1]}"`));
 }
 
-test('shared stylesheet is linked by both pages', () => {
+test('legacy scenario stylesheet remains available while compact Research uses its scoped styles', () => {
   assert.ok(existsSync(cssPath), 'files/assets/scenario-cards.css must exist');
+  assert.doesNotMatch(researchHtml, /href="files\/assets\/scenario-cards\.css/);
+  assert.match(researchHtml, /href="files\/assets\/research-page\.css(?:\?[^"]+)?"/);
 
-  for (const [name, source] of [['index.html', indexHtml], ['research.html', researchHtml]]) {
+  for (const [name, source] of [['index.html', indexHtml]]) {
     assert.equal(source.split(stylesheetLink).length - 1, 1, `${name} must load the stylesheet once`);
     const styleEnd = source.indexOf('</style>');
     const linkPosition = source.indexOf(stylesheetLink);
@@ -400,331 +402,39 @@ test('shared stylesheet implements the approved visual and responsive contract',
   assert.doesNotMatch(scenarioCss, /\.scenario-card-list\b/);
 });
 
-test('homepage uses semantic scenario cards in canonical order', () => {
-  const researchArea = sectionBetween(
-    indexHtml,
-    '<!-- ===== Research Interests ===== -->',
-    '<!-- ===== Latest News ===== -->'
-  );
-  const section = sectionBetween(
-    researchArea,
-    '<section class="scenario-section" aria-labelledby="homepage-scenario-heading">',
-    '</section>'
-  );
-
-  assert.match(section, /<section class="scenario-section" aria-labelledby="homepage-scenario-heading">/);
-  assert.match(section, /<h3 id="homepage-scenario-heading" class="scenario-heading" data-i18n="research\.scenarioTitle">/);
-  const articles = assertScenarioStructure(section, 'Homepage', 'h4');
-
-  for (const modifier of ['science', 'industrial', 'user']) {
-    const article = articles[modifier];
-    for (const [tagName, className, suffix] of [
-      ['h4', 'scenario-card-title', 'Title'],
-      ['p', 'scenario-card-body', 'Body'],
-      ['div', 'scenario-card-topics', 'Topics']
-    ]) {
-      const key = `research.${modifier}${suffix}`;
-      const matchingTags = startTagsWithClass(section, tagName, className)
-        .filter((tag) => hasAttributeValue(tag, 'data-i18n', key));
-      assert.equal(
-        matchingTags.length,
-        1,
-        `${key} must appear once on a ${className} element`
-      );
-      assert.equal(
-        startTagsWithClass(article, tagName, className)
-          .filter((tag) => hasAttributeValue(tag, 'data-i18n', key)).length,
-        1,
-        `${key} must belong to the ${modifier} article`
-      );
-    }
-
-  }
+test('homepage applications use one concise paragraph with all three domain identities', () => {
+  const researchArea = sectionBetween(indexHtml, '<!-- ===== Research Interests ===== -->', '<!-- ===== Latest News ===== -->');
+  assert.doesNotMatch(researchArea, /<article class="scenario-card/);
+  const prose = researchArea.match(/<p\b[^>]*data-i18n="research\.applications"[^>]*>([\s\S]*?)<\/p>/)?.[1];
+  assert.ok(prose, 'Applications need one translatable paragraph');
+  for (const title of ['AI for Science', 'Forecasting Intelligence', 'Personalized Intelligence']) assert.ok(prose.includes(title));
+  assert.equal(prose, decodedTranslationEntries('research.applications')[0]);
+  for (const title of ['科学智能', '预测智能', '个性化智能']) assert.ok(decodedTranslationEntries('research.applications')[1].includes(title));
 });
 
-test('application science cards are titled AI for Science on both surfaces', () => {
-  assert.ok(indexHtml.includes('<h4 class="scenario-card-title" data-i18n="research.scienceTitle">AI for Science</h4>'), 'Homepage application title');
-  assert.ok(researchHtml.includes('<h3 class="scenario-card-title" data-page-i18n="scienceTitle">AI for Science</h3>'), 'Research application title');
-});
 
-test('forecasting application cards use a trend chart rather than the retired factory icon', () => {
-  for (const [page, source] of [['Homepage', indexHtml], ['Research', researchHtml]]) {
-    const article = articleFor(source, 'industrial');
-    assert.ok(article.includes('<path d="M4 4v16h16M7 14l4-4 4 3 5-7M16 6h4v4"></path>'), `${page} forecasting chart icon`);
-    assert.doesNotMatch(article, /M3 20h18M5 20V9/);
-    assert.doesNotMatch(article, /Industrial Intelligence|Energy &amp; traffic|Cloud &amp; finance/);
+
+
+
+
+
+
+
+
+
+
+
+test('homepage keeps three concise primary directions without collection links', () => {
+  const section = sectionBetween(indexHtml, '<!-- ===== Research Interests ===== -->', '<!-- ===== Latest News ===== -->');
+  const directions = [...section.matchAll(/<li\b(?![^>]*\bhidden\b)[^>]*data-i18n="research\.(agent|timeseries|science)"[^>]*>([\s\S]*?)<\/li>/g)];
+  assert.deepEqual(directions.map(match => match[1]), ['agent', 'timeseries', 'science']);
+  for (const [, key, markup] of directions) {
+    const [en, zh] = decodedTranslationEntries(`research.${key}`);
+    assert.equal(markup, en);
+    assert.ok(visibleText(en).length < 450, key);
+    assert.ok(visibleText(zh).length < 200, key);
   }
-});
-
-test('homepage scenario cards use concise domain summaries', () => {
-  const researchArea = sectionBetween(
-    indexHtml,
-    '<!-- ===== Research Interests ===== -->',
-    '<!-- ===== Latest News ===== -->'
-  );
-  const scienceArticle = articleFor(researchArea, 'science');
-  const industrialArticle = articleFor(researchArea, 'industrial');
-  const userArticle = articleFor(researchArea, 'user');
-
-  assert.match(
-    scienceArticle,
-    /<p class="scenario-card-body" data-i18n="research\.scienceBody">Focusing on scientific tools, scientific knowledge mining, and autonomous scientific discovery\.<\/p>/,
-    'AI for Science must use the shared Focusing on phrasing for scientific tools, knowledge mining, and autonomous discovery'
-  );
-  assert.match(
-    industrialArticle,
-    /<h4 class="scenario-card-title" data-i18n="research\.industrialTitle">Forecasting Intelligence<\/h4>/,
-    'The forecasting card must use the Forecasting Intelligence title'
-  );
-  assert.match(
-    industrialArticle,
-    /<p class="scenario-card-body" data-i18n="research\.industrialBody">Focusing on context-aware forecasting, uncertainty estimation, and adaptive decision support for complex, evolving systems\.<\/p>/,
-    'Forecasting Intelligence must introduce forecasting, uncertainty estimation, and adaptive decision support'
-  );
-  assert.match(
-    userArticle,
-    /<p class="scenario-card-body" data-i18n="research\.userBody">Focusing on user behavior and preference modeling for adaptive, personalized recommendations\.<\/p>/,
-    'Recommender Systems must use the shared Focusing on phrasing for user behavior, preference modeling, and personalization'
-  );
-  assert.match(
-    userArticle,
-    /<h4 class="scenario-card-title" data-i18n="research\.userTitle">Personalized Intelligence<\/h4>/,
-    'The homepage user-modeling card must be titled Personalized Intelligence'
-  );
-});
-
-test('homepage scenario summaries and topics stay synchronized with both dictionaries', () => {
-  const expected = {
-    'research.scenarioTitle': ['Application Domains', '应用领域'],
-    'research.scenarioIntro': [
-      'Real-world settings for developing and evaluating intelligent systems.',
-      '在真实任务中发展智能方法，并检验其有效性。'
-    ],
-    'research.scienceTitle': ['AI for Science', '科学智能'],
-    'research.scienceBody': [
-      'Focusing on scientific tools, scientific knowledge mining, and autonomous scientific discovery.',
-      '聚焦科学工具、科学知识挖掘与自主科学发现。'
-    ],
-    'research.scienceTopics': [
-      '<span>Scientific Literature Mining</span><span>Scientific Tool Mining</span>',
-      '<span>科技文献挖掘</span><span>科学工具挖掘</span>'
-    ],
-    'research.industrialTitle': ['Forecasting Intelligence', '预测智能'],
-    'research.industrialBody': [
-      'Focusing on context-aware forecasting, uncertainty estimation, and adaptive decision support for complex, evolving systems.',
-      '聚焦复杂动态系统中的情境感知预测、不确定性估计与自适应决策支持。'
-    ],
-    'research.industrialTopics': [
-      '<span>Context-aware forecasting</span><span>Uncertainty &amp; decisions</span>',
-      '<span>情境感知预测</span><span>不确定性与决策</span>'
-    ],
-    'research.userTitle': ['Personalized Intelligence', '个性化智能'],
-    'research.userBody': [
-      'Focusing on user behavior and preference modeling for adaptive, personalized recommendations.',
-      '聚焦用户行为与偏好建模，支持自适应的个性化推荐。'
-    ],
-    'research.userTopics': [
-      '<span>Behavior modeling</span><span>Contextual Memory</span>',
-      '<span>行为与偏好建模</span><span>情境记忆</span>'
-    ]
-  };
-
-  for (const [key, values] of Object.entries(expected)) {
-    assert.deepEqual(decodedTranslationEntries(key), values, `Unexpected values for ${key}`);
-    const markup = indexHtml.match(new RegExp(
-      `<([a-z][\\w-]*)\\b[^>]*\\bdata-i18n="${escapeRegex(key)}"[^>]*>([\\s\\S]*?)<\\/\\1>`
-    ));
-    assert.ok(markup, `Missing homepage translation hook for ${key}`);
-    assert.equal(markup[2].trim(), values[0], `${key} initial markup must match its English translation`);
-  }
-
-  for (const removedKey of [
-    'research.energyTitle',
-    'research.energyBody',
-    'research.predictionTitle',
-    'research.predictionBody'
-  ]) {
-    const removedKeyPattern = new RegExp(`["']${escapeRegex(removedKey)}["']\\s*:`);
-    assert.equal(removedKeyPattern.test(indexHtml), false, `${removedKey} must be absent`);
-  }
-
-  // research.science now describes the dedicated primary direction, not a legacy application card.
-  for (const oldKey of ['research.energy', 'research.recsys']) {
-    assert.doesNotMatch(indexHtml, new RegExp(`"${escapeRegex(oldKey)}"\\s*:`));
-  }
-});
-
-test('homepage LLMs and Agentic AI direction copy stays synchronized', () => {
-  const oldAgentFocus = 'autonomous interactive learning and reasoning mechanisms';
-  const newAgentFocus = 'autonomous interactive learning';
-  const expectedEnglishAgent =
-    '<span class="research-label">🤖<strong>LLMs and Agentic AI:</strong></span> Developing <span class="research-keyword">autonomous interactive learning</span> for large language models, including <span class="research-keyword">environment-interactive Agentic RL</span>, <span class="research-keyword">tool-augmented reasoning</span>, <span class="research-keyword">multi-agent orchestration</span>, and continual capability evolution through context, knowledge, and memory.';
-  const homepageSection = sectionBetween(
-    indexHtml,
-    '<!-- ===== Research Interests ===== -->',
-    '<!-- ===== Latest News ===== -->'
-  );
-
-  assert.match(homepageSection, new RegExp(escapeRegex(expectedEnglishAgent)));
-  assert.equal(
-    decodedTranslationEntries('research.agent')[0],
-    expectedEnglishAgent,
-    'English research.agent translation must match the visible homepage copy'
-  );
-  assert.match(
-    decodedTranslationEntries('research.agent')[1],
-    /^<span class="research-label">🤖<strong>/,
-    'Chinese research.agent translation must not include a space between the icon and title'
-  );
-  assert.equal(indexHtml.includes(oldAgentFocus), false, 'Old agent focus wording must be absent');
-  assert.equal(indexHtml.includes(newAgentFocus), true, 'New agent focus wording must be present');
-});
-
-test('Time Series Mining direction copy stays synchronized', () => {
-  const oldTitle = 'Time-Series Analysis';
-  const supersededTitle = 'Temporal Data Mining';
-  const oldFocus = 'context-aware predictive intelligence for complex systems';
-  const oldObservationFrame = 'dynamic system observations';
-  const oldReasoning = 'slow-thinking temporal reasoning';
-  const expectedEnglishTimeseries =
-    '<span class="research-label">📊<strong>Time Series Mining:</strong></span> Developing <span class="research-keyword">context-aware predictive intelligence</span>, with a focus on <span class="research-keyword">multimodal context representation</span>, <span class="research-keyword">slow-thinking reasoning</span>, <span class="research-keyword">uncertainty-aware forecasting</span>, and <span class="research-keyword">autonomous agentic interaction</span>. Applications include <span class="research-keyword">electricity load forecasting</span>, <span class="research-keyword">power generation forecasting</span>, and <span class="research-keyword">weather forecasting</span>.';
-  const expectedChineseTimeseries =
-    '<span class="research-label">📊<strong>时间序列挖掘：</strong></span> 发展<span class="research-keyword">情境感知预测智能</span>，重点研究<span class="research-keyword">多模态情境表征</span>、<span class="research-keyword">慢思考推理</span>、<span class="research-keyword">不确定性感知预测</span>与<span class="research-keyword">自主智能体交互</span>。同时关注<span class="research-keyword">电力负荷</span>、<span class="research-keyword">能源发电</span>与<span class="research-keyword">气象</span>等垂直领域的时序预测应用。';
-  const homepageSection = sectionBetween(
-    indexHtml,
-    '<!-- ===== Research Interests ===== -->',
-    '<!-- ===== Latest News ===== -->'
-  );
-  const visibleTimeseriesMatch = homepageSection.match(
-    /<li\b[^>]*data-i18n="research\.timeseries"[^>]*>[\s\S]*?<\/li>/
-  );
-  assert.ok(visibleTimeseriesMatch, 'Homepage must include a visible research.timeseries list item');
-  const visibleTimeseries = visibleTimeseriesMatch[0];
-
-  assert.match(visibleTimeseries, new RegExp(escapeRegex(expectedEnglishTimeseries)));
-  assert.equal(
-    decodedTranslationEntries('research.timeseries')[0],
-    expectedEnglishTimeseries,
-    'English research.timeseries translation must match the visible homepage copy'
-  );
-  assert.equal(
-    decodedTranslationEntries('research.timeseries')[1],
-    expectedChineseTimeseries,
-    'Chinese research.timeseries translation must retain the methods and include the three application examples'
-  );
-  assert.doesNotMatch(decodedTranslationEntries('research.timeseries')[1], /科语 SciTime/);
-
-  for (const [label, source] of [
-    ['homepage research.timeseries item', visibleTimeseries],
-    ['English research.timeseries translation', decodedTranslationEntries('research.timeseries')[0]]
-  ]) {
-    assert.equal(source.includes(oldTitle), false, `${label} must not use the old title`);
-    assert.equal(source.includes(supersededTitle), false, `${label} must not use the superseded title`);
-    assert.equal(source.includes(oldFocus), false, `${label} must not use the old predictive-intelligence wording`);
-    assert.equal(source.includes(oldObservationFrame), false, `${label} must not keep the old observation framing`);
-  }
-  for (const [label, source] of [
-    ['homepage research.timeseries item', visibleTimeseries],
-    ['English research.timeseries translation', decodedTranslationEntries('research.timeseries')[0]]
-  ]) {
-    assert.equal(source.includes(oldReasoning), false, `${label} must not keep the old reasoning wording`);
-  }
-});
-
-test('homepage keeps its three primary directions and shared Research collection links', () => {
-  const homepageSection = sectionBetween(
-    indexHtml,
-    '<!-- ===== Research Interests ===== -->',
-    '<!-- ===== Latest News ===== -->'
-  );
-  const homepageDirections = sectionBetween(
-    homepageSection,
-    '<ul class="research-list primary-directions">',
-    '</ul>'
-  );
-
-  assert.equal(
-    matchCount(homepageDirections, /<li\b(?![^>]*\bhidden\b)[^>]*>/g),
-    3,
-    'Homepage must expose LLMs, Time Series Mining and Scientific Literature Mining as primary directions'
-  );
-  assert.match(homepageDirections, /<li class="primary-direction primary-direction--agent" data-i18n="research\.agent">/);
-  assert.match(homepageDirections, /<li class="primary-direction primary-direction--timeseries" data-i18n="research\.timeseries">/);
-  assert.match(homepageDirections, /<li class="primary-direction primary-direction--science" data-i18n="research\.science">/);
-  assert.ok(
-    homepageDirections.indexOf('Time Series Mining') < homepageDirections.indexOf('Scientific Literature Mining'),
-    'Scientific Literature Mining must follow Time Series Mining'
-  );
-  assert.doesNotMatch(
-    homepageDirections,
-    /primary-direction--prediction|prediction-intelligence\.html|research\.prediction(?:Title|Body)/,
-    'Homepage must not expose the Prediction Intelligence direction'
-  );
-  assert.match(
-    homepageDirections,
-    /<li class="primary-direction primary-direction--knowledge" data-i18n="research\.knowledge" hidden>/,
-    'Scientific Knowledge Cognition must remain hidden on the homepage'
-  );
-  assert.ok(
-    homepageDirections.indexOf('LLMs and Agentic AI') <
-      homepageDirections.indexOf('Time Series Mining'),
-    'Homepage primary directions must keep LLMs before Time Series Mining'
-  );
-
-  const homepagePrimaryGridRule = cssRule(indexHtml, '.primary-directions');
-  assert.ok(
-    homepagePrimaryGridRule.includes('grid-template-columns: minmax(0, 1fr);'),
-    'Homepage primary directions must use one full-width column'
-  );
-  assert.doesNotMatch(
-    indexHtml,
-    /\.primary-directions \.primary-direction--agent\s*\{/,
-    'The LLM direction must not need a special grid span in a single-column layout'
-  );
-  assert.ok(
-    cssRule(indexHtml, '.primary-directions li[hidden]').includes('display: none;'),
-    'Homepage author styles must preserve the hidden Scientific Knowledge Cognition direction'
-  );
-  const homepageCollection = homepageSection.match(
-    /<div class="research-note" data-i18n="research\.collections">[\s\S]*?<\/div>/
-  );
-  const researchCollection = researchHtml.match(
-    /<div class="research-note-box">\s*Research collections:[\s\S]*?<\/div>/
-  );
-  assert.ok(homepageCollection, 'Homepage research collections block must exist');
-  assert.ok(researchCollection, 'Research-page collections block must exist');
-  assert.equal(
-    visibleText(researchCollection[0]),
-    visibleText(homepageCollection[0]),
-    'Research collections must match the homepage labels, icons, and order'
-  );
-
-  const expectedEnglishCollectionHtml =
-    'Research collections: 🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI（认知大模型）</a> · 📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence（科语）</a> · 📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence（科言）</a>';
-  const expectedChineseCollectionHtml = expectedEnglishCollectionHtml.replace(
-    'Research collections: ',
-    '研究主页：'
-  );
-  assert.ok(
-    siteLanguageJs.includes(`collections: '${expectedEnglishCollectionHtml}'`),
-    'English Research-page collections translation must match the homepage'
-  );
-  assert.ok(
-    siteLanguageJs.includes(`collections: '${expectedChineseCollectionHtml}'`),
-    'Chinese Research-page collections translation must match the homepage'
-  );
-  assert.ok(
-    siteLanguageJs.includes('note.innerHTML = page.collections;'),
-    'Research-page language switching must preserve the complete aligned collections markup'
-  );
-  assert.doesNotMatch(
-    siteLanguageJs,
-    /const links = Array\.from\(note\.querySelectorAll\('a'\)\)/,
-    'Research-page language switching must not rebuild collections from links alone'
-  );
-
-  assert.ok(siteLanguageJs.includes("join: 'Prospective students and research collaborators"));
-  assert.ok(siteLanguageJs.includes("join: '欢迎脚踏实地、积极主动的本科生和研究生"));
+  assert.doesNotMatch(section, /data-i18n="research\.collections"|primary-direction--prediction/);
 });
 
 test('research technical pillars stack vertically at every breakpoint in canonical order', () => {
@@ -751,19 +461,15 @@ test('research technical pillars stack vertically at every breakpoint in canonic
   assert.equal(finalDeclarationValue(gridRules[0].body, 'display'), 'grid');
 });
 
-test('research collections omit table research without removing its publication category', () => {
+test('research pages omit table research without removing its publication category', () => {
   const homepageSection = sectionBetween(
     indexHtml,
     '<!-- ===== Research Interests ===== -->',
     '<!-- ===== Latest News ===== -->'
   );
-  const collectionTranslations = decodedTranslationEntries('research.collections');
-  assert.equal(collectionTranslations.length, 2, 'Homepage must keep English and Chinese collection translations');
-
   for (const [name, source] of [
-    ['homepage collection', homepageSection],
-    ['research page', researchHtml],
-    ...collectionTranslations.map((source, index) => [`collection translation ${index + 1}`, source])
+    ['homepage research section', homepageSection],
+    ['research page', researchHtml]
   ]) {
     assert.doesNotMatch(source, /ustc-table-mining\.github\.io|🧮/, `${name} must omit Tabular Data Mining`);
   }
@@ -783,170 +489,14 @@ test('research collections omit table research without removing its publication 
   );
 });
 
-test('research page preserves domain identities shared with the homepage', () => {
-  const homepageResearchArea = sectionBetween(
-    indexHtml,
-    '<!-- ===== Research Interests ===== -->',
-    '<!-- ===== Latest News ===== -->'
-  );
-  const homepageSection = sectionBetween(
-    homepageResearchArea,
-    '<section class="scenario-section" aria-labelledby="homepage-scenario-heading">',
-    '</section>'
-  );
-  const researchArea = sectionBetween(researchHtml, '<!-- Broader Scenarios -->', '<!-- Notes -->');
-  const researchSection = sectionBetween(
-    researchArea,
-    '<section class="scenario-section" aria-labelledby="research-scenario-heading">',
-    '</section>'
-  );
 
-  assert.match(researchSection, /<section class="scenario-section" aria-labelledby="research-scenario-heading">/);
-  assert.match(researchSection, /<h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">/);
-  const homepageArticles = assertScenarioStructure(
-    homepageSection,
-    'Homepage',
-    'h4'
-  );
-  const researchArticles = assertScenarioStructure(
-    researchSection,
-    'Research page',
-    'h3'
-  );
-  assert.doesNotMatch(
-    researchSection,
-    /scenario-card--prediction|Prediction Intelligence/,
-    'Prediction Intelligence must not remain duplicated in the Research-page application scenarios'
-  );
-  assert.doesNotMatch(
-    homepageSection,
-    /scenario-card--prediction|Prediction Intelligence/,
-    'Prediction Intelligence must not remain duplicated in the Homepage application scenarios'
-  );
-  assert.ok(
-    cssRule(sharedContentCss, '.research-section .scenario-grid').includes(
-      'grid-template-columns: repeat(3, minmax(0, 1fr));'
-    ),
-    'The three Homepage scenarios must use a balanced three-column layout'
-  );
-  const homepageResponsive = sectionBetween(
-    indexHtml,
-    '@media (max-width: 900px)',
-    '@media (max-width: 680px)'
-  );
-  assert.ok(
-    cssRule(homepageResponsive, '.research-section .scenario-grid').includes(
-      'grid-template-columns: minmax(0, 1fr);'
-    ),
-    'Homepage scenarios must stack into one column on narrow screens'
-  );
-  assert.ok(
-    cssRule(researchHtml, '.research-main .scenario-grid').includes(
-      'grid-template-columns: repeat(3, minmax(0, 1fr));'
-    ),
-    'The three Research-page scenarios must use a balanced three-column layout'
-  );
 
-  assert.match(
-    researchArticles.industrial,
-    /<h3 class="scenario-card-title" data-page-i18n="industrialTitle">Forecasting Intelligence<\/h3>/,
-    'The Research page must include the Forecasting Intelligence scenario'
-  );
-  assert.match(
-    researchArticles.user,
-    /<p class="scenario-card-body" data-page-i18n="userBody">Focusing on user behavior and preference modeling for adaptive, personalized recommendations\.<\/p>/,
-    'The Research-page Personalized Intelligence card must use the shared Focusing on phrasing'
-  );
-
-  for (const modifier of ['science', 'industrial', 'user']) {
-    const researchTitle = researchArticles[modifier].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/);
-    const homepageTitle = homepageArticles[modifier].match(/<h4\b[^>]*>([\s\S]*?)<\/h4>/);
-    assert.ok(researchTitle && homepageTitle, `${modifier} must have a domain heading on both pages`);
-    assert.equal(
-      visibleText(researchTitle[1]),
-      visibleText(homepageTitle[1]),
-      `${modifier} domain identity must match across pages`
-    );
-  }
-});
-
-test('research page keeps the shared language engine and complete framework translation', () => {
-  assert.ok(!researchHtml.includes('.sc-card'), 'Obsolete .sc-card styles must be removed');
-  assert.ok(!researchHtml.includes('.scenario-cards'), 'Obsolete .scenario-cards styles must be removed');
-  assert.ok(!researchHtml.includes('.icon-recommend'), 'Obsolete recommendation icon CSS must be removed');
-  assert.ok(!researchHtml.includes('.icon-energy'), 'Obsolete energy icon CSS must be removed');
-
-  assert.ok(
-    siteLanguageJs.includes("document.querySelectorAll('.rd-section-label, .scenario-section-label')"),
-    'Research heading must remain compatible with site-language.js'
-  );
-  assert.ok(
-    siteLanguageJs.includes("document.querySelectorAll('[data-page-i18n]')"),
-    'Research scenario content must remain compatible with site-language.js'
-  );
-  assert.ok(
-    researchHtml.includes('<script src="files/assets/site-language.js?v=20261024-ai-for-science"></script>'),
-    'Research page must request the current site-language.js content version'
-  );
-  assert.ok(
-    siteLanguageJs.includes(
-      "labels: ['三大核心研究主线', '三条主线如何关联', '共享认知框架', '应用领域']"
-    )
-  );
-  for (const key of [
-    'agentTitle',
-    'agentBody',
-    'agentQuestion',
-    'agentRole',
-    'agentTopics',
-    'knowledgeTitle',
-    'knowledgeBody',
-    'knowledgeQuestion',
-    'knowledgeRole',
-    'knowledgeTopics',
-    'structuredTitle',
-    'structuredBody',
-    'structuredQuestion',
-    'structuredRole',
-    'structuredTopics',
-    'understandTitle',
-    'understandBody',
-    'reasonTitle',
-    'reasonBody',
-    'interactTitle',
-    'interactBody',
-    'mechanismsTitle',
-    'mechanismsBody',
-    'scienceTitle',
-    'scienceBody',
-    'industrialTitle',
-    'industrialBody',
-    'userTitle',
-    'userBody'
-  ]) {
-    assert.ok(
-      researchHtml.includes(`data-page-i18n="${key}"`),
-      `Research scenario markup must expose the ${key} translation hook`
-    );
-  }
-  for (const chineseLabel of [
-    '科学工具',
-    '科技文献挖掘',
-    '科学工具挖掘',
-    '科学知识挖掘',
-    '自主科学发现',
-    '预测智能',
-    '情境感知预测',
-    '不确定性估计',
-    '自适应决策支持',
-    '用户行为与偏好',
-    '行为与偏好建模',
-    '情境记忆',
-    '自适应的个性化推荐',
-    '个性化推荐'
-  ]) {
-    assert.ok(siteLanguageJs.includes(chineseLabel), `Missing Research-page translation: ${chineseLabel}`);
-  }
+test('research page keeps shared translations for directions, questions and compact applications', () => {
+  assert.ok(siteLanguageJs.includes("document.querySelectorAll('[data-page-i18n]')"));
+  assert.match(researchHtml, /site-language\.js\?v=20261107-research-note/);
+  for (const prefix of ['agent', 'knowledge', 'structured']) for (const suffix of ['Title', 'Body', 'Question', 'Role', 'Topics']) assert.ok(researchHtml.includes(`data-page-i18n="${prefix}${suffix}"`));
+  for (const key of ['relationsIntro', 'applicationsSummary']) assert.ok(researchHtml.includes(`data-page-i18n="${key}"`));
+  assert.doesNotMatch(researchHtml, /data-page-i18n="(?:understand|reason|interact|mechanisms)(?:Title|Body)"/);
 });
 
 test('research directions each expose a scientific question without the old vision card', () => {
@@ -964,7 +514,8 @@ test('research hero uses the supplied English introduction in fallback markup an
   const hero = researchHtml.match(/<p class="page-hero-sub">([\s\S]*?)<\/p>/);
   assert.ok(hero, 'Research hero introduction must exist');
   assert.equal(hero[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(), researchIntroEnglish);
-  assert.ok(siteLanguageJs.includes("subtitle: '" + researchIntroEnglish + "'"));
+  const literal = siteLanguageJs.match(/const translations = (\{[\s\S]*?\n  \});\n\n  const navTargets/)?.[1];
+  assert.equal(vm.runInNewContext(`(${literal})`).en.pages['research.html'].subtitle, researchIntroEnglish);
 });
 
 test('research introduction and all three scientific questions survive language switching', () => {

@@ -437,8 +437,10 @@ function createPublicationFilterMatrixHarness(page) {
   })]));
   const fixtureTags = [
     ['llm-only', 'llm'],
+    ['reasoning-only', 'llm reasoning'],
     ['agent-only', 'agent'],
     ['llm-and-agent', 'llm agent'],
+    ['reasoning-and-agent', 'llm agent reasoning'],
     ['time-only', 'timeseries'],
     ['table-only', 'table'],
     ['graph-only', 'graph'],
@@ -446,7 +448,7 @@ function createPublicationFilterMatrixHarness(page) {
     ['structured-overlap', 'timeseries table graph structured'],
     ['science-only', 'ai4science'],
     ['recommendation-only', 'recsys'],
-    ['substring-only', 'llm-extra agentic timeseries-extra table-mining graphing unstructured ai4science-extra recsys-extra'],
+    ['substring-only', 'llm-extra reasoning-extra agentic timeseries-extra table-mining graphing unstructured ai4science-extra recsys-extra'],
     ['unrelated', 'other']
   ];
   const items = new Map(fixtureTags.map(([id, tags]) => [id, new FakeElement({
@@ -630,12 +632,27 @@ test('the actual Publications filter script synchronizes active, aria, item, and
 });
 
 for (const [page] of pages) {
-  test(`${page} actual filter script distinguishes LLM-only, agent-only, and shared publications`, () => {
+  test(`${page} actual filter script distinguishes explicit reasoning, generic LLM, agent, and overlapping publications`, () => {
     const harness = createPublicationFilterMatrixHarness(page);
     harness.buttons.get('llm').click();
-    assert.deepEqual(harness.visibleIds(), ['llm-only', 'llm-and-agent']);
+    assert.deepEqual(harness.visibleIds(), ['reasoning-only', 'reasoning-and-agent']);
     harness.buttons.get('agent').click();
-    assert.deepEqual(harness.visibleIds(), ['agent-only', 'llm-and-agent']);
+    assert.deepEqual(harness.visibleIds(), ['agent-only', 'llm-and-agent', 'reasoning-and-agent']);
+
+    const tagsFor = (prefix) => {
+      const matches = records.filter(record => record.page === page && record.title.startsWith(prefix));
+      assert.equal(matches.length, 1, `${page}: one publication matching ${prefix}`);
+      return attributeValue(matches[0].html.match(/^<li\b[^>]*>/)[0], 'data-tags').split(/\s+/);
+    };
+    for (const prefix of ['Cast-R1:', 'CastFSR:', 'CastFlow:', 'One Forecast, One World:', 'AlphaCast:', 'TableMind:']) {
+      assert.ok(tagsFor(prefix).includes('reasoning'), `${page}: ${prefix} belongs to explicit LLM reasoning`);
+    }
+    for (const prefix of ['NeurJudge:', 'LawyerPAN:', 'Nested Named Entity Recognition', 'Graph Adaptive Semantic Transfer']) {
+      assert.equal(tagsFor(prefix).some(tag => ['llm', 'reasoning', 'agent'].includes(tag)), false, `${page}: legacy NLP must not become LLM reasoning`);
+    }
+    for (const prefix of ['Time Series Forecasting as Reasoning:', 'Towards Context-aware Reasoning-enhanced Generative Searching', 'MemWeaver:', 'Revisiting the Solution of Meta KDD Cup 2024:']) {
+      assert.equal(tagsFor(prefix).includes('agent'), false, `${page}: ${prefix} lacks an autonomous-agent classification`);
+    }
   });
 
   test(`${page} actual filter script matches complete tags rather than substrings`, () => {
@@ -770,13 +787,13 @@ for (const [page, source] of pages) {
       {
         title: 'CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy',
         authors: 'Bokai Pan, Ruijie Yang, Mingyue Cheng, Jiahao Wang, Xiaoyu Tao',
-        tags: 'timeseries agent',
+        tags: 'timeseries agent llm',
         expectedIndex: 5
       },
       {
         title: 'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
         authors: 'Ze Guo, Mingyue Cheng, Xiaoyu Tao, Shuo Yu, Shangtong Ye',
-        tags: 'timeseries agent ai4science',
+        tags: 'timeseries agent ai4science llm',
         expectedIndex: 4
       }
     ];
@@ -834,7 +851,7 @@ test('Time-R1 uses the approved CIKM 2026 citation on both publication surfaces'
   for (const page of ['index.html', 'publications.html']) {
     const record = findRecord(page, title);
     assert.ok(
-      record.html.startsWith(`<li data-tags="timeseries agent llm">${authors}, <strong>${title}</strong>.`),
+      record.html.startsWith(`<li data-tags="timeseries llm reasoning">${authors}, <strong>${title}</strong>.`),
       `${page} Time-R1 exact author order`
     );
     assert.match(record.html, /<em>ACM CIKM 2026 Accepted<\/em>\./, `${page} Time-R1 status`);
@@ -985,6 +1002,6 @@ test('Publications page has an accessible semantic shell and social metadata', (
     assert.match(button, /aria-pressed="(?:true|false)"/);
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
-  assert.match(body, /Last updated in September 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261105-wsdm2027-papers"><\/script>/);
+  assert.match(body, /Last updated on November 7, 2026\./);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261107-concise"><\/script>/);
 });

@@ -417,8 +417,7 @@ a:focus-visible,
   }
 }
 
-/* Reading text uses the same alignment in both languages and at every width.
-   Keep the final line natural and leave headings, controls and logos untouched. */
+/* Desktop prose keeps its existing alignment; narrow English copy is left-aligned below. */
 html[lang] .section p,
 html[lang] .profile-affil,
 html[lang] .research-section p,
@@ -490,6 +489,98 @@ html[lang] .outcome-panel p {
   }
 }
 
+/* Compact navigation keeps the complete publication catalog easy to traverse. */
+.profile-thesis {
+  margin: 8px 0 14px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+}
+.publication-year-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.page-jump-label {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.publication-year-nav a {
+  color: var(--accent);
+  padding: 5px 0;
+  text-decoration: none;
+}
+.publication-year-nav a:hover {
+  text-decoration: underline;
+}
+.publication-year-nav a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.publication-year-nav { margin: 12px 0 8px; }
+.research-keyword,
+.os-card-desc strong,
+.dataset-card-desc strong { font-weight: 600; }
+@media (max-width: 680px) {
+  html[lang="en"] .section p,
+  html[lang="en"] .profile-affil,
+  html[lang="en"] .research-section p,
+  html[lang="en"] .research-section li,
+  html[lang="en"] .research-section .research-note,
+  html[lang="en"] .research-section .scenario-intro,
+  html[lang="en"] .research-main .scenario-intro,
+  html[lang="en"] .research-section .scenario-card-body,
+  html[lang="en"] .research-main .scenario-card-body,
+  html[lang="en"] .research-vision-desc,
+  html[lang="en"] .pillar-card-desc,
+  html[lang="en"] .research-note-box,
+  html[lang="en"] .pub-list,
+  html[lang="en"] .pub-list li,
+  html[lang="en"] .pub-note,
+  html[lang="en"] .os-card-desc,
+  html[lang="en"] .dataset-card-desc,
+  html[lang="en"] .page-hero-sub,
+  html[lang="en"] .pub-hero-sub,
+  html[lang="en"] .pi-hero-lead,
+  html[lang="en"] .research-thesis p,
+  html[lang="en"] .framework-stage > p,
+  html[lang="en"] .timeline-list,
+  html[lang="en"] .timeline-list li,
+  html[lang="en"] .services-list,
+  html[lang="en"] .services-list li,
+  html[lang="en"] .news-list,
+  html[lang="en"] .news-list li,
+  html[lang="en"] .news-body,
+  html[lang="en"] .plain-list li,
+  html[lang="en"] .sys-list li,
+  html[lang="en"] .venue-name,
+  html[lang="en"] .journal-name,
+  html[lang="en"] .grant-title,
+  html[lang="en"] .award-title,
+  html[lang="en"] .award-note,
+  html[lang="en"] .resource-meta,
+  html[lang="en"] .related-card-role,
+  html[lang="en"] .footer-desc,
+  html[lang="en"] .section .industry-support-copy,
+  html[lang="en"] .section-summary,
+  html[lang="en"] .pdec-copy span,
+  html[lang="en"] .stage-signals li,
+  html[lang="en"] .weakness-card p,
+  html[lang="en"] .route-card p,
+  html[lang="en"] .route-gate,
+  html[lang="en"] .outcome-panel p {
+    text-align: left;
+    text-align-last: auto;
+    text-justify: auto;
+  }
+
+  .publication-year-nav { gap: 6px 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .industry-support-logo {
     transition: none;
@@ -513,4 +604,100 @@ html[lang] .outcome-panel p {
   .pub-filter-btn {
     transition: none;
   }
+}
+
+/* Compact status labels stay readable in narrow service and grant lists. */
+.venue-role { white-space: normal; }
+.grant-status {
+  display: inline-block;
+  padding: 1px 7px;
+  margin-left: 5px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* The homepage overview stays compact; detailed sections have their own pages. */
+.research-section .primary-directions {
+  display: block;
+  list-style: disc;
+  margin: 14px 0 10px;
+  padding-left: 20px;
+}
+
+.research-section .primary-directions li,
+.research-section .primary-directions li:hover {
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+}
+
+.research-section .primary-directions li::marker {
+  color: var(--accent);
+}
+
+.research-section .primary-directions .research-label {
+  white-space: normal;
+}
+
+.research-section .research-applications {
+  margin: 12px 0 4px;
+  color: var(--text);
+}
+
+.section-more {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.section-more:hover {
+  text-decoration: underline;
+}
+
+.related-section .related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.related-section .related-links li {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.related-section .related-links a {
+  display: inline-block;
+  padding: 4px 0;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.related-section .related-links a:hover {
+  text-decoration: underline;
+}
+
+/* Short research/service facts should read naturally in either language. */
+html[lang] .research-section .primary-directions li,
+html[lang] .services-list li,
+html[lang] .research-applications {
+  text-align: left;
+  text-align-last: auto;
 }

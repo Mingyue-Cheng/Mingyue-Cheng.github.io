@@ -39,7 +39,7 @@ const grants = [
     en: 'Anhui Provincial Natural Science Foundation; Table Semantic Understanding and Reasoning for Scientific Literature; Project Lead',
     zh: '安徽省自然科学基金，面向科技文献的表格语义理解与推理研究，项目负责人',
   },
-];
+].sort((a, b) => b.period.localeCompare(a.period));
 
 function createHarness(storedLanguage) {
   const titles = [...awardsHtml.matchAll(/<div class="grant-title"([^>]*)>([^<]*)<\/div>/g)]
@@ -48,8 +48,10 @@ function createHarness(storedLanguage) {
       getAttribute: (attribute) => attribute === 'data-grant-i18n'
         ? match[1].match(/data-grant-i18n="([^"]+)"/)?.[1] ?? null : null,
     }));
-  const periods = [...awardsHtml.matchAll(/<span class="grant-period">([^<]*)<\/span>/g)]
+  const periods = [...awardsHtml.matchAll(/<span class="grant-period">([0-9.]+[–-][0-9.]+)<br>/g)]
     .map((match) => ({ textContent: match[1] }));
+  const statuses = [...awardsHtml.matchAll(/<span class="grant-period">[^<]*<br><span data-page-i18n="([^"]+)">([^<]*)<\/span><\/span>/g)]
+    .map((match) => ({ innerHTML: match[2], getAttribute: (name) => name === 'data-page-i18n' ? match[1] : null }));
   const listeners = new Map();
   const toggle = {
     textContent: '',
@@ -68,6 +70,7 @@ function createHarness(storedLanguage) {
         return titles.filter((title) => title.getAttribute('data-grant-i18n'));
       }
       if (selector === '.grant-period') return periods;
+      if (selector === '[data-page-i18n]') return statuses;
       return [];
     },
   };
@@ -81,7 +84,7 @@ function createHarness(storedLanguage) {
     localStorage,
     window: { location: { pathname: '/awards.html' } },
   }, { filename: 'site-language.js' });
-  return { document, localStorage, titles, periods, toggle };
+  return { document, localStorage, titles, periods, statuses, toggle };
 }
 
 function assertGrantLanguage(harness, lang) {
@@ -89,6 +92,8 @@ function assertGrantLanguage(harness, lang) {
   for (const [index, grant] of grants.entries()) {
     assert.equal(harness.titles[index]?.textContent, grant[lang], `${grant.key}: full ${lang} details`);
     assert.equal(harness.periods[index]?.textContent, grant.period, `${grant.key}: date must not change with language`);
+    const status = grant.key === 'ustcYouth' ? ['Upcoming', '即将开始'] : grant.key === 'anhui' ? ['Period ended', '执行期已结束'] : ['Ongoing', '在研'];
+    assert.equal(harness.statuses[index]?.innerHTML, status[lang === 'zh' ? 1 : 0], `${grant.key}: translated date status`);
   }
 }
 

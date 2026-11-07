@@ -340,14 +340,12 @@ function findRetiredActionSelectors(styleText) {
     .filter((selector) => retiredActionSelectorPattern.test(selector));
 }
 
-test('homepage hero omits the removed research summary and its bilingual hooks', () => {
-  assert.equal(/profile-thesis|profile\.thesis/.test(indexHtml), false,
-    'the removed summary markup, styles, and translation keys must be absent');
-  assert.equal(/I study LLM-driven reasoning|以大模型推理与智能体为核心，以时序智能/.test(indexHtml), false,
-    'neither language dictionary should retain the removed summary');
-  const sharedCss = readFileSync(join(root, 'files/assets/site-content.css'), 'utf8');
-  assert.equal(sharedCss.includes('.profile-thesis'), false,
-    'shared prose styles should not target the removed summary');
+test('homepage hero presents one compact bilingual cognitive-intelligence summary', () => {
+  assert.equal((indexHtml.match(/data-i18n="profile.thesis"/g) || []).length, 1);
+  assert.match(indexHtml, /<p class="profile-thesis" data-i18n="profile\.thesis">Cognitive intelligence: understanding, reasoning, and interaction\.<\/p>/);
+  assert.match(indexHtml, /"profile\.thesis": "Cognitive intelligence: understanding, reasoning, and interaction\."/);
+  assert.match(indexHtml, /"profile\.thesis": "认知智能：能理解、会思考、可交互。"/);
+  assert.doesNotMatch(indexHtml, /I study LLM-driven reasoning|以大模型推理与智能体为核心，以时序智能/);
   assert.match(indexHtml, /<div class="profile-affil">[\s\S]*?<\/div>\s*<div class="profile-badges">/);
 });
 
@@ -470,14 +468,11 @@ test('homepage translatePage applies surviving content and accessible-name trans
 
   assert.equal(document.documentElement.lang, 'zh-CN');
   assert.equal(profileTitle.innerHTML, '博士 &nbsp;·&nbsp; 副研究员');
-  assert.equal(
-    researchIntro.innerHTML.replace(/<[^>]*>/g, ''),
-    '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。'
-  );
-  for (const keyword of ['大模型推理与智能体', '情境感知推理', '自主交互学习', '持续学习与适应', '时序智能', '科学智能']) {
-    assert.ok(researchIntro.innerHTML.includes('<span class="research-keyword">' + keyword + '</span>'));
+  assert.equal(researchIntro.innerHTML, dictionaryContext.dictionary.zh['research.intro']);
+  for (const keyword of ['认知智能', '大模型智能体与自主学习', '时序数据', '科技文献与科学工具']) {
+    assert.ok(researchIntro.innerHTML.includes(keyword));
   }
-  assert.equal(profileHome.attributes.get('aria-label'), '刷新主页');
+  assert.equal(profileHome.attributes.get('aria-label'), '程明月 — 主页');
 });
 
 test('homepage hero omits the retired action-button markup', () => {

@@ -174,7 +174,6 @@ test('visible GitHub star counts map to canonical repository and stargazer links
     'AgentR1/Agent-R1',
     'AgentR1/Claw-R1',
     'ustc-time-series/CastClaw',
-    'ustc-time-series/CastMind',
     'AgentR1/PaperScout',
     'ustc-ai4science/academic-search',
     'ustc-ai4science/PaperArena',

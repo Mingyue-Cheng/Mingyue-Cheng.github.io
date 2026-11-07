@@ -13,15 +13,15 @@ const sources = brands.map((brand) => `files/assets/industry/${brand === 'iflyte
 
 test('homepage requests the refreshed content stylesheet after the logo update', () => {
   const href = html.match(/href="(files\/assets\/site-content\.css[^\"]*)"/)?.[1];
-  assert.equal(href, 'files/assets/site-content.css?v=20260917-consistency');
+  assert.equal(href, 'files/assets/site-content.css?v=20261107-concise');
 });
 
 test('the six public grants stay in the timeline with industry support separate', () => {
   const timeline = grants.match(/<ul class="timeline-list">([\s\S]*?)<\/ul>/)?.[1] || '';
-  assert.deepEqual([...timeline.matchAll(/data-i18n="([^"]+)"/g)].map((match) => match[1]), [
-    'grants.casPriority', 'grants.newGenerationAI', 'grants.nsfc', 'grants.ustcYouth', 'grants.ustc', 'grants.anhui',
+  assert.deepEqual([...timeline.matchAll(/data-i18n="(grants\.[^"]+)"/g)].map((match) => match[1]), [
+    'grants.ustcYouth', 'grants.newGenerationAI', 'grants.casPriority', 'grants.nsfc', 'grants.ustc', 'grants.anhui',
   ]);
-  assert.match(grants, /<\/ul>\s*<div class="industry-support">/);
+  assert.match(grants, /<\/ul>\s*(?:<a class="section-more"[^>]*>[^<]+<\/a>\s*)?<div class="industry-support">/);
 });
 
 test('industry logos have the exact requested order and accessible image metadata', () => {

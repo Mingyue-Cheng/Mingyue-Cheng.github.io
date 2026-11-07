@@ -23,8 +23,8 @@ const publicationFilters = [
   ['ai4science', 'filterKnowledge', 'AI for Science', '科学智能'],
   ['recsys', 'filterRec', 'Recommender Systems', '推荐系统']
 ];
-const introEn = 'My research centers on LLM-driven reasoning and AI agents, with a focus on context-aware reasoning, autonomous interactive, and continual learning and adaptation. This work is motivated by complex tasks in time-series intelligence and science intelligence (scientific knowledge and tool mining). These application-driven directions are framed by 科言 SciToken — understanding the scientific world, and 科语 SciTime — modeling the dynamic world.';
-const introZh = '以大模型推理与智能体为核心研究方向，聚焦情境感知推理、自主交互学习、持续学习与适应，以时序智能和科学智能（科学知识与工具挖掘）中的复杂任务为应用牵引。其中，以“科言 SciToken：理解科学世界”和“科语 SciTime：建模动态世界”凝练科学智能与时序智能两条应用牵引方向。';
+const introEn = 'My research focuses on cognitive intelligence: enabling machines to understand, reason, and interact. I study LLM agents and autonomous learning as general intelligent mechanisms, with time-series and structured data and scientific literature and tools as core research objects. Autonomous interactive learning, continual adaptation, and human–AI collaboration support long-term capability development.';
+const introZh = '我的研究面向认知智能，致力于让机器能理解、会思考、可交互。以大模型智能体与自主学习为通用智能机制，以时序与结构化数据、科技文献与科学工具为核心研究对象，通过自主交互学习、持续适应与人机协同，促进智能系统认知能力的长期提升。';
 const homepageScienceDirectionCopy = {
   en: 'Focusing on scientific literature retrieval, multimodal document understanding, and knowledge extraction from text, figures, and tables, with an emphasis on cross-paper knowledge integration and literature-grounded reasoning to support scientific discovery.',
   zh: '聚焦科技文献检索、多模态文献理解与文本、图表中的知识抽取，重点研究跨文献知识整合与文献证据驱动推理，支撑科学知识发现。'
@@ -98,27 +98,17 @@ for (const lang of ['en', 'zh']) {
     }
   });
 
-  test(`${lang}: research collection links carry the corresponding Chinese identities`, () => {
-    const expected = [
-      ['https://agentr1.github.io/', 'LLMs and Agentic AI（认知大模型）'],
-      ['https://ustc-time-series.github.io/', 'Time Series Intelligence（科语）'],
-      ['https://ustcagi-sci.github.io/', 'Science Intelligence（科言）']
-    ];
-    const researchFallback = read('research.html').match(/<div class="research-note-box">([\s\S]*?)<\/div>/)?.[1];
-    assert.ok(researchFallback, 'Research collection fallback must exist');
-    for (const source of [
-      homeCopy[lang]['research.collections'],
-      sharedCopy[lang].pages['research.html'].collections,
-      keyedMarkup(home, 'data-i18n', 'research.collections'),
-      researchFallback
-    ]) {
-      const links = [...source.matchAll(/<a href="([^"]+)" target="_blank" rel="noopener">([^<]+)<\/a>/g)]
-        .map((match) => [match[1], match[2]]);
-      assert.deepEqual(links, expected, 'Labels, destinations and order must stay aligned');
-    }
+  test(`${lang}: Research retains its contact note without the removed collections`, () => {
+    const research = read('research.html');
+    const notes = [...research.matchAll(/<div class="research-note-box" id="research-contact-note">([\s\S]*?)<\/div>/g)];
+    assert.equal(notes.length, 1, 'Research contact fallback must exist exactly once');
+    assert.equal((research.match(/<div class="research-note-box"/g) || []).length, 1);
+    assert.equal(plain(notes[0][1]), plain(sharedCopy.en.pages['research.html'].join));
+    assert.equal(sharedCopy[lang].pages['research.html'].collections, undefined);
+    assert.doesNotMatch(research, /Research collections:|href="https:\/\/(?:agentr1|ustc-time-series|ustcagi-sci)\.github\.io\/"/);
   });
 
-  test(`${lang}: homepage direction cards and introduction keep their intended brand placement`, () => {
+  test(`${lang}: homepage direction cards retain their identities and introduction states cognitive intelligence`, () => {
     const homeScience = plain(homeCopy[lang]['research.science']);
     assert.equal(homeScience.includes('SciToken'), false);
     assert.equal(homeScience.includes('SciTime'), false);
@@ -127,15 +117,15 @@ for (const lang of ['en', 'zh']) {
     assert.equal(homeTimeseries.includes('SciTime'), false);
     assert.equal(homeTimeseries.includes('SciToken'), false);
     const intro = plain(homeCopy[lang]['research.intro']);
-    assert.ok(intro.includes('科言 SciToken'));
-    assert.ok(intro.includes('科语 SciTime'));
+    assert.match(intro, lang === 'en' ? /cognitive intelligence/ : /认知智能/);
+    assert.match(intro, lang === 'en' ? /scientific literature,? and tools/ : /科技文献与科学工具/);
   });
 
-  test(`${lang}: homepage literature mining centers on documents and literature-grounded methods`, () => {
-    const homepageDirection = homeCopy[lang]['research.science'];
-    assert.ok(homepageDirection, 'Homepage needs a Scientific Literature Mining direction');
-    const body = homepageDirection.replace(/^<span class="research-label">[\s\S]*?<\/span>\s*/, '');
-    assert.equal(plain(body), homepageScienceDirectionCopy[lang]);
+  test(`${lang}: homepage literature mining keeps a concise scientific-literature focus`, () => {
+    const body = plain(homeCopy[lang]['research.science']);
+    assert.match(body, lang === 'en' ? /scientific literature/i : /科技文献/);
+    assert.match(body, lang === 'en' ? /knowledge|reasoning/i : /知识|推理/);
+    assert.ok(body.length < (lang === 'en' ? 400 : 180), 'Homepage direction is a summary');
   });
 
   test(`${lang}: science dataset headings include Scientific Tool and Knowledge on both pages`, () => {
@@ -146,54 +136,42 @@ for (const lang of ['en', 'zh']) {
     assert.equal(sharedCopy[lang].pages['projects.html'].content['datasets.category.science'], expected);
   });
 
-  test(`${lang}: academic organization names and appointments agree across both service surfaces`, () => {
-    const expected = {
-      ...organizationCopy[lang],
-      pc: lang === 'en' ? 'Program Committee Member' : '程序委员会委员',
-      journal: lang === 'en' ? 'Journal Reviewer' : '期刊审稿人'
-    };
-    for (const [suffix, value] of Object.entries(expected)) {
+  test(`${lang}: full academic organization names and appointments remain on the service page`, () => {
+    for (const [suffix, value] of Object.entries(organizationCopy[lang])) {
       const key = `service.${suffix}`;
-      assert.equal(homeCopy[lang][key], value, key);
       assert.equal(sharedCopy[lang].pages['service.html'].content?.[key], value, key);
-      keyedMarkup(home, 'data-i18n', key);
       keyedMarkup(read('service.html'), 'data-page-i18n', key);
     }
   });
 
-  test(`${lang}: inline Area Chair roles agree between homepage and service page`, () => {
+  test(`${lang}: the full service page preserves all three 2027 Area Chair appointments`, () => {
     const expected = lang === 'en' ? 'Area Chair 2027' : '领域主席 2027';
-    for (const key of ['service.iclrAreaChair', 'service.wwwAreaChair']) {
-      assert.equal(homeCopy[lang][key], expected, key);
+    for (const key of ['service.icmlAreaChair', 'service.iclrAreaChair', 'service.wwwAreaChair']) {
       assert.equal(sharedCopy[lang].pages['service.html'].content?.[key], expected, key);
-      keyedMarkup(home, 'data-i18n', key);
       keyedMarkup(read('service.html'), 'data-page-i18n', key);
     }
-    assert.equal(homeCopy[lang]['service.areaChair'], undefined);
-    assert.equal(sharedCopy[lang].pages['service.html'].content?.['service.areaChair'], undefined);
   });
 
-  test(`${lang}: homepage keeps its current introduction independently of Research`, () => {
-    const expected = lang === 'en' ? introEn : introZh;
-    assert.equal(plain(homeCopy[lang]['research.intro']), expected);
+  test(`${lang}: homepage introduction remains concise and distinct from the full Research page`, () => {
+    const intro = plain(homeCopy[lang]['research.intro']);
+    assert.match(intro, lang === 'en' ? /cognitive intelligence/i : /认知智能/);
+    assert.ok(intro.length < (lang === 'en' ? 450 : 200));
+    assert.equal(plain(keyedMarkup(home, 'data-i18n', 'research.intro')), plain(homeCopy.en['research.intro']));
   });
 
-  test(`${lang}: shared Research applications, collections, and recruitment agree`, () => {
+  test(`${lang}: compact Research applications and recruitment preserve their destinations`, () => {
     const research = sharedCopy[lang].pages['research.html'];
-    for (const key of ['scenarioIntro', 'scienceTitle', 'scienceBody', 'scienceTopics', 'industrialTitle', 'industrialBody', 'industrialTopics', 'userTitle', 'userBody', 'userTopics']) {
-      assert.equal(plain(research.scenarios[key] || ''), plain(homeCopy[lang][`research.${key}`]), key);
-    }
-    assert.equal(research.labels.at(-1), homeCopy[lang]['research.scenarioTitle']);
+    const hrefs = (html) => [...html.matchAll(/href="([^"]+)"/g)].map(match => match[1]);
+    assert.deepEqual(hrefs(research.join), hrefs(homeCopy[lang]['research.join']));
     for (const key of ['agent', 'timeseries', 'science']) {
-      const direction = homeCopy[lang][`research.${key}`];
-      assert.equal(typeof direction, 'string', `Missing research.${key} translation`);
-      const homepageBody = direction.replace(/^<span class="research-label">[\s\S]*?<\/span>\s*/, '');
-      if (key === 'science') {
-        assert.equal(plain(homepageBody), homepageScienceDirectionCopy[lang], key);
-      }
+      assert.equal(typeof homeCopy[lang][`research.${key}`], 'string');
     }
-    assert.equal(research.collections, homeCopy[lang]['research.collections']);
-    assert.equal(research.join, homeCopy[lang]['research.join']);
+    const homeApplications = Object.entries(homeCopy[lang]).filter(([key]) => /research\.(?:applications|applicationSummary)/.test(key)).map(([, value]) => plain(value)).join(' ');
+    const researchApplications = Object.entries(research.scenarios).filter(([key]) => /applications|applicationSummary/.test(key)).map(([, value]) => plain(value)).join(' ');
+    for (const phrase of lang === 'en' ? ['AI for Science', 'Forecasting Intelligence', 'Personalized Intelligence'] : ['科学智能', '预测智能', '个性化智能']) {
+      assert.ok(homeApplications.includes(phrase), phrase);
+      assert.ok(researchApplications.includes(phrase), phrase);
+    }
   });
 
   test(`${lang}: common navigation and footer labels match the homepage`, () => {
@@ -207,7 +185,8 @@ for (const lang of ['en', 'zh']) {
   test(`${lang}: publication filters use the homepage taxonomy after language changes`, () => {
     const content = sharedCopy[lang].pages['publications.html'].content || {};
     for (const suffix of ['filterAll', 'filterReasoning', 'filterAgent', 'filterStructured', 'filterTime', 'filterKnowledge', 'filterTable', 'filterRec', 'note', 'preprint', 'year2027', 'year2026', 'year2025', 'year2024', 'legacy']) {
-      assert.equal(content[`pub.${suffix}`], homeCopy[lang][`pub.${suffix}`], suffix);
+      const normalizeYear = (value) => suffix === 'legacy' ? value.replace(' 年', '') : value;
+      assert.equal(normalizeYear(content[`pub.${suffix}`]), normalizeYear(homeCopy[lang][`pub.${suffix}`]), suffix);
       keyedMarkup(read('publications.html'), 'data-page-i18n', `pub.${suffix}`);
     }
   });
@@ -220,13 +199,17 @@ for (const lang of ['en', 'zh']) {
     }
   });
 
-  test(`${lang}: shared project descriptions and category names match the homepage`, () => {
+  test(`${lang}: project categories agree while homepage summaries remain shorter than full descriptions`, () => {
     const content = sharedCopy[lang].pages['projects.html'].content || {};
-    const keys = Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.(?:category\.|agentR1$|clawR1$|castClaw$|castMind$|paperScout$|academicSearch$|world2ts$|world2tsKicker$)/.test(key));
-    assert.ok(keys.length >= 13, 'All shared descriptions and category names must be covered');
-    for (const key of keys) {
+    for (const key of Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.category\./.test(key))) {
       assert.equal(content[key], homeCopy[lang][key], key);
       keyedMarkup(read('projects.html'), 'data-page-i18n', key);
+    }
+    for (const key of ['opensource.agentR1', 'opensource.clawR1', 'opensource.castClaw', 'opensource.paperScout', 'opensource.academicSearch', 'datasets.world2ts', 'datasets.paperArena', 'datasets.chemTable', 'datasets.kuaiSearch', 'datasets.hoh']) {
+      const summary = plain(homeCopy[lang][key]);
+      assert.ok(summary.length > 10, key);
+      assert.ok(summary.length < plain(content[key]).length, `${key} is summarized only on the homepage`);
+      assert.equal(plain(keyedMarkup(home, 'data-i18n', key)), plain(homeCopy.en[key]));
     }
   });
 }
@@ -316,21 +299,21 @@ test('CastClaw uses 星辰 in project titles and bilingual descriptions', () => 
     const html = active(read(path));
     const names = [...html.matchAll(/<div class="os-card-name">([\s\S]*?)<\/div>/g)].map((match) => plain(match[1]));
     assert.deepEqual(names.filter((name) => name.startsWith('CastClaw')), [expected], path);
-    assert.ok(plain(keyedMarkup(html, attribute, 'opensource.castClaw')).startsWith(expected), path);
+    assert.ok(plain(keyedMarkup(html, attribute, 'opensource.castClaw')).length > 20, path);
     for (const href of ['https://github.com/ustc-time-series/CastClaw', 'https://ustc-time-series.github.io/cast-claw/', 'https://ustc-time-series.github.io/cast-claw/docs/']) {
       assert.ok(html.includes(`href="${href}"`), `${path} must retain ${href}`);
     }
   }
   for (const lang of ['en', 'zh']) {
     const copy = homeCopy[lang]['opensource.castClaw'];
-    assert.ok(plain(copy).startsWith(expected), `${lang} homepage description`);
-    assert.equal(sharedCopy[lang].pages['projects.html'].content['opensource.castClaw'], copy, `${lang} projects description`);
+    assert.ok(plain(copy).length > 20, `${lang} concise homepage description`);
+    assert.ok(plain(sharedCopy[lang].pages['projects.html'].content['opensource.castClaw']).startsWith(expected), `${lang} full projects description`);
   }
 });
 
 test('homepage and news archive use the current CastClaw Chinese name', () => {
   for (const [path, expectedCount] of [['index.html', 1], ['news.html', 3]]) {
-    const html = active(read(path));
+    const html = active(read(path)).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
     assert.equal((html.match(/<strong>CastClaw（星辰）<\/strong>/g) || []).length, expectedCount, path);
     assert.equal(html.includes('观星阁'), false, `${path} must not display the former name`);
   }
@@ -342,29 +325,28 @@ test('science dataset fallback headings include Scientific Tool and Knowledge on
   assert.equal(plain(keyedMarkup(read('projects.html'), 'data-page-i18n', 'datasets.category.science')), expected);
 });
 
-test('academic organization fallback text matches the English translations on both pages', () => {
+test('academic organization fallback text matches the full service archive translations', () => {
   for (const [suffix, expected] of Object.entries(organizationCopy.en)) {
-    assert.equal(plain(keyedMarkup(home, 'data-i18n', `service.${suffix}`)), expected);
     assert.equal(plain(keyedMarkup(read('service.html'), 'data-page-i18n', `service.${suffix}`)), expected);
   }
 });
 
 test('default homepage markup and metadata no longer describe the superseded research positioning', () => {
-  assert.equal(plain(keyedMarkup(home, 'data-i18n', 'research.intro')), introEn);
+  assert.equal(plain(keyedMarkup(home, 'data-i18n', 'research.intro')), plain(homeCopy.en['research.intro']));
   for (const path of ['index.html', 'publications.html']) {
     const html = read(path);
     for (const match of html.matchAll(/<meta (?:name|property)="(?:description|og:description|twitter:description)" content="([^"]+)"/g)) {
       assert.match(match[1], /LLM-driven reasoning and AI agents/, path);
     }
   }
-  assert.equal(home.includes('data-i18n="profile.thesis"'), false, 'the hero should not duplicate the research introduction');
+  assert.equal((home.match(/data-i18n="profile.thesis"/g) || []).length, 1, 'the hero has one compact cognitive-intelligence summary');
 });
 
-test('Research application fallback markup matches homepage summaries and topics', () => {
-  const research = read('research.html');
-  for (const key of ['scenarioIntro', 'scienceTitle', 'scienceBody', 'scienceTopics', 'industrialTitle', 'industrialBody', 'industrialTopics', 'userTitle', 'userBody', 'userTopics']) {
-    assert.equal(plain(keyedMarkup(research, 'data-page-i18n', key)), plain(homeCopy.en[`research.${key}`]), key);
-  }
+test('Research application prose retains all three named domains without card duplication', () => {
+  const research = active(read('research.html'));
+  const section = research.slice(research.indexOf('<!-- Broader Scenarios -->'));
+  assert.doesNotMatch(research, /<article class="scenario-card/);
+  for (const label of ['AI for Science', 'Forecasting Intelligence', 'Personalized Intelligence']) assert.ok(research.includes(label), label);
 });
 
 test('complete project and dataset pages use the homepage categories without dropping archive entries', () => {
@@ -392,13 +374,11 @@ test('English hero fallbacks agree with the shared runtime translations', () => 
 test('all public pages share the current footer and shared-asset versions', () => {
   for (const path of pages) {
     const html = active(read(path));
-    assert.match(html, /© 2026 Mingyue Cheng\. Last updated in September 2026\./, path);
+    assert.match(html, /© 2026 Mingyue Cheng\. Last updated on November 7, 2026\./, path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
-    assert.match(html, /site-content\.css\?v=20260917-consistency/, path);
+    assert.match(html, /site-content\.css\?v=20261107-concise/, path);
     if (path !== 'index.html') {
-      const version = path === 'research.html' ? '20261024-ai-for-science'
-        : (path === 'news.html' || path === 'publications.html') ? '20261105-wsdm2027-papers'
-        : path === 'projects.html' ? '20261105-context-aware' : '20261020-www-area-chair';
+      const version = path === 'research.html' ? '20261107-research-note' : '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }
   }

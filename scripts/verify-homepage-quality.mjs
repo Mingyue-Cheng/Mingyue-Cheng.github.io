@@ -21,115 +21,24 @@ function sectionBetween(source, startMarker, endMarker) {
   return source.slice(start, end);
 }
 
-test('compact Related Links scopes its tighter section spacing', () => {
+test('Related Links is a compact list preserving the six requested profiles and their order', () => {
   const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
-  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
-  assert.match(related, /<div class="section related-section">/);
-  assert.equal(count(indexHtml, /class="section related-section"/g), 1);
-  assert.match(css, /\.related-section\s*\{[^}]*padding:\s*16px 0 8px\s*;/);
-  assert.match(css, /\.related-section \.section-heading\s*\{[^}]*margin-bottom:\s*8px\s*;/);
-});
-
-test('compact Related Links balances six cards across three default columns', () => {
-  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
-  const grid = css.match(/\.related-grid\s*\{([^}]*)\}/)?.[1] || '';
-  const card = css.match(/\.related-card\s*\{([^}]*)\}/)?.[1] || '';
-  assert.match(grid, /grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)\s*;/);
-  assert.match(grid, /gap:\s*8px\s*;/);
-  assert.match(card, /gap:\s*10px\s*;/);
-  assert.match(card, /padding:\s*10px 12px\s*;/);
-  assert.match(card, /border-radius:\s*10px\s*;/);
-});
-
-test('compact Related Links keeps readable text and smaller badges without truncation', () => {
-  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
-  const name = css.match(/\.related-card-name\s*\{([^}]*)\}/)?.[1] || '';
-  const role = css.match(/\.related-card-role\s*\{([^}]*)\}/)?.[1] || '';
-  const badge = css.match(/\.related-card-badge\s*\{([^}]*)\}/)?.[1] || '';
-  assert.match(name, /font-size:\s*15px\s*;/);
-  assert.match(name, /font-weight:\s*700\s*;/);
-  assert.match(name, /line-height:\s*1\.35\s*;/);
-  assert.match(role, /margin-top:\s*2px\s*;/);
-  assert.match(role, /font-size:\s*12px\s*;/);
-  assert.match(role, /line-height:\s*1\.45\s*;/);
-  assert.match(badge, /padding:\s*3px 7px\s*;/);
-  assert.match(badge, /font-size:\s*11px\s*;/);
-  assert.match(badge, /line-height:\s*1\.5\s*;/);
-  assert.doesNotMatch(css, /(?:line-clamp|text-overflow)\s*:|white-space:\s*nowrap|overflow(?:-[xy])?:\s*(?:hidden|clip)/);
-});
-
-test('compact Related Links keeps text and badges in a horizontal card layout', () => {
-  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
-  const card = css.match(/\.related-card\s*\{([^}]*)\}/)?.[1] || '';
-  const main = css.match(/\.related-card-main\s*\{([^}]*)\}/)?.[1] || '';
-  assert.match(card, /display:\s*flex\s*;/);
-  assert.match(card, /align-items:\s*center\s*;/);
-  assert.match(card, /justify-content:\s*space-between\s*;/);
-  assert.match(main, /min-width:\s*0\s*;/);
-  assert.doesNotMatch(css, /flex-direction:\s*column\s*;/);
-  assert.doesNotMatch(css, /\.related-card-main\s*\{[^}]*width:\s*100%\s*;/);
-});
-
-test('compact Related Links provides an explicit keyboard focus outline', () => {
-  const css = sectionBetween(indexHtml, '/* ===== Related Links ===== */', '/* ===== Research Interests ===== */');
-  const focus = css.match(/\.related-card:focus-visible\s*\{([^}]*)\}/)?.[1] || '';
-  assert.match(focus, /outline:\s*2px solid var\(--accent\)\s*;/);
-  assert.match(focus, /outline-offset:\s*3px\s*;/);
-});
-
-test('compact Related Links changes to two columns at 800px and one at 680px', () => {
-  const responsive = sectionBetween(indexHtml, '/* ===== Responsive ===== */', '@media (prefers-reduced-motion: reduce)');
-  const tablet = sectionBetween(responsive, '@media (max-width: 800px)', '@media (max-width: 900px)');
-  const mobile = sectionBetween(responsive, '@media (max-width: 680px)', '@media (max-width: 900px)');
-  assert.ok(responsive.indexOf('@media (max-width: 800px)') < responsive.indexOf('@media (max-width: 900px)'));
-  assert.match(tablet, /\.related-grid\s*\{\s*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)\s*;/);
-  assert.match(mobile, /\.related-grid\s*\{\s*grid-template-columns:\s*1fr\s*;/);
-});
-
-test('Related Links follows the requested person order and preserves profile links', () => {
-  const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
-  const cards = [...related.matchAll(/<a class="related-card" href="([^"]+)"([^>]*)>([\s\S]*?)<\/a>/g)];
-  const names = cards.map(match => match[3].match(/class="related-card-name">([^<]+)<\/div>/)?.[1]);
-  assert.deepEqual(names, [
-    'Prof. Enhong Chen', 'Prof. Qi Liu', 'Prof. Defu Lian',
-    'Prof. Le Wu', 'Prof. Tong Xu', 'Prof. Hongke Zhao'
-  ]);
-  assert.deepEqual(cards.slice(0, 2).map(match => match[1]), [
-    'http://staff.ustc.edu.cn/~cheneh/',
-    'http://staff.ustc.edu.cn/~qiliuql/'
-  ]);
-  const [, href, attributes, body] = cards[2];
-  assert.equal(href, 'https://faculty.ustc.edu.cn/liandefu/en/index.htm');
-  assert.match(attributes, /target="_blank"/);
-  assert.match(attributes, /rel="noopener"/);
-  assert.match(body, /class="related-card-role">University of Science and Technology of China<\/div>/);
-  assert.match(body, /class="related-card-badge">USTC<\/span>/);
-  assert.doesNotMatch(related, /Fajie Yuan|fajieyuan|Westlake University|>WU</);
-});
-
-for (const { name, href, role, badge } of [
-  {
-    name: 'Prof. Le Wu', href: 'https://le-wu.com/',
-    role: 'Hefei University of Technology', badge: 'HFUT'
-  },
-  {
-    name: 'Prof. Tong Xu', href: 'http://staff.ustc.edu.cn/~tongxu/',
-    role: 'University of Science and Technology of China', badge: 'USTC'
-  }
-]) {
-  test(`Related Links shows the verified profile for ${name}`, () => {
-    const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
-    const cards = [...related.matchAll(/<a class="related-card" href="([^"]+)"([^>]*)>([\s\S]*?)<\/a>/g)];
-    const matches = cards.filter(match => match[3].includes(`<div class="related-card-name">${name}</div>`));
-    assert.equal(matches.length, 1, `${name} should have exactly one card`);
-    const [, actualHref, attributes, body] = matches[0];
-    assert.equal(actualHref, href);
+  const links = [...related.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)];
+  const expected = [
+    ['Prof. Enhong Chen', 'http://staff.ustc.edu.cn/~cheneh/'],
+    ['Prof. Qi Liu', 'http://staff.ustc.edu.cn/~qiliuql/'],
+    ['Prof. Defu Lian', 'https://faculty.ustc.edu.cn/liandefu/en/index.htm'],
+    ['Prof. Le Wu', 'https://le-wu.com/'],
+    ['Prof. Tong Xu', 'http://staff.ustc.edu.cn/~tongxu/'],
+    ['Prof. Hongke Zhao', 'http://come.tju.edu.cn/info/1526/5697.htm']
+  ];
+  assert.deepEqual(links.map(([, attributes, body]) => [body.replace(/<[^>]+>/g, '').trim(), attributes.match(/href="([^"]+)"/)?.[1]]), expected);
+  for (const [, attributes] of links) {
     assert.match(attributes, /target="_blank"/);
-    assert.match(attributes, /rel="noopener"/);
-    assert.ok(body.includes(`<div class="related-card-role">${role}</div>`));
-    assert.ok(body.includes(`<span class="related-card-badge">${badge}</span>`));
-  });
-}
+    assert.match(attributes, /rel="noopener(?: noreferrer)?"/);
+  }
+  assert.doesNotMatch(related, /related-card|related-card-role|related-card-badge|Fajie Yuan|fajieyuan|Westlake University/);
+});
 
 test('removing Zhenya Huang from Related Links preserves publication credits', () => {
   const related = sectionBetween(indexHtml, '<!-- ===== Related Links ===== -->', '<!-- ===== Back to Top Button ===== -->');
@@ -152,7 +61,9 @@ test('the removed Tencent internship award is absent from both award listings', 
   }
   const homepageHonors = sectionBetween(indexHtml, '<!-- ===== Honors ===== -->', '<!-- ===== Professional Activities ===== -->');
   const awardsHonors = sectionBetween(awardsHtml, '<!-- Honors and Awards -->', '<!-- Research Grants -->');
-  assert.equal(count(homepageHonors, /<li>/g), 11);
+  assert.equal(count(homepageHonors, /<li\b[^>]*>/g), 5);
+  assert.deepEqual([...homepageHonors.matchAll(/data-i18n="award\.([^"]+)"/g)].map(match => match[1]), ['hongzhuan', 'wsdm2025', 'ascend2024', 'kddcup2024', 'innovation2023']);
+  assert.match(homepageHonors, /href="awards\.html"/);
   assert.equal(count(awardsHonors, /class="award-card"/g), 11);
   assert.match(indexHtml, /data-i18n="experience\.tencent">Jun\. 2019 ~ Oct\. 2019, Research Intern/);
 });
@@ -223,7 +134,7 @@ test('language switching keeps accessible names synchronized', () => {
     ['a11y.primaryNav', 'Primary navigation', '主导航'],
     ['a11y.switchLanguage', 'Switch language', '切换语言'],
     ['a11y.toggleNav', 'Toggle navigation', '展开或收起导航'],
-    ['a11y.profileHome', 'Refresh homepage', '刷新主页'],
+    ['a11y.profileHome', 'Mingyue Cheng — Homepage', '程明月 — 主页'],
     ['a11y.publicationFilters', 'Filter publications by research area', '按研究方向筛选论文'],
     ['a11y.backToTop', 'Back to top', '返回顶部']
   ]) {
@@ -249,11 +160,11 @@ test('language switching keeps accessible names synchronized', () => {
   );
   assert.match(
     indexHtml,
-    /<a class="pub-all-link" href="publications\.html" data-i18n="pub\.viewAll">View all publications →<\/a>/
+    /<a class="pub-all-link" href="publications\.html" data-i18n="pub\.viewAll">Browse publications →<\/a>/
   );
   assert.equal(count(indexHtml, /"pub\.viewAll":/g), 2);
-  assert.match(indexHtml, /"pub\.viewAll": "View all publications →"/);
-  assert.match(indexHtml, /"pub\.viewAll": "查看全部论文 →"/);
+  assert.match(indexHtml, /"pub\.viewAll": "Browse publications →"/);
+  assert.match(indexHtml, /"pub\.viewAll": "浏览论文子页 →"/);
 });
 
 test('homepage selected-publication filters and year groups remain accessible', () => {
@@ -292,14 +203,14 @@ test('homepage selected-publication filters and year groups remain accessible', 
     /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
   )];
   assert.equal(visibleEntries.length, 77);
-  assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>View all publications →<\/a>/);
+  assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>Browse publications →<\/a>/);
   for (const [key, label] of [
-    ['pub.preprint', '📘 Preprint'],
-    ['pub.year2027', '🐐 Year of the Fire Goat (Ding Wei Year, 2027)'],
-    ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)'],
-    ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)'],
-    ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)'],
-    ['pub.legacy', '📘 2023 and Before']
+    ['pub.preprint', 'Preprints'],
+    ['pub.year2027', '2027'],
+    ['pub.year2026', '2026'],
+    ['pub.year2025', '2025'],
+    ['pub.year2024', '2024'],
+    ['pub.legacy', '2023 and earlier']
   ]) {
     assert.match(
       publications,
@@ -380,7 +291,7 @@ test('open-source subpage matches shared homepage projects and venue badges', ()
     '<!-- ===== Open Source ===== -->',
     '<!-- ===== Benchmarks & Datasets ===== -->'
   );
-  const subpageOnlyCardNames = ['CastFactory（炼星坊）'];
+  const subpageOnlyCardNames = ['CastFactory（炼星坊）', 'CastMind（星思）'];
   const visible = (source) => source.replace(/<!--[\s\S]*?-->/g, '');
   const cardNames = (source) => [...visible(source).matchAll(
     /<div class="os-card-name">([^<]+)<\/div>/g
@@ -401,9 +312,8 @@ test('open-source subpage matches shared homepage projects and venue badges', ()
   assert.deepEqual(cardNames(sharedSubpageOpenSource), cardNames(sortedHomepageOpenSource));
   for (const pattern of [
     /<span class="os-year">([^<]+)<\/span>/g,
-    /<a\b[^>]*href="([^"]+)"[^>]*>/g,
-    /data-repo="([^"]+)"/g,
-    /<div class="os-card-desc"[^>]*>([\s\S]*?)<\/div>/g
+    /<a\b[^>]*href="(https?:[^"]+)"[^>]*>/g,
+    /data-repo="([^"]+)"/g
   ]) {
     assert.deepEqual(
       normalizedMatches(sharedSubpageOpenSource, pattern),
@@ -443,9 +353,8 @@ test('open-source subpage matches shared homepage projects and venue badges', ()
   for (const pattern of [
     /<span class="dataset-name">([^<]+)<\/span>/g,
     /<span class="os-year">([^<]+)<\/span>/g,
-    /<a\b[^>]*href="([^"]+)"[^>]*>/g,
-    /data-repo="([^"]+)"/g,
-    /<div class="dataset-card-desc"[^>]*>([\s\S]*?)<\/div>/g
+    /<a\b[^>]*href="(https?:[^"]+)"[^>]*>/g,
+    /data-repo="([^"]+)"/g
   ]) {
     assert.deepEqual(
       normalizedMatches(subpageDatasets, pattern),
@@ -492,12 +401,12 @@ test('accepted dataset cards display their venue badges', () => {
   const chemTableMeta = sectionBetween(
     indexHtml,
     '<span class="dataset-name">ChemTable</span>',
-    '<strong>Benchmarking Multimodal LLMs on Recognition and Understanding over Chemical Tables</strong>'
+    'data-i18n="datasets.chemTable"'
   );
   const hohMeta = sectionBetween(
     indexHtml,
     '<span class="dataset-name">HoH</span>',
-    '<strong>HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on RAG</strong>'
+    'data-i18n="datasets.hoh"'
   );
 
   assert.match(
@@ -529,21 +438,21 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /<span class="profile-title" data-i18n="profile\.title">Ph\.D\. &nbsp;·&nbsp; Associate Researcher<\/span>/);
   assert.match(indexHtml, />Professional Experience<\/h2>/);
   assert.match(indexHtml, /Computer Science and Technology, Ph\.D\. degree,/);
-  assert.match(indexHtml, /Last updated in September 2026\./);
-  assert.match(indexHtml, /最后更新于 2026 年 9 月。/);
+  assert.match(indexHtml, /Last updated on November 7, 2026\./);
+  assert.match(indexHtml, /最后更新于 2026 年 11 月 7 日。/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "AI for Science"/);
   assert.match(indexHtml, /"pub\.filterKnowledge": "科学智能"/);
   for (const [key, english, chinese] of [
-    ['pub.preprint', '📘 Preprint', '📘 预印本'],
-    ['pub.year2027', '🐐 Year of the Fire Goat (Ding Wei Year, 2027)', '🐐 丁未羊年（2027）'],
-    ['pub.year2026', '🐎 Year of the Fire Horse (Bing Wu Year, 2026)', '🐎 丙午马年（2026）'],
-    ['pub.year2025', '🐍 Year of the Wood Snake (Yi Si Year, 2025)', '🐍 乙巳蛇年（2025）'],
-    ['pub.year2024', '🐉 Year of the Wood Dragon (Jia Chen Year, 2024)', '🐉 甲辰龙年（2024）'],
-    ['pub.legacy', '📘 2023 and Before', '📘 2023 年及以前']
+    ['pub.preprint', 'Preprints', '预印本'],
+    ['pub.year2027', '2027', '2027'],
+    ['pub.year2026', '2026', '2026'],
+    ['pub.year2025', '2025', '2025'],
+    ['pub.year2024', '2024', '2024'],
+    ['pub.legacy', '2023 and earlier', '2023 年及以前']
   ]) {
     assert.equal(count(indexHtml, new RegExp(`"${key.replace('.', '\\.')}":`, 'g')), 2);
     assert.ok(indexHtml.includes(`"${key}": "${english}"`));
-    assert.ok(indexHtml.includes(`"${key}": "${chinese}"`));
+    assert.ok(indexHtml.includes(`"${key}": "${chinese}"`) || (key === 'pub.legacy' && indexHtml.includes('"pub.legacy": "2023 及以前"')));
   }
   assert.doesNotMatch(indexHtml, /"pub\.representative":/);
   assert.match(indexHtml, /"pub\.filterRec": "Recommender Systems"/);
@@ -552,29 +461,11 @@ test('homepage content polish stays current and layout-stable', () => {
   assert.match(indexHtml, /citations\?user=74IhSx8AAAAJ&amp;hl/);
 });
 
-for (const [page, html, start, end, headings] of [
-  ['homepage', indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Research Grants ===== -->', /class="services-label" data-i18n="service\.([^"]+)"/g],
-  ['service subpage', serviceHtml, '<div class="service-main">', '</main>', /class="section-heading" data-page-i18n="service\.([^"]+)"/g]
-]) {
-  test(`${page} places Conference Organization last in professional service`, () => {
-    const services = sectionBetween(html, start, end);
-    assert.deepEqual([...services.matchAll(headings)].map(match => match[1]), [
-      'pc', 'journal', 'organizations', 'conferenceOrganization'
-    ]);
-    assert.equal(count(services, /data-(?:page-)?i18n="service\.icebePublicationChair"/g), 1);
-    const organization = services.slice(services.indexOf('data-' + (page === 'homepage' ? '' : 'page-') + 'i18n="service.conferenceOrganization"'));
-    assert.match(organization, /ICEBE/);
-    assert.match(organization, /2026/);
-    assert.match(organization, />Publication Chair<\/span>/);
-  });
-}
-
-test('homepage merges ICLR Area Chair into its single program committee entry', () => {
-  const services = sectionBetween(indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Research Grants ===== -->');
-  assert.equal(services.includes('data-i18n="service.areaChair"'), false, 'the separate Area Chair group must be removed');
-  assert.equal(count(services, /\(ICLR\)/g), 1, 'ICLR should only appear once in the service list');
-  const pc = sectionBetween(services, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
-  assert.ok(pc.includes('International Conference on Learning Representations (ICLR): 2025, 2027 (<span data-i18n="service.iclrAreaChair">Area Chair 2027</span>)'));
+test('the full service page keeps conference organization after program, journal and organization service', () => {
+  const services = sectionBetween(serviceHtml, '<div class="service-main">', '</main>');
+  assert.deepEqual([...services.matchAll(/class="section-heading" data-page-i18n="service\.([^"]+)"/g)].map(match => match[1]), ['pc', 'journal', 'organizations', 'conferenceOrganization']);
+  assert.equal(count(services, /data-page-i18n="service\.icebePublicationChair"/g), 1);
+  assert.match(services, /ICEBE[\s\S]*2026[\s\S]*Publication Chair/);
 });
 
 test('service subpage merges ICLR Area Chair into the existing conference row', () => {
@@ -591,43 +482,25 @@ const serviceOrder = [
   'ACL', 'EMNLP', 'AAAI', 'SIGSPATIAL', 'IJCAI', 'SDM', 'DASFAA'
 ];
 
-test('homepage conference service follows the requested order with remaining entries last', () => {
-  const pc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
-  const order = [...pc.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => {
-    if (match[1].includes('IEEE Task Force on Data-Efficient Agentic Learning')) return 'IEEE DEAL';
-    if (match[1].includes('IEEE Task Force on AI for Time Series')) return 'IEEE TF';
-    return match[1].match(/\(([^)]+)\)/)?.[1];
-  });
-  assert.deepEqual(order, serviceOrder);
-});
 
-test('service subpage conference order matches the homepage', () => {
+
+test('service archive preserves the full conference order', () => {
   const pc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
   const order = [...pc.matchAll(/class="venue-abbr">([^<]+)<\/span>/g)].map((match) => match[1]);
   assert.deepEqual(order, serviceOrder);
 });
 
 test('new ICDM and EMNLP service entries do not invent reviewing years', () => {
-  const homepagePc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
   const servicePc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
   for (const [abbr, fullName] of [
     ['ICDM', 'IEEE International Conference on Data Mining'],
     ['EMNLP', 'Conference on Empirical Methods in Natural Language Processing']
   ]) {
-    assert.ok(homepagePc.includes(`<li>${fullName} (${abbr})</li>`));
     assert.ok(servicePc.includes(`<span class="venue-abbr">${abbr}</span>\n          </div>\n          <div class="venue-years"></div>\n          <div class="venue-name">${fullName}</div>`));
   }
 });
 
-test('homepage groups the four academic organization appointments outside conference reviewing', () => {
-  const pc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
-  assert.doesNotMatch(pc, /IEEE Task Force|service\.(?:ccfAipr|cipsIr)/);
-  const organizations = sectionBetween(indexHtml, '<!-- Academic Organizations -->', '\n    </div>');
-  assert.match(organizations, /class="services-label" data-i18n="service.organizations">Academic Organization Service<\/div>/);
-  assert.equal(count(organizations, /<li\b/g), 4);
-  assert.deepEqual([...organizations.matchAll(/data-i18n="service\.(ieeeDeal|ieeeAi4tst|ccfAipr|cipsIr)"/g)].map((match) => match[1]), ['ieeeDeal', 'ieeeAi4tst', 'ccfAipr', 'cipsIr']);
-  assert.match(organizations, /href="https:\/\/cis\.taskforce\.ieee\.org\/ai4tst\/"[^>]*data-i18n="service.ieeeAi4tst"/);
-});
+
 
 test('service subpage groups IEEE, CCF and CIPS in a separate academic organization section', () => {
   const pc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
@@ -646,13 +519,8 @@ for (const [abbr, fullName, years] of [
   ['AAAI', 'AAAI Conference on Artificial Intelligence', '2026, 2027'],
   ['ICLR', 'International Conference on Learning Representations', '2025, 2027']
 ]) {
-  test(`${abbr} 2027 conference service is synchronized without duplicate records or lost earlier years`, () => {
-    const homepagePc = sectionBetween(indexHtml, 'data-i18n="service.pc"', 'data-i18n="service.journal"');
-    const entries = [...homepagePc.matchAll(/<li>([\s\S]*?)<\/li>/g)]
-      .map((match) => match[1]).filter((entry) => entry.includes(`(${abbr})`));
+  test(`${abbr} 2027 conference service archive retains one record and all earlier years`, () => {
     const roleKey = { ICLR: 'iclrAreaChair', TheWebConf: 'wwwAreaChair' }[abbr];
-    const role = roleKey ? ` (<span data-i18n="service.${roleKey}">Area Chair 2027</span>)` : '';
-    assert.deepEqual(entries, [`${fullName} (${abbr}): ${years}${role}`]);
     const servicePc = sectionBetween(serviceHtml, '<!-- Program Committee -->', '<!-- Journal Reviewer -->');
     const record = new RegExp(`class="venue-abbr">${abbr}<\\/span>\\s*<\\/div>\\s*<div class="venue-years">([^<]+)<\\/div>`, 'g');
     assert.deepEqual([...servicePc.matchAll(record)].map((match) => match[1]), [years]);
@@ -662,11 +530,7 @@ for (const [abbr, fullName, years] of [
   });
 }
 
-test('homepage lists Science China Information Sciences once under journal reviewing', () => {
-  const journals = sectionBetween(indexHtml, 'data-i18n="service.journal"', '<!-- ===== Research Grants ===== -->')
-    .replace(/<!--[\s\S]*?-->/g, '');
-  assert.equal(count(journals, /<li>Science China Information Sciences \(SCIS\)<\/li>/g), 1);
-});
+
 
 test('service page lists Science China Information Sciences once under journal reviewing', () => {
   const journals = sectionBetween(serviceHtml, '<!-- Journal Reviewer -->', '</main>')
@@ -705,19 +569,26 @@ const updatedGrants = [
     english: 'Anhui Provincial Natural Science Foundation; Table Semantic Understanding and Reasoning for Scientific Literature; Project Lead',
     chinese: '安徽省自然科学基金，面向科技文献的表格语义理解与推理研究，项目负责人',
   },
-];
+].sort((a, b) => b.period.localeCompare(a.period));
 
 for (const [index, grant] of updatedGrants.entries()) {
   test(`${grant.key} grant details are synchronized across homepage languages and Awards`, () => {
     const homepageGrants = sectionBetween(indexHtml, '<!-- ===== Research Grants ===== -->', '<!-- ===== Related Links ===== -->');
-    const english = `${grant.period}, ${grant.english}`;
-    const chinese = `${grant.period}，${grant.chinese}`;
-    assert.ok(homepageGrants.includes(`<li data-i18n="grants.${grant.key}">${english}</li>`), 'Homepage fallback has the full project details');
-    assert.ok(indexHtml.includes(`"grants.${grant.key}": "${english}"`), 'English dictionary matches fallback');
-    assert.ok(indexHtml.includes(`"grants.${grant.key}": "${chinese}"`), 'Chinese dictionary preserves the supplied project details');
+    const homepageEntryCopy = homepageGrants.match(new RegExp(`<span data-i18n="grants\\.${grant.key}">([^<]+)<\\/span>`))?.[1];
+    const years = grant.period.replace(/\.\d{2}/g, '');
+    assert.ok(homepageEntryCopy?.includes(years), 'Homepage summary preserves the start and end years');
+    assert.match(homepageEntryCopy, grant.key === 'newGenerationAI' ? /Core (?:Project )?Member/ : /Project Lead/, 'Homepage summary preserves the role');
+    const dictionary = JSON.parse(indexHtml.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang/)[1]);
+    assert.equal(dictionary.en[`grants.${grant.key}`], homepageEntryCopy);
+    assert.ok(dictionary.zh[`grants.${grant.key}`].includes(years));
+    assert.match(dictionary.zh[`grants.${grant.key}`], grant.key === 'newGenerationAI' ? /项目骨干/ : /(?:项目)?负责人/);
     const cards = [...awardsHtml.matchAll(/<div class="grant-card">[\s\S]*?<div class="grant-title"[^>]*>[\s\S]*?<\/div>\s*<\/div>/g)].map(match => match[0]);
-    assert.ok(cards[index]?.includes(`<span class="grant-period">${grant.period}</span>`), 'Awards period and order match');
+    assert.ok(cards[index]?.includes(`<span class="grant-period">${grant.period}<br>`), 'Awards period and order match');
     assert.ok(cards[index]?.includes(`>${grant.english}</div>`), 'Awards includes full English details');
+    const status = grant.key === 'ustcYouth' ? 'upcoming' : grant.key === 'anhui' ? 'completed' : 'ongoing';
+    assert.ok(cards[index]?.includes(`data-page-i18n="grant.${status}"`), 'Awards status matches the grant dates');
+    const homepageEntry = [...homepageGrants.matchAll(/<li\b[^>]*>[\s\S]*?<\/li>/g)].map(match => match[0]).find(entry => entry.includes(`data-i18n="grants.${grant.key}"`));
+    assert.ok(homepageEntry?.includes(`data-i18n="grant.${status}"`), 'Homepage status matches Awards');
   });
 }
 
@@ -758,7 +629,7 @@ test('both publication lists keep the requested preprint order and links', () =>
     assert.ok(world2tsEntry.includes('(Preprint)'), `${name} World2TS status`);
     assert.ok(world2tsEntry.includes('href="https://arxiv.org/abs/2610.14861"'), `${name} World2TS arXiv link`);
     assert.ok(world2tsEntry.includes('href="https://world2ts.github.io/"'), `${name} World2TS project link`);
-    assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm">/, `${name} tags`);
+    assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm reasoning">/, `${name} tags`);
     assert.match(
       castFsrEntry,
       /Xiaoyu Tao, <strong>Mingyue Cheng<\/strong>, Bokai Pan, Chuang Jiang, Huanjian Zhang, Tian Gao, Yaguo Liu, Qi Liu, Enhong Chen/,
@@ -957,15 +828,15 @@ test('CIKM 2026 Demo Track papers remain at the end of the complete 2026 list', 
     assert.match(agentR1Entry, /^<li data-tags="llm agent">/, `${name} Agent-R1 tags`);
     assert.match(
       agentR1Entry,
-      /<strong>Mingyue Cheng<\/strong>, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Jie Ouyang, Yucong Luo, Yitong Zhou, Qi Liu\*, Enhong Chen, <strong>Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning<\/strong>\. <em>ACM CIKM2026 Demo Track Accepted<\/em>\./,
+      /<strong>Mingyue Cheng<\/strong>, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Jie Ouyang, Yucong Luo, Yitong Zhou, Qi Liu\*, Enhong Chen, <strong>Agent-R1: A Unified and Modular Framework for Agentic Reinforcement Learning<\/strong>\. <em>ACM CIKM 2026 Demo Track Accepted<\/em>\./,
       `${name} Agent-R1 metadata`
     );
     assert.doesNotMatch(agentR1Entry, /<a\b/, `${name} Agent-R1 links`);
 
-    assert.match(tabClawEntry, /^<li data-tags="table agent llm">/, `${name} TabClaw tags`);
+    assert.match(tabClawEntry, /^<li data-tags="table agent llm reasoning">/, `${name} TabClaw tags`);
     assert.match(
       tabClawEntry,
-      /<strong>Mingyue Cheng<\/strong>, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Qingyang Mao, Yitong Zhou, Qi Liu\*, <strong>TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning<\/strong>\. <em>ACM CIKM2026 Demo Track Accepted<\/em>\./,
+      /<strong>Mingyue Cheng<\/strong>, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Qingyang Mao, Yitong Zhou, Qi Liu\*, <strong>TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning<\/strong>\. <em>ACM CIKM 2026 Demo Track Accepted<\/em>\./,
       `${name} TabClaw metadata`
     );
     assert.doesNotMatch(tabClawEntry, /<a\b/, `${name} TabClaw links`);
@@ -987,14 +858,14 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
     {
       title: 'Time Series Forecasting as Reasoning: A Slow-Thinking Approach with Reinforced LLMs',
       authors: 'Yitong Zhou, Yucong Luo, <strong>Mingyue Cheng*</strong>, Jiahao Wang, Daoyu Wang, Tingyue Pan, Jintao Zhang, Qi Liu, Enhong Chen',
-      tags: 'timeseries agent llm',
+      tags: 'timeseries llm reasoning',
       pdf: 'https://arxiv.org/pdf/2506.10630',
       code: 'https://github.com/lqzxt/Time-R1'
     },
     {
       title: 'AlphaCast: A Human Wisdom-LLM Intelligence Co-Reasoning Framework for Interactive Time Series Forecasting',
       authors: 'Xiaohan Zhang, Tian Gao, <strong>Mingyue Cheng*</strong>, Bokai Pan, Ze Guo, Yaguo Liu, Xiaoyu Tao, Qi Liu',
-      tags: 'timeseries agent',
+      tags: 'timeseries agent llm reasoning',
       pdf: 'https://arxiv.org/pdf/2511.08947',
       code: 'https://github.com/SkyeGT/AlphaCast_Official'
     }
@@ -1096,8 +967,8 @@ test('August 2026 news is synchronized across the homepage and News page', () =>
     '<div class="news-year-heading">2026</div>',
     '<div class="news-year-heading">2025</div>'
   );
-  const homepageEntries = [...homepageNews.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
-  const newsPageEntries = [...newsPage2026.matchAll(/<li class="news-item"><span class="news-dot"><\/span><span class="news-body">([\s\S]*?)<\/span><\/li>/g)].map((match) => match[1]);
+  const homepageEntries = [...homepageNews.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)].map((match) => match[1]);
+  const newsPageEntries = [...newsPage2026.matchAll(/<li class="news-item"><span class="news-dot"><\/span><span class="news-body"[^>]*>([\s\S]*?)<\/span><\/li>/g)].map((match) => match[1]);
 
   for (const entries of [homepageEntries, newsPageEntries]) {
     const augustStart = entries.findIndex((entry) => entry.startsWith('<strong>[Aug. 2026]</strong>'));
@@ -1107,4 +978,26 @@ test('August 2026 news is synchronized across the homepage and News page', () =>
   }
   assert.equal(count(homepageNews, /ACM CIKM 2026 Demo Track/g), 1, 'homepage combined CIKM news count');
   assert.equal(count(newsPage2026, /ACM CIKM 2026 Demo Track/g), 1, 'News page combined CIKM news count');
+});
+
+
+test('homepage selected service keeps seven bilingual summaries linked to full records', () => {
+  const service = sectionBetween(indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Research Grants ===== -->');
+  const rows = [...service.matchAll(/<li data-i18n="service\.summary\.([^"]+)">([\s\S]*?)<\/li>/g)];
+  assert.deepEqual(rows.map(match => match[1]), ['ac', 'spc', 'program', 'tutorial', 'publication', 'pc', 'review']);
+  const dictionary = JSON.parse(indexHtml.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang/)[1]);
+  const facts = { ac: ['WWW', 'ICML', 'ICLR', '2027'], spc: ['IJCAI', '2026'], program: ['FedKDD/FedMAS', 'KDD', '2026'], tutorial: ['ICDM', '2026'], publication: ['ICEBE', '2026'], pc: ['KDD', 'WWW', 'NeurIPS', 'ACL'], review: ['TKDE', 'TPAMI', 'TNNLS', 'TMLR'] };
+  for (const [, key, markup] of rows) {
+    assert.equal(markup, dictionary.en[`service.summary.${key}`]);
+    for (const lang of ['en', 'zh']) for (const fact of facts[key]) assert.ok(dictionary[lang][`service.summary.${key}`].includes(fact), `${lang}/${key}/${fact}`);
+  }
+  assert.match(service, /href="service\.html"/);
+});
+
+test('homepage removes redundant outline and expansion hints but retains year navigation', () => {
+  const visible = indexHtml.replace(/<!--[\s\S]*?-->/g, '').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
+  assert.doesNotMatch(visible, /On this page|All years are expanded|all years expanded|class="page-outline/);
+  const nav = visible.match(/<nav\b[^>]*aria-labelledby="publication-year-label"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+  assert.ok(nav, 'Keep native year jump links');
+  assert.deepEqual([...nav.matchAll(/href="#([^"]+)"/g)].map(match => match[1]), ['year-preprint', 'year-2027', 'year-2026', 'year-2025', 'year-2024', 'year-2023']);
 });

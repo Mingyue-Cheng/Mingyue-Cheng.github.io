@@ -76,7 +76,7 @@ test('each system card embeds its matching user-supplied logo instead of a place
       const images = [...cards[index][1].matchAll(/<img\b[^>]*>/g)].map(match => match[0]);
       assert.equal(images.length, 1, `${page}/${name} needs one original logo`);
       for (const attribute of [
-        'class="system-product-logo"', `src="files/assets/system-products/${key}-logo.png"`,
+        'class="system-product-logo"', `src="files/assets/system-products/${key}-logo.webp"`,
         `alt="${name} Logo"`, 'width="64"', 'height="64"', 'loading="lazy"', 'decoding="async"'
       ]) assert.ok(images[0].includes(attribute), `${page}/${name}: ${attribute}`);
       assert.doesNotMatch(cards[index][1], /<svg\b/);
@@ -95,7 +95,7 @@ for (const [page, html, attribute] of [
       const id = `system-product-${key}-name`;
       const header = content.match(/^\s*<div class="system-product-header">\s*(<img\b[^>]*>)\s*<div class="system-product-identity">([\s\S]*?)<\/div>\s*<\/div>/);
       assert.ok(header, `${page}/${name} must place its logo and identity inside the header`);
-      assert.ok(header[1].includes(`src="files/assets/system-products/${key}-logo.png"`));
+      assert.ok(header[1].includes(`src="files/assets/system-products/${key}-logo.webp"`));
       assert.match(header[2], new RegExp(`^\\s*<h3 id="${id}" class="system-product-name">${name}<\\/h3>\\s*<span class="system-product-brand" ${attribute}="systems.brand">科言 · Science Intelligence<\\/span>\\s*$`));
       assert.ok(attributes.includes(`aria-labelledby="${id}"`));
       assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1);

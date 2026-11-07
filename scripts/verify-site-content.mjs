@@ -149,20 +149,30 @@ test('both research surfaces share the approved Prussian-blue application cards'
   }
 });
 
-test('prose is justified at every width with language-aware specificity and natural last lines', () => {
+test('desktop prose stays justified while compact facts and English mobile prose align left', () => {
   for (const selector of proseSelectors) {
     const rule = declarations(`html[lang] ${selector}`);
-    assert.equal(rule['text-align'], 'justify', selector);
-    assert.equal(rule['text-align-last'], 'left', selector);
+    const compactFactList = selector === '.services-list li';
+    assert.equal(rule['text-align'], compactFactList ? 'left' : 'justify', selector);
+    assert.equal(rule['text-align-last'], compactFactList ? 'auto' : 'left', selector);
     assert.equal(rule['text-justify'], 'auto', selector);
     assert.equal(rule.hyphens, 'none', selector);
     assert.equal(rule['-webkit-hyphens'], 'none', selector);
     assert.equal(rule['overflow-wrap'], 'break-word', selector);
     assert.equal(rule['word-break'], 'normal', selector);
   }
-  const mobile = mediaBlock('(max-width: 680px)');
-  assert.doesNotMatch(mobile, /text-align\s*:\s*(?:left|start)/,
-    'mobile content must not override justified prose');
+  for (const selector of ['.research-section .primary-directions li', '.services-list li', '.research-applications']) {
+    const rule = declarations(`html[lang] ${selector}`);
+    assert.equal(rule['text-align'], 'left', `${selector} must read naturally in both languages`);
+    assert.equal(rule['text-align-last'], 'auto', selector);
+  }
+  const mobile = [...clean(css).matchAll(/@media \(max-width: 680px\)\s*\{([\s\S]*?)\n\}/g)]
+    .map(match => match[1]).join('\n');
+  for (const selector of proseSelectors) {
+    const rule = declarations(`html[lang="en"] ${selector}`, mobile);
+    assert.equal(rule['text-align'], 'left', `${selector}: English mobile prose`);
+    assert.equal(rule['text-align-last'], 'auto', selector);
+  }
   assert.doesNotMatch(clean(css), /(?:^|[{}])\s*(?:html\[lang\]\s+)?(?:\*|body|p|li)\s*\{/,
     'alignment should target reading content, not every element');
   for (const selector of ['.os-card-title-row', '.dataset-card-title-row', '.os-card-meta', '.dataset-card-meta']) {

@@ -405,9 +405,37 @@ body {
   -webkit-hyphens: none;
 }
 
-.research-main .scenario-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.research-evidence {
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
 }
+.research-evidence-label {
+  margin-bottom: 3px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+.research-evidence-contribution {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.research-evidence-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 7px;
+}
+.research-evidence-links a {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.research-evidence-links a:hover { text-decoration: underline; }
+.research-evidence-links a span { color: var(--text-muted); font-size: 12px; font-weight: 400; }
+
 
 /* ===== CSS-drawn visual markers ===== */
 .visual-icon i,
@@ -479,7 +507,6 @@ body {
 }
 .research-note-box a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .research-note-box a:hover { text-decoration: underline; }
-.research-note-box + .research-note-box { margin-top: 10px; }
 
 /* ===== Back to Top ===== */
 #back-to-top {
@@ -497,11 +524,12 @@ body {
   align-items: center;
   justify-content: center;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transition: opacity 0.3s ease, background-color 0.2s ease;
   z-index: 999;
 }
-#back-to-top.visible { opacity: 1; pointer-events: auto; }
+#back-to-top.visible { opacity: 1; visibility: visible; pointer-events: auto; }
 #back-to-top:hover { background-color: #00243d; }
 
 /* ===== Footer ===== */
@@ -550,9 +578,6 @@ body {
 /* ===== Responsive ===== */
 @media (max-width: 960px) {
   .pillar-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .research-main .scenario-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }
@@ -616,9 +641,8 @@ body {
   .footer-shell { padding-left: 20px; padding-right: 20px; }
 }
   </style>
-  <link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">
   <link rel="stylesheet" href="files/assets/site-theme.css?v=20260917-consistency">
-  <link rel="stylesheet" href="files/assets/site-content.css?v=20260917-consistency">
+  <link rel="stylesheet" href="files/assets/site-content.css?v=20261107-concise">
   <link rel="stylesheet" href="files/assets/research-page.css?v=20261020-cognitive-research">
 </head>
 <body class="research-page">
@@ -655,7 +679,7 @@ body {
         <p class="research-eyebrow" data-page-i18n="heroEyebrow">Research Overview</p>
         <h1 class="page-hero-title">Cognitive Intelligence</h1>
         <p class="page-hero-sub">
-          My research focuses on cognitive intelligence: enabling machines to understand, reason, and interact. I study LLM agents and autonomous learning as general intelligent mechanisms, with scientific knowledge and tools and structured data as two core research objects. The three directions address independent scientific questions while sharing foundations in cognitive intelligence. Autonomous learning, continual evolution, and human–AI collaboration support long-term capability improvement.
+          I study cognitive intelligence: enabling machines to understand, reason, and interact. My work spans three directions with independent scientific questions, connected through autonomous learning, continual evolution, and human–AI collaboration.
         </p>
       </div>
     </div>
@@ -680,12 +704,17 @@ body {
           <div class="pillar-card-copy">
             <p class="pillar-card-role" data-page-i18n="agentRole">01 · General Mechanisms of Intelligence</p>
             <h3 class="pillar-card-title" data-page-i18n="agentTitle">LLM Agents &amp; Autonomous Learning</h3>
-            <p class="pillar-card-desc" data-page-i18n="agentBody">Study how LLM agents make autonomous decisions in open environments, accumulate experience, optimize learning strategies, and continually evolve. Research focuses on <strong>agent architectures and harnesses, long-term memory, autonomous interaction, and learning mechanisms</strong>.</p>
+            <p class="pillar-card-desc" data-page-i18n="agentBody">Study <strong>agent harnesses, long-term memory, autonomous interaction, and learning mechanisms</strong> that support decision-making, transferable experience, and continual evolution.</p>
             <div class="pillar-question">
               <span class="question-label" data-page-i18n="questionLabel">Scientific question</span>
-              <p data-page-i18n="agentQuestion">How can LLM agents make autonomous decisions, accumulate transferable experience, and continually improve their capabilities?</p>
+              <p data-page-i18n="agentQuestion">How can LLM agents make autonomous decisions, accumulate transferable experience, and continually improve?</p>
             </div>
             <p class="research-topics" data-page-i18n="agentTopics"><span>Agent Harness</span><span>Agent Memory</span><span>Self-Evolution</span><span>Autonomous Learning</span></p>
+            <div class="research-evidence">
+              <p class="research-evidence-label" data-page-i18n="representativeLabel">Representative work</p>
+              <p class="research-evidence-contribution" data-page-i18n="agentContribution">Agent training, persistent memory, and evidence-guided research workflows.</p>
+              <div class="research-evidence-links"><a href="https://github.com/AgentR1/Agent-R1" target="_blank" rel="noopener">Agent-R1 <span>· CIKM 2026 Demo</span></a><a href="https://arxiv.org/abs/2510.07713" target="_blank" rel="noopener">MemWeaver <span>· WWW 2026</span></a><a href="https://arxiv.org/pdf/2601.04879" target="_blank" rel="noopener">Mind2Report <span>· CIKM 2026</span></a></div>
+            </div>
           </div>
         </article>
 
@@ -696,12 +725,17 @@ body {
           <div class="pillar-card-copy">
             <p class="pillar-card-role" data-page-i18n="knowledgeRole">02 · Research for Scientific Innovation</p>
             <h3 class="pillar-card-title" data-page-i18n="knowledgeTitle">Scientific Knowledge &amp; Tool Mining</h3>
-            <p class="pillar-card-desc" data-page-i18n="knowledgeBody">Discover, understand, and organize scientific knowledge and tools from research resources. Research spans <strong>scientific literature mining, knowledge extraction and reasoning, tool discovery, capability understanding, and autonomous tool composition</strong> to support scientific exploration and innovation.</p>
+            <p class="pillar-card-desc" data-page-i18n="knowledgeBody">Study <strong>scientific literature mining and scientific tool mining</strong>, including knowledge extraction and reasoning, tool capability modeling, and autonomous tool orchestration.</p>
             <div class="pillar-question">
               <span class="question-label" data-page-i18n="questionLabel">Scientific question</span>
-              <p data-page-i18n="knowledgeQuestion">How can scientific knowledge and tools be discovered, organized, and reliably used to support scientific innovation?</p>
+              <p data-page-i18n="knowledgeQuestion">How can scientific knowledge and tools be discovered, organized, and reliably used for scientific innovation?</p>
             </div>
             <p class="research-topics" data-page-i18n="knowledgeTopics"><span>Scientific Literature Mining</span><span>Scientific Tool Mining</span><span>Knowledge Discovery</span><span>Agentic Research</span></p>
+            <div class="research-evidence">
+              <p class="research-evidence-label" data-page-i18n="representativeLabel">Representative work</p>
+              <p class="research-evidence-contribution" data-page-i18n="knowledgeContribution">Scientific paper discovery, tool-augmented literature reasoning, and chemical-table understanding.</p>
+              <div class="research-evidence-links"><a href="https://agentr1.github.io/paperscout/" target="_blank" rel="noopener">PaperScout <span>· Findings of EMNLP 2026</span></a><a href="https://paperarena-ai.github.io/" target="_blank" rel="noopener">PaperArena <span>· WSDM 2027</span></a><a href="https://github.com/ustc-ai4science/ChemTable" target="_blank" rel="noopener">ChemTable <span>· KDD 2026</span></a></div>
+            </div>
           </div>
         </article>
 
@@ -712,12 +746,17 @@ body {
           <div class="pillar-card-copy">
             <p class="pillar-card-role" data-page-i18n="structuredRole">03 · Research for Complex-System Cognition</p>
             <h3 class="pillar-card-title" data-page-i18n="structuredTitle">Cognitive Intelligence for Structured Data</h3>
-            <p class="pillar-card-desc" data-page-i18n="structuredBody">Study semantics, context, complex relationships, and dynamic evolution in <strong>time series, tables, and graphs</strong>, moving from pattern recognition toward <strong>knowledge-grounded cognitive reasoning, interactive analysis, and decision support</strong> for complex systems.</p>
+            <p class="pillar-card-desc" data-page-i18n="structuredBody">Study <strong>semantics, context, relationships, and dynamics in time series, tables, and graphs</strong> to support knowledge-grounded reasoning, interactive analysis, and decisions.</p>
             <div class="pillar-question">
               <span class="question-label" data-page-i18n="questionLabel">Scientific question</span>
-              <p data-page-i18n="structuredQuestion">How can complex relationships and dynamic evolution in structured data be understood and reasoned about using knowledge and evidence?</p>
+              <p data-page-i18n="structuredQuestion">How can knowledge and evidence support reasoning about complex relationships and dynamics in structured data?</p>
             </div>
             <p class="research-topics" data-page-i18n="structuredTopics"><span>Time Series</span><span>Tabular Data</span><span>Graph Data</span></p>
+            <div class="research-evidence">
+              <p class="research-evidence-label" data-page-i18n="representativeLabel">Representative work</p>
+              <p class="research-evidence-contribution" data-page-i18n="structuredContribution">Context-aware forecasting and tool-augmented reasoning over time series and tables.</p>
+              <div class="research-evidence-links"><a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">AlphaCast <span>· CIKM 2026</span></a><a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Time-R1 <span>· CIKM 2026</span></a><a href="https://github.com/lennendd/TableMind-Repo" target="_blank" rel="noopener">TableMind <span>· WSDM 2026</span></a></div>
+            </div>
           </div>
         </article>
       </div>
@@ -725,110 +764,19 @@ body {
 
     <section class="research-tier research-relations" aria-labelledby="research-relations-heading">
       <h2 id="research-relations-heading" class="rd-section-label">How the Directions Connect</h2>
-      <p class="research-section-intro" data-page-i18n="relationsIntro">The three directions have independent scientific questions and share a technical foundation in cognitive intelligence. General mechanisms and object-specific research inform one another.</p>
-      <div class="research-relation-map">
-        <div class="relation-mechanism">
-          <p class="relation-label" data-page-i18n="mechanismLabel">General Intelligent Mechanisms</p>
-          <h3 data-page-i18n="mechanismTitle">LLM Agents &amp; Autonomous Learning</h3>
-          <p class="research-topics" data-page-i18n="mechanismTopics"><span>Harness</span><span>Memory</span><span>Self-Evolution</span><span>Autonomous Learning</span></p>
-        </div>
-        <p class="relation-feedback"><span aria-hidden="true">↕</span><span data-page-i18n="feedbackLabel">General methods support domain research; domain feedback improves intelligent capabilities.</span></p>
-        <div class="relation-objects">
-          <div class="relation-object relation-object--knowledge">
-            <h3 data-page-i18n="knowledgeObjectTitle">Scientific Knowledge &amp; Tools</h3>
-            <p data-page-i18n="knowledgeObjectBody">Scientific literature, knowledge, and tools: discovering and using scientific knowledge and capabilities.</p>
-          </div>
-          <div class="relation-object relation-object--structured">
-            <h3 data-page-i18n="structuredObjectTitle">Structured Data</h3>
-            <p data-page-i18n="structuredObjectBody">Time series, tables, and graphs: understanding structure and context, and reasoning about complex systems.</p>
-          </div>
-        </div>
-        <p class="relation-synergy"><span aria-hidden="true">↔</span><span data-page-i18n="synergyLabel">Knowledge–data synergy: knowledge and tools inform data analysis; data evidence tests knowledge and tool capabilities.</span></p>
-      </div>
+      <p class="research-section-intro" data-page-i18n="relationsIntro">LLM agents and autonomous learning provide general mechanisms for cognition. Scientific knowledge and tools, and structured data, pose distinct research questions and provide evidence and feedback that help refine these mechanisms.</p>
     </section>
 
-    <section class="research-tier cognitive-framework" aria-labelledby="cognitive-framework-heading">
-      <h2 id="cognitive-framework-heading" class="rd-section-label">Shared Cognitive Framework</h2>
-      <p class="research-section-intro" data-page-i18n="frameworkIntro">Understanding, reasoning, and interaction form a feedback loop. New evidence and interaction outcomes can revise understanding and guide further reasoning.</p>
-      <div class="cognitive-grid">
-        <article class="cognitive-step">
-          <span class="cognitive-step-number" aria-hidden="true">01</span>
-          <h3 data-page-i18n="understandTitle">Understand</h3>
-          <p data-page-i18n="understandBody">Interpret structure and relationships; understand semantics, context, scientific knowledge, and tool capabilities.</p>
-        </article>
-        <article class="cognitive-step">
-          <span class="cognitive-step-number" aria-hidden="true">02</span>
-          <h3 data-page-i18n="reasonTitle">Reason</h3>
-          <p data-page-i18n="reasonBody">Integrate knowledge and evidence to support cognitive reasoning, planning, and informed decisions.</p>
-        </article>
-        <article class="cognitive-step">
-          <span class="cognitive-step-number" aria-hidden="true">03</span>
-          <h3 data-page-i18n="interactTitle">Interact</h3>
-          <p data-page-i18n="interactBody">Actively acquire external evidence and interact with tools, environments, and people to update cognition.</p>
-        </article>
-      </div>
-      <div class="learning-mechanisms">
-        <h3 data-page-i18n="mechanismsTitle">Long-Term Capability Development</h3>
-        <p data-page-i18n="mechanismsBody"><strong>Autonomous learning · Continual evolution · Human–AI collaboration.</strong> Accumulate experience, reflect on feedback, and improve learning strategies to sustain the development of cognitive capabilities.</p>
-      </div>
-    </section>
     <!-- /Research Framework -->
 
     <!-- Broader Scenarios -->
-    <section class="scenario-section" aria-labelledby="research-scenario-heading">
-      <div class="scenario-heading-row">
-        <h2 id="research-scenario-heading" class="scenario-heading scenario-section-label">Application Domains</h2>
-      </div>
-      <p class="scenario-intro" data-page-i18n="scenarioIntro">Real-world settings for developing and evaluating intelligent systems.</p>
-      <div class="scenario-grid">
-        <article class="scenario-card scenario-card--science">
-          <div class="scenario-card-header">
-            <span class="scenario-card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M9 3h6M10 3v5L5 17a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M8 14h8"></path>
-              </svg>
-            </span>
-            <h3 class="scenario-card-title" data-page-i18n="scienceTitle">AI for Science</h3>
-          </div>
-          <p class="scenario-card-body" data-page-i18n="scienceBody">Focusing on scientific tools, scientific knowledge mining, and autonomous scientific discovery.</p>
-          <div class="scenario-card-topics" data-page-i18n="scienceTopics"><span>Scientific Literature Mining</span><span>Scientific Tool Mining</span></div>
-        </article>
-        <article class="scenario-card scenario-card--user">
-          <div class="scenario-card-header">
-            <span class="scenario-card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <circle cx="12" cy="8" r="3"></circle>
-                <path d="M6 20c.7-4 2.7-6 6-6s5.3 2 6 6M4 8h2m12 0h2"></path>
-              </svg>
-            </span>
-            <h3 class="scenario-card-title" data-page-i18n="userTitle">Personalized Intelligence</h3>
-          </div>
-          <p class="scenario-card-body" data-page-i18n="userBody">Focusing on user behavior and preference modeling for adaptive, personalized recommendations.</p>
-          <div class="scenario-card-topics" data-page-i18n="userTopics"><span>Behavior modeling</span><span>Contextual Memory</span></div>
-        </article>
-        <article class="scenario-card scenario-card--industrial">
-          <div class="scenario-card-header">
-            <span class="scenario-card-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M4 4v16h16M7 14l4-4 4 3 5-7M16 6h4v4"></path>
-              </svg>
-            </span>
-            <h3 class="scenario-card-title" data-page-i18n="industrialTitle">Forecasting Intelligence</h3>
-          </div>
-          <p class="scenario-card-body" data-page-i18n="industrialBody">Focusing on context-aware forecasting, uncertainty estimation, and adaptive decision support for complex, evolving systems.</p>
-          <div class="scenario-card-topics" data-page-i18n="industrialTopics"><span>Context-aware forecasting</span><span>Uncertainty &amp; decisions</span></div>
-        </article>
-      </div>
+    <section class="research-tier research-applications" aria-labelledby="research-scenario-heading">
+      <h2 id="research-scenario-heading" class="rd-section-label">Application Domains</h2>
+      <p class="research-section-intro" data-page-i18n="applicationsSummary">Applications include <strong>AI for Science</strong> through scientific literature and tool mining; <strong>Personalized Intelligence</strong> through user behavior and contextual memory; and <strong>Forecasting Intelligence</strong> for electricity load, power generation, and weather, with context-aware prediction and uncertainty estimation.</p>
     </section>
 
     <!-- Notes -->
-    <div class="research-note-box">
-      Research collections:
-      🤖 <a href="https://agentr1.github.io/" target="_blank" rel="noopener">LLMs and Agentic AI（认知大模型）</a> ·
-      📊 <a href="https://ustc-time-series.github.io/" target="_blank" rel="noopener">Time Series Intelligence（科语）</a> ·
-      📚 <a href="https://ustcagi-sci.github.io/" target="_blank" rel="noopener">Science Intelligence（科言）</a>
-    </div>
-    <div class="research-note-box">Prospective students and research collaborators are welcome to explore the <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a> and <a href="mailto:mycheng@ustc.edu.cn">contact me by email</a>.</div>
+    <div class="research-note-box" id="research-contact-note">For research opportunities and collaboration, visit the <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a> or <a href="mailto:mycheng@ustc.edu.cn">contact me by email</a>.</div>
 
   </div>
 </div>
@@ -850,7 +798,7 @@ body {
       <a class="footer-link" href="https://scholar.google.com/citations?user=74IhSx8AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
       <a class="footer-link" href="mailto:mycheng@ustc.edu.cn">Contact</a>
     </div>
-    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated in September 2026.</div>
+    <div class="footer-bottom">© 2026 Mingyue Cheng. Last updated on November 7, 2026.</div>
   </div>
 </footer>
 
@@ -860,9 +808,12 @@ body {
   window.addEventListener('scroll', () => {
     btn.classList.toggle('visible', window.scrollY > 300);
   });
-  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  btn.addEventListener('click', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
 })();
 </script>
-<script src="files/assets/site-language.js?v=20261024-ai-for-science"></script>
+<script src="files/assets/site-language.js?v=20261107-research-note"></script>
 </body>
 </html>

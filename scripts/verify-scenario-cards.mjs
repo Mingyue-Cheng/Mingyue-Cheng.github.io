@@ -14,7 +14,7 @@ const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 const sharedContentCss = read('files/assets/site-content.css');
 const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">';
-const researchIntroEnglish = "I study cognitive intelligence: enabling machines to understand, reason, and interact. My work spans three directions with independent scientific questions, connected through autonomous learning, continual evolution, and human–AI collaboration.";
+const researchIntroEnglish = 'My research centers on large language models and agents, time-series data mining, and scientific literature mining. I pursue three connected directions: Forecasting Intelligence, AI for AI, and AI for Science, with a focus on predictive reasoning, autonomous learning, and scientific discovery.';
 const researchCssPath = join(root, 'files/assets/research-page.css');
 const researchCss = existsSync(researchCssPath) ? readFileSync(researchCssPath, 'utf8') : '';
 
@@ -402,14 +402,16 @@ test('shared stylesheet implements the approved visual and responsive contract',
   assert.doesNotMatch(scenarioCss, /\.scenario-card-list\b/);
 });
 
-test('homepage applications use one concise paragraph with all three domain identities', () => {
+test('homepage research directions use one concise bilingual paragraph in the requested order', () => {
   const researchArea = sectionBetween(indexHtml, '<!-- ===== Research Interests ===== -->', '<!-- ===== Latest News ===== -->');
   assert.doesNotMatch(researchArea, /<article class="scenario-card/);
-  const prose = researchArea.match(/<p\b[^>]*data-i18n="research\.applications"[^>]*>([\s\S]*?)<\/p>/)?.[1];
-  assert.ok(prose, 'Applications need one translatable paragraph');
-  for (const title of ['AI for Science', 'Forecasting Intelligence', 'Personalized Intelligence']) assert.ok(prose.includes(title));
-  assert.equal(prose, decodedTranslationEntries('research.applications')[0]);
-  for (const title of ['科学智能', '预测智能', '个性化智能']) assert.ok(decodedTranslationEntries('research.applications')[1].includes(title));
+  const paragraphs = [...researchArea.matchAll(/<p\b[^>]*data-i18n="research\.applications"[^>]*>([\s\S]*?)<\/p>/g)];
+  assert.equal(paragraphs.length, 1, 'Research directions need one translatable paragraph');
+  assert.match(paragraphs[0][0], /class="research-applications"/);
+  const expectedEnglish = '<strong>Research Directions:</strong> Forecasting Intelligence, AI for AI, AI for Science, Recommender Systems.';
+  const expectedChinese = '<strong>研究方向：</strong>预测智能、大模型自主学习与智能体持续进化、科学智能、推荐系统。';
+  assert.equal(paragraphs[0][1], expectedEnglish);
+  assert.deepEqual(decodedTranslationEntries('research.applications'), [expectedEnglish, expectedChinese]);
 });
 
 
@@ -437,17 +439,28 @@ test('homepage keeps three concise primary directions without collection links',
   assert.doesNotMatch(section, /data-i18n="research\.collections"|primary-direction--prediction/);
 });
 
-test('research technical pillars stack vertically at every breakpoint in canonical order', () => {
-  const pillars = sectionBetween(
-    researchHtml,
-    '<!-- Core Technical Pillars -->',
-    '<!-- /Research Framework -->'
-  );
+test('research foundations use three responsive columns and directions remain in canonical vertical order', () => {
+  const foundationRules = cssRuleBlocks(researchCss, '.research-page .foundation-grid');
+  assert.equal(finalDeclarationValue(foundationRules[0]?.body || '', 'display'), 'grid');
+  assert.equal(finalDeclarationValue(foundationRules[0].body, 'grid-template-columns'), 'repeat(3, minmax(0, 1fr))');
+  const tabletStyles = sectionBetween(researchCss, '@media (min-width: 681px) and (max-width: 960px)', '@media (max-width: 680px)');
+  assertFinalDeclarations(cssRule(tabletStyles, '.research-page .foundation-grid'), {
+    'grid-template-columns': 'repeat(2, minmax(0, 1fr))'
+  }, 'Research foundation tablet columns');
+  assertFinalDeclarations(cssRule(tabletStyles, '.research-page .foundation-card--literature'), {
+    'grid-column': '1 / -1'
+  }, 'Research literature foundation tablet span');
+  const mobileStyles = researchCss.slice(researchCss.indexOf('@media (max-width: 680px)'));
+  assertFinalDeclarations(cssRule(mobileStyles, '.research-page .foundation-grid'), {
+    'grid-template-columns': 'minmax(0, 1fr)'
+  }, 'Research foundation mobile columns');
+  const pillars = researchHtml.match(/<section\b[^>]*aria-labelledby="research-directions-heading"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(pillars, 'Research directions must have a semantic section');
   const cards = startTagsWithClass(pillars, 'article', 'pillar-card');
   assert.deepEqual(
     cards.map((tag) => classTokens(tag).filter((token) => token.startsWith('pillar-card--'))),
-    [['pillar-card--agent'], ['pillar-card--knowledge'], ['pillar-card--structured']],
-    'Research directions must appear as agents, scientific knowledge and tools, then structured data'
+    [['pillar-card--forecasting'], ['pillar-card--ai'], ['pillar-card--science']],
+    'Research directions must appear as Forecasting Intelligence, AI for AI, then AI for Science'
   );
 
   const gridRules = cssRuleBlocks(researchCss, '.research-page .pillar-grid');
@@ -459,6 +472,10 @@ test('research technical pillars stack vertically at every breakpoint in canonic
     }
   }
   assert.equal(finalDeclarationValue(gridRules[0].body, 'display'), 'grid');
+  assertFinalDeclarations(cssRule(researchCss, '.research-page .direction-works'), {
+    'display': 'flex',
+    'flex-wrap': 'wrap'
+  }, 'Research selected-work row');
 });
 
 test('research pages omit table research without removing its publication category', () => {
@@ -491,21 +508,23 @@ test('research pages omit table research without removing its publication catego
 
 
 
-test('research page keeps shared translations for directions, questions and compact applications', () => {
+test('research page keeps shared translations for its foundations and directions', () => {
   assert.ok(siteLanguageJs.includes("document.querySelectorAll('[data-page-i18n]')"));
-  assert.match(researchHtml, /site-language\.js\?v=20261107-research-note/);
-  for (const prefix of ['agent', 'knowledge', 'structured']) for (const suffix of ['Title', 'Body', 'Question', 'Role', 'Topics']) assert.ok(researchHtml.includes(`data-page-i18n="${prefix}${suffix}"`));
-  for (const key of ['relationsIntro', 'applicationsSummary']) assert.ok(researchHtml.includes(`data-page-i18n="${key}"`));
-  assert.doesNotMatch(researchHtml, /data-page-i18n="(?:understand|reason|interact|mechanisms)(?:Title|Body)"/);
+  assert.match(researchHtml, /site-language\.js\?v=20261114-research-editorial/);
+  for (const prefix of ['forecasting', 'ai', 'science']) for (const suffix of ['Title', 'Body', 'Role']) assert.ok(researchHtml.includes(`data-page-i18n="${prefix}${suffix}"`));
+  for (const prefix of ['foundationLlm', 'foundationTimeseries', 'foundationLiterature']) for (const suffix of ['Title', 'Body']) assert.ok(researchHtml.includes(`data-page-i18n="${prefix}${suffix}"`));
+  assert.doesNotMatch(researchHtml, /data-page-i18n="(?:relationsIntro|applicationsSummary|\w+Topics)"/);
 });
 
-test('research directions each expose a scientific question without the old vision card', () => {
-  const directions = sectionBetween(researchHtml, '<!-- Core Technical Pillars -->', '<!-- /Research Framework -->');
-  for (const prefix of ['agent', 'knowledge', 'structured']) {
-    const question = directions.match(new RegExp(`<p\\b[^>]*data-page-i18n="${prefix}Question"[^>]*>([\\s\\S]*?)<\\/p>`));
-    assert.ok(question, `${prefix} needs its own scientific question`);
-    assert.ok(visibleText(question[1]).length > 30, `${prefix} question must have substantive content`);
+test('research directions keep substantive descriptions without question blocks or the old vision card', () => {
+  const directions = researchHtml.match(/<section\b[^>]*aria-labelledby="research-directions-heading"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(directions, 'Research directions must have a semantic section');
+  for (const prefix of ['forecasting', 'ai', 'science']) {
+    const description = directions.match(new RegExp(`<p\\b[^>]*data-page-i18n="${prefix}Body"[^>]*>([\\s\\S]*?)<\\/p>`));
+    assert.ok(description, `${prefix} needs its own description`);
+    assert.ok(visibleText(description[1]).length > 30, `${prefix} description must have substantive content`);
   }
+  assert.doesNotMatch(directions, /pillar-question|data-page-i18n="(?:questionLabel|\w+Question)"/);
   assert.equal(startTagsWithClass(directions, 'article', 'research-vision-card').length, 0);
   assert.doesNotMatch(researchHtml, /<!-- Research Vision -->|data-page-i18n="researchQuestion"/);
 });
@@ -518,18 +537,18 @@ test('research hero uses the supplied English introduction in fallback markup an
   assert.equal(vm.runInNewContext(`(${literal})`).en.pages['research.html'].subtitle, researchIntroEnglish);
 });
 
-test('research introduction and all three scientific questions survive language switching', () => {
+test('research introduction and all three direction descriptions survive language switching', () => {
   const literal = siteLanguageJs.match(/const translations = (\{[\s\S]*?\n  \});\n\n  const navTargets/)?.[1];
   const translations = vm.runInNewContext(`(${literal})`);
-  const questions = ['agent', 'knowledge', 'structured'].map((prefix) => {
-    const key = `${prefix}Question`;
+  const descriptions = ['forecasting', 'ai', 'science'].map((prefix) => {
+    const key = `${prefix}Body`;
     const markup = researchHtml.match(new RegExp(`<p\\b[^>]*data-page-i18n="${key}"[^>]*>([\\s\\S]*?)<\\/p>`));
     assert.ok(markup, `${key} must have a translation target`);
     return { key, innerHTML: markup[1], getAttribute(name) { return name === 'data-page-i18n' ? this.key : null; } };
   });
   for (const initialLanguage of ['en', 'zh']) {
     const subtitle = { textContent: '' };
-    const elements = questions.map((question) => ({ ...question }));
+    const elements = descriptions.map((description) => ({ ...description }));
     let onToggle;
     const toggle = {
       textContent: '',
@@ -554,8 +573,8 @@ test('research introduction and all three scientific questions survive language 
     }, { filename: 'site-language.js' });
     for (const lang of [initialLanguage, initialLanguage === 'en' ? 'zh' : 'en', initialLanguage]) {
       if (document.documentElement.lang !== (lang === 'zh' ? 'zh-CN' : 'en')) onToggle();
-      for (const question of elements) {
-        assert.equal(question.innerHTML, translations[lang].pages['research.html'].scenarios[question.key]);
+      for (const description of elements) {
+        assert.equal(description.innerHTML, translations[lang].pages['research.html'].scenarios[description.key]);
       }
       assert.equal(storage.get('homepage-language'), lang);
       if (lang === 'en') assert.equal(subtitle.textContent, researchIntroEnglish);
@@ -576,7 +595,7 @@ test('research framework prose uses left alignment with safe line wrapping', () 
   }, 'Research direction prose');
 });
 
-test('research hero gives the cognitive framework full-width emphasis', () => {
+test('research hero gives the foundations and directions full-width emphasis', () => {
   const hero = sectionBetween(researchHtml, '<!-- ===== Hero ===== -->', '<!-- ===== Main ===== -->');
 
   assert.equal(matchCount(hero, /class="page-hero-copy"/g), 1);

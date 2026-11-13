@@ -202,7 +202,7 @@ test('homepage selected-publication filters and year groups remain accessible', 
   const visibleEntries = [...publications.replace(/<!--[\s\S]*?-->/g, '').matchAll(
     /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
   )];
-  assert.equal(visibleEntries.length, 77);
+  assert.equal(visibleEntries.length, 78);
   assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>Browse publications →<\/a>/);
   for (const [key, label] of [
     ['pub.preprint', 'Preprints'],
@@ -912,17 +912,21 @@ function latestNewsLists() {
   ];
 }
 
-test('November 2026 WSDM acceptances lead both news surfaces once', () => {
+test('November 2026 GeoMind acceptance leads both news surfaces followed by WSDM acceptances', () => {
+  const expected = '<strong>[Nov. 2026]</strong> 🎉 Congratulations on our paper <strong>GeoMind</strong> being accepted to the <strong>ACM SIGKDD 2027 Research Track (August Cycle)</strong>!';
   for (const entries of latestNewsLists()) {
-    assert.match(entries[0], /WSDM\s*2027/);
+    assert.equal(entries[0], expected);
+    assert.equal(entries.filter(entry => entry === expected).length, 1);
+    assert.match(entries[1], /WSDM\s*2027/);
     assert.equal(entries.filter(entry => /WSDM\s*2027/.test(entry)).length, 1);
   }
+  assert.match(newsHtml, /data-page-i18n="news\.geomindPreprint"><strong>\[Apr\. 2026\]<\/strong>[\s\S]*?https:\/\/arxiv\.org\/abs\/2604\.21501/);
 });
 
 test('October 2026 ICML Area Chair announcement follows the WSDM news on both surfaces once', () => {
   const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.';
   for (const entries of latestNewsLists()) {
-    assert.equal(entries[1], expected);
+    assert.equal(entries[2], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
   }
 });
@@ -930,7 +934,7 @@ test('October 2026 ICML Area Chair announcement follows the WSDM news on both su
 test('October 2026 WWW Area Chair announcement remains after the ICML announcement once', () => {
   const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.';
   for (const entries of latestNewsLists()) {
-    assert.equal(entries[2], expected);
+    assert.equal(entries[3], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
   }
 });
@@ -938,7 +942,7 @@ test('October 2026 WWW Area Chair announcement remains after the ICML announceme
 test('September 2026 ICDM demo acceptance follows the WWW Area Chair announcement', () => {
   const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
   for (const entries of latestNewsLists()) {
-    assert.equal(entries[3], expected);
+    assert.equal(entries[4], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
   }
 });
@@ -946,7 +950,7 @@ test('September 2026 ICDM demo acceptance follows the WWW Area Chair announcemen
 test('September 2026 TKDE survey acceptance follows the ICDM demo news', () => {
   const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
   for (const entries of latestNewsLists()) {
-    assert.equal(entries[4], expected);
+    assert.equal(entries[5], expected);
     assert.equal(entries.filter((entry) => entry === expected).length, 1);
   }
   assert.ok(newsHtml.includes('<strong>[Apr. 2025]</strong> 📄 We preprinted a new survey: <strong>A Comprehensive Survey of Time Series Forecasting</strong>'), 'Keep the historical preprint announcement');

@@ -24,40 +24,39 @@
       },
       pages: {
         'research.html': {
-          title: 'Cognitive Intelligence',
-          subtitle: "I study cognitive intelligence: enabling machines to understand, reason, and interact. My work spans three directions with independent scientific questions, connected through autonomous learning, continual evolution, and human–AI collaboration.",
-          labels: ["Core Research Directions", "How the Directions Connect", "Application Domains"],
-          scenarios: {
-            "representativeLabel": "Representative work",
-            "structuredContribution": "Context-aware forecasting and tool-augmented reasoning over time series and tables.",
-            "knowledgeContribution": "Scientific paper discovery, tool-augmented literature reasoning, and chemical-table understanding.",
-            "agentContribution": "Agent training, persistent memory, and evidence-guided research workflows.",
-            heroEyebrow: 'Research Overview',
-            questionLabel: 'Scientific question',
-            agentRole: '01 · General Mechanisms of Intelligence',
-            agentTitle: 'LLM Agents &amp; Autonomous Learning',
-            agentBody: "Study <strong>agent harnesses, long-term memory, autonomous interaction, and learning mechanisms</strong> that support decision-making, transferable experience, and continual evolution.",
-            agentQuestion: "How can LLM agents make autonomous decisions, accumulate transferable experience, and continually improve?",
-            agentTopics: '<span>Agent Harness</span><span>Agent Memory</span><span>Self-Evolution</span><span>Autonomous Learning</span>',
-            knowledgeRole: '02 · Research for Scientific Innovation',
-            knowledgeTitle: 'Scientific Knowledge &amp; Tool Mining',
-            knowledgeBody: "Study <strong>scientific literature mining and scientific tool mining</strong>, including knowledge extraction and reasoning, tool capability modeling, and autonomous tool orchestration.",
-            knowledgeQuestion: "How can scientific knowledge and tools be discovered, organized, and reliably used for scientific innovation?",
-            knowledgeTopics: '<span>Scientific Literature Mining</span><span>Scientific Tool Mining</span><span>Knowledge Discovery</span><span>Agentic Research</span>',
-            structuredRole: '03 · Research for Complex-System Cognition',
-            structuredTitle: 'Cognitive Intelligence for Structured Data',
-            structuredBody: "Study <strong>semantics, context, relationships, and dynamics in time series, tables, and graphs</strong> to support knowledge-grounded reasoning, interactive analysis, and decisions.",
-            structuredQuestion: "How can knowledge and evidence support reasoning about complex relationships and dynamics in structured data?",
-            structuredTopics: '<span>Time Series</span><span>Tabular Data</span><span>Graph Data</span>',
-            relationsIntro: "LLM agents and autonomous learning provide general mechanisms for cognition. Scientific knowledge and tools, and structured data, pose distinct research questions and provide evidence and feedback that help refine these mechanisms.",
-            applicationsSummary: "Applications include <strong>AI for Science</strong> through scientific literature and tool mining; <strong>Personalized Intelligence</strong> through user behavior and contextual memory; and <strong>Forecasting Intelligence</strong> for electricity load, power generation, and weather, with context-aware prediction and uncertainty estimation."
+          "title": "Research",
+          "subtitle": "My research centers on large language models and agents, time-series data mining, and scientific literature mining. I pursue three connected directions: Forecasting Intelligence, AI for AI, and AI for Science, with a focus on predictive reasoning, autonomous learning, and scientific discovery.",
+          "labels": [
+            "Research Foundations",
+            "Research Directions"
+          ],
+          "footer": "© 2026 Mingyue Cheng. Last updated on November 14, 2026.",
+          "scenarios": {
+            "heroEyebrow": "Foundations &amp; Directions",
+            "selectedWorksLabel": "Selected work",
+            "foundationLlmTitle": "LLMs and Agentic AI",
+            "foundationLlmBody": "I study LLM reasoning and decision-making, agent planning and tool use, and agent harnesses for memory, context management, and reliable interaction.",
+            "foundationTimeseriesTitle": "Time Series Mining",
+            "foundationTimeseriesBody": "I study time-series representation learning, forecasting, and cross-domain generalization, with a focus on transferable models for understanding temporal patterns and dependencies.",
+            "foundationLiteratureTitle": "Scientific Literature Mining",
+            "foundationLiteratureBody": "I study scientific literature retrieval, multimodal understanding of text, figures, and tables, and the extraction and integration of knowledge and evidence across papers.",
+            "aiRole": "02 · Autonomous Learning &amp; Continual Evolution",
+            "aiTitle": "AI for AI",
+            "aiBody": "I study <strong>autonomous learning in large language models</strong> and <strong>continual evolution in agents</strong> through interaction, feedback, and accumulated experience. My research connects learning in model parameters with adaptation through memory and interaction, so models and agents can learn from experience and improve over time.",
+            "scienceRole": "03 · AI-Ready Infrastructure &amp; Autonomous Research",
+            "scienceTitle": "AI for Science",
+            "scienceBody": "I study <strong>AI-ready scientific infrastructure</strong> and <strong>autonomous research agents</strong>, with a focus on making scientific data, literature, and tools usable by agents. My goal is to support iterative research through hypothesis generation, experiment planning and execution, and evidence-based validation, with human oversight.",
+            "forecastingRole": "01 · Predictive Reasoning &amp; Temporal Dynamics",
+            "forecastingTitle": "Forecasting Intelligence",
+            "forecastingBody": "I study how models and agents use <strong>contextual evidence</strong> to understand and forecast dynamic systems. My research focuses on context-aware forecasting, evidence-driven predictive reasoning, and <strong>active context acquisition</strong>, with the long-term goal of understanding and discovering the mechanisms underlying temporal dynamics."
           },
-          join: 'For research opportunities and collaboration, visit the <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a> or <a href="mailto:mycheng@ustc.edu.cn">contact me by email</a>.'
+          "join": "For research opportunities and collaboration, visit the <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a> or <a href=\"mailto:mycheng@ustc.edu.cn\">contact me by email</a>."
         },
         'news.html': {
           title: 'News & Updates',
           subtitle: 'Latest news from USTC AGI Research Group.',
           content: {
+            "news.geomindKdd2027": "<strong>[Nov. 2026]</strong> 🎉 Congratulations on our paper <strong>GeoMind</strong> being accepted to the <strong>ACM SIGKDD 2027 Research Track (August Cycle)</strong>!",
             "news.wsdm2027Papers": "<strong>[Nov. 2026]</strong> 🎉 Congratulations on our papers <strong>AdaCast</strong>, <strong>PaperArena</strong>, and <strong>SheetCompass</strong> being accepted to <strong>ACM WSDM 2027</strong>!",
             "news.icml2027AC": "<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.",
             "news.www2027AC": "<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.",
@@ -276,40 +275,39 @@
       },
       pages: {
         'research.html': {
-          title: '认知智能',
-          subtitle: "我的研究聚焦认知智能，让机器能理解、会思考、可交互。三条研究主线各有独立的科学问题，并通过自主学习、持续进化与人机协同相互联系。",
-          labels: ["三大核心研究主线", "三条主线如何关联", "应用领域"],
-          scenarios: {
-            "representativeLabel": "代表性工作",
-            "structuredContribution": "情境感知预测，以及面向时序和表格的工具增强推理。",
-            "knowledgeContribution": "科学论文发现、工具增强的文献推理与化学表格理解。",
-            "agentContribution": "智能体训练、持久记忆与证据引导的研究流程。",
-            heroEyebrow: '研究方向概览',
-            questionLabel: '核心科学问题',
-            agentRole: '研究主线一 · 通用智能机制',
-            agentTitle: '大模型智能体与自主学习',
-            agentBody: "研究<strong>智能体运行机制（Agent Harness）、长期记忆、自主交互与学习方法</strong>，支持自主决策、可迁移经验积累与持续进化。",
-            agentQuestion: "如何让大模型智能体自主决策、积累可迁移经验，并持续提升自身能力？",
-            agentTopics: '<span>智能体架构与运行机制</span><span>长期记忆</span><span>自我进化</span><span>自主学习</span>',
-            knowledgeRole: '研究主线二 · 面向科学创新的研究体系',
-            knowledgeTitle: '面向科研创新的知识与工具挖掘',
-            knowledgeBody: "研究<strong>科技文献挖掘与科学工具挖掘</strong>，涵盖知识抽取与推理、工具能力建模及自主编排。",
-            knowledgeQuestion: "如何发现、组织和可靠利用科学知识与工具，促进科研创新？",
-            knowledgeTopics: '<span>科技文献挖掘</span><span>科学工具挖掘</span><span>科学知识发现</span><span>自主科研智能</span>',
-            structuredRole: '研究主线三 · 面向复杂系统认知的研究体系',
-            structuredTitle: '结构化数据认知',
-            structuredBody: "研究<strong>时序、表格与图中的语义、情境、关联及动态演化</strong>，支持知识驱动的认知推理、交互分析与决策。",
-            structuredQuestion: "如何结合知识与证据，推理结构化数据中的复杂关联与动态演化？",
-            structuredTopics: '<span>时序数据</span><span>表格数据</span><span>图数据</span>',
-            relationsIntro: "大模型智能体与自主学习提供通用认知机制。科研知识与工具、结构化数据各有独立的科学问题，并通过领域证据与反馈促进这些机制的改进。",
-            applicationsSummary: "应用涵盖<strong>科学智能</strong>中的科技文献与科学工具挖掘、<strong>个性化智能</strong>中的用户行为与情境记忆，以及面向电力负荷、能源发电和气象的<strong>预测智能</strong>，关注情境感知预测与不确定性估计。"
+          "title": "研究方向",
+          "subtitle": "我的研究以大模型与智能体、时序数据挖掘和科技文献挖掘为基础，围绕 Forecasting Intelligence、AI for AI 和 AI for Science 三条相互关联的方向，探索预测推理、自主学习和科学发现。",
+          "labels": [
+            "研究基础",
+            "重点研究方向"
+          ],
+          "footer": "© 2026 程明月。最后更新于 2026 年 11 月 14 日。",
+          "scenarios": {
+            "heroEyebrow": "技术基础与研究布局",
+            "selectedWorksLabel": "代表成果",
+            "foundationLlmTitle": "大模型与智能体",
+            "foundationLlmBody": "研究大模型推理与决策、智能体规划与工具使用，以及支撑记忆、上下文管理与可靠交互的智能体运行框架（Agent Harness）。",
+            "foundationTimeseriesTitle": "时序数据挖掘",
+            "foundationTimeseriesBody": "研究时序表示学习、预测建模与跨域泛化，重点构建可迁移的模型来理解时序模式与依赖关系。",
+            "foundationLiteratureTitle": "科技文献挖掘",
+            "foundationLiteratureBody": "研究科技文献检索、文本与图表的多模态理解，以及跨文献的知识与证据抽取和整合。",
+            "aiRole": "02 · 自主学习与持续进化",
+            "aiTitle": "AI for AI",
+            "aiBody": "研究<strong>大模型自主学习</strong>与<strong>智能体持续进化</strong>，探索如何从交互、反馈和积累的经验中学习。将模型参数学习与基于记忆和交互的适应机制结合，使模型和智能体能够从经验中学习并持续提升能力。",
+            "scienceRole": "03 · 科研基础设施与自主科研",
+            "scienceTitle": "AI for Science",
+            "scienceBody": "研究<strong>面向 AI 的科研基础设施</strong>与<strong>自主科研智能体</strong>，让智能体能够使用科学数据、文献和工具。目标是在研究人员监督下，支持提出假设、规划与执行实验、依据证据验证结果并迭代的科研过程。",
+            "forecastingRole": "01 · 预测推理与时序动态",
+            "forecastingTitle": "Forecasting Intelligence",
+            "forecastingBody": "研究模型与智能体如何利用<strong>情境证据</strong>理解和预测动态系统，重点关注情境感知预测、证据驱动的预测推理与<strong>主动情境获取</strong>，长期目标是理解和发现时序变化背后的机制。"
           },
-          join: '如有意了解研究机会或开展合作，欢迎访问 <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI Group</a>，或<a href="mailto:mycheng@ustc.edu.cn">通过邮箱联系我</a>。'
+          "join": "如有意了解研究机会或开展合作，欢迎访问 <a href=\"https://ustcagi.github.io/\" target=\"_blank\" rel=\"noopener\">USTC-AGI Group</a>，或<a href=\"mailto:mycheng@ustc.edu.cn\">通过邮箱联系我</a>。"
         },
         'news.html': {
           title: '最新动态',
           subtitle: 'USTC AGI Research Group 的最新动态。',
           content: {
+            "news.geomindKdd2027": "<strong>[2026 年 11 月]</strong> 🎉 祝贺我们的论文 <strong>GeoMind</strong> 被 <strong>ACM SIGKDD 2027 研究轨（8 月轮次）</strong> 录用！",
             "news.wsdm2027Papers": "<strong>[2026 年 11 月]</strong> 🎉 祝贺我们的论文 <strong>AdaCast</strong>、<strong>PaperArena</strong> 和 <strong>SheetCompass</strong> 被 <strong>ACM WSDM 2027</strong> 录用！",
             "news.icml2027AC": "<strong>[2026 年 10 月]</strong> 🎉 我即将担任 <strong>ICML 2027</strong> 的<strong>领域主席（Area Chair，AC）</strong>。",
             "news.www2027AC": "<strong>[2026 年 10 月]</strong> 🎉 我即将担任 <strong>The Web Conference 2027（WWW 2027）</strong> 的<strong>领域主席（Area Chair，AC）</strong>。",
@@ -537,7 +535,7 @@
 
     setText('.nav-logo', pack.nav.logo);
     setText('.skip-link', pack.common.skip);
-    setText('.footer-bottom', pack.common.footer);
+    setText('.footer-bottom', (pack.pages[pageName()] || {}).footer || pack.common.footer);
     for (const [selector, label] of [
       ['.site-header .nav-links', pack.common.primaryNav],
       ['.site-header .nav-toggle', pack.common.toggleNav],

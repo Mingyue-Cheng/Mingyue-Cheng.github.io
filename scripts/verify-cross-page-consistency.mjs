@@ -54,7 +54,20 @@ function keyedMarkup(html, attribute, key) {
 }
 
 for (const lang of ['en', 'zh']) {
-  test(`${lang}: the November WSDM announcement matches the homepage and the News page`, () => {
+  test(`${lang}: November GeoMind and WSDM announcements match the homepage and the News page`, () => {
+    const geoMindKey = 'news.geomindKdd2027';
+    const expectedGeoMind = lang === 'en'
+      ? '<strong>[Nov. 2026]</strong> 🎉 Congratulations on our paper <strong>GeoMind</strong> being accepted to the <strong>ACM SIGKDD 2027 Research Track (August Cycle)</strong>!'
+      : '<strong>[2026 年 11 月]</strong> 🎉 祝贺我们的论文 <strong>GeoMind</strong> 被 <strong>ACM SIGKDD 2027 研究轨（8 月轮次）</strong> 录用！';
+    assert.equal(homeCopy[lang][geoMindKey], expectedGeoMind);
+    assert.equal(sharedCopy[lang].pages['news.html'].content[geoMindKey], expectedGeoMind);
+    assert.equal(keyedMarkup(home, 'data-i18n', geoMindKey), homeCopy.en[geoMindKey]);
+    assert.equal(keyedMarkup(read('news.html'), 'data-page-i18n', geoMindKey), homeCopy.en[geoMindKey]);
+    const historicalGeoMind = sharedCopy[lang].pages['news.html'].content['news.geomindPreprint'];
+    assert.match(historicalGeoMind, lang === 'en' ? /\[Apr\. 2026\]/ : /\[2026 年 4 月\]/);
+    assert.match(historicalGeoMind, lang === 'en' ? /preprint/ : /预印本/);
+    assert.ok(historicalGeoMind.includes('https://arxiv.org/abs/2604.21501'));
+    assert.equal(keyedMarkup(read('news.html'), 'data-page-i18n', 'news.geomindPreprint'), sharedCopy.en.pages['news.html'].content['news.geomindPreprint']);
     const key = 'news.wsdm2027Papers';
     const announcement = homeCopy[lang][key];
     assert.equal(sharedCopy[lang].pages['news.html'].content[key], announcement);
@@ -159,19 +172,20 @@ for (const lang of ['en', 'zh']) {
     assert.equal(plain(keyedMarkup(home, 'data-i18n', 'research.intro')), plain(homeCopy.en['research.intro']));
   });
 
-  test(`${lang}: compact Research applications and recruitment preserve their destinations`, () => {
+  test(`${lang}: Research directions and recruitment preserve their identities and destinations`, () => {
     const research = sharedCopy[lang].pages['research.html'];
     const hrefs = (html) => [...html.matchAll(/href="([^"]+)"/g)].map(match => match[1]);
     assert.deepEqual(hrefs(research.join), hrefs(homeCopy[lang]['research.join']));
     for (const key of ['agent', 'timeseries', 'science']) {
       assert.equal(typeof homeCopy[lang][`research.${key}`], 'string');
     }
-    const homeApplications = Object.entries(homeCopy[lang]).filter(([key]) => /research\.(?:applications|applicationSummary)/.test(key)).map(([, value]) => plain(value)).join(' ');
-    const researchApplications = Object.entries(research.scenarios).filter(([key]) => /applications|applicationSummary/.test(key)).map(([, value]) => plain(value)).join(' ');
-    for (const phrase of lang === 'en' ? ['AI for Science', 'Forecasting Intelligence', 'Personalized Intelligence'] : ['科学智能', '预测智能', '个性化智能']) {
-      assert.ok(homeApplications.includes(phrase), phrase);
-      assert.ok(researchApplications.includes(phrase), phrase);
-    }
+    assert.equal(plain(homeCopy[lang]['research.applications']), lang === 'en'
+      ? 'Research Directions: Forecasting Intelligence, AI for AI, AI for Science, Recommender Systems.'
+      : '研究方向：预测智能、大模型自主学习与智能体持续进化、科学智能、推荐系统。');
+    const researchDirections = ['forecasting', 'ai', 'science'].map((prefix) => plain(research.scenarios[`${prefix}Title`]));
+    for (const [index, phrase] of ['Forecasting Intelligence', 'AI for AI', 'AI for Science'].entries()) assert.ok(researchDirections[index].includes(phrase), phrase);
+    assert.equal(research.scenarios.applicationsSummary, undefined);
+    assert.equal(research.scenarios.relationsIntro, undefined);
   });
 
   test(`${lang}: common navigation and footer labels match the homepage`, () => {
@@ -278,8 +292,8 @@ test('homepage literature mining and Research directions match their own English
   const homepageDirection = keyedMarkup(home, 'data-i18n', 'research.science');
   assert.equal(homepageDirection, homeCopy.en['research.science']);
   const research = read('research.html');
-  for (const prefix of ['agent', 'knowledge', 'structured']) {
-    for (const suffix of ['Title', 'Body', 'Question', 'Role', 'Topics']) {
+  for (const prefix of ['forecasting', 'ai', 'science']) {
+    for (const suffix of ['Title', 'Body', 'Role']) {
       const key = `${prefix}${suffix}`;
       assert.equal(plain(keyedMarkup(research, 'data-page-i18n', key)), plain(sharedCopy.en.pages['research.html'].scenarios[key]), key);
     }
@@ -342,11 +356,11 @@ test('default homepage markup and metadata no longer describe the superseded res
   assert.equal((home.match(/data-i18n="profile.thesis"/g) || []).length, 1, 'the hero has one compact cognitive-intelligence summary');
 });
 
-test('Research application prose retains all three named domains without card duplication', () => {
+test('Research replaces its former applications with three named directions', () => {
   const research = active(read('research.html'));
-  const section = research.slice(research.indexOf('<!-- Broader Scenarios -->'));
   assert.doesNotMatch(research, /<article class="scenario-card/);
-  for (const label of ['AI for Science', 'Forecasting Intelligence', 'Personalized Intelligence']) assert.ok(research.includes(label), label);
+  for (const label of ['Forecasting Intelligence', 'AI for AI', 'AI for Science']) assert.ok(research.includes(label), label);
+  assert.doesNotMatch(research, /Personalized Intelligence|Research collections|research-relations-heading|research-scenario-heading/);
 });
 
 test('complete project and dataset pages use the homepage categories without dropping archive entries', () => {
@@ -371,14 +385,16 @@ test('English hero fallbacks agree with the shared runtime translations', () => 
   }
 });
 
-test('all public pages share the current footer and shared-asset versions', () => {
+test('Research updates its own footer while public pages retain shared-asset versions', () => {
   for (const path of pages) {
     const html = active(read(path));
-    assert.match(html, /© 2026 Mingyue Cheng\. Last updated on November 7, 2026\./, path);
+    const updatedDay = path === 'research.html' ? 14 : 7;
+    assert.ok(html.includes(`© 2026 Mingyue Cheng. Last updated on November ${updatedDay}, 2026.`), path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20261107-concise/, path);
     if (path !== 'index.html') {
-      const version = path === 'research.html' ? '20261107-research-note' : '20261107-concise';
+      const versions = { 'research.html': '20261114-research-editorial', 'news.html': '20261114-geomind' };
+      const version = versions[path] ?? '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }
   }
@@ -431,7 +447,10 @@ for (const path of ['research.html', 'projects.html', 'publications.html', 'serv
           assert.ok(dictionary[element.key], `${path}/${lang}/${element.key} needs a translation`);
           assert.equal(element.innerHTML, dictionary[element.key], `${path}/${lang}/${element.key}`);
         }
-        assert.equal(footer.textContent, homeCopy[lang]['footer.bottom']);
+        const expectedFooter = path === 'research.html'
+          ? (lang === 'en' ? '© 2026 Mingyue Cheng. Last updated on November 14, 2026.' : '© 2026 程明月。最后更新于 2026 年 11 月 14 日。')
+          : homeCopy[lang]['footer.bottom'];
+        assert.equal(footer.textContent, expectedFooter);
         if (path !== 'publications.html') assert.equal(subtitle.textContent, page.subtitle);
       }
     }

@@ -573,7 +573,7 @@ for (const page of pages) {
       `<link rel="stylesheet" href="files/assets/site-content.css?v=${contentVersion}">`
     ];
     if (page === 'research.html') {
-      expectedFinalLayers.push('<link rel="stylesheet" href="files/assets/research-page.css?v=20261020-cognitive-research">');
+      expectedFinalLayers.push('<link rel="stylesheet" href="files/assets/research-page.css?v=20261114-research-editorial">');
     }
     assert.deepEqual(styles.slice(-expectedFinalLayers.length), expectedFinalLayers);
     for (const name of ['site-theme', 'site-content']) {

@@ -543,8 +543,8 @@ test('in-memory conflict fixtures expose one arXiv ID mapped to different titles
   );
 });
 
-test('publication title baseline locks the complete 77-paper order on both publication surfaces', () => {
-  assert.equal(titleBaseline.publications.length, 77, 'fixture must intentionally list 77 publications');
+test('publication title baseline locks the complete 78-paper order on both publication surfaces', () => {
+  assert.equal(titleBaseline.publications.length, 78, 'fixture must intentionally list 78 publications');
   assert.deepEqual(
     publicationRecords(publicationsHtml, 'publications.html').map((record) => record.title),
     titleBaseline.publications
@@ -761,21 +761,29 @@ test('year and list fragments reveal collapsed publications on load and hash cha
 });
 
 for (const [page, source] of pages) {
-  test(`${page} lists the three WSDM acceptances in 2027 and preserves PaperArena's links`, () => {
+  test(`${page} leads 2027 with GeoMind acceptance and retains the three WSDM acceptances`, () => {
     const section = sectionBetween(source, '<!-- ===== 2027 ===== -->', '<!-- ===== 2026 ===== -->');
     assert.match(section, /<h3\b[^>]*\bid="year-2027"/);
     const entries = publicationEntries(section);
+    const geoMindTitle = 'GeoMind: An Agentic Workflow for Lithology Classification with Reasoned Tool Invocation';
     assert.deepEqual(entries.map(publicationTitle), [
+      geoMindTitle,
       'One Forecast, One World: Adaptive Evidence Reasoning for Context-Aware Time Series Forecasting',
       'PaperArena: An Evaluation Benchmark for Tool-Augmented Agentic Reasoning on Scientific Literature',
       'SheetCompass: Hierarchical Relation Graphs for Agentic Spreadsheet Reasoning'
     ]);
     for (const entry of entries) {
-      assert.match(textFromHtml(entry), /WSDM\s*2027/i);
       assert.match(textFromHtml(entry), /accepted/i);
       assert.doesNotMatch(textFromHtml(entry), /preprint|under review/i);
     }
-    const paperArena = entries[1];
+    const geoMind = entries[0];
+    assert.equal(textFromHtml(geoMind).split(geoMindTitle)[0].trim(), 'Mingyue Cheng, Yitong Zhou, Jiahao Wang, Qingyang Mao, Qi Liu*,');
+    assert.equal(attributeValue(geoMind.match(/^<li\b[^>]*>/)[0], 'data-tags'), 'agent llm ai4science reasoning');
+    assert.match(geoMind, /<em>ACM SIGKDD 2027 Research Track \(August Cycle\) Accepted<\/em>/);
+    assert.match(geoMind, /<a href="https:\/\/arxiv\.org\/pdf\/2604\.21501" target="_blank" rel="noopener">PDF<\/a>/);
+    assert.doesNotMatch(sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->'), /GeoMind|2604\.21501/, `${page}: GeoMind must not remain in commented preprints`);
+    for (const entry of entries.slice(1)) assert.match(textFromHtml(entry), /WSDM\s*2027/i);
+    const paperArena = entries[2];
     assert.ok(paperArena.includes('href="https://arxiv.org/pdf/2510.10909"'));
     assert.ok(paperArena.includes('href="https://github.com/ustc-ai4science/PaperArena"'));
   });
@@ -947,8 +955,8 @@ test('homepage presents the complete year-grouped publication catalog with a lin
 
   assert.equal(
     selectedEntries.length,
-    77,
-    `Selected Publications must contain the complete 77-paper catalog; found ${selectedEntries.length}`
+    78,
+    `Selected Publications must contain the complete 78-paper catalog; found ${selectedEntries.length}`
   );
   assert.match(selected, /<a\b[^>]*href="publications\.html"[^>]*>/, 'link to full publication list');
   for (const title of requiredTitles) {
@@ -959,7 +967,7 @@ test('homepage presents the complete year-grouped publication catalog with a lin
     );
   }
   const completeEntries = publicationEntries(publicationsHtml);
-  assert.equal(completeEntries.length, 77, `Publications page must retain the complete list; found ${completeEntries.length}`);
+  assert.equal(completeEntries.length, 78, `Publications page must retain the complete list; found ${completeEntries.length}`);
   assert.deepEqual(selectedEntries.map(normalizeText), completeEntries.map(normalizeText));
 });
 

@@ -543,8 +543,8 @@ test('in-memory conflict fixtures expose one arXiv ID mapped to different titles
   );
 });
 
-test('publication title baseline locks the complete 78-paper order on both publication surfaces', () => {
-  assert.equal(titleBaseline.publications.length, 78, 'fixture must intentionally list 78 publications');
+test('publication title baseline locks the complete 77-paper order on both publication surfaces', () => {
+  assert.equal(titleBaseline.publications.length, 77, 'fixture must intentionally list 77 publications');
   assert.deepEqual(
     publicationRecords(publicationsHtml, 'publications.html').map((record) => record.title),
     titleBaseline.publications
@@ -788,30 +788,37 @@ for (const [page, source] of pages) {
     assert.ok(paperArena.includes('href="https://github.com/ustc-ai4science/PaperArena"'));
   });
 
-  test(`${page} keeps the two under-review preprints in the requested order with exact authors and no links`, () => {
+  test(`${page} keeps CastWorld and NeoResearch in order with their current status and links`, () => {
     const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->');
     const entries = publicationEntries(preprintSection);
     const additions = [
       {
         title: 'CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy',
-        authors: 'Bokai Pan, Ruijie Yang, Mingyue Cheng, Jiahao Wang, Xiaoyu Tao',
+        authors: 'Bokai Pan, Ruijie Yang, Mingyue Cheng*, Jiahao Wang, Xiaoyu Tao',
         tags: 'timeseries agent llm',
-        expectedIndex: 5
+        expectedIndex: 1,
+        status: 'Preprint',
+        link: { label: 'PDF', href: 'https://arxiv.org/pdf/2611.15262' }
       },
       {
         title: 'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
-        authors: 'Ze Guo, Mingyue Cheng, Xiaoyu Tao, Shuo Yu, Shangtong Ye',
+        authors: 'Ze Guo, Mingyue Cheng*, Xiaoyu Tao, Shuo Yu, Shangtong Ye',
         tags: 'timeseries agent ai4science llm',
-        expectedIndex: 4
+        expectedIndex: 2,
+        status: 'Preprint',
+        link: { label: 'Paper', href: 'https://arxiv.org/html/2611.18235' }
       }
     ];
-    additions.forEach(({ title, authors, tags, expectedIndex }) => {
+    additions.forEach(({ title, authors, tags, expectedIndex, status, link }) => {
       const record = findRecord(page, title);
       assert.equal(publicationTitle(entries[expectedIndex]), title, `${page} new preprint order`);
-      assert.equal(textFromHtml(record.html), `${authors}, ${title}. (under review)`);
+      const linkLabel = ` [${link.label}]`;
+      assert.equal(textFromHtml(record.html), `${authors}, ${title}. (${status})${linkLabel}`);
       assert.equal(attributeValue(record.html.match(/^<li\b[^>]*>/)[0], 'data-tags'), tags);
-      assert.match(record.html, /<strong>Mingyue Cheng<\/strong>/);
-      assert.doesNotMatch(record.html, /<a\b|\bhref\s*=|<sup\b/i);
+      assert.match(record.html, /<strong>Mingyue Cheng\*<\/strong>/);
+      assert.doesNotMatch(record.html, /<sup\b/i);
+      const links = [...record.html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map(([, href]) => href);
+      assert.deepEqual(links, [link.href]);
     });
   });
 
@@ -820,9 +827,9 @@ for (const [page, source] of pages) {
     const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->');
     const preprintList = preprintSection.match(/<ol\b[^>]*>[\s\S]*?<\/ol>/)?.[0] || '';
     const entries = publicationEntries(preprintList);
-    assert.equal(entries.length, 9, `${page} must contain nine preprints in one list`);
-    assert.equal(publicationTitle(entries.at(-1)), title, `${page} must append the survey after the existing preprints`);
-    const entry = entries.at(-1);
+    assert.equal(entries.length, 8, `${page} must contain eight preprints in one list`);
+    const entry = entries.find((candidate) => publicationTitle(candidate) === title);
+    assert.ok(entry, `${page} must include the survey in the preprint list`);
     assert.equal(publicationRecords(source, page).filter(record => record.title === title).length, 1);
     assert.equal(textFromHtml(entry).split(title)[0].replace(/,\s*$/, ''),
       'Mingyue Cheng, Daoyu Wang, Shuo Yu, Qingchuan Li, Jie Ouyang, Yucong Luo, Yiju Zhang, Qi Liu*, Enhong Chen');
@@ -955,8 +962,8 @@ test('homepage presents the complete year-grouped publication catalog with a lin
 
   assert.equal(
     selectedEntries.length,
-    78,
-    `Selected Publications must contain the complete 78-paper catalog; found ${selectedEntries.length}`
+    77,
+    `Selected Publications must contain the complete 77-paper catalog; found ${selectedEntries.length}`
   );
   assert.match(selected, /<a\b[^>]*href="publications\.html"[^>]*>/, 'link to full publication list');
   for (const title of requiredTitles) {
@@ -967,7 +974,7 @@ test('homepage presents the complete year-grouped publication catalog with a lin
     );
   }
   const completeEntries = publicationEntries(publicationsHtml);
-  assert.equal(completeEntries.length, 78, `Publications page must retain the complete list; found ${completeEntries.length}`);
+  assert.equal(completeEntries.length, 77, `Publications page must retain the complete list; found ${completeEntries.length}`);
   assert.deepEqual(selectedEntries.map(normalizeText), completeEntries.map(normalizeText));
 });
 

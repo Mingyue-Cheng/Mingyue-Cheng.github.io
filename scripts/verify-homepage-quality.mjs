@@ -202,7 +202,7 @@ test('homepage selected-publication filters and year groups remain accessible', 
   const visibleEntries = [...publications.replace(/<!--[\s\S]*?-->/g, '').matchAll(
     /<li data-tags="[^"]+">[\s\S]*?<\/li>/g
   )];
-  assert.equal(visibleEntries.length, 78);
+  assert.equal(visibleEntries.length, 77);
   assert.match(publications, /<a\b[^>]*href="publications\.html"[^>]*>Browse publications →<\/a>/);
   for (const [key, label] of [
     ['pub.preprint', 'Preprints'],
@@ -602,15 +602,14 @@ test('grant cards retain their responsive layout after the content update', () =
 
 test('both publication lists keep the requested preprint order and links', () => {
   const expectedTitles = [
-    'World2TS: Real-World Event Context for Time-Series Forecasting',
     'Position: Beyond Model-Centric Prediction — Agentic Time Series Forecasting',
-    'Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting',
-    'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
-    'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
     'CastWorld: Benchmarking Context-Aware Agentic Time Series Forecasting Beyond Predictive Accuracy',
+    'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
+    'CastFSR: A Fast--Slow--Reflect Agentic Reasoning Framework for Context-Aware Time Series Forecasting',
+    'Cast-R1: Learning Tool-Augmented Sequential Decision Policies for Time Series Forecasting',
     'CastFlow: Learning Role-Specialized Agentic Workflows for Time Series Forecasting',
-    'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning',
-    'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective'
+    'A Comprehensive Survey of the LLM-Based Agent: The Contextual Cognition Perspective',
+    'StepPO: Step-Aligned Policy Optimization for Agentic Reinforcement Learning'
   ];
   for (const [name, source] of [['homepage', indexHtml], ['publications page', publicationsHtml]]) {
     const preprints = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->')
@@ -621,18 +620,10 @@ test('both publication lists keep the requested preprint order and links', () =>
     const castFsrEntry = entries.find((entry) => entry.includes('<strong>CastFSR:')) || '';
 
     assert.deepEqual(titles, expectedTitles, `${name} preprint order`);
-    const world2tsEntry = entries[0];
-    const world2tsAuthors = world2tsEntry.split('<strong>World2TS:')[0]
-      .replace(/<[^>]+>/g, '').trim().replace(/,\s*$/, '');
-    assert.equal(world2tsAuthors, 'Zhiding Liu+, Jiqian Yang+, Mingyue Cheng*, Zhi Li*, Enhong Chen*', `${name} World2TS authors`);
-    assert.match(world2tsEntry, /^<li data-tags="timeseries">/, `${name} World2TS tags`);
-    assert.ok(world2tsEntry.includes('(Preprint)'), `${name} World2TS status`);
-    assert.ok(world2tsEntry.includes('href="https://arxiv.org/abs/2610.14861"'), `${name} World2TS arXiv link`);
-    assert.ok(world2tsEntry.includes('href="https://world2ts.github.io/"'), `${name} World2TS project link`);
     assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm reasoning">/, `${name} tags`);
     assert.match(
       castFsrEntry,
-      /Xiaoyu Tao, <strong>Mingyue Cheng<\/strong>, Bokai Pan, Chuang Jiang, Huanjian Zhang, Tian Gao, Yaguo Liu, Qi Liu, Enhong Chen/,
+      /Xiaoyu Tao, <strong>Mingyue Cheng<\/strong>, Bokai Pan, Ze Guo, Hao Xue, <strong>CastFSR:/,
       `${name} authors`
     );
     assert.match(

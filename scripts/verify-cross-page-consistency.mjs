@@ -192,8 +192,8 @@ for (const lang of ['en', 'zh']) {
       assert.equal(typeof homeCopy[lang][`research.${key}`], 'string');
     }
     assert.equal(plain(homeCopy[lang]['research.applications']), lang === 'en'
-      ? 'Research Directions: Forecasting Intelligence, AI for AI, AI for Science, Recommender Systems.'
-      : '研究方向：预测智能、大模型自主学习与智能体持续进化、科学智能、推荐系统。');
+      ? 'Application Areas: Forecasting Intelligence (time series forecasting for decision support and user behavior prediction for personalized recommendations), AI for AI (enhancing LLM capabilities and continual agent evolution), and AI for Science (autonomous scientific research and AI for chemistry).'
+      : '应用方向：预测智能（面向智能决策的时序预测、面向个性化推荐的用户行为预测）、AI for AI（大模型能力增强与智能体持续进化）、AI for Science（自主科研与化学智能）。');
     const researchDirections = ['forecasting', 'ai', 'science'].map((prefix) => plain(research.scenarios[`${prefix}Title`]));
     for (const [index, phrase] of ['Forecasting Intelligence', 'AI for AI', 'AI for Science'].entries()) assert.ok(researchDirections[index].includes(phrase), phrase);
     assert.equal(research.scenarios.applicationsSummary, undefined);

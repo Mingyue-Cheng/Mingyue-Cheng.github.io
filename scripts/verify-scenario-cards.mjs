@@ -402,14 +402,14 @@ test('shared stylesheet implements the approved visual and responsive contract',
   assert.doesNotMatch(scenarioCss, /\.scenario-card-list\b/);
 });
 
-test('homepage research directions use one concise bilingual paragraph in the requested order', () => {
+test('homepage application areas use one bilingual paragraph in the requested order', () => {
   const researchArea = sectionBetween(indexHtml, '<!-- ===== Research Interests ===== -->', '<!-- ===== Latest News ===== -->');
   assert.doesNotMatch(researchArea, /<article class="scenario-card/);
   const paragraphs = [...researchArea.matchAll(/<p\b[^>]*data-i18n="research\.applications"[^>]*>([\s\S]*?)<\/p>/g)];
-  assert.equal(paragraphs.length, 1, 'Research directions need one translatable paragraph');
+  assert.equal(paragraphs.length, 1, 'Application areas need one translatable paragraph');
   assert.match(paragraphs[0][0], /class="research-applications"/);
-  const expectedEnglish = '<strong>Research Directions:</strong> Forecasting Intelligence, AI for AI, AI for Science, Recommender Systems.';
-  const expectedChinese = '<strong>研究方向：</strong>预测智能、大模型自主学习与智能体持续进化、科学智能、推荐系统。';
+  const expectedEnglish = '<strong>Application Areas:</strong> Forecasting Intelligence (time series forecasting for decision support and user behavior prediction for personalized recommendations), AI for AI (enhancing LLM capabilities and continual agent evolution), and AI for Science (autonomous scientific research and AI for chemistry).';
+  const expectedChinese = '<strong>应用方向：</strong>预测智能（面向智能决策的时序预测、面向个性化推荐的用户行为预测）、AI for AI（大模型能力增强与智能体持续进化）、AI for Science（自主科研与化学智能）。';
   assert.equal(paragraphs[0][1], expectedEnglish);
   assert.deepEqual(decodedTranslationEntries('research.applications'), [expectedEnglish, expectedChinese]);
 });

@@ -33,7 +33,6 @@
           "footer": "© 2026 Mingyue Cheng. Last updated on November 14, 2026.",
           "scenarios": {
             "heroEyebrow": "Foundations &amp; Directions",
-            "selectedWorksLabel": "Selected work",
             "foundationLlmTitle": "LLMs and Agentic AI",
             "foundationLlmBody": "I study LLM reasoning and decision-making, agent planning and tool use, and agent harnesses for memory, context management, and reliable interaction.",
             "foundationTimeseriesTitle": "Time Series Mining",
@@ -284,7 +283,6 @@
           "footer": "© 2026 程明月。最后更新于 2026 年 11 月 14 日。",
           "scenarios": {
             "heroEyebrow": "技术基础与研究布局",
-            "selectedWorksLabel": "代表成果",
             "foundationLlmTitle": "大模型与智能体",
             "foundationLlmBody": "研究大模型推理与决策、智能体规划与工具使用，以及支撑记忆、上下文管理与可靠交互的智能体运行框架（Agent Harness）。",
             "foundationTimeseriesTitle": "时序数据挖掘",

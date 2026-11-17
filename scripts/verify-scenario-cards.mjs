@@ -472,10 +472,7 @@ test('research foundations use three responsive columns and directions remain in
     }
   }
   assert.equal(finalDeclarationValue(gridRules[0].body, 'display'), 'grid');
-  assertFinalDeclarations(cssRule(researchCss, '.research-page .direction-works'), {
-    'display': 'flex',
-    'flex-wrap': 'wrap'
-  }, 'Research selected-work row');
+  assert.doesNotMatch(researchCss, /\.direction-works\b/, 'Removed selected-work rows must not leave page styles');
 });
 
 test('research pages omit table research without removing its publication category', () => {

@@ -25,11 +25,6 @@ const directionKeys = ['forecasting', 'ai', 'science'].flatMap((prefix) =>
   ['Title', 'Body', 'Role'].map((suffix) => `${prefix}${suffix}`)
 );
 const requiredKeys = [...foundationKeys, ...directionKeys];
-const selectedWorks = {
-  forecasting: [['AlphaCast', 'https://arxiv.org/abs/2511.08947'], ['Time-R1', 'https://github.com/ustc-time-series/Time-R1']],
-  ai: [['Agent-R1', 'https://github.com/AgentR1/Agent-R1'], ['MemWeaver', 'https://arxiv.org/abs/2510.07713']],
-  science: [['PaperScout', 'https://agentr1.github.io/paperscout/'], ['PaperArena', 'https://paperarena-ai.github.io/']]
-};
 const boundNodes = [...active(html).matchAll(/<([a-z][\w-]*)\b[^>]*data-page-i18n="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/g)]
   .map((match) => ({ key: match[2], innerHTML: match[3], getAttribute(name) { return name === 'data-page-i18n' ? this.key : null; } }));
 const labelNodes = [...active(html).matchAll(/<h2\b[^>]*class="[^"]*(?:rd-section-label|scenario-section-label)[^"]*"[^>]*>([\s\S]*?)<\/h2>/g)]
@@ -118,29 +113,15 @@ test('Research exposes three supporting foundations and three independent scient
   for (const concept of [/context-aware forecasting/i, /evidence-driven predictive reasoning/i, /active context acquisition/i, /long-term goal/i, /mechanisms underlying temporal dynamics/i]) assert.match(plain(copy.forecastingBody), concept);
 });
 
-test('Research directions show two selected works each without former evidence or question blocks', () => {
+test('Research directions omit selected works and former evidence or question blocks', () => {
   const directions = section('research-directions-heading');
+  assert.doesNotMatch(directions, /direction-works|selectedWorksLabel|Selected work|代表成果/i);
   assert.doesNotMatch(directions, /research-evidence|representativeLabel|Representative work|代表性工作/i);
   assert.doesNotMatch(directions, /pillar-question|question-label|questionLabel|(?:forecasting|ai|science)Question|Scientific question|核心科学问题/i);
-  const cards = [...directions.matchAll(/<article class="pillar-card pillar-card--([^"\s]+)">([\s\S]*?)<\/article>/g)];
-  for (const [, prefix, card] of cards) {
-    const rows = [...card.matchAll(/<([a-z][\w-]*)\b[^>]*class="[^"]*\bdirection-works\b[^"]*"[^>]*>([\s\S]*?)<\/\1>/g)];
-    assert.equal(rows.length, 1, `${prefix}: selected works must occupy one compact row`);
-    assert.doesNotMatch(rows[0][2], /<(?:ul|ol|li)\b/i, `${prefix}: selected works must remain inline`);
-    assert.equal((rows[0][2].match(/data-page-i18n="selectedWorksLabel"/g) || []).length, 1, `${prefix}: selected works need their translated label`);
-    const links = [...rows[0][2].matchAll(/<a\b([^>]*)href="([^"]+)"([^>]*)>([\s\S]*?)<\/a>/g)];
-    assert.deepEqual(links.map(([, , href, , content]) => [plain(content), href]), selectedWorks[prefix], `${prefix}: selected works and destinations`);
-    for (const [, before, , after] of links) {
-      assert.match(`${before}${after}`, /target="_blank"/);
-      assert.match(`${before}${after}`, /rel="noopener"/);
-    }
-  }
-  assert.equal(boundNodes.filter((node) => node.key === 'selectedWorksLabel').length, 3);
-  const removedKeys = ['representativeLabel', 'questionLabel', 'forecastingQuestion', 'aiQuestion', 'scienceQuestion'];
+  const removedKeys = ['selectedWorksLabel', 'representativeLabel', 'questionLabel', 'forecastingQuestion', 'aiQuestion', 'scienceQuestion'];
   for (const key of removedKeys) assert.equal(boundNodes.filter((node) => node.key === key).length, 0, `${key} must not have a visible binding`);
   for (const lang of ['en', 'zh']) {
     const copy = translations[lang].pages['research.html'].scenarios;
-    assert.equal(copy.selectedWorksLabel, lang === 'en' ? 'Selected work' : '代表成果');
     for (const key of removedKeys) assert.equal(copy[key], undefined, `${lang}: removed ${key} must not remain`);
   }
 });

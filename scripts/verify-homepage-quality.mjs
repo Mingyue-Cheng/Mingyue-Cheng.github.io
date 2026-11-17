@@ -294,8 +294,8 @@ test('open-source subpage matches shared homepage projects and venue badges', ()
   const subpageOnlyCardNames = ['CastFactory（炼星坊）', 'CastMind（星思）'];
   const visible = (source) => source.replace(/<!--[\s\S]*?-->/g, '');
   const cardNames = (source) => [...visible(source).matchAll(
-    /<div class="os-card-name">([^<]+)<\/div>/g
-  )].map((match) => match[1]);
+    /<div class="os-card-name"[^>]*>([^<]+)<\/div>/g
+  )].map((match) => ({ 'CastClaw（星辰）': 'CastClaw', 'PaperScout（科言乐问）': 'PaperScout' })[match[1]] || match[1]);
   const sortedCards = (source) => visible(source)
     .split('<div class="os-card">').slice(1)
     .sort((left, right) => cardNames(left)[0].localeCompare(cardNames(right)[0]));
@@ -376,7 +376,7 @@ test('accepted open-source cards display their venue badges', () => {
   );
   const paperScoutMeta = sectionBetween(
     indexHtml,
-    '<div class="os-card-name">PaperScout（科言乐问）</div>',
+    '<div class="os-card-name" data-i18n="opensource.name.paperScout">PaperScout</div>',
     '<div class="os-card-desc"'
   );
 
@@ -570,25 +570,33 @@ const updatedGrants = [
     chinese: '安徽省自然科学基金，面向科技文献的表格语义理解与推理研究，项目负责人',
   },
 ].sort((a, b) => b.period.localeCompare(a.period));
+const homepageGrantKeys = new Set(['ustcYouth', 'newGenerationAI', 'casPriority']);
 
 for (const [index, grant] of updatedGrants.entries()) {
-  test(`${grant.key} grant details are synchronized across homepage languages and Awards`, () => {
+  test(`${grant.key} full Awards details remain intact with the requested homepage selection`, () => {
     const homepageGrants = sectionBetween(indexHtml, '<!-- ===== Research Grants ===== -->', '<!-- ===== Related Links ===== -->');
     const homepageEntryCopy = homepageGrants.match(new RegExp(`<span data-i18n="grants\\.${grant.key}">([^<]+)<\\/span>`))?.[1];
-    const years = grant.period.replace(/\.\d{2}/g, '');
-    assert.ok(homepageEntryCopy?.includes(years), 'Homepage summary preserves the start and end years');
-    assert.match(homepageEntryCopy, grant.key === 'newGenerationAI' ? /Core (?:Project )?Member/ : /Project Lead/, 'Homepage summary preserves the role');
     const dictionary = JSON.parse(indexHtml.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang/)[1]);
-    assert.equal(dictionary.en[`grants.${grant.key}`], homepageEntryCopy);
-    assert.ok(dictionary.zh[`grants.${grant.key}`].includes(years));
-    assert.match(dictionary.zh[`grants.${grant.key}`], grant.key === 'newGenerationAI' ? /项目骨干/ : /(?:项目)?负责人/);
     const cards = [...awardsHtml.matchAll(/<div class="grant-card">[\s\S]*?<div class="grant-title"[^>]*>[\s\S]*?<\/div>\s*<\/div>/g)].map(match => match[0]);
     assert.ok(cards[index]?.includes(`<span class="grant-period">${grant.period}<br>`), 'Awards period and order match');
     assert.ok(cards[index]?.includes(`>${grant.english}</div>`), 'Awards includes full English details');
     const status = grant.key === 'ustcYouth' ? 'upcoming' : grant.key === 'anhui' ? 'completed' : 'ongoing';
     assert.ok(cards[index]?.includes(`data-page-i18n="grant.${status}"`), 'Awards status matches the grant dates');
     const homepageEntry = [...homepageGrants.matchAll(/<li\b[^>]*>[\s\S]*?<\/li>/g)].map(match => match[0]).find(entry => entry.includes(`data-i18n="grants.${grant.key}"`));
-    assert.ok(homepageEntry?.includes(`data-i18n="grant.${status}"`), 'Homepage status matches Awards');
+    if (homepageGrantKeys.has(grant.key)) {
+      const years = grant.period.replace(/\.\d{2}/g, '');
+      assert.ok(homepageEntryCopy?.includes(years), 'Homepage summary preserves the start and end years');
+      assert.match(homepageEntryCopy, grant.key === 'newGenerationAI' ? /Core (?:Project )?Member/ : /Project Lead/, 'Homepage summary preserves the role');
+      assert.equal(dictionary.en[`grants.${grant.key}`], homepageEntryCopy);
+      assert.ok(dictionary.zh[`grants.${grant.key}`].includes(years));
+      assert.match(dictionary.zh[`grants.${grant.key}`], grant.key === 'newGenerationAI' ? /项目骨干/ : /(?:项目)?负责人/);
+      assert.ok(homepageEntry?.includes(`data-i18n="grant.${status}"`), 'Homepage status matches Awards');
+    } else {
+      assert.equal(homepageEntry, undefined, 'Unselected grant remains only in the full Awards archive');
+      for (const lang of ['en', 'zh']) {
+        assert.equal(dictionary[lang][`grants.${grant.key}`], undefined, `${lang}: removed homepage grant copy must not remain`);
+      }
+    }
   });
 }
 
@@ -976,17 +984,45 @@ test('August 2026 news is synchronized across the homepage and News page', () =>
 });
 
 
-test('homepage selected service keeps seven bilingual summaries linked to full records', () => {
-  const service = sectionBetween(indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Research Grants ===== -->');
+test('homepage separates four service summaries from four bilingual academic activities', () => {
+  const service = sectionBetween(indexHtml, '<!-- ===== Professional Activities ===== -->', '<!-- ===== Academic Activities ===== -->');
   const rows = [...service.matchAll(/<li data-i18n="service\.summary\.([^"]+)">([\s\S]*?)<\/li>/g)];
-  assert.deepEqual(rows.map(match => match[1]), ['ac', 'spc', 'program', 'tutorial', 'publication', 'pc', 'review']);
+  assert.deepEqual(rows.map(match => match[1]), ['ac', 'spc', 'pc', 'review']);
   const dictionary = JSON.parse(indexHtml.match(/const i18n = (\{[\s\S]*?\n\});\n\nlet currentLang/)[1]);
-  const facts = { ac: ['WWW', 'ICML', 'ICLR', '2027'], spc: ['IJCAI', '2026'], program: ['FedKDD/FedMAS', 'KDD', '2026'], tutorial: ['ICDM', '2026'], publication: ['ICEBE', '2026'], pc: ['KDD', 'WWW', 'NeurIPS', 'ACL'], review: ['TKDE', 'TPAMI', 'TNNLS', 'TMLR'] };
+  const facts = { ac: ['WWW', 'ICML', 'ICLR', '2027'], spc: ['IJCAI', '2026'], pc: ['KDD', 'WWW', 'NeurIPS', 'ACL'], review: ['TKDE', 'TPAMI', 'TNNLS', 'TMLR'] };
   for (const [, key, markup] of rows) {
     assert.equal(markup, dictionary.en[`service.summary.${key}`]);
     for (const lang of ['en', 'zh']) for (const fact of facts[key]) assert.ok(dictionary[lang][`service.summary.${key}`].includes(fact), `${lang}/${key}/${fact}`);
   }
   assert.match(service, /href="service\.html"/);
+
+  const activities = sectionBetween(indexHtml, '<!-- ===== Academic Activities ===== -->', '<!-- ===== Research Grants ===== -->');
+  assert.match(activities, /<h2 id="academic-activities" class="section-heading" data-i18n="activities\.heading">Academic Activities<\/h2>/);
+  assert.equal(dictionary.en['activities.heading'], 'Academic Activities');
+  assert.equal(dictionary.zh['activities.heading'], '学术活动');
+  const activityRows = [...activities.matchAll(/<li data-i18n="activities\.([^"]+)">([\s\S]*?)<\/li>/g)];
+  assert.deepEqual(activityRows.map(match => match[1]), ['icebe2026', 'icdm2026', 'fedkdd2026', 'www2025']);
+  const activityFacts = { icebe2026: ['IEEE', 'ICEBE 2026'], icdm2026: ['ICDM', '2026'], fedkdd2026: ['FedKDD', 'KDD', '2026'], www2025: ['WebST 2025', 'WWW', 'Advancing Time Series Analysis with Deep, Transferable, and Generative Modeling'] };
+  for (const [, key, markup] of activityRows) {
+    assert.equal(markup, dictionary.en[`activities.${key}`]);
+    for (const lang of ['en', 'zh']) {
+      const copy = dictionary[lang][`activities.${key}`];
+      for (const fact of activityFacts[key]) assert.ok(copy.includes(fact), `${lang}/${key}/${fact}`);
+      const links = [...copy.matchAll(/href="([^"]+)"/g)].map(match => match[1]);
+      if (key === 'icebe2026') {
+        assert.deepEqual(links, ['https://conferences.computer.org/icebe/2026/']);
+        assert.match(copy, lang === 'en' ? /Publication Chair/ : /出版主席/);
+      } else if (key === 'icdm2026') {
+        assert.deepEqual(links, [lang === 'en' ? 'https://context-time.github.io/' : 'https://context-time.github.io/zh.html']);
+      } else if (key === 'fedkdd2026') {
+        assert.deepEqual(links, ['https://fedmas-fedkdd.github.io/fedmas-fedkdd2026/']);
+        assert.match(copy, lang === 'en' ? /Program Chair/ : /程序.*主席/);
+      } else {
+        assert.deepEqual(links, ['https://archives.iw3c2.org/www2025/accepted-workshops/']);
+        assert.match(copy, lang === 'en' ? /Workshop Speaker/ : /研讨会报告嘉宾/);
+      }
+    }
+  }
 });
 
 test('homepage removes redundant outline and expansion hints but retains year navigation', () => {

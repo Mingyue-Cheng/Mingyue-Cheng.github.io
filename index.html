@@ -1973,13 +1973,13 @@ html[lang="zh-CN"] .footer-title {
       </section>
 
       <section class="os-category" aria-labelledby="opensource-timeseries" data-os-category="timeseries">
-        <h3 id="opensource-timeseries" class="os-category-heading" data-i18n="opensource.category.timeseries">Time Series Intelligence（科语）</h3>
+        <h3 id="opensource-timeseries" class="os-category-heading" data-i18n="opensource.category.timeseries">Time Series Intelligence</h3>
         <div class="os-grid">
           <div class="os-card">
             <div class="os-body">
               <div class="os-card-header">
                 <div class="os-card-title os-card-title-row">
-                  <div class="os-card-name">CastClaw（星辰）</div>
+                  <div class="os-card-name" data-i18n="opensource.name.castClaw">CastClaw</div>
                   <div class="os-card-meta">
                     <span class="os-year">2026.04</span>
                     <a class="os-github" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
@@ -2005,7 +2005,7 @@ html[lang="zh-CN"] .footer-title {
             <div class="os-body">
               <div class="os-card-header">
                 <div class="os-card-title os-card-title-row">
-                  <div class="os-card-name">PaperScout（科言乐问）</div>
+                  <div class="os-card-name" data-i18n="opensource.name.paperScout">PaperScout</div>
                   <div class="os-card-meta">
                     <span class="os-year">2026.01</span>
                     <span class="os-venue">EMNLP 2026</span>
@@ -2278,15 +2278,25 @@ html[lang="zh-CN"] .footer-title {
     <ul class="services-list">
       <li data-i18n="service.summary.ac"><strong>Area Chair:</strong> WWW, ICML, and ICLR 2027.</li>
       <li data-i18n="service.summary.spc"><strong>Senior Program Committee:</strong> IJCAI 2026.</li>
-      <li data-i18n="service.summary.program"><strong>Program Chair:</strong> FedKDD/FedMAS Workshop at KDD 2026.</li>
-      <li data-i18n="service.summary.tutorial"><strong>Tutorial Organizer and Speaker:</strong> Context-Aware Time Series Forecasting, IEEE ICDM 2026.</li>
-      <li data-i18n="service.summary.publication"><strong>Publication Chair:</strong> IEEE ICEBE 2026.</li>
       <li data-i18n="service.summary.pc"><strong>Program Committee:</strong> KDD, WWW, WSDM, CIKM, NeurIPS, ACL, and other conferences.</li>
       <li data-i18n="service.summary.review"><strong>Reviewer:</strong> TKDE, TPAMI, TNNLS, TKDD, TIST, TMLR, and other journals.</li>
     </ul>
     <a class="section-more" href="service.html" data-i18n="service.more">Full academic service →</a>
   </div>
 </div>
+
+<!-- ===== Academic Activities ===== -->
+<section class="section" aria-labelledby="academic-activities">
+  <div class="container">
+    <h2 id="academic-activities" class="section-heading" data-i18n="activities.heading">Academic Activities</h2>
+    <ul class="services-list">
+      <li data-i18n="activities.icebe2026"><strong>Publication Chair</strong> · <a href="https://conferences.computer.org/icebe/2026/" target="_blank" rel="noopener">IEEE International Conference on E-Business Engineering (ICEBE 2026)</a></li>
+      <li data-i18n="activities.icdm2026"><strong>Tutorial Organizer and Speaker</strong> · IEEE ICDM 2026 · <a href="https://context-time.github.io/" target="_blank" rel="noopener">Context-Aware Time Series Forecasting with LLMs: From Pattern Recognition to Cognitive Reasoning</a></li>
+      <li data-i18n="activities.fedkdd2026"><strong>Program Chair</strong> · ACM KDD 2026 · <a href="https://fedmas-fedkdd.github.io/fedmas-fedkdd2026/" target="_blank" rel="noopener">FedKDD/FedMAS Workshop</a></li>
+      <li data-i18n="activities.www2025"><strong>Workshop Speaker</strong> · <a href="https://archives.iw3c2.org/www2025/accepted-workshops/" target="_blank" rel="noopener">WebST 2025</a> at The Web Conference (WWW) 2025 · <cite>Advancing Time Series Analysis with Deep, Transferable, and Generative Modeling</cite></li>
+    </ul>
+  </div>
+</section>
 
 <!-- ===== Research Grants ===== -->
 <div class="section">
@@ -2296,9 +2306,6 @@ html[lang="zh-CN"] .footer-title {
       <li><span data-i18n="grants.ustcYouth">2027–2028 · USTC Youth Innovation Fund · Project Lead — Multi-turn agent learning and continual evolution.</span> <span class="grant-status" data-i18n="grant.upcoming">Upcoming</span></li>
       <li><span data-i18n="grants.newGenerationAI">2026–2028 · National Science and Technology Major Project · Core Member — Scientific data governance for chemistry.</span> <span class="grant-status" data-i18n="grant.ongoing">Ongoing</span></li>
       <li><span data-i18n="grants.casPriority">2026–2029 · CAS Strategic Priority Research Program (Category B) · Project Lead — Autonomous interactive learning.</span> <span class="grant-status" data-i18n="grant.ongoing">Ongoing</span></li>
-      <li><span data-i18n="grants.nsfc">2026–2028 · NSFC Young Scientists Fund (Category C) · Project Lead — Context-aware time series learning and forecasting.</span> <span class="grant-status" data-i18n="grant.ongoing">Ongoing</span></li>
-      <li><span data-i18n="grants.ustc">2025–2026 · USTC New Medicine Joint Fund · Project Lead — Time series modeling for perioperative care.</span> <span class="grant-status" data-i18n="grant.ongoing">Ongoing</span></li>
-      <li><span data-i18n="grants.anhui">2024–2026 · Anhui Provincial Natural Science Foundation · Project Lead — Scientific table understanding and reasoning.</span> <span class="grant-status" data-i18n="grant.completed">Period ended</span></li>
     </ul>
     <a class="section-more" href="awards.html" data-i18n="grants.more">Project details →</a>
     <div class="industry-support">
@@ -2475,7 +2482,9 @@ const i18n = {
     "opensource.paperScout": "An autonomous scientific literature retrieval agent that refines search strategies through multi-turn interaction.",
     "opensource.academicSearch": "A literature search tool for AI agents, supporting scholarly retrieval, metadata verification, and BibTeX export.",
     "opensource.category.agents": "LLMs and Agentic AI",
-    "opensource.category.timeseries": "Time Series Intelligence（科语）",
+    "opensource.category.timeseries": "Time Series Intelligence",
+    "opensource.name.castClaw": "CastClaw",
+    "opensource.name.paperScout": "PaperScout",
     "opensource.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
     "datasets.heading": "Benchmarks &amp; Datasets",
     "datasets.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
@@ -2497,9 +2506,6 @@ const i18n = {
     "grants.heading": "Research Grants",
     "grants.newGenerationAI": "2026–2028 · National Science and Technology Major Project · Core Member — Scientific data governance for chemistry.",
     "grants.casPriority": "2026–2029 · CAS Strategic Priority Research Program (Category B) · Project Lead — Autonomous interactive learning.",
-    "grants.nsfc": "2026–2028 · NSFC Young Scientists Fund (Category C) · Project Lead — Context-aware time series learning and forecasting.",
-    "grants.ustc": "2025–2026 · USTC New Medicine Joint Fund · Project Lead — Time series modeling for perioperative care.",
-    "grants.anhui": "2024–2026 · Anhui Provincial Natural Science Foundation · Project Lead — Scientific table understanding and reasoning.",
     "grants.ustcYouth": "2027–2028 · USTC Youth Innovation Fund · Project Lead — Multi-turn agent learning and continual evolution.",
     "grants.industry": "My research is also partially supported by industry grants from:",
     "related.heading": "Related Links",
@@ -2576,12 +2582,14 @@ const i18n = {
     "honors.more": "All honors &amp; awards →",
     "service.summary.ac": "<strong>Area Chair:</strong> WWW, ICML, and ICLR 2027.",
     "service.summary.spc": "<strong>Senior Program Committee:</strong> IJCAI 2026.",
-    "service.summary.program": "<strong>Program Chair:</strong> FedKDD/FedMAS Workshop at KDD 2026.",
-    "service.summary.tutorial": "<strong>Tutorial Organizer and Speaker:</strong> Context-Aware Time Series Forecasting, IEEE ICDM 2026.",
-    "service.summary.publication": "<strong>Publication Chair:</strong> IEEE ICEBE 2026.",
     "service.summary.pc": "<strong>Program Committee:</strong> KDD, WWW, WSDM, CIKM, NeurIPS, ACL, and other conferences.",
     "service.summary.review": "<strong>Reviewer:</strong> TKDE, TPAMI, TNNLS, TKDD, TIST, TMLR, and other journals.",
     "service.more": "Full academic service →",
+    "activities.heading": "Academic Activities",
+    "activities.icebe2026": "<strong>Publication Chair</strong> · <a href=\"https://conferences.computer.org/icebe/2026/\" target=\"_blank\" rel=\"noopener\">IEEE International Conference on E-Business Engineering (ICEBE 2026)</a>",
+    "activities.icdm2026": "<strong>Tutorial Organizer and Speaker</strong> · IEEE ICDM 2026 · <a href=\"https://context-time.github.io/\" target=\"_blank\" rel=\"noopener\">Context-Aware Time Series Forecasting with LLMs: From Pattern Recognition to Cognitive Reasoning</a>",
+    "activities.fedkdd2026": "<strong>Program Chair</strong> · ACM KDD 2026 · <a href=\"https://fedmas-fedkdd.github.io/fedmas-fedkdd2026/\" target=\"_blank\" rel=\"noopener\">FedKDD/FedMAS Workshop</a>",
+    "activities.www2025": "<strong>Workshop Speaker</strong> · <a href=\"https://archives.iw3c2.org/www2025/accepted-workshops/\" target=\"_blank\" rel=\"noopener\">WebST 2025</a> at The Web Conference (WWW) 2025 · <cite>Advancing Time Series Analysis with Deep, Transferable, and Generative Modeling</cite>",
     "grants.more": "Project details →"
   },
   "zh": {
@@ -2652,6 +2660,8 @@ const i18n = {
     "opensource.academicSearch": "面向 AI 智能体的文献检索工具，支持学术检索、元数据核验与 BibTeX 导出。",
     "opensource.category.agents": "大模型与智能体",
     "opensource.category.timeseries": "时序智能（科语）",
+    "opensource.name.castClaw": "CastClaw（星辰）",
+    "opensource.name.paperScout": "PaperScout（科言乐问）",
     "opensource.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
     "datasets.heading": "基准与数据集",
     "datasets.category.science": "科学智能（科学工具与知识）",
@@ -2673,9 +2683,6 @@ const i18n = {
     "grants.heading": "科研项目",
     "grants.newGenerationAI": "2026–2028 · 新一代人工智能国家科技重大专项 · 项目骨干 — 化学领域科学数据治理。",
     "grants.casPriority": "2026–2029 · 中科院先导专项（B 类）· 负责人 — 大模型自主交互学习。",
-    "grants.nsfc": "2026–2028 · 国家自然科学基金青年 C 类 · 负责人 — 情境感知时序学习与预测。",
-    "grants.ustc": "2025–2026 · 中国科大新医学联合基金 · 负责人 — 围术期生理数据时序建模。",
-    "grants.anhui": "2024–2026 · 安徽省自然科学基金 · 负责人 — 科技文献表格理解与推理。",
     "grants.ustcYouth": "2027–2028 · 中国科大青年创新基金 · 负责人 — 智能体多轮交互学习与持续进化。",
     "grants.industry": "部分研究亦获得以下企业科研项目支持：",
     "related.heading": "相关链接",
@@ -2752,12 +2759,14 @@ const i18n = {
     "honors.more": "全部荣誉与奖励 →",
     "service.summary.ac": "<strong>领域主席（AC）：</strong>WWW、ICML、ICLR 2027。",
     "service.summary.spc": "<strong>高级程序委员会委员（SPC）：</strong>IJCAI 2026。",
-    "service.summary.program": "<strong>程序主席：</strong>KDD 2026 FedKDD/FedMAS Workshop。",
-    "service.summary.tutorial": "<strong>Tutorial 组织者与报告人：</strong>情境感知时间序列预测，IEEE ICDM 2026。",
-    "service.summary.publication": "<strong>出版主席：</strong>IEEE ICEBE 2026。",
     "service.summary.pc": "<strong>程序委员会：</strong>KDD、WWW、WSDM、CIKM、NeurIPS、ACL 等会议。",
     "service.summary.review": "<strong>期刊审稿：</strong>TKDE、TPAMI、TNNLS、TKDD、TIST、TMLR 等。",
     "service.more": "完整学术服务记录 →",
+    "activities.heading": "学术活动",
+    "activities.icebe2026": "<strong>出版主席</strong> · <a href=\"https://conferences.computer.org/icebe/2026/\" target=\"_blank\" rel=\"noopener\">IEEE 国际电子商务工程会议（ICEBE 2026）</a>",
+    "activities.icdm2026": "<strong>教程组织者与报告人</strong> · IEEE ICDM 2026 · <a href=\"https://context-time.github.io/zh.html\" target=\"_blank\" rel=\"noopener\">大模型驱动的情境感知时间序列预测：从模式识别到认知推理</a>",
+    "activities.fedkdd2026": "<strong>程序主席</strong> · ACM KDD 2026 · <a href=\"https://fedmas-fedkdd.github.io/fedmas-fedkdd2026/\" target=\"_blank\" rel=\"noopener\">FedKDD/FedMAS 研讨会</a>",
+    "activities.www2025": "<strong>研讨会报告嘉宾</strong> · The Web Conference (WWW) 2025 · <a href=\"https://archives.iw3c2.org/www2025/accepted-workshops/\" target=\"_blank\" rel=\"noopener\">国际网络时空数据挖掘研讨会（WebST 2025）</a> · <cite>Advancing Time Series Analysis with Deep, Transferable, and Generative Modeling</cite>",
     "grants.more": "完整项目介绍 →"
   }
 };

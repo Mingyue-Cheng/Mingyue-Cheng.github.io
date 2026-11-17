@@ -140,22 +140,6 @@
   overflow-wrap: anywhere;
 }
 .research-page .pillar-card-desc strong { color: #354e5b; font-weight: 600; }
-.research-page .direction-works {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 14px;
-  margin-top: 10px;
-  color: #516773;
-  font-size: 13px;
-  line-height: 1.6;
-}
-.research-page .direction-works a {
-  color: var(--accent);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
 .research-page .research-main .research-note-box {
   margin-top: 24px;
   text-align: left;

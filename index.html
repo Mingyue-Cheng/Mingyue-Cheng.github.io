@@ -1932,7 +1932,7 @@ html[lang="zh-CN"] .footer-title {
     <h2 id="opensource" class="section-heading" data-i18n="opensource.heading">Open Project</h2>
     <div class="os-categories">
       <section class="os-category" aria-labelledby="opensource-agents" data-os-category="agents">
-        <h3 id="opensource-agents" class="os-category-heading" data-i18n="opensource.category.agents">LLMs and Agentic AI</h3>
+        <h3 id="opensource-agents" class="os-category-heading" data-i18n="opensource.category.agents">LLMs and Agentic AI（AI for AI）</h3>
         <div class="os-grid">
           <div class="os-card">
             <div class="os-body">
@@ -1973,7 +1973,7 @@ html[lang="zh-CN"] .footer-title {
       </section>
 
       <section class="os-category" aria-labelledby="opensource-timeseries" data-os-category="timeseries">
-        <h3 id="opensource-timeseries" class="os-category-heading" data-i18n="opensource.category.timeseries">Time Series Intelligence</h3>
+        <h3 id="opensource-timeseries" class="os-category-heading" data-i18n="opensource.category.timeseries">Time Series Intelligence（Context-aware Forecasting Intelligence）</h3>
         <div class="os-grid">
           <div class="os-card">
             <div class="os-body">
@@ -1993,13 +1993,26 @@ html[lang="zh-CN"] .footer-title {
             </div>
           </div>
 
-
-
+          <div class="os-card">
+            <div class="os-body">
+              <div class="os-card-header">
+                <div class="os-card-title os-card-title-row">
+                  <div class="os-card-name">NeoResearch</div>
+                  <div class="os-card-meta">
+                    <a class="os-github" href="https://github.com/Kawai1Angel/NeoResearch" target="_blank" rel="noopener">GitHub</a>
+                    <a class="os-github" href="https://kawai1angel.github.io/NeoResearch/#top" target="_blank" rel="noopener">Website</a>
+                    <a class="os-github" href="https://arxiv.org/html/2611.18235" target="_blank" rel="noopener">Paper</a>
+                  </div>
+                </div>
+              </div>
+              <div class="os-card-desc" data-i18n="opensource.neoResearch">An autonomous research agent that combines scientific literature and experimental experience to discover and optimize time series forecasting models.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="os-category" aria-labelledby="opensource-science" data-os-category="science">
-        <h3 id="opensource-science" class="os-category-heading" data-i18n="opensource.category.science">Science Intelligence（Scientific Tool and Knowledge）</h3>
+        <h3 id="opensource-science" class="os-category-heading" data-i18n="opensource.category.science">AI for Science（Scientific Tool and Knowledge）</h3>
         <div class="os-grid">
           <div class="os-card">
             <div class="os-body">
@@ -2038,23 +2051,6 @@ html[lang="zh-CN"] .footer-title {
         </div>
       </section>
     </div>
-
-    <!-- Temporarily hidden: NeoResearch open source project.
-    <div class="os-card">
-      <div class="os-body">
-        <div class="os-card-header">
-          <div class="os-card-title os-card-title-row">
-            <div class="os-card-name">NeoResearch（智多星）</div>
-            <div class="os-card-meta">
-              <span class="os-year">2026.05</span>
-              <a class="os-github" href="https://ustc-time-series.github.io/star-cast/" target="_blank" rel="noopener">Website</a>
-            </div>
-          </div>
-        </div>
-        <div class="os-card-desc"><span class="os-inline-highlight">NeoResearch（智多星）</span> is an autonomous research agent system for <strong>time series forecasting model development</strong>. It connects research hypothesis generation, candidate recipe search, controlled experiments, evaluation diagnosis, and research memory into a reproducible loop, supporting systematic iteration from problem definition to validated forecasting model candidates.</div>
-      </div>
-    </div>
-    -->
 
     <!-- Temporarily hidden: CrabShrimp open source project.
     <div class="os-card">
@@ -2122,6 +2118,25 @@ html[lang="zh-CN"] .footer-title {
               </div>
             </div>
             <div class="dataset-card-desc" data-i18n="datasets.world2ts">A human-reviewed dataset linking time series across six domains to real-world events for context-aware forecasting.</div>
+          </article>
+
+          <article class="dataset-card">
+            <div class="dataset-kicker" data-i18n="datasets.castWorldKicker">Time Series Intelligence · Agentic Forecasting Benchmark</div>
+            <div class="dataset-card-header">
+              <div class="dataset-card-title dataset-card-title-row">
+                <div class="dataset-title-main">
+                  <span class="dataset-name">CastWorld</span>
+                  <a class="dataset-inline-link" href="https://arxiv.org/abs/2611.15262" target="_blank" rel="noopener">Paper</a>
+                </div>
+                <div class="dataset-card-meta">
+                  <span class="os-year">2026.11</span>
+                  <a class="dataset-repo-link" href="https://castworld-bench.github.io/" target="_blank" rel="noopener">Website</a>
+                  <a class="dataset-repo-link" href="https://github.com/CastWorld-Bench/CastWorld" target="_blank" rel="noopener">GitHub</a>
+                  <a class="dataset-repo-link" href="https://github.com/CastWorld-Bench/CastWorld/blob/main/docs/AB_DATA.md" target="_blank" rel="noopener">Dataset</a>
+                </div>
+              </div>
+            </div>
+            <div class="dataset-card-desc" data-i18n="datasets.castWorld">A benchmark for context-aware agentic time series forecasting, combining contextual data, interactive tool use, and evaluation beyond predictive accuracy.</div>
           </article>
         </div>
       </section>
@@ -2481,17 +2496,19 @@ const i18n = {
     "opensource.castClaw": "A human-in-the-loop agent framework for interactive time series forecasting and research.",
     "opensource.paperScout": "An autonomous scientific literature retrieval agent that refines search strategies through multi-turn interaction.",
     "opensource.academicSearch": "A literature search tool for AI agents, supporting scholarly retrieval, metadata verification, and BibTeX export.",
-    "opensource.category.agents": "LLMs and Agentic AI",
-    "opensource.category.timeseries": "Time Series Intelligence",
+    "opensource.category.agents": "LLMs and Agentic AI（AI for AI）",
+    "opensource.category.timeseries": "Time Series Intelligence（Context-aware Forecasting Intelligence）",
     "opensource.name.castClaw": "CastClaw",
     "opensource.name.paperScout": "PaperScout",
-    "opensource.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
+    "opensource.category.science": "AI for Science（Scientific Tool and Knowledge）",
     "datasets.heading": "Benchmarks &amp; Datasets",
     "datasets.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
     "datasets.category.timeseries": "Time Series Intelligence（Context-aware Time Series Forecasting）",
     "datasets.category.retrieval": "Retrieval &amp; Recommendation",
     "datasets.world2ts": "A human-reviewed dataset linking time series across six domains to real-world events for context-aware forecasting.",
     "datasets.world2tsKicker": "Time Series Intelligence · Real-world Event Context",
+    "datasets.castWorld": "A benchmark for context-aware agentic time series forecasting, combining contextual data, interactive tool use, and evaluation beyond predictive accuracy.",
+    "datasets.castWorldKicker": "Time Series Intelligence · Agentic Forecasting Benchmark",
     "education.heading": "Education",
     "education.phd": "Sep. 2017 ~ Jun. 2023, Major: Computer Science and Technology, Ph.D. degree, <a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>University of Science and Technology of China (USTC)</strong></a>, China",
     "education.bachelor": "Sep. 2013 ~ Jul. 2017, Major: Marketing Management, Bachelor of Management, <a href=\"http://www.hfut.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>Hefei University of Technology (HFUT)</strong></a>, China",
@@ -2564,7 +2581,7 @@ const i18n = {
     "opensource.webMind": "<span class=\"os-inline-highlight\">WebMind</span> is a <strong>web-task skill</strong> for <strong>AI agents</strong>. It completes web search, reading, navigation, and interaction in an <strong>isolated, persistent browser environment</strong>, with built-in support for <strong>screenshots</strong>, <strong>mouse and keyboard control</strong>, and <strong>reusable local experience</strong>. It requires <strong>no Google sign-in</strong> and does not use personal data from the user's everyday Chrome profile by default, making it especially suitable for <strong>topic research</strong>, <strong>information collection</strong>, and <strong>repeatable web workflows</strong>.",
     "opensource.tabClaw": "<span class=\"os-inline-highlight\">TabClaw</span> is an open-source agentic framework that empowers LLMs to reason over <strong>complex, real-world tabular data</strong>. It decomposes table-centric tasks into <strong>structured sub-goals</strong>, equips agents with <strong>code execution</strong>, <strong>schema-aware lookup</strong>, and <strong>formula tools</strong>, and coordinates them through <strong>multi-step decision workflows</strong>. TabClaw is designed to tackle challenges beyond flat QA — including <strong>multi-hop joins</strong>, <strong>conditional aggregation</strong>, and <strong>cross-table inference</strong> — making it suitable for enterprise data analysis and scientific table understanding.",
     "opensource.castFactory": "<span class=\"os-inline-highlight\">CastFactory（炼星坊）</span> is an open-source framework for <strong>LLM-driven time series forecasting model training</strong>, designed to make it <strong>extremely easy</strong> for users to build and adapt TSF models with modern large-model pipelines. It provides a unified and practical workflow for <strong>continued pre-training (CPT)</strong>, <strong>supervised fine-tuning (SFT)</strong>, and <strong>reinforcement learning (RL)</strong>, helping researchers and practitioners develop, optimize, and evaluate LLM-based forecasting systems with much lower engineering overhead.",
-    "opensource.neoResearch": "<span class=\"os-inline-highlight\">NeoResearch（智多星）</span> is an autonomous research agent system for <strong>time series forecasting model development</strong>. It connects research hypothesis generation, candidate recipe search, controlled experiments, evaluation diagnosis, and research memory into a reproducible loop, supporting systematic iteration from problem definition to validated forecasting model candidates.",
+    "opensource.neoResearch": "An autonomous research agent that combines scientific literature and experimental experience to discover and optimize time series forecasting models.",
     "award.hongzhuan": "Aug. 2025, USTC Hongzhuan Young Talent",
     "award.wsdm2025": "Mar. 2025, Best of WSDM 2025 (Outstanding Paper Award)",
     "award.ascend2024": "Dec. 2024, Gold Award, Ascend AI Innovation Competition National Finals (Advisor)",
@@ -2658,17 +2675,19 @@ const i18n = {
     "opensource.castClaw": "支持人机协同与交互式时间序列预测研究的智能体框架。",
     "opensource.paperScout": "通过多轮交互持续优化检索策略的自主科技文献检索智能体。",
     "opensource.academicSearch": "面向 AI 智能体的文献检索工具，支持学术检索、元数据核验与 BibTeX 导出。",
-    "opensource.category.agents": "大模型与智能体",
-    "opensource.category.timeseries": "时序智能（科语）",
+    "opensource.category.agents": "大模型与智能体（AI for AI）",
+    "opensource.category.timeseries": "时序智能（情境感知预测智能）",
     "opensource.name.castClaw": "CastClaw（星辰）",
     "opensource.name.paperScout": "PaperScout（科言乐问）",
-    "opensource.category.science": "Science Intelligence（Scientific Tool and Knowledge）",
+    "opensource.category.science": "AI for Science（Scientific Tool and Knowledge）",
     "datasets.heading": "基准与数据集",
     "datasets.category.science": "科学智能（科学工具与知识）",
     "datasets.category.timeseries": "时序智能（Context-aware Time Series Forecasting）",
     "datasets.category.retrieval": "检索推荐",
     "datasets.world2ts": "经人工审核的情境感知预测数据集，将六个领域的时间序列与真实事件关联。",
     "datasets.world2tsKicker": "时序智能 · 真实世界事件情境",
+    "datasets.castWorld": "面向情境感知时序预测智能体的基准，整合多样情境数据、工具交互与超越预测准确率的综合评测。",
+    "datasets.castWorldKicker": "时序智能 · 智能体预测基准",
     "education.heading": "教育经历",
     "education.phd": "2017.09 ~ 2023.06，计算机科学与技术专业，博士，<a href=\"http://www.ustc.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>中国科学技术大学（USTC）</strong></a>",
     "education.bachelor": "2013.09 ~ 2017.07，市场营销专业，管理学学士，<a href=\"http://www.hfut.edu.cn/\" target=\"_blank\" rel=\"noopener\"><strong>合肥工业大学（HFUT）</strong></a>",
@@ -2741,7 +2760,7 @@ const i18n = {
     "opensource.webMind": "<span class=\"os-inline-highlight\">WebMind</span> 是面向<strong>智能体</strong>的<strong>网页任务 Skill</strong>，在<strong>独立、持久化的浏览器环境</strong>中完成检索、阅读、导航与交互，支持<strong>截图、鼠标键盘操作和可复用的本地经验</strong>。它<strong>无需登录 Google</strong>，默认不使用日常 Chrome 配置中的个人数据，适用于<strong>主题调研、信息采集与可重复的网页工作流</strong>。",
     "opensource.tabClaw": "<span class=\"os-inline-highlight\">TabClaw</span> 是面向<strong>复杂真实表格数据</strong>的开源智能体框架。它将任务分解为<strong>结构化子目标</strong>，结合<strong>代码执行、模式感知检索与公式工具</strong>，通过<strong>多步决策流程</strong>完成推理，支持<strong>多跳连接、条件聚合与跨表推断</strong>，服务于企业数据分析与科学表格理解。",
     "opensource.castFactory": "<span class=\"os-inline-highlight\">CastFactory（炼星坊）</span> 是面向<strong>大模型驱动的时间序列预测模型训练</strong>的开源框架。它提供覆盖<strong>持续预训练（CPT）、监督微调（SFT）与强化学习（RL）</strong>的统一工作流，降低构建、适配、优化与评测时序预测模型的工程成本。",
-    "opensource.neoResearch": "<span class=\"os-inline-highlight\">NeoResearch（智多星）</span> 是面向<strong>时间序列预测模型研发</strong>的自主科研智能体系统。它将研究假设生成、候选方案搜索、受控实验、评测诊断与科研记忆连接为<strong>可复现的闭环</strong>，支持从问题定义到候选预测模型验证的系统化迭代。",
+    "opensource.neoResearch": "结合科技文献与实验经验，自主发现并优化时间序列预测模型的科研智能体。",
     "award.hongzhuan": "Aug. 2025, 中国科学技术大学红专青年人才",
     "award.wsdm2025": "Mar. 2025, Best of WSDM 2025（优秀论文奖）",
     "award.ascend2024": "Dec. 2024, 昇腾人工智能创新大赛全国总决赛金奖（指导教师）",

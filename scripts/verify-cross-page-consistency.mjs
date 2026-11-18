@@ -14,12 +14,14 @@ const sharedLiteral = sharedScript.match(/const translations = (\{[\s\S]*?\n  \}
 const sharedCopy = vm.runInNewContext(`(${sharedLiteral})`);
 const homepageProjectLabels = {
   en: {
-    'opensource.category.timeseries': 'Time Series Intelligence',
+    'opensource.category.timeseries': 'Time Series Intelligence（Context-aware Forecasting Intelligence）',
+    'opensource.category.science': 'AI for Science（Scientific Tool and Knowledge）',
     'opensource.name.castClaw': 'CastClaw',
     'opensource.name.paperScout': 'PaperScout'
   },
   zh: {
-    'opensource.category.timeseries': '时序智能（科语）',
+    'opensource.category.timeseries': '时序智能（情境感知预测智能）',
+    'opensource.category.science': 'AI for Science（Scientific Tool and Knowledge）',
     'opensource.name.castClaw': 'CastClaw（星辰）',
     'opensource.name.paperScout': 'PaperScout（科言乐问）'
   }
@@ -116,9 +118,9 @@ for (const lang of ['en', 'zh']) {
 
   test(`${lang}: time-series project and dataset categories use their requested labels`, () => {
     for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
-      const qualifier = key === 'datasets.category.timeseries' ? 'Context-aware Time Series Forecasting' : '科语';
-      const expected = `${lang === 'en' ? 'Time Series Intelligence' : '时序智能'}（${qualifier}）`;
-      assert.equal(homeCopy[lang][key], homepageProjectLabels[lang][key] || expected, `Homepage ${key}`);
+      const expected = homepageProjectLabels[lang][key]
+        || `${lang === 'en' ? 'Time Series Intelligence' : '时序智能'}（Context-aware Time Series Forecasting）`;
+      assert.equal(homeCopy[lang][key], expected, `Homepage ${key}`);
       assert.equal(sharedCopy[lang].pages['projects.html'].content[key], expected, `Projects ${key}`);
     }
   });
@@ -153,7 +155,10 @@ for (const lang of ['en', 'zh']) {
     assert.ok(body.length < (lang === 'en' ? 400 : 180), 'Homepage direction is a summary');
   });
 
-  test(`${lang}: science dataset headings include Scientific Tool and Knowledge on both pages`, () => {
+  test(`${lang}: science project and dataset headings retain their distinct labels on both pages`, () => {
+    const projectLabel = homepageProjectLabels[lang]['opensource.category.science'];
+    assert.equal(homeCopy[lang]['opensource.category.science'], projectLabel);
+    assert.equal(sharedCopy[lang].pages['projects.html'].content['opensource.category.science'], projectLabel);
     const expected = lang === 'en'
       ? 'Science Intelligence（Scientific Tool and Knowledge）'
       : '科学智能（科学工具与知识）';
@@ -225,17 +230,13 @@ for (const lang of ['en', 'zh']) {
     }
   });
 
-  test(`${lang}: project categories retain their page-specific labels while homepage summaries remain shorter than full descriptions`, () => {
+  test(`${lang}: project categories agree while homepage summaries remain shorter than full descriptions`, () => {
     const content = sharedCopy[lang].pages['projects.html'].content || {};
-    for (const key of Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.category\./.test(key))) {
-      if (key === 'opensource.category.timeseries') {
-        assert.equal(homeCopy[lang][key], homepageProjectLabels[lang][key], key);
-      } else {
-        assert.equal(content[key], homeCopy[lang][key], key);
-      }
+    for (const key of Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.category\./.test(key) || key === 'datasets.castWorldKicker')) {
+      assert.equal(content[key], homeCopy[lang][key], key);
       keyedMarkup(read('projects.html'), 'data-page-i18n', key);
     }
-    for (const key of ['opensource.agentR1', 'opensource.clawR1', 'opensource.castClaw', 'opensource.paperScout', 'opensource.academicSearch', 'datasets.world2ts', 'datasets.paperArena', 'datasets.chemTable', 'datasets.kuaiSearch', 'datasets.hoh']) {
+    for (const key of ['opensource.agentR1', 'opensource.clawR1', 'opensource.castClaw', 'opensource.neoResearch', 'opensource.paperScout', 'opensource.academicSearch', 'datasets.world2ts', 'datasets.castWorld', 'datasets.paperArena', 'datasets.chemTable', 'datasets.kuaiSearch', 'datasets.hoh']) {
       const summary = plain(homeCopy[lang][key]);
       assert.ok(summary.length > 10, key);
       assert.ok(summary.length < plain(content[key]).length, `${key} is summarized only on the homepage`);
@@ -273,16 +274,14 @@ test('project fallback headings and navigation consistently show Open Project', 
 test('time-series category fallback headings use their requested labels on both pages', () => {
   for (const [path, attribute] of [['index.html', 'data-i18n'], ['projects.html', 'data-page-i18n']]) {
     for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
-      const qualifier = key === 'datasets.category.timeseries' ? 'Context-aware Time Series Forecasting' : '科语';
-      const expected = path === 'index.html' && key === 'opensource.category.timeseries'
-        ? homepageProjectLabels.en[key]
-        : `Time Series Intelligence（${qualifier}）`;
+      const expected = homepageProjectLabels.en[key]
+        || 'Time Series Intelligence（Context-aware Time Series Forecasting）';
       assert.equal(plain(keyedMarkup(read(path), attribute, key)), expected, `${path}/${key}`);
     }
   }
 });
 
-test('homepage language switching keeps English project labels concise and restores Chinese names', () => {
+test('homepage language switching preserves the requested project labels and distinct dataset category', () => {
   const translate = home.match(/function translatePage\(lang\) \{[\s\S]*?\n\}\n\nfunction initLanguageToggle/)?.[0]
     .replace(/\n\nfunction initLanguageToggle$/, '');
   assert.ok(translate, 'Homepage translation function must exist');
@@ -356,10 +355,14 @@ test('homepage and news archive use the current CastClaw Chinese name', () => {
   }
 });
 
-test('science dataset fallback headings include Scientific Tool and Knowledge on both pages', () => {
-  const expected = 'Science Intelligence（Scientific Tool and Knowledge）';
-  assert.equal(plain(keyedMarkup(home, 'data-i18n', 'datasets.category.science')), expected);
-  assert.equal(plain(keyedMarkup(read('projects.html'), 'data-page-i18n', 'datasets.category.science')), expected);
+test('science project and dataset fallback headings retain their distinct labels on both pages', () => {
+  for (const [key, expected] of [
+    ['opensource.category.science', homepageProjectLabels.en['opensource.category.science']],
+    ['datasets.category.science', 'Science Intelligence（Scientific Tool and Knowledge）']
+  ]) {
+    assert.equal(plain(keyedMarkup(home, 'data-i18n', key)), expected);
+    assert.equal(plain(keyedMarkup(read('projects.html'), 'data-page-i18n', key)), expected);
+  }
 });
 
 test('academic organization fallback text matches the full service archive translations', () => {
@@ -394,9 +397,23 @@ test('complete project and dataset pages use the homepage categories without dro
     assert.deepEqual(values(active(home)), expected);
   }
   const names = [...projects.matchAll(/<div class="os-card-name">([\s\S]*?)<\/div>/g)].map((match) => plain(match[1]));
-  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（星辰）', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
-  assert.match(read('projects.html'), /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?NeoResearch（智多星）[\s\S]*?-->/);
-  assert.equal((projects.match(/class="dataset-card"/g) || []).length, 5);
+  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（星辰）', 'NeoResearch', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
+  for (const source of [active(home), projects]) {
+    const datasetNames = html => [...html.matchAll(/<span class="dataset-name">([^<]+)<\/span>/g)].map(match => match[1]);
+    assert.deepEqual(datasetNames(source), ['World2TS', 'CastWorld', 'PaperArena', 'ChemTable', 'KuaiSearch', 'HoH']);
+    const timeseries = source.match(/<section\b[^>]*data-dataset-category="timeseries"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+    assert.ok(timeseries, 'Time-series datasets retain their category');
+    assert.deepEqual(datasetNames(timeseries), ['World2TS', 'CastWorld']);
+    const card = [...timeseries.matchAll(/<article class="dataset-card">[\s\S]*?<\/article>/g)][1]?.[0];
+    assert.ok(card, 'CastWorld follows World2TS as its own dataset card');
+    assert.match(card, /<span class="os-year">2026\.11<\/span>/);
+    assert.deepEqual([...card.matchAll(/href="([^"]+)"/g)].map(match => match[1]).sort(), [
+      'https://arxiv.org/abs/2611.15262',
+      'https://castworld-bench.github.io/',
+      'https://github.com/CastWorld-Bench/CastWorld',
+      'https://github.com/CastWorld-Bench/CastWorld/blob/main/docs/AB_DATA.md'
+    ].sort());
+  }
 });
 
 test('English hero fallbacks agree with the shared runtime translations', () => {
@@ -416,7 +433,7 @@ test('Research updates its own footer while public pages retain shared-asset ver
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20261107-concise/, path);
     if (path !== 'index.html') {
-      const versions = { 'research.html': '20261114-research-editorial', 'news.html': '20261114-geomind' };
+      const versions = { 'research.html': '20261114-research-editorial', 'news.html': '20261114-geomind', 'projects.html': '20261118-neoresearch' };
       const version = versions[path] ?? '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }

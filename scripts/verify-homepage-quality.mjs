@@ -265,19 +265,24 @@ test('hidden WebMind and TabClaw cards remain recoverable without removing acade
   assert.match(newsHtml, /<strong>TabClaw<\/strong>/);
 });
 
-test('homepage keeps NeoResearch source-preserved but hidden', () => {
-  const openSource = sectionBetween(
-    indexHtml,
-    '<!-- ===== Open Source Projects ===== -->',
-    '<!-- ===== Datasets ===== -->'
-  );
-  const renderedOpenSource = openSource.replace(/<!--[\s\S]*?-->/g, '');
-
-  assert.doesNotMatch(renderedOpenSource, /NeoResearch（智多星）/);
-  assert.match(
-    openSource,
-    /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?<div class="os-card-name">NeoResearch（智多星）<\/div>[\s\S]*?<a class="os-github" href="https:\/\/ustc-time-series\.github\.io\/star-cast\/" target="_blank" rel="noopener">Website<\/a>[\s\S]*?<span class="os-inline-highlight">NeoResearch（智多星）<\/span>[\s\S]*?-->/
-  );
+test('NeoResearch is visible after CastClaw with current resource links on both project displays', () => {
+  for (const html of [indexHtml, projectsHtml]) {
+    const visible = html.replace(/<!--[\s\S]*?-->/g, '');
+    const timeseries = visible.match(/<section\b[^>]*data-os-category="timeseries"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+    assert.ok(timeseries, 'Time-series projects retain their category');
+    const cards = timeseries.split('<div class="os-card">').slice(1);
+    const names = cards.map(card => card.match(/<div class="os-card-name"[^>]*>([^<]+)<\/div>/)?.[1]);
+    assert.match(names[0], /^CastClaw(?:（星辰）)?$/);
+    assert.equal(names[1], 'NeoResearch');
+    assert.equal(names.filter(name => name === 'NeoResearch').length, 1);
+    const neoResearch = cards[1];
+    assert.deepEqual([...neoResearch.matchAll(/href="([^"]+)"/g)].map(match => match[1]).sort(), [
+      'https://github.com/Kawai1Angel/NeoResearch',
+      'https://kawai1angel.github.io/NeoResearch/#top',
+      'https://arxiv.org/html/2611.18235'
+    ].sort());
+    assert.doesNotMatch(html, /Temporarily hidden: NeoResearch|ustc-time-series\.github\.io\/star-cast\//);
+  }
 });
 
 test('open-source subpage matches shared homepage projects and venue badges', () => {
@@ -324,12 +329,6 @@ test('open-source subpage matches shared homepage projects and venue badges', ()
     venueBadges(sharedSubpageOpenSource, 'os-venue'),
     venueBadges(sortedHomepageOpenSource, 'os-venue')
   );
-  assert.doesNotMatch(visible(subpageOpenSource), /NeoResearch（智多星）/);
-  assert.match(
-    subpageOpenSource,
-    /<!-- Temporarily hidden: NeoResearch open source project\.[\s\S]*?<div class="os-card-name">NeoResearch（智多星）<\/div>[\s\S]*?-->/
-  );
-
   const sortedDatasetCards = (source) => [...visible(source).matchAll(
     /<article class="dataset-card">[\s\S]*?<\/article>/g
   )].map(([card]) => card).sort((left, right) => {

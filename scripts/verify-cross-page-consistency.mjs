@@ -232,11 +232,11 @@ for (const lang of ['en', 'zh']) {
 
   test(`${lang}: project categories agree while homepage summaries remain shorter than full descriptions`, () => {
     const content = sharedCopy[lang].pages['projects.html'].content || {};
-    for (const key of Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.category\./.test(key) || key === 'datasets.castWorldKicker')) {
+    for (const key of Object.keys(homeCopy[lang]).filter((key) => /^(?:opensource|datasets)\.category\./.test(key) || ['datasets.castWorldKicker', 'datasets.scholarQuestKicker'].includes(key))) {
       assert.equal(content[key], homeCopy[lang][key], key);
       keyedMarkup(read('projects.html'), 'data-page-i18n', key);
     }
-    for (const key of ['opensource.agentR1', 'opensource.clawR1', 'opensource.castClaw', 'opensource.neoResearch', 'opensource.paperScout', 'opensource.academicSearch', 'datasets.world2ts', 'datasets.castWorld', 'datasets.paperArena', 'datasets.chemTable', 'datasets.kuaiSearch', 'datasets.hoh']) {
+    for (const key of ['opensource.agentR1', 'opensource.clawR1', 'opensource.castClaw', 'opensource.neoResearch', 'opensource.paperScout', 'opensource.academicSearch', 'datasets.world2ts', 'datasets.castWorld', 'datasets.paperArena', 'datasets.scholarQuest', 'datasets.chemTable', 'datasets.kuaiSearch', 'datasets.hoh']) {
       const summary = plain(homeCopy[lang][key]);
       assert.ok(summary.length > 10, key);
       assert.ok(summary.length < plain(content[key]).length, `${key} is summarized only on the homepage`);
@@ -400,7 +400,7 @@ test('complete project and dataset pages use the homepage categories without dro
   assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（星辰）', 'NeoResearch', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
   for (const source of [active(home), projects]) {
     const datasetNames = html => [...html.matchAll(/<span class="dataset-name">([^<]+)<\/span>/g)].map(match => match[1]);
-    assert.deepEqual(datasetNames(source), ['World2TS', 'CastWorld', 'PaperArena', 'ChemTable', 'KuaiSearch', 'HoH']);
+    assert.deepEqual(datasetNames(source), ['World2TS', 'CastWorld', 'PaperArena', 'ScholarQuest', 'ChemTable', 'KuaiSearch', 'HoH']);
     const timeseries = source.match(/<section\b[^>]*data-dataset-category="timeseries"[^>]*>([\s\S]*?)<\/section>/)?.[1];
     assert.ok(timeseries, 'Time-series datasets retain their category');
     assert.deepEqual(datasetNames(timeseries), ['World2TS', 'CastWorld']);
@@ -413,6 +413,13 @@ test('complete project and dataset pages use the homepage categories without dro
       'https://github.com/CastWorld-Bench/CastWorld',
       'https://github.com/CastWorld-Bench/CastWorld/blob/main/docs/AB_DATA.md'
     ].sort());
+    const science = source.match(/<section\b[^>]*data-dataset-category="science"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+    assert.ok(science, 'Science datasets retain their category');
+    assert.deepEqual(datasetNames(science), ['PaperArena', 'ScholarQuest', 'ChemTable']);
+    const scholarQuest = [...science.matchAll(/<article class="dataset-card">[\s\S]*?<\/article>/g)][1]?.[0];
+    assert.ok(scholarQuest, 'ScholarQuest follows PaperArena as its own dataset card');
+    assert.match(scholarQuest, /<span class="os-year">2026\.06<\/span>/);
+    assert.match(scholarQuest, /href="https:\/\/arxiv\.org\/abs\/2606\.20235"/);
   }
 });
 
@@ -433,7 +440,7 @@ test('Research updates its own footer while public pages retain shared-asset ver
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20261107-concise/, path);
     if (path !== 'index.html') {
-      const versions = { 'research.html': '20261114-research-editorial', 'news.html': '20261114-geomind', 'projects.html': '20261118-neoresearch' };
+      const versions = { 'research.html': '20261114-research-editorial', 'news.html': '20261114-geomind', 'projects.html': '20261118-scholarquest' };
       const version = versions[path] ?? '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }

@@ -2165,6 +2165,25 @@ html[lang="zh-CN"] .footer-title {
           </article>
 
           <article class="dataset-card">
+            <div class="dataset-kicker" data-i18n="datasets.scholarQuestKicker">Scientific Literature · Agentic Paper Search</div>
+            <div class="dataset-card-header">
+              <div class="dataset-card-title-row">
+                <div class="dataset-title-main">
+                  <span class="dataset-name">ScholarQuest</span>
+                  <span class="dataset-topic" data-i18n="datasets.topicLiterature">Scientific Literature Mining</span>
+                  <a class="dataset-inline-link" href="https://arxiv.org/abs/2606.20235" target="_blank" rel="noopener">Paper</a>
+                </div>
+                <div class="dataset-card-meta">
+                  <span class="os-year">2026.06</span>
+                  <a class="dataset-repo-link" href="https://github.com/pty12345/ScholarQuest" target="_blank" rel="noopener">GitHub</a>
+                  <a class="dataset-repo-link" href="https://github.com/pty12345/ScholarQuest/tree/main/datasets" target="_blank" rel="noopener">Dataset</a>
+                </div>
+              </div>
+            </div>
+            <div class="dataset-card-desc" data-i18n="datasets.scholarQuest">A benchmark that measures how thoroughly and efficiently academic search agents find relevant papers across four research intents.</div>
+          </article>
+
+          <article class="dataset-card">
             <div class="dataset-kicker" data-i18n="datasets.chemTableKicker">AI for Science · Chemical Tables</div>
             <div class="dataset-card-header">
               <div class="dataset-card-title-row">
@@ -2578,6 +2597,8 @@ const i18n = {
     "datasets.kuaiSearch": "A large-scale e-commerce search dataset covering retrieval, ranking, and relevance assessment.",
     "datasets.chemTable": "A benchmark for recognizing and understanding chemical tables in scientific literature.",
     "datasets.paperArena": "A benchmark for evaluating tool-augmented agentic reasoning over scientific literature.",
+    "datasets.scholarQuest": "A benchmark that measures how thoroughly and efficiently academic search agents find relevant papers across four research intents.",
+    "datasets.scholarQuestKicker": "Scientific Literature · Agentic Paper Search",
     "opensource.webMind": "<span class=\"os-inline-highlight\">WebMind</span> is a <strong>web-task skill</strong> for <strong>AI agents</strong>. It completes web search, reading, navigation, and interaction in an <strong>isolated, persistent browser environment</strong>, with built-in support for <strong>screenshots</strong>, <strong>mouse and keyboard control</strong>, and <strong>reusable local experience</strong>. It requires <strong>no Google sign-in</strong> and does not use personal data from the user's everyday Chrome profile by default, making it especially suitable for <strong>topic research</strong>, <strong>information collection</strong>, and <strong>repeatable web workflows</strong>.",
     "opensource.tabClaw": "<span class=\"os-inline-highlight\">TabClaw</span> is an open-source agentic framework that empowers LLMs to reason over <strong>complex, real-world tabular data</strong>. It decomposes table-centric tasks into <strong>structured sub-goals</strong>, equips agents with <strong>code execution</strong>, <strong>schema-aware lookup</strong>, and <strong>formula tools</strong>, and coordinates them through <strong>multi-step decision workflows</strong>. TabClaw is designed to tackle challenges beyond flat QA — including <strong>multi-hop joins</strong>, <strong>conditional aggregation</strong>, and <strong>cross-table inference</strong> — making it suitable for enterprise data analysis and scientific table understanding.",
     "opensource.castFactory": "<span class=\"os-inline-highlight\">CastFactory（炼星坊）</span> is an open-source framework for <strong>LLM-driven time series forecasting model training</strong>, designed to make it <strong>extremely easy</strong> for users to build and adapt TSF models with modern large-model pipelines. It provides a unified and practical workflow for <strong>continued pre-training (CPT)</strong>, <strong>supervised fine-tuning (SFT)</strong>, and <strong>reinforcement learning (RL)</strong>, helping researchers and practitioners develop, optimize, and evaluate LLM-based forecasting systems with much lower engineering overhead.",
@@ -2757,6 +2778,8 @@ const i18n = {
     "datasets.kuaiSearch": "覆盖召回、排序与相关性评估的大规模电商搜索数据集。",
     "datasets.chemTable": "面向科技文献中化学表格识别与理解的评测基准。",
     "datasets.paperArena": "评测智能体借助工具理解科学文献、开展推理的基准。",
+    "datasets.scholarQuest": "面向学术文献检索智能体的基准，评测其在四类研究意图下的检索覆盖率与搜索效率。",
+    "datasets.scholarQuestKicker": "科技文献 · 智能体检索",
     "opensource.webMind": "<span class=\"os-inline-highlight\">WebMind</span> 是面向<strong>智能体</strong>的<strong>网页任务 Skill</strong>，在<strong>独立、持久化的浏览器环境</strong>中完成检索、阅读、导航与交互，支持<strong>截图、鼠标键盘操作和可复用的本地经验</strong>。它<strong>无需登录 Google</strong>，默认不使用日常 Chrome 配置中的个人数据，适用于<strong>主题调研、信息采集与可重复的网页工作流</strong>。",
     "opensource.tabClaw": "<span class=\"os-inline-highlight\">TabClaw</span> 是面向<strong>复杂真实表格数据</strong>的开源智能体框架。它将任务分解为<strong>结构化子目标</strong>，结合<strong>代码执行、模式感知检索与公式工具</strong>，通过<strong>多步决策流程</strong>完成推理，支持<strong>多跳连接、条件聚合与跨表推断</strong>，服务于企业数据分析与科学表格理解。",
     "opensource.castFactory": "<span class=\"os-inline-highlight\">CastFactory（炼星坊）</span> 是面向<strong>大模型驱动的时间序列预测模型训练</strong>的开源框架。它提供覆盖<strong>持续预训练（CPT）、监督微调（SFT）与强化学习（RL）</strong>的统一工作流，降低构建、适配、优化与评测时序预测模型的工程成本。",

@@ -495,11 +495,11 @@ test('research pages omit table research without removing its publication catego
   assert.match(indexHtml, /<li data-tags="[^"]*\btable\b[^"]*">/);
   assert.match(
     indexHtml,
-    /<meta property="og:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
+    /<meta property="og:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*AI for Science[^"]*">/
   );
   assert.match(
     indexHtml,
-    /<meta name="twitter:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
+    /<meta name="twitter:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*AI for Science[^"]*">/
   );
 });
 

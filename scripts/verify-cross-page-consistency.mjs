@@ -15,12 +15,14 @@ const sharedCopy = vm.runInNewContext(`(${sharedLiteral})`);
 const homepageProjectLabels = {
   en: {
     'opensource.category.timeseries': 'Time Series Mining（Context-aware Prediction Intelligence）',
+    'opensource.category.ai4ai': 'AI for AI',
     'opensource.category.science': 'AI for Science（Scientific Tool and Knowledge）',
     'opensource.name.castClaw': 'CastClaw',
     'opensource.name.paperScout': 'PaperScout'
   },
   zh: {
     'opensource.category.timeseries': '时序数据挖掘（情境感知预测智能）',
+    'opensource.category.ai4ai': 'AI for AI',
     'opensource.category.science': 'AI for Science（Scientific Tool and Knowledge）',
     'opensource.name.castClaw': 'CastClaw（星辰）',
     'opensource.name.paperScout': 'PaperScout（科言乐问）'
@@ -33,7 +35,7 @@ const publicationFilters = [
   ['agent', 'filterAgent', 'Agentic AI', '智能体'],
   ['timeseries', 'filterTime', 'Time Series Mining', '时序数据挖掘'],
   ['table', 'filterTable', 'Tabular Data Mining', '表格数据挖掘'],
-  ['ai4ds', 'filterDataScience', 'AI for Data Science', '数据科学智能'],
+  ['ai4ds', 'filterDataScience', 'AI for AI', 'AI for AI'],
   ['ai4science', 'filterKnowledge', 'AI for Science', '科学智能'],
   ['recsys', 'filterRec', 'Recommender Systems', '推荐系统']
 ];
@@ -155,12 +157,12 @@ for (const lang of ['en', 'zh']) {
     assert.ok(body.length < (lang === 'en' ? 400 : 180), 'Homepage direction is a summary');
   });
 
-  test(`${lang}: science project and dataset headings retain their distinct labels on both pages`, () => {
+  test(`${lang}: science project and dataset headings use their requested labels on both pages`, () => {
     const projectLabel = homepageProjectLabels[lang]['opensource.category.science'];
     assert.equal(homeCopy[lang]['opensource.category.science'], projectLabel);
     assert.equal(sharedCopy[lang].pages['projects.html'].content['opensource.category.science'], projectLabel);
     const expected = lang === 'en'
-      ? 'Science Intelligence（Scientific Tool and Knowledge）'
+      ? 'AI for Science（Scientific Tool and Knowledge）'
       : '科学智能（科学工具与知识）';
     assert.equal(homeCopy[lang]['datasets.category.science'], expected);
     assert.equal(sharedCopy[lang].pages['projects.html'].content['datasets.category.science'], expected);
@@ -355,10 +357,10 @@ test('homepage and news archive use the current CastClaw Chinese name', () => {
   }
 });
 
-test('science project and dataset fallback headings retain their distinct labels on both pages', () => {
+test('science project and dataset fallback headings use their requested labels on both pages', () => {
   for (const [key, expected] of [
     ['opensource.category.science', homepageProjectLabels.en['opensource.category.science']],
-    ['datasets.category.science', 'Science Intelligence（Scientific Tool and Knowledge）']
+    ['datasets.category.science', 'AI for Science（Scientific Tool and Knowledge）']
   ]) {
     assert.equal(plain(keyedMarkup(home, 'data-i18n', key)), expected);
     assert.equal(plain(keyedMarkup(read('projects.html'), 'data-page-i18n', key)), expected);
@@ -391,13 +393,13 @@ test('Research replaces its former applications with three named directions', ()
 
 test('complete project and dataset pages use the homepage categories without dropping archive entries', () => {
   const projects = active(read('projects.html'));
-  for (const [attribute, expected] of [['data-os-category', ['agents', 'timeseries', 'science']], ['data-dataset-category', ['timeseries', 'science', 'retrieval']]]) {
+  for (const [attribute, expected] of [['data-os-category', ['agents', 'timeseries', 'ai4ai', 'science']], ['data-dataset-category', ['timeseries', 'science', 'retrieval']]]) {
     const values = (html) => [...html.matchAll(new RegExp(`${attribute}="([^"]+)"`, 'g'))].map((match) => match[1]);
     assert.deepEqual(values(projects), expected);
     assert.deepEqual(values(active(home)), expected);
   }
   const names = [...projects.matchAll(/<div class="os-card-name">([\s\S]*?)<\/div>/g)].map((match) => plain(match[1]));
-  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（星辰）', 'NeoResearch', 'CastMind（星思）', 'CastFactory（炼星坊）', 'PaperScout（科言乐问）', 'Academic Search']);
+  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（星辰）', 'CastMind（星思）', 'CastFactory（炼星坊）', 'NeoResearch', 'PaperScout（科言乐问）', 'Academic Search']);
   for (const source of [active(home), projects]) {
     const datasetNames = html => [...html.matchAll(/<span class="dataset-name">([^<]+)<\/span>/g)].map(match => match[1]);
     assert.deepEqual(datasetNames(source), ['World2TS', 'CastWorld', 'PaperArena', 'ScholarQuest', 'ChemTable', 'KuaiSearch', 'HoH']);
@@ -440,7 +442,7 @@ test('Research updates its own footer while public pages retain shared-asset ver
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20261107-concise/, path);
     if (path !== 'index.html') {
-      const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261114-geomind', 'projects.html': '20261119-time-series-mining', 'publications.html': '20261124-publication-filters' };
+      const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261114-geomind', 'projects.html': '20261119-ai-for-science', 'publications.html': '20261119-ai-for-ai-filter' };
       const version = versions[path] ?? '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }

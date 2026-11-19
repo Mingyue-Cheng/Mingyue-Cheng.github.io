@@ -20,7 +20,7 @@ const plain = html => html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 const expected = {
   en: {
     'systems.heading': 'Systems Product',
-    'systems.brand': '科言 · Science Intelligence',
+    'systems.brand': '科言 · AI for Science',
     'systems.lewen': 'Discover scientific literature through quick search and in-depth retrieval.',
     'systems.wenxiu': 'Support academic writing with polishing, proofreading, and translation tools.',
     'systems.visit': 'Visit website'
@@ -96,7 +96,7 @@ for (const [page, html, attribute] of [
       const header = content.match(/^\s*<div class="system-product-header">\s*(<img\b[^>]*>)\s*<div class="system-product-identity">([\s\S]*?)<\/div>\s*<\/div>/);
       assert.ok(header, `${page}/${name} must place its logo and identity inside the header`);
       assert.ok(header[1].includes(`src="files/assets/system-products/${key}-logo.webp"`));
-      assert.match(header[2], new RegExp(`^\\s*<h3 id="${id}" class="system-product-name">${name}<\\/h3>\\s*<span class="system-product-brand" ${attribute}="systems.brand">科言 · Science Intelligence<\\/span>\\s*$`));
+      assert.match(header[2], new RegExp(`^\\s*<h3 id="${id}" class="system-product-name">${name}<\\/h3>\\s*<span class="system-product-brand" ${attribute}="systems.brand">科言 · AI for Science<\\/span>\\s*$`));
       assert.ok(attributes.includes(`aria-labelledby="${id}"`));
       assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1);
       assert.equal((content.match(/class="system-product-name"/g) || []).length, 1);

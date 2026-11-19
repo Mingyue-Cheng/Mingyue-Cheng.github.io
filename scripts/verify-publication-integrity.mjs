@@ -655,10 +655,10 @@ for (const [page] of pages) {
       assert.equal(tagsFor(prefix).includes('agent'), false, `${page}: ${prefix} lacks an autonomous-agent classification`);
     }
     for (const prefix of ['CastWorld:', 'NeoResearch:', 'SheetCompass:']) {
-      assert.ok(tagsFor(prefix).includes('ai4ds'), `${page}: ${prefix} belongs to AI for Data Science`);
+      assert.ok(tagsFor(prefix).includes('ai4ds'), `${page}: ${prefix} belongs to AI for AI`);
     }
     for (const prefix of ['StepPO:', 'ConvTimeNet:']) {
-      assert.equal(tagsFor(prefix).includes('ai4ds'), false, `${page}: ${prefix} stays outside AI for Data Science`);
+      assert.equal(tagsFor(prefix).includes('ai4ds'), false, `${page}: ${prefix} stays outside AI for AI`);
     }
   });
 
@@ -1017,5 +1017,5 @@ test('Publications page has an accessible semantic shell and social metadata', (
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
   assert.match(body, /Last updated on November 7, 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261124-publication-filters"><\/script>/);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261119-ai-for-ai-filter"><\/script>/);
 });

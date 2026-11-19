@@ -77,15 +77,15 @@ test('homepage metadata describes the current research portfolio', () => {
   );
   assert.match(
     head,
-    /<meta name="description" content="[^"]*LLM-driven reasoning and AI agents[^"]*time-series mining[^"]*science intelligence[^"]*">/
+    /<meta name="description" content="[^"]*LLM-driven reasoning and AI agents[^"]*time-series mining[^"]*AI for Science[^"]*">/
   );
   assert.match(
     head,
-    /<meta property="og:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
+    /<meta property="og:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*AI for Science[^"]*">/
   );
   assert.match(
     head,
-    /<meta name="twitter:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*science intelligence[^"]*">/
+    /<meta name="twitter:description" content="[^"]*LLM-driven reasoning and AI agents[^"]*AI for Science[^"]*">/
   );
   assert.match(
     head,
@@ -265,17 +265,21 @@ test('hidden WebMind and TabClaw cards remain recoverable without removing acade
   assert.match(newsHtml, /<strong>TabClaw<\/strong>/);
 });
 
-test('NeoResearch is visible after CastClaw with current resource links on both project displays', () => {
-  for (const html of [indexHtml, projectsHtml]) {
+test('NeoResearch has its own AI for AI category with current resource links on both project displays', () => {
+  for (const [page, html] of [['index.html', indexHtml], ['projects.html', projectsHtml]]) {
     const visible = html.replace(/<!--[\s\S]*?-->/g, '');
     const timeseries = visible.match(/<section\b[^>]*data-os-category="timeseries"[^>]*>([\s\S]*?)<\/section>/)?.[1];
     assert.ok(timeseries, 'Time-series projects retain their category');
-    const cards = timeseries.split('<div class="os-card">').slice(1);
+    const timeSeriesNames = [...timeseries.matchAll(/<div class="os-card-name"[^>]*>([^<]+)<\/div>/g)].map(match => match[1]);
+    assert.deepEqual(timeSeriesNames, page === 'index.html' ? ['CastClaw'] : ['CastClaw（星辰）', 'CastMind（星思）', 'CastFactory（炼星坊）']);
+    const ai4ai = visible.match(/<section\b[^>]*data-os-category="ai4ai"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+    assert.ok(ai4ai, `${page} includes the AI for AI category`);
+    assert.match(ai4ai, /<h3 id="opensource-ai4ai" class="os-category-heading" data-(?:page-)?i18n="opensource\.category\.ai4ai">AI for AI<\/h3>/);
+    const cards = ai4ai.split('<div class="os-card">').slice(1);
     const names = cards.map(card => card.match(/<div class="os-card-name"[^>]*>([^<]+)<\/div>/)?.[1]);
-    assert.match(names[0], /^CastClaw(?:（星辰）)?$/);
-    assert.equal(names[1], 'NeoResearch');
-    assert.equal(names.filter(name => name === 'NeoResearch').length, 1);
-    const neoResearch = cards[1];
+    assert.deepEqual(names, ['NeoResearch']);
+    assert.equal((visible.match(/<div class="os-card-name"[^>]*>NeoResearch<\/div>/g) || []).length, 1);
+    const neoResearch = cards[0];
     assert.deepEqual([...neoResearch.matchAll(/href="([^"]+)"/g)].map(match => match[1]).sort(), [
       'https://github.com/Kawai1Angel/NeoResearch',
       'https://kawai1angel.github.io/NeoResearch/#top',

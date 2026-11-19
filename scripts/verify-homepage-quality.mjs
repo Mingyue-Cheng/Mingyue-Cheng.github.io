@@ -271,7 +271,14 @@ test('NeoResearch has its own AI for AI category with current resource links on 
     const timeseries = visible.match(/<section\b[^>]*data-os-category="timeseries"[^>]*>([\s\S]*?)<\/section>/)?.[1];
     assert.ok(timeseries, 'Time-series projects retain their category');
     const timeSeriesNames = [...timeseries.matchAll(/<div class="os-card-name"[^>]*>([^<]+)<\/div>/g)].map(match => match[1]);
-    assert.deepEqual(timeSeriesNames, page === 'index.html' ? ['CastClaw'] : ['CastClaw（星辰）', 'CastMind（星思）', 'CastFactory（炼星坊）']);
+    assert.deepEqual(timeSeriesNames, page === 'index.html'
+      ? ['AlphaCast', 'CastFSR', 'AdaCast', 'CastMind', 'CastClaw']
+      : ['AlphaCast', 'CastFSR', 'AdaCast', 'CastMind（星思）', 'CastClaw（星辰）', 'CastFactory（炼星坊）']);
+    const timeSeriesCards = timeseries.split('<div class="os-card">').slice(1);
+    for (const name of ['AdaCast', page === 'index.html' ? 'CastMind' : 'CastMind（星思）']) {
+      const card = timeSeriesCards[timeSeriesNames.indexOf(name)];
+      assert.doesNotMatch(card, /<a\b[^>]*>\s*Paper\s*<\/a>/, `${page}: ${name} has no standalone paper link`);
+    }
     const ai4ai = visible.match(/<section\b[^>]*data-os-category="ai4ai"[^>]*>([\s\S]*?)<\/section>/)?.[1];
     assert.ok(ai4ai, `${page} includes the AI for AI category`);
     assert.match(ai4ai, /<h3 id="opensource-ai4ai" class="os-category-heading" data-(?:page-)?i18n="opensource\.category\.ai4ai">AI for AI<\/h3>/);
@@ -300,11 +307,11 @@ test('open-source subpage matches shared homepage projects and venue badges', ()
     '<!-- ===== Open Source ===== -->',
     '<!-- ===== Benchmarks & Datasets ===== -->'
   );
-  const subpageOnlyCardNames = ['CastFactory（炼星坊）', 'CastMind（星思）'];
+  const subpageOnlyCardNames = ['CastFactory（炼星坊）'];
   const visible = (source) => source.replace(/<!--[\s\S]*?-->/g, '');
   const cardNames = (source) => [...visible(source).matchAll(
     /<div class="os-card-name"[^>]*>([^<]+)<\/div>/g
-  )].map((match) => ({ 'CastClaw（星辰）': 'CastClaw', 'PaperScout（科言乐问）': 'PaperScout' })[match[1]] || match[1]);
+  )].map((match) => ({ 'CastMind（星思）': 'CastMind', 'CastClaw（星辰）': 'CastClaw', 'PaperScout（科言乐问）': 'PaperScout' })[match[1]] || match[1]);
   const sortedCards = (source) => visible(source)
     .split('<div class="os-card">').slice(1)
     .sort((left, right) => cardNames(left)[0].localeCompare(cardNames(right)[0]));

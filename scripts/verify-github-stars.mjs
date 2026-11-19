@@ -17,8 +17,8 @@ const publicHtmlSource = readdirSync(root)
 const expectedRepos = [
   'AgentR1/Agent-R1',
   'AgentR1/Claw-R1',
-  'ustc-time-series/CastClaw',
   'ustc-time-series/CastMind',
+  'ustc-time-series/CastClaw',
   'ustc-time-series/CastFactory',
   'AgentR1/PaperScout',
   'ustc-ai4science/academic-search',
@@ -173,6 +173,7 @@ test('visible GitHub star counts map to canonical repository and stargazer links
   const homepageRepos = [
     'AgentR1/Agent-R1',
     'AgentR1/Claw-R1',
+    'ustc-time-series/CastMind',
     'ustc-time-series/CastClaw',
     'AgentR1/PaperScout',
     'ustc-ai4science/academic-search',

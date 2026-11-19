@@ -238,7 +238,7 @@ for (const lang of ['en', 'zh']) {
       assert.equal(content[key], homeCopy[lang][key], key);
       keyedMarkup(read('projects.html'), 'data-page-i18n', key);
     }
-    for (const key of ['opensource.agentR1', 'opensource.clawR1', 'opensource.castClaw', 'opensource.neoResearch', 'opensource.paperScout', 'opensource.academicSearch', 'datasets.world2ts', 'datasets.castWorld', 'datasets.paperArena', 'datasets.scholarQuest', 'datasets.chemTable', 'datasets.kuaiSearch', 'datasets.hoh']) {
+    for (const key of ['opensource.agentR1', 'opensource.clawR1', 'opensource.alphaCast', 'opensource.castFsr', 'opensource.adaCast', 'opensource.castMind', 'opensource.castClaw', 'opensource.neoResearch', 'opensource.paperScout', 'opensource.academicSearch', 'datasets.world2ts', 'datasets.castWorld', 'datasets.paperArena', 'datasets.scholarQuest', 'datasets.chemTable', 'datasets.kuaiSearch', 'datasets.hoh']) {
       const summary = plain(homeCopy[lang][key]);
       assert.ok(summary.length > 10, key);
       assert.ok(summary.length < plain(content[key]).length, `${key} is summarized only on the homepage`);
@@ -330,7 +330,7 @@ test('PaperScout uses its English homepage title while the projects page retains
   assert.equal(keyedMarkup(home, 'data-i18n', 'opensource.name.paperScout'), homepageProjectLabels.en['opensource.name.paperScout']);
 });
 
-test('CastClaw keeps its Chinese name on the projects page and its existing bilingual descriptions', () => {
+test('CastClaw keeps its project name and bilingual human–AI collaboration descriptions', () => {
   const expected = 'CastClaw（星辰）';
   for (const [path, attribute] of [['index.html', 'data-i18n'], ['projects.html', 'data-page-i18n']]) {
     const html = active(read(path));
@@ -345,7 +345,11 @@ test('CastClaw keeps its Chinese name on the projects page and its existing bili
   for (const lang of ['en', 'zh']) {
     const copy = homeCopy[lang]['opensource.castClaw'];
     assert.ok(plain(copy).length > 20, `${lang} concise homepage description`);
-    assert.ok(plain(sharedCopy[lang].pages['projects.html'].content['opensource.castClaw']).startsWith(expected), `${lang} full projects description`);
+    const fullCopy = plain(sharedCopy[lang].pages['projects.html'].content['opensource.castClaw']);
+    assert.ok(fullCopy.startsWith(expected), `${lang} full projects description`);
+    for (const description of [plain(copy), fullCopy]) {
+      assert.match(description, lang === 'en' ? /human[–-]AI collaboration/i : /人机协同/);
+    }
   }
 });
 
@@ -399,7 +403,7 @@ test('complete project and dataset pages use the homepage categories without dro
     assert.deepEqual(values(active(home)), expected);
   }
   const names = [...projects.matchAll(/<div class="os-card-name">([\s\S]*?)<\/div>/g)].map((match) => plain(match[1]));
-  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'CastClaw（星辰）', 'CastMind（星思）', 'CastFactory（炼星坊）', 'NeoResearch', 'PaperScout（科言乐问）', 'Academic Search']);
+  assert.deepEqual(names, ['Agent-R1', 'Claw-R1', 'AlphaCast', 'CastFSR', 'AdaCast', 'CastMind（星思）', 'CastClaw（星辰）', 'CastFactory（炼星坊）', 'NeoResearch', 'PaperScout（科言乐问）', 'Academic Search']);
   for (const source of [active(home), projects]) {
     const datasetNames = html => [...html.matchAll(/<span class="dataset-name">([^<]+)<\/span>/g)].map(match => match[1]);
     assert.deepEqual(datasetNames(source), ['World2TS', 'CastWorld', 'PaperArena', 'ScholarQuest', 'ChemTable', 'KuaiSearch', 'HoH']);
@@ -442,7 +446,7 @@ test('Research updates its own footer while public pages retain shared-asset ver
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20261107-concise/, path);
     if (path !== 'index.html') {
-      const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261114-geomind', 'projects.html': '20261119-ai-for-science', 'publications.html': '20261119-ai-for-ai-filter' };
+      const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261114-geomind', 'projects.html': '20261119-forecasting-projects', 'publications.html': '20261119-ai-for-ai-filter' };
       const version = versions[path] ?? '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }

@@ -77,7 +77,7 @@ test('homepage metadata describes the current research portfolio', () => {
   );
   assert.match(
     head,
-    /<meta name="description" content="[^"]*LLM-driven reasoning and AI agents[^"]*time-series intelligence[^"]*science intelligence[^"]*">/
+    /<meta name="description" content="[^"]*LLM-driven reasoning and AI agents[^"]*time-series mining[^"]*science intelligence[^"]*">/
   );
   assert.match(
     head,
@@ -89,7 +89,7 @@ test('homepage metadata describes the current research portfolio', () => {
   );
   assert.match(
     head,
-    /<meta name="keywords" content="[^"]*Time Series Intelligence[^"]*">/
+    /<meta name="keywords" content="[^"]*Time Series Mining[^"]*">/
   );
   assert.match(head, /<meta property="og:image:alt" content="Portrait of Mingyue Cheng">/);
   assert.doesNotMatch(
@@ -627,7 +627,7 @@ test('both publication lists keep the requested preprint order and links', () =>
     const castFsrEntry = entries.find((entry) => entry.includes('<strong>CastFSR:')) || '';
 
     assert.deepEqual(titles, expectedTitles, `${name} preprint order`);
-    assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm reasoning">/, `${name} tags`);
+    assert.match(castFsrEntry, /^<li data-tags="timeseries agent llm reasoning(?: ai4ds)?">/, `${name} tags`);
     assert.match(
       castFsrEntry,
       /Xiaoyu Tao, <strong>Mingyue Cheng<\/strong>, Bokai Pan, Ze Guo, Hao Xue, <strong>CastFSR:/,
@@ -801,7 +801,7 @@ for (const paper of icdmDemoPapers) {
     for (const [name, source] of [['homepage', indexHtml], ['publications', publicationsHtml]]) {
       const year = sectionBetween(source, '<!-- ===== 2026 ===== -->', '<!-- ===== 2025 ===== -->').replace(/<!--[\s\S]*?-->/g, '');
       const entries = [...year.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map(match => match[0]);
-      assert.deepEqual(entries.filter(entry => entry.includes(`<strong>${paper.title}</strong>`)), [expected], `${name}: exact authors, title, acceptance, tags, and existing code link`);
+      assert.deepEqual(entries.filter(entry => entry.includes(`<strong>${paper.title}</strong>`)).map(entry => entry.replace(/^(<li data-tags="[^"]*) ai4ds">/, '$1">')), [expected], `${name}: exact authors, title, acceptance, original tags, and existing code link`);
       const preprints = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->');
       assert.ok(!preprints.includes(paper.title), `${name}: no accepted paper duplicated under preprints`);
     }
@@ -831,7 +831,7 @@ test('CIKM 2026 Demo Track papers remain at the end of the complete 2026 list', 
     );
     assert.doesNotMatch(agentR1Entry, /<a\b/, `${name} Agent-R1 links`);
 
-    assert.match(tabClawEntry, /^<li data-tags="table agent llm reasoning">/, `${name} TabClaw tags`);
+    assert.match(tabClawEntry, /^<li data-tags="table agent llm reasoning(?: ai4ds)?">/, `${name} TabClaw tags`);
     assert.match(
       tabClawEntry,
       /<strong>Mingyue Cheng<\/strong>, Shuo Yu, Daoyu Wang, Qingchuan Li, Xiaoyu Tao, Qingyang Mao, Yitong Zhou, Qi Liu\*, <strong>TabClaw: An Interactive and Self-Evolving Agent for Spreadsheet Manipulation and Table Reasoning<\/strong>\. <em>ACM CIKM 2026 Demo Track Accepted<\/em>\./,
@@ -891,7 +891,7 @@ test('CIKM 2026 main-track papers are synchronized and removed from Preprint', (
       assert.equal(location.preprints.includes(paper.title), false, `${location.name} stale preprint placement for ${paper.title}`);
       const entries = [...location.publications2026.matchAll(/<li data-tags="[^"]+">[\s\S]*?<\/li>/g)].map((match) => match[0]);
       const entry = entries.find((candidate) => candidate.includes(paper.title)) || '';
-      assert.match(entry, new RegExp(`^<li data-tags="${paper.tags}">`), `${location.name} tags for ${paper.title}`);
+      assert.match(entry, new RegExp(`^<li data-tags="${paper.tags}(?: ai4ds)?">`), `${location.name} tags for ${paper.title}`);
       assert.equal(entry.includes(paper.authors), true, `${location.name} authors for ${paper.title}`);
       assert.match(entry, /<em>ACM CIKM 2026 Accepted<\/em>\./, `${location.name} status for ${paper.title}`);
       assert.equal(entry.includes(`href="${paper.pdf}"`), true, `${location.name} PDF for ${paper.title}`);

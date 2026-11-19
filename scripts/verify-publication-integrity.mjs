@@ -429,7 +429,7 @@ function createPublicationFilterMatrixHarness(page) {
   const document = new FakeDocument(`/${page}`);
   const window = new FakeEventTarget();
   window.location = { hash: '' };
-  const filters = ['all', 'llm', 'agent', 'structured', 'timeseries', 'table', 'ai4science', 'recsys'];
+  const filters = ['all', 'llm', 'agent', 'timeseries', 'table', 'ai4ds', 'ai4science', 'recsys'];
   const buttons = new Map(filters.map((filter) => [filter, new FakeElement({
     tagName: 'button',
     classes: filter === 'all' ? ['pub-filter-btn', 'active'] : ['pub-filter-btn'],
@@ -445,10 +445,11 @@ function createPublicationFilterMatrixHarness(page) {
     ['table-only', 'table'],
     ['graph-only', 'graph'],
     ['structured-only', 'structured'],
-    ['structured-overlap', 'timeseries table graph structured'],
+    ['structured-overlap', 'timeseries table graph structured ai4ds'],
+    ['data-science-only', 'ai4ds'],
     ['science-only', 'ai4science'],
     ['recommendation-only', 'recsys'],
-    ['substring-only', 'llm-extra reasoning-extra agentic timeseries-extra table-mining graphing unstructured ai4science-extra recsys-extra'],
+    ['substring-only', 'llm-extra reasoning-extra agentic timeseries-extra table-mining graphing unstructured ai4ds-extra ai4science-extra recsys-extra'],
     ['unrelated', 'other']
   ];
   const items = new Map(fixtureTags.map(([id, tags]) => [id, new FakeElement({
@@ -653,6 +654,12 @@ for (const [page] of pages) {
     for (const prefix of ['Time Series Forecasting as Reasoning:', 'Towards Context-aware Reasoning-enhanced Generative Searching', 'MemWeaver:', 'Revisiting the Solution of Meta KDD Cup 2024:']) {
       assert.equal(tagsFor(prefix).includes('agent'), false, `${page}: ${prefix} lacks an autonomous-agent classification`);
     }
+    for (const prefix of ['CastWorld:', 'NeoResearch:', 'SheetCompass:']) {
+      assert.ok(tagsFor(prefix).includes('ai4ds'), `${page}: ${prefix} belongs to AI for Data Science`);
+    }
+    for (const prefix of ['StepPO:', 'ConvTimeNet:']) {
+      assert.equal(tagsFor(prefix).includes('ai4ds'), false, `${page}: ${prefix} stays outside AI for Data Science`);
+    }
   });
 
   test(`${page} actual filter script matches complete tags rather than substrings`, () => {
@@ -665,20 +672,12 @@ for (const [page] of pages) {
     }
   });
 
-  test(`${page} actual structured filter includes every structured data area and counts overlap once`, () => {
-    const harness = createPublicationFilterMatrixHarness(page);
-    harness.buttons.get('structured').click();
-    assert.deepEqual(harness.visibleIds(), [
-      'time-only', 'table-only', 'graph-only', 'structured-only', 'structured-overlap'
-    ]);
-    assert.equal(harness.visibleIds().filter((id) => id === 'structured-overlap').length, 1);
-  });
-
   test(`${page} actual filter script retains specific areas and restores every publication through All`, () => {
     const harness = createPublicationFilterMatrixHarness(page);
     const expectedByFilter = [
       ['timeseries', ['time-only', 'structured-overlap']],
       ['table', ['table-only', 'structured-overlap']],
+      ['ai4ds', ['structured-overlap', 'data-science-only']],
       ['ai4science', ['science-only']],
       ['recsys', ['recommendation-only']]
     ];
@@ -814,7 +813,7 @@ for (const [page, source] of pages) {
       assert.equal(publicationTitle(entries[expectedIndex]), title, `${page} new preprint order`);
       const linkLabel = ` [${link.label}]`;
       assert.equal(textFromHtml(record.html), `${authors}, ${title}. (${status})${linkLabel}`);
-      assert.equal(attributeValue(record.html.match(/^<li\b[^>]*>/)[0], 'data-tags'), tags);
+      assert.equal(attributeValue(record.html.match(/^<li\b[^>]*>/)[0], 'data-tags').replace(/ ai4ds$/, ''), tags);
       assert.match(record.html, /<strong>Mingyue Cheng\*<\/strong>/);
       assert.doesNotMatch(record.html, /<sup\b/i);
       const links = [...record.html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map(([, href]) => href);
@@ -866,7 +865,7 @@ test('Time-R1 uses the approved CIKM 2026 citation on both publication surfaces'
   for (const page of ['index.html', 'publications.html']) {
     const record = findRecord(page, title);
     assert.ok(
-      record.html.startsWith(`<li data-tags="timeseries llm reasoning">${authors}, <strong>${title}</strong>.`),
+      record.html.replace(/^(<li data-tags="[^"]*) ai4ds">/, '$1">').startsWith(`<li data-tags="timeseries llm reasoning">${authors}, <strong>${title}</strong>.`),
       `${page} Time-R1 exact author order`
     );
     assert.match(record.html, /<em>ACM CIKM 2026 Accepted<\/em>\./, `${page} Time-R1 status`);
@@ -1018,5 +1017,5 @@ test('Publications page has an accessible semantic shell and social metadata', (
   }
   assert.equal(filterButtons.filter((button) => button.includes('aria-pressed="true"')).length, 1);
   assert.match(body, /Last updated on November 7, 2026\./);
-  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261107-concise"><\/script>/);
+  assert.match(body, /<script src="files\/assets\/site-language\.js\?v=20261124-publication-filters"><\/script>/);
 });

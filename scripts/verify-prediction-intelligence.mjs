@@ -152,27 +152,27 @@ test('page-specific language switching covers the full research narrative', () =
   }
 });
 
-test('Prediction Intelligence stays off the homepage and Research overview while its standalone page remains', () => {
+test('Legacy prediction cards stay removed from the homepage and Research overview while the standalone page remains', () => {
   assert.doesNotMatch(
     indexHtml,
     /<li class="primary-direction primary-direction--prediction">/,
-    'Homepage must not include a Prediction Intelligence primary direction'
+    'Homepage must not restore the legacy prediction primary-direction row'
   );
   assert.doesNotMatch(
     researchHtml,
     /<article\b[^>]*\bclass="[^"]*\bresearch-vision-card\b[^"]*"/,
-    'Research overview must not display the removed Prediction Intelligence card'
+    'Research overview must not restore the legacy prediction vision card'
   );
   assert.match(pageHtml, /<h1\b[^>]*class="pi-hero-title"[^>]*>Prediction Intelligence<\/h1>/);
   assert.doesNotMatch(
     indexHtml,
     /<article class="scenario-card scenario-card--prediction">/,
-    'Homepage must not duplicate Prediction Intelligence in the application scenarios'
+    'Homepage must not restore the legacy prediction scenario card'
   );
   assert.doesNotMatch(
     researchHtml,
     /<article class="scenario-card scenario-card--prediction">/,
-    'Research page must not duplicate Prediction Intelligence in the application scenarios'
+    'Research page must not restore the legacy prediction scenario card'
   );
 });
 

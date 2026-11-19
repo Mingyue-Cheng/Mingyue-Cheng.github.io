@@ -12,8 +12,8 @@ const normalize = (source) => source.replace(/\s+/g, ' ').trim();
 const literal = script.match(/const translations = (\{[\s\S]*?\n  \});\n\n  const navTargets/)?.[1];
 assert.ok(literal, 'The existing shared translation dictionary must remain readable');
 const translations = vm.runInNewContext(`(${literal})`);
-const description = 'Research by Mingyue Cheng on large language models and agents, time-series data mining, and scientific literature mining, with a focus on Forecasting Intelligence, AI for AI, and AI for Science.';
-const intro = 'My research centers on large language models and agents, time-series data mining, and scientific literature mining. I pursue three connected directions: Forecasting Intelligence, AI for AI, and AI for Science, with a focus on predictive reasoning, autonomous learning, and scientific discovery.';
+const description = 'Research by Mingyue Cheng on large language models and agents, time-series data mining, and scientific literature mining, with a focus on Prediction Intelligence, AI for AI, and AI for Science.';
+const intro = 'My research centers on large language models and agents, time-series data mining, and scientific literature mining. I pursue three connected directions: Prediction Intelligence, AI for AI, and AI for Science, with a focus on predictive reasoning, autonomous learning, and scientific discovery.';
 const labels = {
   en: ['Research Foundations', 'Research Directions'],
   zh: ['研究基础', '重点研究方向']
@@ -90,14 +90,14 @@ test('Research exposes three supporting foundations and three independent scient
       assert.equal((copy[`${prefix}Body`].match(/<strong>/g) || []).length, 2, `${lang}: ${prefix} must emphasize only two compact phrases`);
     }
     assert.ok(page.subtitle.includes(lang === 'en'
-      ? 'Forecasting Intelligence, AI for AI, and AI for Science'
-      : 'Forecasting Intelligence、AI for AI 和 AI for Science'), `${lang}: introduction must follow the displayed direction order`);
+      ? 'Prediction Intelligence, AI for AI, and AI for Science'
+      : 'Prediction Intelligence、AI for AI 和 AI for Science'), `${lang}: introduction must follow the displayed direction order`);
     assert.ok(page.subtitle.includes(lang === 'en'
       ? 'predictive reasoning, autonomous learning, and scientific discovery'
       : '预测推理、自主学习和科学发现'), `${lang}: research goals must follow the displayed direction order`);
     assert.equal(copy.aiTitle, 'AI for AI');
     assert.equal(copy.scienceTitle, 'AI for Science');
-    assert.equal(copy.forecastingTitle, 'Forecasting Intelligence');
+    assert.equal(copy.forecastingTitle, 'Prediction Intelligence');
     assert.equal(copy.foundationLiteratureTitle, lang === 'en' ? 'Scientific Literature Mining' : '科技文献挖掘');
     assert.ok(page.subtitle.startsWith(lang === 'en'
       ? 'My research centers on large language models and agents, time-series data mining, and scientific literature mining.'
@@ -140,7 +140,7 @@ test('Research uses an isolated stylesheet after shared styles and retains conta
   for (const page of readdirSync(new URL('..', import.meta.url)).filter((path) => path.endsWith('.html') && path !== 'research.html')) {
     assert.doesNotMatch(read(page), /files\/assets\/research-page\.css/, `${page} must not load Research-only styles`);
   }
-  assert.match(html, /site-language\.js\?v=20261114-research-editorial/);
+  assert.match(html, /site-language\.js\?v=20261119-prediction-intelligence/);
   assert.equal(sheets.at(-1), 'files/assets/research-page.css?v=20261114-research-editorial');
   for (const destination of ['https://ustcagi.github.io/', 'mailto:mycheng@ustc.edu.cn']) {
     assert.ok(html.includes(`href="${destination}"`), `Retain ${destination}`);

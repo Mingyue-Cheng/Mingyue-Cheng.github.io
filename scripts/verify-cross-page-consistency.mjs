@@ -14,13 +14,13 @@ const sharedLiteral = sharedScript.match(/const translations = (\{[\s\S]*?\n  \}
 const sharedCopy = vm.runInNewContext(`(${sharedLiteral})`);
 const homepageProjectLabels = {
   en: {
-    'opensource.category.timeseries': 'Time Series Intelligence（Context-aware Forecasting Intelligence）',
+    'opensource.category.timeseries': 'Time Series Mining（Context-aware Prediction Intelligence）',
     'opensource.category.science': 'AI for Science（Scientific Tool and Knowledge）',
     'opensource.name.castClaw': 'CastClaw',
     'opensource.name.paperScout': 'PaperScout'
   },
   zh: {
-    'opensource.category.timeseries': '时序智能（情境感知预测智能）',
+    'opensource.category.timeseries': '时序数据挖掘（情境感知预测智能）',
     'opensource.category.science': 'AI for Science（Scientific Tool and Knowledge）',
     'opensource.name.castClaw': 'CastClaw（星辰）',
     'opensource.name.paperScout': 'PaperScout（科言乐问）'
@@ -29,11 +29,11 @@ const homepageProjectLabels = {
 const pages = ['index.html', 'research.html', 'news.html', 'publications.html', 'projects.html', 'awards.html', 'service.html', 'resources.html', 'prediction-intelligence.html'];
 const publicationFilters = [
   ['all', 'filterAll', 'All', '全部'],
-  ['llm', 'filterReasoning', 'LLM-based Reasoning', '大模型推理'],
-  ['agent', 'filterAgent', 'LLM-based Agentic AI', '大模型智能体'],
-  ['structured', 'filterStructured', 'Structured Data Mining', '结构化数据挖掘'],
-  ['timeseries', 'filterTime', 'Time Series Analysis', '时间序列分析'],
-  ['table', 'filterTable', 'Table Mining', '表格挖掘'],
+  ['llm', 'filterReasoning', 'Cognitive Reasoning', '认知推理'],
+  ['agent', 'filterAgent', 'Agentic AI', '智能体'],
+  ['timeseries', 'filterTime', 'Time Series Mining', '时序数据挖掘'],
+  ['table', 'filterTable', 'Tabular Data Mining', '表格数据挖掘'],
+  ['ai4ds', 'filterDataScience', 'AI for Data Science', '数据科学智能'],
   ['ai4science', 'filterKnowledge', 'AI for Science', '科学智能'],
   ['recsys', 'filterRec', 'Recommender Systems', '推荐系统']
 ];
@@ -119,7 +119,7 @@ for (const lang of ['en', 'zh']) {
   test(`${lang}: time-series project and dataset categories use their requested labels`, () => {
     for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
       const expected = homepageProjectLabels[lang][key]
-        || `${lang === 'en' ? 'Time Series Intelligence' : '时序智能'}（Context-aware Time Series Forecasting）`;
+        || `${lang === 'en' ? 'Time Series Mining' : '时序数据挖掘'}（Context-aware Prediction Intelligence）`;
       assert.equal(homeCopy[lang][key], expected, `Homepage ${key}`);
       assert.equal(sharedCopy[lang].pages['projects.html'].content[key], expected, `Projects ${key}`);
     }
@@ -197,10 +197,10 @@ for (const lang of ['en', 'zh']) {
       assert.equal(typeof homeCopy[lang][`research.${key}`], 'string');
     }
     assert.equal(plain(homeCopy[lang]['research.applications']), lang === 'en'
-      ? 'Application Areas: Forecasting Intelligence (time series forecasting for decision support and user behavior prediction for personalized recommendations), AI for AI (enhancing LLM capabilities and continual agent evolution), and AI for Science (autonomous scientific research and AI for chemistry).'
+      ? 'Application Areas: Prediction Intelligence (time series forecasting for decision support and user behavior prediction for personalized recommendations), AI for AI (enhancing LLM capabilities and continual agent evolution), and AI for Science (autonomous scientific research and AI for chemistry).'
       : '应用方向：预测智能（面向智能决策的时序预测、面向个性化推荐的用户行为预测）、AI for AI（大模型能力增强与智能体持续进化）、AI for Science（自主科研与化学智能）。');
     const researchDirections = ['forecasting', 'ai', 'science'].map((prefix) => plain(research.scenarios[`${prefix}Title`]));
-    for (const [index, phrase] of ['Forecasting Intelligence', 'AI for AI', 'AI for Science'].entries()) assert.ok(researchDirections[index].includes(phrase), phrase);
+    for (const [index, phrase] of ['Prediction Intelligence', 'AI for AI', 'AI for Science'].entries()) assert.ok(researchDirections[index].includes(phrase), phrase);
     assert.equal(research.scenarios.applicationsSummary, undefined);
     assert.equal(research.scenarios.relationsIntro, undefined);
   });
@@ -215,7 +215,7 @@ for (const lang of ['en', 'zh']) {
 
   test(`${lang}: publication filters use the homepage taxonomy after language changes`, () => {
     const content = sharedCopy[lang].pages['publications.html'].content || {};
-    for (const suffix of ['filterAll', 'filterReasoning', 'filterAgent', 'filterStructured', 'filterTime', 'filterKnowledge', 'filterTable', 'filterRec', 'note', 'preprint', 'year2027', 'year2026', 'year2025', 'year2024', 'legacy']) {
+    for (const suffix of ['filterAll', 'filterReasoning', 'filterAgent', 'filterTime', 'filterTable', 'filterDataScience', 'filterKnowledge', 'filterRec', 'note', 'preprint', 'year2027', 'year2026', 'year2025', 'year2024', 'legacy']) {
       const normalizeYear = (value) => suffix === 'legacy' ? value.replace(' 年', '') : value;
       assert.equal(normalizeYear(content[`pub.${suffix}`]), normalizeYear(homeCopy[lang][`pub.${suffix}`]), suffix);
       keyedMarkup(read('publications.html'), 'data-page-i18n', `pub.${suffix}`);
@@ -275,7 +275,7 @@ test('time-series category fallback headings use their requested labels on both 
   for (const [path, attribute] of [['index.html', 'data-i18n'], ['projects.html', 'data-page-i18n']]) {
     for (const key of ['opensource.category.timeseries', 'datasets.category.timeseries']) {
       const expected = homepageProjectLabels.en[key]
-        || 'Time Series Intelligence（Context-aware Time Series Forecasting）';
+        || 'Time Series Mining（Context-aware Prediction Intelligence）';
       assert.equal(plain(keyedMarkup(read(path), attribute, key)), expected, `${path}/${key}`);
     }
   }
@@ -302,7 +302,7 @@ test('homepage language switching preserves the requested project labels and dis
     for (const element of elements) {
       const key = element.getAttribute('data-i18n');
       const expected = homepageProjectLabels[lang][key]
-        || `${lang === 'en' ? 'Time Series Intelligence' : '时序智能'}（Context-aware Time Series Forecasting）`;
+        || `${lang === 'en' ? 'Time Series Mining' : '时序数据挖掘'}（Context-aware Prediction Intelligence）`;
       assert.equal(element.innerHTML, expected, key);
     }
   }
@@ -385,7 +385,7 @@ test('default homepage markup and metadata no longer describe the superseded res
 test('Research replaces its former applications with three named directions', () => {
   const research = active(read('research.html'));
   assert.doesNotMatch(research, /<article class="scenario-card/);
-  for (const label of ['Forecasting Intelligence', 'AI for AI', 'AI for Science']) assert.ok(research.includes(label), label);
+  for (const label of ['Prediction Intelligence', 'AI for AI', 'AI for Science']) assert.ok(research.includes(label), label);
   assert.doesNotMatch(research, /Personalized Intelligence|Research collections|research-relations-heading|research-scenario-heading/);
 });
 
@@ -440,7 +440,7 @@ test('Research updates its own footer while public pages retain shared-asset ver
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
     assert.match(html, /site-content\.css\?v=20261107-concise/, path);
     if (path !== 'index.html') {
-      const versions = { 'research.html': '20261114-research-editorial', 'news.html': '20261114-geomind', 'projects.html': '20261118-scholarquest' };
+      const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261114-geomind', 'projects.html': '20261119-time-series-mining', 'publications.html': '20261124-publication-filters' };
       const version = versions[path] ?? '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }

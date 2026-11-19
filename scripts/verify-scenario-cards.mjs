@@ -14,7 +14,7 @@ const cssPath = join(root, 'files/assets/scenario-cards.css');
 const scenarioCss = existsSync(cssPath) ? readFileSync(cssPath, 'utf8') : '';
 const sharedContentCss = read('files/assets/site-content.css');
 const stylesheetLink = '<link rel="stylesheet" href="files/assets/scenario-cards.css?v=20260815">';
-const researchIntroEnglish = 'My research centers on large language models and agents, time-series data mining, and scientific literature mining. I pursue three connected directions: Forecasting Intelligence, AI for AI, and AI for Science, with a focus on predictive reasoning, autonomous learning, and scientific discovery.';
+const researchIntroEnglish = 'My research centers on large language models and agents, time-series data mining, and scientific literature mining. I pursue three connected directions: Prediction Intelligence, AI for AI, and AI for Science, with a focus on predictive reasoning, autonomous learning, and scientific discovery.';
 const researchCssPath = join(root, 'files/assets/research-page.css');
 const researchCss = existsSync(researchCssPath) ? readFileSync(researchCssPath, 'utf8') : '';
 
@@ -243,7 +243,7 @@ function assertScenarioStructure(
   );
   assert.doesNotMatch(section, /role="list(item)?"/, `${pageLabel} cards must not use list roles`);
   assert.doesNotMatch(section, /scenario-card--energy/, `${pageLabel} must not contain an Energy card`);
-  assert.doesNotMatch(section, /scenario-card--prediction/, `${pageLabel} must not duplicate Prediction Intelligence`);
+  assert.doesNotMatch(section, /scenario-card--prediction/, `${pageLabel} must not restore the legacy prediction scenario card`);
   assertCanonicalOrder(section, pageLabel, expectedModifiers);
 
   const articles = {};
@@ -408,7 +408,7 @@ test('homepage application areas use one bilingual paragraph in the requested or
   const paragraphs = [...researchArea.matchAll(/<p\b[^>]*data-i18n="research\.applications"[^>]*>([\s\S]*?)<\/p>/g)];
   assert.equal(paragraphs.length, 1, 'Application areas need one translatable paragraph');
   assert.match(paragraphs[0][0], /class="research-applications"/);
-  const expectedEnglish = '<strong>Application Areas:</strong> Forecasting Intelligence (time series forecasting for decision support and user behavior prediction for personalized recommendations), AI for AI (enhancing LLM capabilities and continual agent evolution), and AI for Science (autonomous scientific research and AI for chemistry).';
+  const expectedEnglish = '<strong>Application Areas:</strong> Prediction Intelligence (time series forecasting for decision support and user behavior prediction for personalized recommendations), AI for AI (enhancing LLM capabilities and continual agent evolution), and AI for Science (autonomous scientific research and AI for chemistry).';
   const expectedChinese = '<strong>应用方向：</strong>预测智能（面向智能决策的时序预测、面向个性化推荐的用户行为预测）、AI for AI（大模型能力增强与智能体持续进化）、AI for Science（自主科研与化学智能）。';
   assert.equal(paragraphs[0][1], expectedEnglish);
   assert.deepEqual(decodedTranslationEntries('research.applications'), [expectedEnglish, expectedChinese]);
@@ -460,7 +460,7 @@ test('research foundations use three responsive columns and directions remain in
   assert.deepEqual(
     cards.map((tag) => classTokens(tag).filter((token) => token.startsWith('pillar-card--'))),
     [['pillar-card--forecasting'], ['pillar-card--ai'], ['pillar-card--science']],
-    'Research directions must appear as Forecasting Intelligence, AI for AI, then AI for Science'
+    'Research directions must appear as Prediction Intelligence, AI for AI, then AI for Science'
   );
 
   const gridRules = cssRuleBlocks(researchCss, '.research-page .pillar-grid');
@@ -490,7 +490,7 @@ test('research pages omit table research without removing its publication catego
 
   assert.match(
     indexHtml,
-    /<button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub\.filterTable">Table Mining<\/button>/
+    /<button class="pub-filter-btn" type="button" aria-pressed="false" data-filter="table" data-i18n="pub\.filterTable">Tabular Data Mining<\/button>/
   );
   assert.match(indexHtml, /<li data-tags="[^"]*\btable\b[^"]*">/);
   assert.match(
@@ -507,7 +507,7 @@ test('research pages omit table research without removing its publication catego
 
 test('research page keeps shared translations for its foundations and directions', () => {
   assert.ok(siteLanguageJs.includes("document.querySelectorAll('[data-page-i18n]')"));
-  assert.match(researchHtml, /site-language\.js\?v=20261114-research-editorial/);
+  assert.match(researchHtml, /site-language\.js\?v=20261119-prediction-intelligence/);
   for (const prefix of ['forecasting', 'ai', 'science']) for (const suffix of ['Title', 'Body', 'Role']) assert.ok(researchHtml.includes(`data-page-i18n="${prefix}${suffix}"`));
   for (const prefix of ['foundationLlm', 'foundationTimeseries', 'foundationLiterature']) for (const suffix of ['Title', 'Body']) assert.ok(researchHtml.includes(`data-page-i18n="${prefix}${suffix}"`));
   assert.doesNotMatch(researchHtml, /data-page-i18n="(?:relationsIntro|applicationsSummary|\w+Topics)"/);

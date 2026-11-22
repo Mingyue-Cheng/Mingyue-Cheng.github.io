@@ -444,7 +444,8 @@ test('Research updates its own footer while public pages retain shared-asset ver
     const updatedDay = path === 'research.html' ? 14 : 7;
     assert.ok(html.includes(`© 2026 Mingyue Cheng. Last updated on November ${updatedDay}, 2026.`), path);
     assert.match(html, /site-theme\.css\?v=20260917-consistency/, path);
-    assert.match(html, /site-content\.css\?v=20261107-concise/, path);
+    const contentVersion = path === 'index.html' ? '20261122-research-alignment' : '20261107-concise';
+    assert.ok(html.includes(`site-content.css?v=${contentVersion}`), path);
     if (path !== 'index.html') {
       const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261114-geomind', 'projects.html': '20261119-agentworld', 'publications.html': '20261119-ai-for-ai-filter' };
       const version = versions[path] ?? '20261107-concise';

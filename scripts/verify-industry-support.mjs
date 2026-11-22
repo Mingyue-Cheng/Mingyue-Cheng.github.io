@@ -11,9 +11,9 @@ const brands = ['iflytek', 'huawei', 'tencent', 'kuaishou'];
 const names = ['科大讯飞 iFLYTEK', '华为 Huawei', '腾讯 Tencent', '快手 Kuaishou'];
 const sources = brands.map((brand) => `files/assets/industry/${brand === 'iflytek' ? 'iflytek-hd' : brand}.png`);
 
-test('homepage requests the refreshed content stylesheet after the logo update', () => {
+test('homepage requests the current content stylesheet for research alignment and industry logos', () => {
   const href = html.match(/href="(files\/assets\/site-content\.css[^\"]*)"/)?.[1];
-  assert.equal(href, 'files/assets/site-content.css?v=20261107-concise');
+  assert.equal(href, 'files/assets/site-content.css?v=20261122-research-alignment');
 });
 
 test('the three selected public grants stay in order with full details linked and industry support separate', () => {

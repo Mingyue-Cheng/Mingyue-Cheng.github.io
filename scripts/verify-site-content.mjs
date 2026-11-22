@@ -149,7 +149,7 @@ test('both research surfaces share the approved Prussian-blue application cards'
   }
 });
 
-test('desktop prose stays justified while compact facts and English mobile prose align left', () => {
+test('shared prose defaults coexist with justified homepage research and left-aligned compact facts', () => {
   for (const selector of proseSelectors) {
     const rule = declarations(`html[lang] ${selector}`);
     const compactFactList = selector === '.services-list li';
@@ -161,10 +161,15 @@ test('desktop prose stays justified while compact facts and English mobile prose
     assert.equal(rule['overflow-wrap'], 'break-word', selector);
     assert.equal(rule['word-break'], 'normal', selector);
   }
-  for (const selector of ['.research-section .primary-directions li', '.services-list li', '.research-applications']) {
+  for (const selector of ['.services-list li']) {
     const rule = declarations(`html[lang] ${selector}`);
     assert.equal(rule['text-align'], 'left', `${selector} must read naturally in both languages`);
     assert.equal(rule['text-align-last'], 'auto', selector);
+  }
+  for (const selector of ['.research-section > .container > p', '.research-section .primary-directions > li']) {
+    const rule = declarations(`html[lang] ${selector}`);
+    assert.equal(rule['text-align'], 'justify', `${selector}: homepage research body stays justified in both languages`);
+    assert.equal(rule['text-align-last'], 'left', selector);
   }
   const mobile = [...clean(css).matchAll(/@media \(max-width: 680px\)\s*\{([\s\S]*?)\n\}/g)]
     .map(match => match[1]).join('\n');

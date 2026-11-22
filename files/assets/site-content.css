@@ -694,10 +694,13 @@ html[lang] .outcome-panel p {
   text-decoration: underline;
 }
 
-/* Short research/service facts should read naturally in either language. */
-html[lang] .research-section .primary-directions li,
-html[lang] .services-list li,
-html[lang] .research-applications {
+html[lang] .research-section > .container > p,
+html[lang] .research-section .primary-directions > li {
+  text-align: justify;
+  text-align-last: left;
+}
+
+html[lang] .services-list li {
   text-align: left;
   text-align-last: auto;
 }

@@ -928,12 +928,13 @@ test('November 2026 GeoMind acceptance leads both news surfaces followed by WSDM
     assert.equal(entries.filter(entry => entry === expected).length, 1);
     assert.match(entries[1], /WSDM\s*2027/);
     assert.equal(entries.filter(entry => /WSDM\s*2027/.test(entry)).length, 1);
+    assert.equal(entries.filter(entry => entry.includes('🎉')).length, 4, 'Only four selected milestones retain a celebration marker');
   }
   assert.match(newsHtml, /data-page-i18n="news\.geomindPreprint"><strong>\[Apr\. 2026\]<\/strong>[\s\S]*?https:\/\/arxiv\.org\/abs\/2604\.21501/);
 });
 
 test('October 2026 ICML Area Chair announcement follows the WSDM news on both surfaces once', () => {
-  const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.';
+  const expected = '<strong>[Oct. 2026]</strong> I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.';
   for (const entries of latestNewsLists()) {
     assert.equal(entries[2], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
@@ -941,7 +942,7 @@ test('October 2026 ICML Area Chair announcement follows the WSDM news on both su
 });
 
 test('October 2026 WWW Area Chair announcement remains after the ICML announcement once', () => {
-  const expected = '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.';
+  const expected = '<strong>[Oct. 2026]</strong> I will serve as an <strong>Area Chair (AC)</strong> for <strong>The Web Conference 2027 (WWW 2027)</strong>.';
   for (const entries of latestNewsLists()) {
     assert.equal(entries[3], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
@@ -949,7 +950,7 @@ test('October 2026 WWW Area Chair announcement remains after the ICML announceme
 });
 
 test('September 2026 ICDM demo acceptance follows the WWW Area Chair announcement', () => {
-  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
+  const expected = '<strong>[Sep. 2026]</strong> Congratulations on our demo papers <strong>CastClaw</strong> and <strong>AgentWorld</strong> being accepted to the <strong>IEEE ICDM 2026 Demo Track</strong>!';
   for (const entries of latestNewsLists()) {
     assert.equal(entries[4], expected);
     assert.equal(entries.filter(entry => entry === expected).length, 1);
@@ -957,7 +958,7 @@ test('September 2026 ICDM demo acceptance follows the WWW Area Chair announcemen
 });
 
 test('September 2026 TKDE survey acceptance follows the ICDM demo news', () => {
-  const expected = '<strong>[Sep. 2026]</strong> 🎉 Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
+  const expected = '<strong>[Sep. 2026]</strong> Congratulations on our survey <strong>A Comprehensive Survey of Time Series Forecasting: Concepts, Challenges, and Future Directions</strong> being accepted by <strong>IEEE Transactions on Knowledge and Data Engineering (IEEE TKDE)</strong>!';
   for (const entries of latestNewsLists()) {
     assert.equal(entries[5], expected);
     assert.equal(entries.filter((entry) => entry === expected).length, 1);
@@ -967,12 +968,12 @@ test('September 2026 TKDE survey acceptance follows the ICDM demo news', () => {
 
 test('August 2026 news is synchronized across the homepage and News page', () => {
   const expected = [
-    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our paper <strong>PaperScout</strong> being accepted to <strong>Findings of EMNLP 2026</strong>!',
-    '<strong>[Aug. 2026]</strong> 🎉 We are excited to present our tutorial, “<strong>Context-Aware Time Series Forecasting: From Pattern Extrapolation to Cognitive Reasoning</strong>,” at <strong>IEEE ICDM 2026</strong>. See you in <strong>Shenyang</strong>!',
-    '<strong>[Aug. 2026]</strong> 🎉 I will serve as the <strong>Publication Chair</strong> for <strong>ICEBE 2026</strong>.',
-    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our papers <strong>Mind2Report</strong>, <strong>Time-R1</strong>, and <strong>AlphaCast</strong> being accepted to <strong>ACM CIKM 2026</strong>!',
-    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> being accepted by <strong>ACM Computing Surveys (ACM CSUR)</strong>!',
-    '<strong>[Aug. 2026]</strong> 🎉 Congratulations on our demo papers <strong>Agent-R1</strong> and <strong>TabClaw</strong> being accepted to the <strong>ACM CIKM 2026 Demo Track</strong>!'
+    '<strong>[Aug. 2026]</strong> Congratulations on our paper <strong>PaperScout</strong> being accepted to <strong>Findings of EMNLP 2026</strong>!',
+    '<strong>[Aug. 2026]</strong> We are excited to present our tutorial, “<strong>Context-Aware Time Series Forecasting: From Pattern Extrapolation to Cognitive Reasoning</strong>,” at <strong>IEEE ICDM 2026</strong>. See you in <strong>Shenyang</strong>!',
+    '<strong>[Aug. 2026]</strong> I will serve as the <strong>Publication Chair</strong> for <strong>ICEBE 2026</strong>.',
+    '<strong>[Aug. 2026]</strong> Congratulations on our papers <strong>Mind2Report</strong>, <strong>Time-R1</strong>, and <strong>AlphaCast</strong> being accepted to <strong>ACM CIKM 2026</strong>!',
+    '<strong>[Aug. 2026]</strong> Congratulations on our survey <strong>A Survey on Table Mining with Large Language Models: Challenges, Advancements and Prospects</strong> being accepted by <strong>ACM Computing Surveys (ACM CSUR)</strong>!',
+    '<strong>[Aug. 2026]</strong> Congratulations on our demo papers <strong>Agent-R1</strong> and <strong>TabClaw</strong> being accepted to the <strong>ACM CIKM 2026 Demo Track</strong>!'
   ];
   const homepageNews = sectionBetween(indexHtml, '<ul class="news-list" id="newsList">', '</ul>');
   const newsPage2026 = sectionBetween(

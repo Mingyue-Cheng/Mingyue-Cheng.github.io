@@ -96,13 +96,22 @@ for (const lang of ['en', 'zh']) {
     assert.match(text, /One Forecast, One World|AdaCast/);
     assert.match(text, /PaperArena/);
     assert.match(text, /SheetCompass/);
+    const celebrationKeys = ['news.geomindKdd2027', 'news.wsdm2027Papers', 'news.castclawBaai', 'news.jindouyunOffers'].sort();
+    for (const copy of [homeCopy[lang], sharedCopy[lang].pages['news.html'].content]) {
+      const actualKeys = Object.entries(copy)
+        .filter(([key, value]) => key.startsWith('news.') && value.includes('🎉'))
+        .map(([key]) => key).sort();
+      assert.deepEqual(actualKeys, celebrationKeys, 'Both news surfaces reserve celebration markers for the same four milestones');
+    }
+    assert.match(sharedCopy[lang].pages['news.html'].content['news.agenticTsfPosition'], /<\/strong> 📄 /);
+    assert.equal(keyedMarkup(read('news.html'), 'data-page-i18n', 'news.agenticTsfPosition'), sharedCopy.en.pages['news.html'].content['news.agenticTsfPosition']);
   });
 
   test(`${lang}: ICML 2027 Area Chair news is synchronized and translatable on both news surfaces`, () => {
     const key = 'news.icml2027AC';
     const expected = lang === 'en'
-      ? '<strong>[Oct. 2026]</strong> 🎉 I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.'
-      : '<strong>[2026 年 10 月]</strong> 🎉 我即将担任 <strong>ICML 2027</strong> 的<strong>领域主席（Area Chair，AC）</strong>。';
+      ? '<strong>[Oct. 2026]</strong> I will serve as an <strong>Area Chair (AC)</strong> for <strong>ICML 2027</strong>.'
+      : '<strong>[2026 年 10 月]</strong> 我即将担任 <strong>ICML 2027</strong> 的<strong>领域主席（Area Chair，AC）</strong>。';
     assert.equal(homeCopy[lang][key], expected);
     assert.equal(sharedCopy[lang].pages['news.html'].content?.[key], expected);
     assert.equal(keyedMarkup(home, 'data-i18n', key), homeCopy.en[key]);
@@ -447,7 +456,7 @@ test('Research updates its own footer while public pages retain shared-asset ver
     const contentVersion = path === 'index.html' ? '20261122-research-alignment' : '20261107-concise';
     assert.ok(html.includes(`site-content.css?v=${contentVersion}`), path);
     if (path !== 'index.html') {
-      const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261114-geomind', 'projects.html': '20261119-agentworld', 'publications.html': '20261119-ai-for-ai-filter' };
+      const versions = { 'research.html': '20261119-prediction-intelligence', 'news.html': '20261123-news-emoji', 'projects.html': '20261119-agentworld', 'publications.html': '20261119-ai-for-ai-filter' };
       const version = versions[path] ?? '20261107-concise';
       assert.ok(html.includes(`site-language.js?v=${version}`), path);
     }

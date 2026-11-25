@@ -544,8 +544,8 @@ test('in-memory conflict fixtures expose one arXiv ID mapped to different titles
   );
 });
 
-test('publication title baseline locks the complete 77-paper order on both publication surfaces', () => {
-  assert.equal(titleBaseline.publications.length, 77, 'fixture must intentionally list 77 publications');
+test('publication title baseline locks the complete 78-paper order on both publication surfaces', () => {
+  assert.equal(titleBaseline.publications.length, 78, 'fixture must intentionally list 78 publications');
   assert.deepEqual(
     publicationRecords(publicationsHtml, 'publications.html').map((record) => record.title),
     titleBaseline.publications
@@ -645,7 +645,7 @@ for (const [page] of pages) {
       assert.equal(matches.length, 1, `${page}: one publication matching ${prefix}`);
       return attributeValue(matches[0].html.match(/^<li\b[^>]*>/)[0], 'data-tags').split(/\s+/);
     };
-    for (const prefix of ['Cast-R1:', 'CastFSR:', 'CastFlow:', 'One Forecast, One World:', 'AlphaCast:', 'TableMind:']) {
+    for (const prefix of ['Learning Agentic Time Series Forecasting via Trajectory Distillation', 'CastFSR:', 'CastFlow:', 'One Forecast, One World:', 'AlphaCast:', 'TableMind:']) {
       assert.ok(tagsFor(prefix).includes('reasoning'), `${page}: ${prefix} belongs to explicit LLM reasoning`);
     }
     for (const prefix of ['NeurJudge:', 'LawyerPAN:', 'Nested Named Entity Recognition', 'Graph Adaptive Semantic Transfer']) {
@@ -803,7 +803,7 @@ for (const [page, source] of pages) {
         title: 'NeoResearch: Literature- and Experience-Guided Autonomous Time Series Model Discovery',
         authors: 'Ze Guo, Mingyue Cheng*, Xiaoyu Tao, Shuo Yu, Shangtong Ye',
         tags: 'timeseries agent ai4science llm',
-        expectedIndex: 2,
+        expectedIndex: 3,
         status: 'Preprint',
         link: { label: 'Paper', href: 'https://arxiv.org/html/2611.18235' }
       }
@@ -826,7 +826,7 @@ for (const [page, source] of pages) {
     const preprintSection = sectionBetween(source, '<!-- ===== Preprint ===== -->', '<!-- ===== 2027 ===== -->');
     const preprintList = preprintSection.match(/<ol\b[^>]*>[\s\S]*?<\/ol>/)?.[0] || '';
     const entries = publicationEntries(preprintList);
-    assert.equal(entries.length, 8, `${page} must contain eight preprints in one list`);
+    assert.equal(entries.length, 9, `${page} must contain nine preprints in one list`);
     const entry = entries.find((candidate) => publicationTitle(candidate) === title);
     assert.ok(entry, `${page} must include the survey in the preprint list`);
     assert.equal(publicationRecords(source, page).filter(record => record.title === title).length, 1);
@@ -961,8 +961,8 @@ test('homepage presents the complete year-grouped publication catalog with a lin
 
   assert.equal(
     selectedEntries.length,
-    77,
-    `Selected Publications must contain the complete 77-paper catalog; found ${selectedEntries.length}`
+    78,
+    `Selected Publications must contain the complete 78-paper catalog; found ${selectedEntries.length}`
   );
   assert.match(selected, /<a\b[^>]*href="publications\.html"[^>]*>/, 'link to full publication list');
   for (const title of requiredTitles) {
@@ -973,7 +973,7 @@ test('homepage presents the complete year-grouped publication catalog with a lin
     );
   }
   const completeEntries = publicationEntries(publicationsHtml);
-  assert.equal(completeEntries.length, 77, `Publications page must retain the complete list; found ${completeEntries.length}`);
+  assert.equal(completeEntries.length, 78, `Publications page must retain the complete list; found ${completeEntries.length}`);
   assert.deepEqual(selectedEntries.map(normalizeText), completeEntries.map(normalizeText));
 });
 
